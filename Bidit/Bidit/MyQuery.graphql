@@ -1,0 +1,6 @@
+
+query Query {
+  launches {
+    cursor
+  }
+}
