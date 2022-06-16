@@ -1,0 +1,81 @@
+PODS:
+  - Apollo (0.51.2):
+    - Apollo/Core (= 0.51.2)
+  - Apollo/Core (0.51.2)
+  - Differentiator (5.0.0)
+  - ImageSlideshow (1.9.2):
+    - ImageSlideshow/Core (= 1.9.2)
+  - ImageSlideshow/Core (1.9.2)
+  - Pageboy (3.6.2)
+  - ReactorKit (3.2.0):
+    - RxSwift (~> 6.0)
+    - WeakMapTable (~> 1.1)
+  - Reusable (4.1.2):
+    - Reusable/Storyboard (= 4.1.2)
+    - Reusable/View (= 4.1.2)
+  - Reusable/Storyboard (4.1.2)
+  - Reusable/View (4.1.2)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
+  - SnapKit (5.0.1)
+  - Tabman (2.12.0):
+    - Pageboy (~> 3.6.0)
+  - Then (2.7.0)
+  - WeakMapTable (1.2.0)
+
+DEPENDENCIES:
+  - Apollo
+  - ImageSlideshow (~> 1.9.0)
+  - ReactorKit
+  - Reusable
+  - RxCocoa (= 6.5.0)
+  - RxDataSources (~> 5.0)
+  - RxSwift (= 6.5.0)
+  - SnapKit (~> 5.0.0)
+  - Tabman (~> 2.9)
+  - Then
+
+SPEC REPOS:
+  trunk:
+    - Apollo
+    - Differentiator
+    - ImageSlideshow
+    - Pageboy
+    - ReactorKit
+    - Reusable
+    - RxCocoa
+    - RxDataSources
+    - RxRelay
+    - RxSwift
+    - SnapKit
+    - Tabman
+    - Then
+    - WeakMapTable
+
+SPEC CHECKSUMS:
+  Apollo: e5bc805c3f3556c18edc4eae4e2ea4723cea2318
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  ImageSlideshow: be305b54eaf2b2cfc7a7141c7c734605d44dc07d
+  Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
+  ReactorKit: e8b11d6b9c415405f381669b095c154a05b59eca
+  Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  Tabman: 447a50447ed2869c39ab3b1a779327e43e067c4e
+  Then: acfe0be7e98221c6204e12f8161459606d5d822d
+  WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
+
+PODFILE CHECKSUM: adb0a8353bd71aa2423c8ace29469fc23d5b068f
+
+COCOAPODS: 1.8.4

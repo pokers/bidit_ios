@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Bidit' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+    pod 'RxSwift', '6.5.0'
+    pod 'RxCocoa', '6.5.0'
+    pod 'ReactorKit'
+    pod 'Apollo'
+    pod 'SnapKit', '~> 5.0.0'
+    pod 'RxDataSources', '~> 5.0'
+    pod 'Then'
+    pod 'Reusable'
+    pod 'Tabman', '~> 2.9'
+    pod 'ImageSlideshow', '~> 1.9.0'
+
+  # Pods for Bidit
+
+end
