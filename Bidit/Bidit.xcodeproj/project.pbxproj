@@ -32,6 +32,8 @@
 		EE9DA5E0285315F200E33800 /* HomeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9DA5DF285315F200E33800 /* HomeReactor.swift */; };
 		EEA07B022856D1FE002D4F57 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA07B012856D1FE002D4F57 /* CategoryCell.swift */; };
 		EEA07B042856D675002D4F57 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA07B032856D675002D4F57 /* Category.swift */; };
+		EEADAFBD285B6662004277F9 /* ItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEADAFBC285B6662004277F9 /* ItemListViewController.swift */; };
+		EEADAFBF285B66A3004277F9 /* ItemListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEADAFBE285B66A3004277F9 /* ItemListReactor.swift */; };
 		EEB3CD71285AB2D400DF7596 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3CD70285AB2D400DF7596 /* Item.swift */; };
 		EEB3CD73285AB36500DF7596 /* EndingSoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3CD72285AB36500DF7596 /* EndingSoonCell.swift */; };
 		EEB3CD75285AB37300DF7596 /* EndingSoonCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3CD74285AB37300DF7596 /* EndingSoonCellReactor.swift */; };
@@ -80,6 +82,8 @@
 		EE9DA5DF285315F200E33800 /* HomeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReactor.swift; sourceTree = "<group>"; };
 		EEA07B012856D1FE002D4F57 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		EEA07B032856D675002D4F57 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		EEADAFBC285B6662004277F9 /* ItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewController.swift; sourceTree = "<group>"; };
+		EEADAFBE285B66A3004277F9 /* ItemListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListReactor.swift; sourceTree = "<group>"; };
 		EEB3CD70285AB2D400DF7596 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		EEB3CD72285AB36500DF7596 /* EndingSoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonCell.swift; sourceTree = "<group>"; };
 		EEB3CD74285AB37300DF7596 /* EndingSoonCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonCellReactor.swift; sourceTree = "<group>"; };
@@ -255,6 +259,7 @@
 		EE7C1A192852522E00730E95 /* presentation */ = {
 			isa = PBXGroup;
 			children = (
+				EEADAFBB285B6620004277F9 /* CategoryItemList */,
 				EE9DA5DC285315CA00E33800 /* homeScene */,
 				EE7C1A1B2852553600730E95 /* loginScene */,
 				EED180122855CF4800E17B06 /* MainViewController.swift */,
@@ -307,6 +312,15 @@
 				EE9D99D22856FD33005480C6 /* CategoryReactor.swift */,
 			);
 			path = categoryCell;
+			sourceTree = "<group>";
+		};
+		EEADAFBB285B6620004277F9 /* CategoryItemList */ = {
+			isa = PBXGroup;
+			children = (
+				EEADAFBC285B6662004277F9 /* ItemListViewController.swift */,
+				EEADAFBE285B66A3004277F9 /* ItemListReactor.swift */,
+			);
+			path = CategoryItemList;
 			sourceTree = "<group>";
 		};
 		EED180222855EA0400E17B06 /* cell */ = {
@@ -472,6 +486,7 @@
 				EE0D430228535131008464EA /* TempRepository.swift in Sources */,
 				EED180242855EA3900E17B06 /* BannerCell.swift in Sources */,
 				EEBD01CC28577A2100368533 /* HomeProductListCell.swift in Sources */,
+				EEADAFBD285B6662004277F9 /* ItemListViewController.swift in Sources */,
 				EE7C1A1D285255D100730E95 /* LoginViewController.swift in Sources */,
 				EE51D5DF2856288700AF1BC5 /* BannerCellReactor.swift in Sources */,
 				EE7C1A052852516A00730E95 /* AppDelegate.swift in Sources */,
@@ -492,6 +507,7 @@
 				EE7C1A072852516A00730E95 /* SceneDelegate.swift in Sources */,
 				EEBC50D92859BC1E00F1EE26 /* HomeTabbar.swift in Sources */,
 				EED180212855E01900E17B06 /* API.swift in Sources */,
+				EEADAFBF285B66A3004277F9 /* ItemListReactor.swift in Sources */,
 				EEB3CD71285AB2D400DF7596 /* Item.swift in Sources */,
 				EEB3CD77285AD27F00DF7596 /* UILayoutPriority.swift in Sources */,
 				EEBD01CE28577A7600368533 /* HomeProductListReactor.swift in Sources */,

@@ -61,13 +61,31 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
+        tableView.rx.itemSelected //아이템 클릭
+            .map{Reactor.Action.cellSelected($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         //State
         reactor.state
             .map { $0.itemSection }
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
+        
+        reactor.state.map{ $0.selectedIndexPath}
+            .compactMap{$0}
+            .subscribe(onNext : { [weak self] indexPath in
+                let vc = ItemListViewController()
+                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init())
+                vc.reactor = listReactor
+               // vc.bind(reactor: listReactor)
+                self?.navigationController?.pushViewController(vc, animated: true)
+                guard let self = self else { return }
+                self.tableView.deselectRow(at: indexPath, animated: true)
+            }).disposed(by: disposeBag)
     }
     
+//
     
 }
 
