@@ -19,6 +19,9 @@ class ItemListReactor : Reactor{
         case tapPopularityBtn
         case tapEndingSoonBtn
         case tapLatestBtn
+        
+        case tapFilterBtn
+        case disappearFilter
     }
       
       
@@ -30,6 +33,8 @@ class ItemListReactor : Reactor{
         case sortPopularity
         case sortEndingSoon
         case sortLatest
+        case openFilter
+        case closeFilter
     }
       
       
@@ -38,6 +43,7 @@ class ItemListReactor : Reactor{
         var selectedIndexPath : IndexPath?
         var isSortListOpened : Bool = false
         var sortState : SortState = .latest
+        var isFilterOpened : Bool = false
       }
       
       let initialState: State
@@ -74,6 +80,13 @@ class ItemListReactor : Reactor{
         case .tapLatestBtn:
             print("reactor : 최신순 버튼 클릭")
             return Observable<Mutation>.just(Mutation.sortLatest)
+            
+        case .tapFilterBtn:
+            print("reactor : 상세 필터 열기")
+            return Observable<Mutation>.just(Mutation.openFilter)
+        case .disappearFilter:
+            print("reactor : 필터 닫기")
+            return Observable<Mutation>.just(Mutation.closeFilter)
         
         }
       }
@@ -102,6 +115,11 @@ class ItemListReactor : Reactor{
         case .sortLatest:
             state.sortState = .latest
             
+        case .openFilter:
+            state.isFilterOpened = true
+            
+        case .closeFilter:
+            state.isFilterOpened = false
         }
         return state
       

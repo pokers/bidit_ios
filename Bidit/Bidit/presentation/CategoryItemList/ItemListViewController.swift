@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import ReactorKit
 import RxDataSources
+import SideMenu
 
 class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     
@@ -47,10 +48,32 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
         
     }
     
+    //사이드 필터
+    var filterVC = DetailFilterViewController()
+    var reactorOfFilter = DetailFilterReactor()
+    //filterVC.reactor = DetailFilterReactor()
+    var menu : SideMenuNavigationController? = nil
+    
+    
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        
+        filterVC.reactor = reactorOfFilter
+        menu = SideMenuNavigationController(rootViewController: filterVC)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         attribute()
         layout()
+        
+        
+        
         
         
         
@@ -170,6 +193,12 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
         latestBtn.setTitleColor(.gray, for: .normal)
         
         latestBtn.isUserInteractionEnabled = true
+        
+        //오른쪽 사이드 메뉴 추가.
+        SideMenuManager.default.rightMenuNavigationController = menu
+        menu!.menuWidth = 300 //사이드 메뉴 너비 설정
+    
+        
     }
     
     func bind(reactor: ItemListReactor) {
@@ -208,6 +237,15 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
+        self.filterButton.rx.tap //상세 필터 버튼클릭
+            .map(Reactor.Action.tapFilterBtn)
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        self.menu!.rx.viewWillDisappear
+            .map(Reactor.Action.disappearFilter)
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
         
         //State
@@ -258,6 +296,14 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
                 
             }).disposed(by: self.disposeBag)
         
+        reactor.state
+            .map{$0.isFilterOpened}
+            .subscribe(onNext : { isOpened in
+                if isOpened == true{
+                    self.present(self.menu!, animated: true, completion: nil)
+                }
+                
+            }).disposed(by: self.disposeBag)
     }
      
     

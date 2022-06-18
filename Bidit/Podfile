@@ -15,6 +15,7 @@ target 'Bidit' do
     pod 'Reusable'
     pod 'Tabman', '~> 2.9'
     pod 'ImageSlideshow', '~> 1.9.0'
+    pod 'SideMenu'
 
   # Pods for Bidit
 
