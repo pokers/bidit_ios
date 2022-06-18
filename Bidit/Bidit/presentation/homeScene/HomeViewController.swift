@@ -49,6 +49,8 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     var homeTabbar = HomeTabbar()
     var tabbarContainer = UIView()
     
+    var intCount = 1
+    
     //임시 배너
     let images = [
         ImageSource(image: UIImage(named: "tempBanner")!),
@@ -119,7 +121,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        
+        self.navigationController?.navigationBar.isHidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,15 +135,28 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         setUpCollectionView()
         attribute()
         
+    
+        //startTimer()
         
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        startTimer()
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        stopTimer()
     }
     
 
     private func slideBannerSetting(){
         slideShow.setImageInputs(images)
         slideShow.contentScaleMode = .scaleAspectFill
-        //slideShow.slideshowInterval = 4
+        slideShow.slideshowInterval = 4
         slideShow.pageIndicatorPosition = .init(horizontal: .right(padding: -20), vertical: .bottom)
         let uiIndcator = UIPageControl()
         uiIndcator.transform = CGAffineTransform(scaleX: 0.7, y: 0.8)
@@ -156,6 +171,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+        
     }
 
     private func layout(){
@@ -204,14 +220,11 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     
     private func attribute(){
         
-        //네비게이션 컨트롤러 투명하게 만들기
-//        self.navigationController?.navigationBar.tintColor = .white
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.tintColor = .clear
+
         self.navigationController?.navigationBar.isHidden = true
+        scrollView.showsHorizontalScrollIndicator = true
+        scrollView.indicatorStyle = .black
         
-        scrollView.isScrollEnabled = true
         
     }
     
@@ -231,6 +244,51 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
       }
     
     
+    
+        // [실시간 반복 작업 시작 호출]
+        
+    var timer : Timer?
+    func startTimer(){
+        // [타이머 객체 생성 실시]
+        timer = Timer.scheduledTimer(timeInterval: 6, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+    }
+        // [실시간 반복 작업 수행 부분]
+        
+    var isTop = true
+    
+    @objc func timerCallback() {
+        var index = IndexPath.init(item: 0, section: 0) // 이동할 곳
+        
+        collectionView.flashScrollIndicators()
+        if(isTop == true){
+            index = IndexPath.init(item: 11, section: 0) // 이동할 곳
+            collectionView.scrollToItem(at: index, at: .right, animated: true)
+            isTop = !isTop
+            
+            print("뒤로 스크롤")
+            collectionView.flashScrollIndicators()
+            return
+        }else if (isTop == false){
+            index = IndexPath.init(item: 0, section: 0) // 이동할 곳
+            collectionView.scrollToItem(at: index, at: .left, animated: true)
+            isTop = !isTop
+            print("앞으로 스크롤")
+            collectionView.flashScrollIndicators()
+            return
+        }
+        
+    }
+        // [실시간 반복 작업 정지 호출]
+        
+    func stopTimer(){
+        // [실시간 반복 작업 중지]
+        timer!.invalidate()
+        if timer != nil && timer!.isValid {
+            timer!.invalidate()
+        }
+    }
+    
+    
     //따로 호출할 필요 없음. 리액터가 바뀌면 자동으로 호출
     func bind(reactor: HomeReactor) {
         
@@ -240,6 +298,9 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
               .map(Reactor.Action.viewDidLoad)
               .bind(to: reactor.action)
               .disposed(by: self.disposeBag)
+        
+//        reactor.state
+//            .bind(to: collectionView.rx.scrollsToTop)
               
             //State
         reactor.state
