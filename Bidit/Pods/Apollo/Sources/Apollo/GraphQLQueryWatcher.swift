@@ -15,16 +15,13 @@ public final class GraphQLQueryWatcher<Query: GraphQLQuery>: Cancellable, Apollo
 
   private let contextIdentifier = UUID()
 
-  private class WeakFetchTaskContainer {
+  private class WeakCancellableContainer {
     weak var cancellable: Cancellable?
-    var cachePolicy: CachePolicy?
-
-    fileprivate init(_ cancellable: Cancellable?, _ cachePolicy: CachePolicy?) {
+    fileprivate init(_ cancellable: Cancellable?) {
       self.cancellable = cancellable
-      self.cachePolicy = cachePolicy
     }
   }
-  private var fetching: Atomic<WeakFetchTaskContainer> = Atomic(.init(nil, nil))
+  private var fetching: Atomic<WeakCancellableContainer> = Atomic(.init(nil))
 
   private var dependentKeys: Atomic<Set<CacheKey>?> = Atomic(nil)
 
@@ -56,7 +53,6 @@ public final class GraphQLQueryWatcher<Query: GraphQLQuery>: Cancellable, Apollo
     fetching.mutate {
       // Cancel anything already in flight before starting a new fetch
       $0.cancellable?.cancel()
-      $0.cachePolicy = cachePolicy
       $0.cancellable = client?.fetch(query: query, cachePolicy: cachePolicy, contextIdentifier: self.contextIdentifier, queue: callbackQueue) { [weak self] result in
         guard let self = self else { return }
 
@@ -115,10 +111,8 @@ public final class GraphQLQueryWatcher<Query: GraphQLQuery>: Cancellable, Apollo
             self.resultHandler(result)
           }
         case .failure:
-          if self.fetching.value.cachePolicy != .returnCacheDataDontFetch {
-            // If the cache fetch is not successful, for instance if the data is missing, refresh from the server.
-            self.fetch(cachePolicy: .fetchIgnoringCacheData)
-          }
+          // If the cache fetch is not successful, for instance if the data is missing, refresh from the server.
+          self.fetch(cachePolicy: .fetchIgnoringCacheData)
         }
       }
     }

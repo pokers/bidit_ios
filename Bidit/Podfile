@@ -8,7 +8,7 @@ target 'Bidit' do
     pod 'RxSwift', '6.5.0'
     pod 'RxCocoa', '6.5.0'
     pod 'ReactorKit'
-    pod 'Apollo'
+    pod 'Apollo', '~> 0.50.0'
     pod 'SnapKit', '~> 5.0.0'
     pod 'RxDataSources', '~> 5.0'
     pod 'Then'
@@ -16,7 +16,11 @@ target 'Bidit' do
     pod 'Tabman', '~> 2.9'
     pod 'ImageSlideshow', '~> 1.9.0'
     pod 'SideMenu'
-
+    pod 'KakaoSDKCommon'  # 필수 요소를 담은 공통 모듈
+    pod 'KakaoSDKAuth'  # 사용자 인증
+    pod 'KakaoSDKUser'  # 카카오 로그인, 사용자 관리
+    pod 'KeychainSwift', '~> 20.0'
+    pod 'RxApolloClient', '1.6.0'
   # Pods for Bidit
 
 end

@@ -71,6 +71,7 @@ If you'd like to contribute, please refer to the [Apollo Contributor Guide](http
 
 - [@AnthonyMDev](https://github.com/AnthonyMDev) (Apollo)
 - [@calvincestari](https://github.com/calvincestari) (Apollo)
+- [@designatednerd](https://github.com/designatednerd) (Apollo)
 
 ## Who is Apollo?
 

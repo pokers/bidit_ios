@@ -1,6 +1,14 @@
 
-query Query {
-  launches {
-    cursor
-  }
+mutation MyQuery {
+    addUser {
+        id
+        status
+
+        kakaoAccount {
+            id
+        }
+
 }
+
+}
+
