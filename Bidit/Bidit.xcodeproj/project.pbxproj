@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		BB89F6DFB879C662BBCB1B56 /* Pods_Bidit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC60C3D2F14D63E852F8864C /* Pods_Bidit.framework */; };
+		EE069C7F286213320033FA4E /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = EE069C7E286213320033FA4E /* schema.json */; };
+		EE069C81286219250033FA4E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE069C80286219250033FA4E /* API.swift */; };
+		EE069C8328621F0A0033FA4E /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE069C8228621F090033FA4E /* Network.swift */; };
+		EE069C86286221E80033FA4E /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE069C85286221E80033FA4E /* TokenManager.swift */; };
+		EE069C88286223270033FA4E /* API+ApolloClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE069C87286223270033FA4E /* API+ApolloClient.swift */; };
+		EE069C8C286226080033FA4E /* Types.graphql.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE069C8B286226080033FA4E /* Types.graphql.swift */; };
 		EE0D430228535131008464EA /* TempRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0D430128535131008464EA /* TempRepository.swift */; };
 		EE0D4304285351F9008464EA /* DefaultTempRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0D4303285351F9008464EA /* DefaultTempRepository.swift */; };
 		EE51D5DF2856288700AF1BC5 /* BannerCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE51D5DE2856288700AF1BC5 /* BannerCellReactor.swift */; };
@@ -47,8 +53,6 @@
 		EED180152855CF5100E17B06 /* MainReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180142855CF5100E17B06 /* MainReactor.swift */; };
 		EED180172855CFEB00E17B06 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180162855CFEB00E17B06 /* TabbarController.swift */; };
 		EED1801B2855DBCC00E17B06 /* MyQuery.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EED1801A2855DBCC00E17B06 /* MyQuery.graphql */; };
-		EED1801F2855DF8C00E17B06 /* schema.json in Resources */ = {isa = PBXBuildFile; fileRef = EED1801E2855DF8C00E17B06 /* schema.json */; };
-		EED180212855E01900E17B06 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180202855E01900E17B06 /* API.swift */; };
 		EED180242855EA3900E17B06 /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180232855EA3900E17B06 /* BannerCell.swift */; };
 		EED180282855F14F00E17B06 /* DefaultCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180272855F14F00E17B06 /* DefaultCellReactor.swift */; };
 		EED1802A2855F55E00E17B06 /* DefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180292855F55E00E17B06 /* DefaultCell.swift */; };
@@ -59,6 +63,12 @@
 /* Begin PBXFileReference section */
 		30D3F8BC16399A24964243D2 /* Pods-Bidit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bidit.release.xcconfig"; path = "Target Support Files/Pods-Bidit/Pods-Bidit.release.xcconfig"; sourceTree = "<group>"; };
 		BC60C3D2F14D63E852F8864C /* Pods_Bidit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bidit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE069C7E286213320033FA4E /* schema.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
+		EE069C80286219250033FA4E /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		EE069C8228621F090033FA4E /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		EE069C85286221E80033FA4E /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		EE069C87286223270033FA4E /* API+ApolloClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+ApolloClient.swift"; sourceTree = "<group>"; };
+		EE069C8B286226080033FA4E /* Types.graphql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Types.graphql.swift; path = Bidit/API/Types.graphql.swift; sourceTree = SOURCE_ROOT; };
 		EE0D430128535131008464EA /* TempRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempRepository.swift; sourceTree = "<group>"; };
 		EE0D4303285351F9008464EA /* DefaultTempRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTempRepository.swift; sourceTree = "<group>"; };
 		EE51D5DE2856288700AF1BC5 /* BannerCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCellReactor.swift; sourceTree = "<group>"; };
@@ -100,8 +110,6 @@
 		EED180142855CF5100E17B06 /* MainReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainReactor.swift; sourceTree = "<group>"; };
 		EED180162855CFEB00E17B06 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		EED1801A2855DBCC00E17B06 /* MyQuery.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MyQuery.graphql; sourceTree = "<group>"; };
-		EED1801E2855DF8C00E17B06 /* schema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = schema.json; sourceTree = "<group>"; };
-		EED180202855E01900E17B06 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		EED180232855EA3900E17B06 /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
 		EED180272855F14F00E17B06 /* DefaultCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCellReactor.swift; sourceTree = "<group>"; };
 		EED180292855F55E00E17B06 /* DefaultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCell.swift; sourceTree = "<group>"; };
@@ -137,6 +145,18 @@
 				BC60C3D2F14D63E852F8864C /* Pods_Bidit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EE069C84286221BB0033FA4E /* API */ = {
+			isa = PBXGroup;
+			children = (
+				EE069C80286219250033FA4E /* API.swift */,
+				EE069C85286221E80033FA4E /* TokenManager.swift */,
+				EE069C87286223270033FA4E /* API+ApolloClient.swift */,
+				EE069C8B286226080033FA4E /* Types.graphql.swift */,
+			);
+			name = API;
+			path = "몌ㅑ";
 			sourceTree = "<group>";
 		};
 		EE0D42F828535042008464EA /* Domain */ = {
@@ -246,6 +266,7 @@
 		EE7C1A032852516A00730E95 /* Bidit */ = {
 			isa = PBXGroup;
 			children = (
+				EE069C84286221BB0033FA4E /* API */,
 				EE9D99CB2856EA10005480C6 /* Utils */,
 				EE0D42F92853504B008464EA /* Data */,
 				EE0D42F828535042008464EA /* Domain */,
@@ -256,8 +277,8 @@
 				EE7C1A0F2852516D00730E95 /* LaunchScreen.storyboard */,
 				EE7C1A122852516D00730E95 /* Info.plist */,
 				EED1801A2855DBCC00E17B06 /* MyQuery.graphql */,
-				EED1801E2855DF8C00E17B06 /* schema.json */,
-				EED180202855E01900E17B06 /* API.swift */,
+				EE069C7E286213320033FA4E /* schema.json */,
+				EE069C8228621F090033FA4E /* Network.swift */,
 			);
 			path = Bidit;
 			sourceTree = "<group>";
@@ -416,7 +437,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EED1801F2855DF8C00E17B06 /* schema.json in Resources */,
+				EE069C7F286213320033FA4E /* schema.json in Resources */,
 				EED1801B2855DBCC00E17B06 /* MyQuery.graphql in Resources */,
 				EE7C1A112852516D00730E95 /* LaunchScreen.storyboard in Resources */,
 				EE7C1A0E2852516D00730E95 /* Assets.xcassets in Resources */,
@@ -483,7 +504,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n# Don't run this during index builds\nif [ $ACTION = \"indexbuild\" ]; then exit 0; fi\n\nSCRIPT_PATH=\"${PODS_ROOT}/Apollo/scripts\"\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" API.swift\n\n\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n# Don't run this during index builds\nif [ $ACTION = \"indexbuild\" ]; then exit 0; fi\n\nSCRIPT_PATH=\"${PODS_ROOT}/Apollo/scripts\"\n\n \ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"schema.json\" API.swift\n\n\ncd \"${SRCROOT}/${TARGET_NAME}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --namespace=MyAPI --includes=./**/*.graphql --localSchemaFile=\"schema.json\" API\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -524,15 +545,19 @@
 				EED180132855CF4800E17B06 /* MainViewController.swift in Sources */,
 				EEE64408285D208D009D92AA /* DetailFilterReactor.swift in Sources */,
 				EEB3CD73285AB36500DF7596 /* EndingSoonCell.swift in Sources */,
+				EE069C8328621F0A0033FA4E /* Network.swift in Sources */,
+				EE069C86286221E80033FA4E /* TokenManager.swift in Sources */,
 				EE7C1A072852516A00730E95 /* SceneDelegate.swift in Sources */,
 				EEBC50D92859BC1E00F1EE26 /* HomeTabbar.swift in Sources */,
-				EED180212855E01900E17B06 /* API.swift in Sources */,
+				EE069C81286219250033FA4E /* API.swift in Sources */,
 				EEADAFBF285B66A3004277F9 /* ItemListReactor.swift in Sources */,
+				EE069C88286223270033FA4E /* API+ApolloClient.swift in Sources */,
 				EEB3CD71285AB2D400DF7596 /* Item.swift in Sources */,
 				EEB3CD77285AD27F00DF7596 /* UILayoutPriority.swift in Sources */,
 				EEBD01CE28577A7600368533 /* HomeProductListReactor.swift in Sources */,
 				EE9D99D528570362005480C6 /* Rx+Cell.swift in Sources */,
 				EE9DA5E0285315F200E33800 /* HomeReactor.swift in Sources */,
+				EE069C8C286226080033FA4E /* Types.graphql.swift in Sources */,
 				EEA07B042856D675002D4F57 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
