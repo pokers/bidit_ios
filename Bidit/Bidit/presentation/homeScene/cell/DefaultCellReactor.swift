@@ -13,17 +13,20 @@ class DefaultCellReactor: Reactor{
     
     enum Action {
         case layoutSubviews
+        case cellSelected(IndexPath)
     }
       
       
     enum Mutation {
         case updateDataSource
+        case setSelectedIndexPath(IndexPath?)
       
     }
       
       
     struct State {
-          var messageSection : [CategorySection] 
+        var messageSection : [CategorySection]
+        var selectedIndexPath : IndexPath?
       }
 
       
@@ -37,6 +40,13 @@ class DefaultCellReactor: Reactor{
         switch action {
         case .layoutSubviews:
           return Observable<Mutation>.just(.updateDataSource)
+            
+            
+        case .cellSelected(let indexPath):
+            return Observable.concat([
+                Observable.just(Mutation.setSelectedIndexPath(indexPath)),
+                Observable.just(Mutation.setSelectedIndexPath(nil))
+            ])
         }
       }
       
@@ -45,6 +55,10 @@ class DefaultCellReactor: Reactor{
         switch mutation {
         case .updateDataSource:
           state.messageSection = getMockSections()
+            
+        case .setSelectedIndexPath(let indexPath):
+            state.selectedIndexPath = indexPath
+            print("reactor endingSoon : ")
         }
         return state
       }

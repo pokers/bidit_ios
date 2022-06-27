@@ -159,12 +159,17 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     
     
     private func attribute(){
-       
+        subToolBarContainer.backgroundColor = .systemBackground
+        self.view.backgroundColor = .systemBackground
+        
         //self.navigationItem.leftBarButtonItem = backButton
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = . gray
         self.navigationController?.navigationBar.isHidden = false
         self.title = "카테고리"
+        
+        
+        
         
         self.tabBarController?.tabBar.isHidden = true
         
@@ -260,6 +265,11 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
             .subscribe(onNext : { [weak self] indexPath in
                
                 guard let self = self else { return }
+                print("cell clicked")
+                //구매자 아이템 디테일 화면
+                var itemDetailVC = ItemBuyDetailViewController()
+                itemDetailVC.reactor = ItemBuyDetailReactor()
+                self.navigationController?.pushViewController(itemDetailVC, animated: true)
                 self.tableView.deselectRow(at: indexPath, animated: true)
             }).disposed(by: disposeBag)
         

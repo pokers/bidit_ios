@@ -45,6 +45,9 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         cv.register(CategoryCell.self, forCellWithReuseIdentifier: "CategoryCell")
             return cv
     }()
+    //커스텀 스크롤 인디케이터 (왔다갔다 보여줌.)
+    private let indicatorView = IndicatorView()
+    
     //탭바
     var homeTabbar = HomeTabbar()
     var tabbarContainer = UIView()
@@ -185,6 +188,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             $0.bottom.equalToSuperview()
         }
         
+        
         scrollView.addSubview(containerView)
         containerView.snp.makeConstraints{
             $0.top.equalToSuperview()
@@ -195,12 +199,12 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         slideShow.snp.makeConstraints{
             $0.leading.top.trailing.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(220)
+            $0.height.equalTo(320)
         }
         
         containerView.addSubview(tabbarContainer)
         tabbarContainer.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(400)
+            $0.top.equalToSuperview().offset(535)
             $0.leading.trailing.equalToSuperview()
             $0.width.equalToSuperview()
             $0.height.equalTo(660)
@@ -216,15 +220,20 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         //let bar = TMBar.ButtonBar()
         //homeTabbar.addBar(bar, dataSource: homeTabbar.self, at: .custom(view: tabbarContainer, layout: nil))
   
+        
+        
     }
     
     private func attribute(){
         
 
         self.navigationController?.navigationBar.isHidden = true
-        scrollView.showsHorizontalScrollIndicator = true
-        scrollView.indicatorStyle = .black
-        
+        self.view.backgroundColor = .systemBackground
+        scrollView.showsHorizontalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        scrollView.backgroundColor = .systemBackground
+        containerView.backgroundColor = .systemBackground
+        tabbarContainer.backgroundColor = .systemBackground
         
     }
     
@@ -236,8 +245,37 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             $0.height.equalTo(186)
         }
         
+        containerView.addSubview(indicatorView)
+                self.indicatorView.snp.makeConstraints {
+                  $0.top.equalTo(self.collectionView.snp.bottom)//.offset(4)
+                  $0.left.right.equalTo(self.collectionView).inset(156)
+                  $0.height.equalTo(4)
+            }
+        
+       
+        
+//
+        
+//        컬렉션 뷰 스크롤시 동작
+        collectionView.rx.didScroll.subscribe(onNext : {
+            let scroll = self.collectionView.contentOffset.x + self.collectionView.contentInset.left
+            let width = self.collectionView.contentSize.width + self.collectionView.contentInset.left + self.collectionView.contentInset.right
+            let scrollRatio = scroll / width
+            self.indicatorView.leftOffsetRatio = scrollRatio
+        }).disposed(by: disposeBag)
+        
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //탭바
+        let allWidth = self.collectionView.contentSize.width + self.collectionView.contentInset.left + self.collectionView.contentInset.right
+        let showingWidth = self.collectionView.bounds.width
+        self.indicatorView.widthRatio = showingWidth / allWidth
+        self.indicatorView.layoutIfNeeded()
+    }
+    
     private func setupView() {
         self.collectionView.rx.setDelegate(self)
           .disposed(by: disposeBag)
@@ -266,19 +304,19 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             isTop = !isTop
             
             print("뒤로 스크롤")
-            collectionView.flashScrollIndicators()
+            //collectionView.flashScrollIndicators() 스크롤바 보이기
             return
         }else if (isTop == false){
             index = IndexPath.init(item: 0, section: 0) // 이동할 곳
             collectionView.scrollToItem(at: index, at: .left, animated: true)
             isTop = !isTop
             print("앞으로 스크롤")
-            collectionView.flashScrollIndicators()
+            //collectionView.flashScrollIndicators() 스크롤바 보이기
             return
         }
         
     }
-        // [실시간 반복 작업 정지 호출]
+    // [실시간 반복 작업 정지 호출]
         
     func stopTimer(){
         // [실시간 반복 작업 중지]
@@ -299,6 +337,11 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
               .bind(to: reactor.action)
               .disposed(by: self.disposeBag)
         
+        collectionView.rx.itemSelected //아이템 클릭
+            .map{Reactor.Action.cellSelected($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
 //        reactor.state
 //            .bind(to: collectionView.rx.scrollsToTop)
               
@@ -308,7 +351,17 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
         
-        
+        reactor.state.map{ $0.selectedIndexPath}
+            .compactMap{$0}
+            .subscribe(onNext : { [weak self] indexPath in
+                let vc = ItemListViewController()
+                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init())
+                vc.reactor = listReactor
+               // vc.bind(reactor: listReactor)
+                self?.navigationController?.pushViewController(vc, animated: true)
+                guard let self = self else { return }
+                //self.collectionView.deselectRow(at: indexPath, animated: true)
+            }).disposed(by: disposeBag)
         
         
 //        //Action

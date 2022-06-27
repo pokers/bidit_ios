@@ -15,17 +15,20 @@ class HomeReactor : Reactor{
     
     enum Action {
         case viewDidLoad
+        case cellSelected(IndexPath)
     }
       
       
     enum Mutation {
         case updateDataSource
+        case setSelectedIndexPath(IndexPath?)
       
     }
       
       
     struct State {
         var messageSection = [CategorySection]()
+        var selectedIndexPath : IndexPath?
       }
       
       let initialState: State
@@ -40,7 +43,14 @@ class HomeReactor : Reactor{
         switch action {
         case .viewDidLoad:
           return Observable<Mutation>.just(.updateDataSource)
+            
+        case .cellSelected(let indexPath):
+            return Observable.concat([
+                Observable.just(Mutation.setSelectedIndexPath(indexPath)),
+                Observable.just(Mutation.setSelectedIndexPath(nil))
+            ])
         }
+        
       }
       
       func reduce(state: State, mutation: Mutation) -> State {
@@ -48,6 +58,10 @@ class HomeReactor : Reactor{
         switch mutation {
         case .updateDataSource:
           state.messageSection = getMockCategory()
+            
+        case .setSelectedIndexPath(let indexPath):
+            state.selectedIndexPath = indexPath
+            print("reactor endingSoon : ")
         }
         return state
       

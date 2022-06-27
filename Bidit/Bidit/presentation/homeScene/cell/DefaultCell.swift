@@ -68,6 +68,7 @@ class DefaultCell: UITableViewCell, View, Reusable {
             $0.height.equalTo(186)
         
         }
+        
     }
     
     required init?(coder: NSCoder) {
@@ -75,19 +76,37 @@ class DefaultCell: UITableViewCell, View, Reusable {
     }
     
     func bind(reactor: DefaultCellReactor) {
-
         //Action
         self.rx.layoutSubviews
               .mapVoid()
               .map(Reactor.Action.layoutSubviews)
               .bind(to: reactor.action)
               .disposed(by: self.disposeBag)
+        
+        collectionView.rx.itemSelected //아이템 클릭
+            .map{Reactor.Action.cellSelected($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
               
             //State
             reactor.state
               .map { $0.messageSection }
               .bind(to: self.collectionView.rx.items(dataSource: dataSource))
               .disposed(by: self.disposeBag)
+        
+        reactor.state.map{ $0.selectedIndexPath}
+            .compactMap{$0}
+            .subscribe(onNext : { [weak self] indexPath in
+                let vc = ItemListViewController()
+                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init())
+                vc.reactor = listReactor
+               // vc.bind(reactor: listReactor)
+                //self?.navigationController?.pushViewController(vc, animated: true)
+                guard let self = self else { return }
+                //self.collectionView.deselectRow(at: indexPath, animated: true)
+                
+            }).disposed(by: disposeBag)
           
     }
 }
