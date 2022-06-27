@@ -17,9 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let vc = LoginViewController() //TabbarController() //LoginViewController()
-        vc.reactor = LoginReactor()
+        let vc = TabbarController()//LoginViewController() //TabbarController() //LoginViewController()
+        //vc.reactor = LoginReactor()
         vc.view.backgroundColor = .black
+        
         window?.rootViewController = vc
         //vc.reactor = HomeReactor() as! HomeViewController.Reactor //LoginReactor() as! LoginViewController.Reactor
         window?.makeKeyAndVisible()

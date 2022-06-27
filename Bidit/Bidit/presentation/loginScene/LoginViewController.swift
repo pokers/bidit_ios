@@ -134,7 +134,13 @@ class LoginViewController : UIViewController, View{
     func movingHomeView(){
         print("movingHomeView")
         let vc = TabbarController()
-        self.present(vc, animated: true)
+        vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        self.view.backgroundColor = .systemBackground
+        self.dismiss(animated: true) {
+            self.present(vc, animated: true, completion: nil)
+        }
+        
+        //self.present(vc, animated: true)
     }
    
 }

@@ -12,4 +12,7 @@ import Then
 //Codable -> decode & encode
 //Then => SwiftUI와 유사하게 클로저를 통해 편리하게 접근 가능.
 
-protocol ModelType : Then, Codable, Equatable{ }
+protocol ModelType : Then, Codable, Equatable{
+    
+
+}
