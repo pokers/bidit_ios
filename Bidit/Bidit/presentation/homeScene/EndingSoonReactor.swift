@@ -13,17 +13,17 @@ class EndingSoonReactor : Reactor {
     
     enum Action {
         case viewDidLoad
+        case cellSelected(IndexPath)
     }
-      
       
     enum Mutation {
         case updateDataSource
-      
+        case setSelectedIndexPath(IndexPath?)
     }
-      
       
     struct State {
         var itemSection = getItemListMock()//[ProductListSection]()
+        var selectedIndexPath : IndexPath?
       }
       
       let initialState: State
@@ -38,6 +38,12 @@ class EndingSoonReactor : Reactor {
         switch action {
         case .viewDidLoad:
           return Observable<Mutation>.just(.updateDataSource)
+            
+        case .cellSelected(let indexPath):
+            return Observable.concat([
+                Observable.just(Mutation.setSelectedIndexPath(indexPath)),
+                Observable.just(Mutation.setSelectedIndexPath(nil))
+            ])
         }
       }
       
@@ -46,6 +52,10 @@ class EndingSoonReactor : Reactor {
         switch mutation {
         case .updateDataSource:
           state.itemSection = getItemListMock()
+            
+        case .setSelectedIndexPath(let indexPath):
+            state.selectedIndexPath = indexPath
+            print("reactor endingSoon : ")
         }
         return state
       

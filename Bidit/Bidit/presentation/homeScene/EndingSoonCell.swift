@@ -61,7 +61,7 @@ class EndingSoonCell : UITableViewCell, View, Reusable {
         //이름
         itemName.snp.makeConstraints{
             $0.leading.equalTo(itemImage.snp.trailing).offset(20)
-            $0.top.equalToSuperview().offset(8)
+            $0.top.equalTo(itemImage.snp.top).offset(8)
         }
         itemDeadLine.snp.makeConstraints{
             $0.leading.equalTo(itemName)
@@ -82,9 +82,12 @@ class EndingSoonCell : UITableViewCell, View, Reusable {
     func attribute(){
         self.backgroundColor = .white
         itemImage.image = UIImage(named: "tempIcon")
-        nowText.text == "현재"
-        nowText.font = .systemFont(ofSize: 20)
+        nowText.text = "현재"
+        nowText.font = .systemFont(ofSize: 12)
         nowText.textColor = .gray
+        
+        itemName.text = "상품 이름이 들어가는 칸입니다."
+        itemName.font = .systemFont(ofSize: 12, weight: .bold)
     }
     
     

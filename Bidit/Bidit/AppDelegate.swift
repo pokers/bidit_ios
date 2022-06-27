@@ -5,6 +5,10 @@
 //
 
 import UIKit
+import RxSwift
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        //RxKakaoSDK.initSDK(appKey: "67d3596a544ebd751c1807820b4b55f3")
+        KakaoSDK.initSDK(appKey: "67d3596a544ebd751c1807820b4b55f3")
         return true
     }
 

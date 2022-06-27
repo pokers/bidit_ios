@@ -9,7 +9,6 @@ import Reusable
 import UIKit
 
 
-
 //리액터를 뷰에 연결해주어야함 .
 class HomeReactor : Reactor{
     
