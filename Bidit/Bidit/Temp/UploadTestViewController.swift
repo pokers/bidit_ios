@@ -10,7 +10,7 @@ import UIKit
 import AWSS3
 class UploadTestViewController: UIViewController {
 
-    var temp = 0
+    var temp = 11
     
     let bucketName = PrivateKey().BUCKET_NAME
     let accessKey = PrivateKey().ACCESS_KEY
