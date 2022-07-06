@@ -27,7 +27,7 @@ class ItemDetailBiddingListCellReactor : Reactor{
       
       
     struct State {
-        var itemSection = getBiddingListMock()//[ProductListSection]()
+        var itemSection = getBiddingListMock()// [ProductListSection]()//
         //var selectedIndexPath : IndexPath?
        
       }
@@ -60,7 +60,7 @@ class ItemDetailBiddingListCellReactor : Reactor{
         switch mutation {
             
         case .updateDataSource:
-            state.itemSection = getBiddingListMock()
+            state.itemSection = []//getBiddingListMock()
         
 //        case .setSelectedIndexPath(let indexPath):
 //            state.selectedIndexPath = indexPath
@@ -78,21 +78,21 @@ class ItemDetailBiddingListCellReactor : Reactor{
 }
 func getBiddingListMock() -> [BiddingListSection]{
     print("입찰 내역 생성")
-    let tempItem1 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id : 1)))
-    let tempItem2 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id : 2)))
-    let tempItem3 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id : 3)))
-    let tempItem4 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id : 4)))
-    let tempItem5 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id : 5)))
-    
+    let tempItem1 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
+    let tempItem2 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
+    let tempItem3 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
+    let tempItem4 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
+    let tempItem5 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
+
     let itemInFirstSection = [tempItem1, tempItem2, tempItem3, tempItem4, tempItem5]
-    
+
     let firstSection = BiddingListSection(
         original: BiddingListSection(
             original: .first(itemInFirstSection),
             items: itemInFirstSection),
         items: itemInFirstSection)
-    
+
     return [firstSection]
-    
+
 }
 

@@ -10,44 +10,49 @@ import ReactorKit
 class ItemBuyDetailReactor : Reactor {
     enum Action {
         case viewDidLoad
+        case tapBiddingBtn
+        case tapDirectBuyingBtn
+        
     }
     
     enum Mutation {
-        //case updateDataSource
-        case setTitle
-        case setAlbum
-        case setContent
-        case setBiddingList
+        case switchBidding
+        case switchDirectBuying
+        case updateData
     }
     
     struct State {
        // var itemSection = getDetailMock()//[ProductListSection]()
-        var albumSection = ItemDetailSection.DetailSectionModel(model: .album, items: [])
         
-        var titleSection = ItemDetailSection.DetailSectionModel(model: .title, items: [])
-        var contentSection = ItemDetailSection.DetailSectionModel(model: .content, items: [])
-        var biddingListSection = ItemDetailSection.DetailSectionModel(model: .biddingList, items: [])
+        var sections: [DetailCellSection]
+        var isOpenBidding : Bool
+        var isOpenDirectBuying : Bool
+        var item : Item
 
     }
     
     let initialState: State
     
-    init() {
-        self.initialState = State()
+    init(item : Item) {
+    
+        self.initialState = State(sections: configSections(item: item), isOpenBidding: false, isOpenDirectBuying: false, item: item)
+        
+        
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
       switch action {
       case .viewDidLoad:
-          return .concat(
-            [Observable<Mutation>.just(.setAlbum),
-             Observable<Mutation>.just(.setTitle),
-             Observable<Mutation>.just(.setContent),
-             Observable<Mutation>.just(.setBiddingList)
-            ]
-          )
+          return Observable<Mutation>.just(.updateData)
+      
+      case .tapBiddingBtn:
+        print("mutate 호출")
+          return Observable<Mutation>.just(.switchBidding)
+          
+      case .tapDirectBuyingBtn:
+          print("mutate 호출")
+          return Observable<Mutation>.just(.switchDirectBuying)
       }
-    }
     
     
     
@@ -56,44 +61,58 @@ class ItemBuyDetailReactor : Reactor {
     func reduce(state: State, mutation: Mutation) -> State {
       var state = state
       switch mutation {
-      case .setAlbum:
-          let items = ItemDetailSection.DetailItem.photo
-          state.albumSection = ItemDetailSection.DetailSectionModel(model: .album, items: [items])
+      case .switchBidding :
+          let statusBid =  state.isOpenBidding
+          print("\(statusBid) bidding status")
+          state.isOpenBidding = statusBid
+     
+          break
+     
+      case .switchDirectBuying:
+          let statusDirect =  state.isOpenDirectBuying
+          print(statusDirect)
+          state.isOpenDirectBuying = (statusDirect)
+          break
           
-      case .setTitle:
-          let items = ItemDetailSection.DetailItem.title
-          state.titleSection = ItemDetailSection.DetailSectionModel(model: .title, items: [items])
-          
-      case .setContent:
-          let items = ItemDetailSection.DetailItem.content
-          state.contentSection = ItemDetailSection.DetailSectionModel(model: .content, items: [items])
-          
-      case .setBiddingList:
-          let items = ItemDetailSection.DetailItem.bidding
-          state.biddingListSection = ItemDetailSection.DetailSectionModel(model: .biddingList, items: [items])
-          
-          
+      case .updateData:
+          state = initialState
+          break
       }
       return state
     
+    
     }
+        
+        
+ 
+
+        
+       
+
+    }
+
+}
+    
+    /*
+     셀 리액터 마다 아이템 할당.
+     */
+func configSections(item : Item) -> [DetailCellSection] {
+            
+    let firstCell = DetailCellSectionItem.photo(ItemDetailImageCellReactor(item: item))
+    let albumSection = DetailCellSection.album([firstCell])
+        
+    let secondCell = DetailCellSectionItem.title(ItemDetailTitleCellReactor(item: item))
+    let titleSection = DetailCellSection.title([secondCell])
+        
+    let thirdCell = DetailCellSectionItem.content(ItemDetailContentCellReactor(item: item))
+    let contentSection = DetailCellSection.content([thirdCell])
+        
+    let fourthCell = DetailCellSectionItem.bidding(ItemDetailBiddingListCellReactor(initialState: .init()))
+    let biddingSection = DetailCellSection.biddingList([fourthCell])
+            
+        
+    return [albumSection, titleSection, contentSection, biddingSection]
     
 }
-//func getDetailMock() -> [ItemDetailSctionItem]{
-//    let tempItem1 = .item(ItemDetailImageCellReactor())
-//    let tempItem2 = DetailListSectionItem.item(ItemDetailImageCellReactor())
-//    let tempItem3 = DetailListSectionItem.item(ItemDetailImageCellReactor())
-//    let tempItem4 = DetailListSectionItem.item(ItemDetailImageCellReactor())
-//   // let tempItem5 = ProductListSectionItem.item(EndingSoonCellReactor(item : Item(id : 5)))
-//
-//    let itemInFirstSection = [tempItem1, tempItem2, tempItem3, tempItem4]
-//
-//    let firstSection = DetailListSection(
-//        original: DetailListSection(
-//            original: .first(itemInFirstSection),
-//            items: itemInFirstSection),
-//        items: itemInFirstSection)
-//
-//    return [firstSection]
-//
-//}
+
+

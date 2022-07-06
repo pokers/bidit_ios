@@ -8,13 +8,13 @@
 import Foundation
 
 struct Category : ModelType{
-    var message : String
+    var categoryName : String
     var isDone = false
 }
 
 extension Category : Equatable{
     static func == (lhs : Category, rhs : Category) -> Bool{
-        lhs.message == rhs.message
+        lhs.categoryName == rhs.categoryName
     }
 }
 

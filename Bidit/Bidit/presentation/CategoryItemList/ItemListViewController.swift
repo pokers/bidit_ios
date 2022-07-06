@@ -268,7 +268,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
                 print("cell clicked")
                 //구매자 아이템 디테일 화면
                 var itemDetailVC = ItemBuyDetailViewController()
-                itemDetailVC.reactor = ItemBuyDetailReactor()
+                itemDetailVC.reactor = ItemBuyDetailReactor(item: Item()) //수정 필요
                 self.navigationController?.pushViewController(itemDetailVC, animated: true)
                 self.tableView.deselectRow(at: indexPath, animated: true)
             }).disposed(by: disposeBag)

@@ -7,12 +7,30 @@
 import ReactorKit
 import Foundation
 class ItemDetailContentCellReactor : Reactor{
-    typealias Action = NoAction
+    var initialState: State
     
-    let initialState : Item
+    enum Action {
+       // case touchButton(index: Int)
+        
+    }
+   
+    
+    enum Mutation {
+        //case setImage(image: UIImage?)
+    }
+    
+    struct State {
+     //   var image: UIImage?
+        var item : Item
+        
+        
+    }
+    
     
     init(item : Item){
-        self.initialState = item
+        self.initialState = .init(item: item)
+
     }
+    
 }
 

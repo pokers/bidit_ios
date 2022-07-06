@@ -1,0 +1,27 @@
+
+mutation requestBid($bidInfo:BidInput!){
+    bid(bid: $bidInfo){
+
+        
+        id
+        status
+        userId
+        itemId
+        price
+        createdAt
+
+        item {
+            id
+            status
+            userId
+        }
+        user {
+        
+            id
+            status
+            createdAt
+        
+        }
+    
+    }
+}

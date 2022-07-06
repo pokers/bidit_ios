@@ -72,18 +72,18 @@ class HomeReactor : Reactor{
 
 
 func getMockCategory() -> [CategorySection] {
-    let mainItem1 = CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem2 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem3 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem4 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem5 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem6 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem7 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem8 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem9 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem10 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem11 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
-    let mainItem12 =  CategorySectionItem.category(CategoryReactor(category: Category(message: "1")))
+    let mainItem1 = CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "iphone_img")))
+    let mainItem2 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "tablet_img")))
+    let mainItem3 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "gallaxy_img")))
+    let mainItem4 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "monitor_img")))
+    let mainItem5 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "etc_phone_img")))
+    let mainItem6 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "game_img")))
+    let mainItem7 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "smart_watch_img")))
+    let mainItem8 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "music_img")))
+    let mainItem9 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "notebook_img")))
+    let mainItem10 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "camera_img")))
+    let mainItem11 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "drone_img")))
+    let mainItem12 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "etc_img")))
     
   
   let itemsInFirstSection = [mainItem1, mainItem2, mainItem3,mainItem4, mainItem5,mainItem6,

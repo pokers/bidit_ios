@@ -29,7 +29,6 @@ class ItemListReactor : Reactor{
         case updateDataSource
         case setSelectedIndexPath(IndexPath?)
         case sortListOpen(isOpened : Bool) // -> reduce()를 통해 State반환하여 UI정보 업데이트
-      
         case sortPopularity
         case sortEndingSoon
         case sortLatest
@@ -37,9 +36,9 @@ class ItemListReactor : Reactor{
         case closeFilter
     }
       
-      
+    
     struct State {
-        var itemSection = getItemListMock()//[ProductListSection]()
+        var itemSection =  [ProductListSection]()// getIListMock() //[ProductListSection]()
         var selectedIndexPath : IndexPath?
         var isSortListOpened : Bool = false
         var sortState : SortState = .latest
@@ -96,7 +95,7 @@ class ItemListReactor : Reactor{
         switch mutation {
             
         case .updateDataSource:
-            state.itemSection = getItemListMock()
+            state.itemSection = []//getIListMock()
         
         case .setSelectedIndexPath(let indexPath):
             state.selectedIndexPath = indexPath
@@ -122,7 +121,6 @@ class ItemListReactor : Reactor{
             state.isFilterOpened = false
         }
         return state
-      
       }
     
     enum SortState{
@@ -132,3 +130,24 @@ class ItemListReactor : Reactor{
         case latest
     }
 }
+
+//func getIListMock() -> [ProductListSection]{
+//
+//
+//    let tempItem1 = ProductListSectionItem.item(EndingSoonCellReactor(item : Item()))
+//    let tempItem2 = ProductListSectionItem.item(EndingSoonCellReactor(item : Item(id : 2)))
+//    let tempItem3 = ProductListSectionItem.item(EndingSoonCellReactor(item : Item(id : 3)))
+//    let tempItem4 = ProductListSectionItem.item(EndingSoonCellReactor(item : Item(id : 4)))
+//    let tempItem5 = ProductListSectionItem.item(EndingSoonCellReactor(item : Item(id : 5)))
+//
+//    let itemInFirstSection = [tempItem1, tempItem2, tempItem3, tempItem4, tempItem5]
+//
+//    let firstSection = ProductListSection(
+//        original: ProductListSection(
+//            original: .first(itemInFirstSection),
+//            items: itemInFirstSection),
+//        items: itemInFirstSection)
+//
+//    return [firstSection]
+//
+//}

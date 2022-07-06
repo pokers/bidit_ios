@@ -1,12 +1,11 @@
 //
 //  SceneDelegate.swift
 //  Bidit
-//
 
-//
 
 import UIKit
 import KakaoSDKAuth
+import SendBirdUIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,13 +16,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let vc = TabbarController()//LoginViewController() //TabbarController() //LoginViewController()
-        //vc.reactor = LoginReactor()
-        vc.view.backgroundColor = .black
+        
+        
+       
+        let naviVC = LoginViewController()
+        let vc = naviVC//() //TabbarController() //LoginViewController()
+        vc.reactor = LoginReactor()//LoginReactor()
+        
+        //self.present(naviVC, animated: true)
+        
+        //vc.view.backgroundColor = .black
         
         window?.rootViewController = vc
         //vc.reactor = HomeReactor() as! HomeViewController.Reactor //LoginReactor() as! LoginViewController.Reactor
         window?.makeKeyAndVisible()
+
+        
+        
+        
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

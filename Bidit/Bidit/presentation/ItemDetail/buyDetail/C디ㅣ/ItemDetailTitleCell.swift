@@ -48,7 +48,6 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
     var divider2 = UIView()
     
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -237,7 +236,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         //현재 구매가
         instantPrice.text = "3,000,000원"
         instantPrice.font = .systemFont(ofSize: 12, weight: .medium)
-        instantPriceTitle.text = "현재구매가"
+        instantPriceTitle.text = "즉시구매가"
         instantPriceTitle.font = .systemFont(ofSize: 12, weight: .light)
         
         //마감시간
@@ -253,10 +252,111 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         writeTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
         
     }
+   
     
     func bind(reactor: ItemDetailTitleCellReactor) {
         //Action
-            //State
+        
+        
+        
+        
+        //State
+        reactor.state
+            .map { "\(String(describing: $0.item.sPrice?.description ?? "") )원"}
+            .bind(to: self.nowPrice.rx.text)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { "\(String(describing: $0.item.buyNow?.description ?? "") )명"}
+            .bind(to: self.participants.rx.text)
+            .disposed(by: self.disposeBag)
+        
+        
+        
+        reactor.state
+            .map{ calcRestDayAndTime(end: $0.item.dueDate ?? "") }
+            .bind(to: self.endTime.rx.text)
+            .disposed(by: disposeBag)
+    
+        reactor.state.map{$0.item.title}
+            .bind(to: self.itemTitle.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map{$0.item.userId?.description }
+            .bind(to: self.sellerNameText.rx.text)
+            .disposed(by: disposeBag)
+        //즉시 구매가
+        reactor.state.map{"\($0.item.cPrice?.description ?? "0")원"}
+            .bind(to: self.instantPrice.rx.text)
+            .disposed(by: disposeBag)
+        
+        //마감시간
+        reactor.state.map{
+            stringConvertDueDate(time: $0.item.dueDate ?? ""
+            )}
+            .bind(to: self.endTime.rx.text)
+            .disposed(by: disposeBag)
+        
+        //작성일
+        reactor.state.map{stringConvertToDateTime(time: $0.item.createdAt ?? "")}
+            .bind(to: self.writeTime.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map{
+            $0.item.dueDate?.description ?? "0"
+        }.subscribe( onNext : { dueDate in
+            self.remainingTime.text = calcRestDayAndTime(end: dueDate)
+            self.setupOnlyForegroundTimer(endTime: dueDate)
+        }).disposed(by: disposeBag)
+        
+        
     }
     
+    
+    
+    
+    
 }
+
+extension ItemDetailTitleCell {
+    
+    //타이머
+    private func setupOnlyForegroundTimer(endTime : String)  {
+     
+       
+        
+        let timer = Observable<Int>.interval(
+            .seconds(1),
+            scheduler: MainScheduler.instance
+        )
+        var now = Date()
+        let endTime = stringConvertToDateTime(time: endTime)
+        //출력 포맷 설정
+        let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        var convertedEndTime = format.date(from: endTime) ?? now
+        
+        var interval = convertedEndTime.timeIntervalSince(now)
+        
+        
+        
+      timer.withUnretained(self)
+        .do(onNext: { result in
+           
+           
+            let restDay = Int(interval/(60*60*24))
+            let hour = Int(Int(interval) - restDay*60*60*24) / (60*60)
+            let minite = Int(Int(interval) - restDay*60*60*24 - hour * 60 * 60) / 60
+            let second = Int(Int(interval) - restDay*60*60*24 - hour * 60 * 60 - minite * 60) % 60
+            //시간
+            print("restDay is  : \(restDay)일 \(hour):\(minite):\(second)")
+            let result = "\(restDay)일 \(hour):\(minite):\(second)"
+            self.remainingTime.text = result
+        })
+        .subscribe()
+        .disposed(by: disposeBag)
+    }
+
+}
+
+

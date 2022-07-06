@@ -10,6 +10,7 @@ import ReactorKit
 import RxCocoa
 import RxSwift
 
+
 class LoginViewController : UIViewController, View{
     var disposeBag: DisposeBag = DisposeBag()
     
@@ -26,6 +27,9 @@ class LoginViewController : UIViewController, View{
         layout()
         attribute()
         extendBind()
+        
+        
+        
         
     }
     
@@ -98,6 +102,12 @@ class LoginViewController : UIViewController, View{
         
 //        reactor.state
 //            .bind(to: collectionView.rx.scrollsToTop)
+        
+        self.rx.viewDidLoad
+              .mapVoid()
+              .map(Reactor.Action.viewDidLoad)
+              .bind(to: reactor.action)
+              .disposed(by: self.disposeBag)
               
             //State
         reactor.state
@@ -119,6 +129,8 @@ class LoginViewController : UIViewController, View{
                 
             })
             .disposed(by: self.disposeBag)
+        
+        
         
         
     }
