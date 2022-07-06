@@ -4,7 +4,6 @@
 //
 //  Created by JeongMin Ko on 2022/06/22.
 //
-
 import Foundation
 import KeychainSwift
 class TokenManager {
@@ -30,4 +29,3 @@ struct Token {
   let value = "test-token"
   var isExpired: Bool { Bool.random() }
 }
-

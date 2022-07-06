@@ -21,6 +21,13 @@ target 'Bidit' do
     pod 'KakaoSDKUser'  # 카카오 로그인, 사용자 관리
     pod 'KeychainSwift', '~> 20.0'
     pod 'RxApolloClient', '1.6.0'
+    pod 'AWSS3'
+    pod 'MaterialComponents/BottomSheet'
+    pod 'Firebase/Analytics'
+    pod 'Firebase/Messaging'
+ 
+  
+
   # Pods for Bidit
 
 end

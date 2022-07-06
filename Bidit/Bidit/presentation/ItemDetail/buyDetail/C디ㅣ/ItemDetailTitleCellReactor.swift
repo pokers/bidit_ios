@@ -9,11 +9,29 @@ import Foundation
 import ReactorKit
 
 class ItemDetailTitleCellReactor : Reactor{
-    typealias Action = NoAction
     
-    let initialState : Item
+    var initialState: State
+    
+    enum Action {
+       // case touchButton(index: Int)
+        
+    }
+   
+    
+    enum Mutation {
+        //case setImage(image: UIImage?)
+    }
+    
+    struct State {
+     //   var image: UIImage?
+        var item : Item
+        
+    }
+    
     
     init(item : Item){
-        self.initialState = item
+        self.initialState = .init(item: item)
+
     }
+    
 }

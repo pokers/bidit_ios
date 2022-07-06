@@ -6,6 +6,7 @@
 
 import Foundation
 import UIKit
+import SendBirdUIKit
 class TabbarController : UITabBarController{
     
     override func viewDidLoad() {
@@ -15,6 +16,15 @@ class TabbarController : UITabBarController{
         let reactor = HomeReactor(initialState: HomeReactor.State())
         vc.reactor = reactor
         let homeViewController = UINavigationController(rootViewController: vc)
+        
+        //채팅 뷰 컨트롤러 설정
+        let listQuery = SBDGroupChannel.createMyGroupChannelListQuery()
+        listQuery?.includeEmptyChannel = false
+        listQuery?.includeFrozenChannel = true
+        let channelListVC = ChannelListViewController(channelListQuery: listQuery)
+        let chatVC = UINavigationController(rootViewController: channelListVC)
+        //() //TabbarController() //LoginViewController()
+        
         //임시
         let vc2 = UIViewController()
         let vc3 = UIViewController()
@@ -22,18 +32,20 @@ class TabbarController : UITabBarController{
         let vc5 = UIViewController()
         
         tabBar.barTintColor = .white
+        tabBar.tintColor = .black
         
-        homeViewController.tabBarItem = UITabBarItem(title: "홈", image: UIImage(named:"tempTabbarImg" ), selectedImage: UIImage(named:"tempTabbarImg" ))
         
-        vc2.tabBarItem = UITabBarItem(title: "채팅", image: UIImage(named:"tempTabbarImg" ), selectedImage: UIImage(named:"tempTabbarImg" ))
+        homeViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"home_img" ), selectedImage: UIImage(named:"home_fill_img" ))
         
-        vc3.tabBarItem = UITabBarItem(title: "검색", image: UIImage(named:"tempTabbarImg" ), selectedImage: UIImage(named:"tempTabbarImg" ))
+        chatVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"chatting_img" ), selectedImage: UIImage(named:"chatting_fill_img" ))
         
-        vc4.tabBarItem = UITabBarItem(title: "내 거래", image: UIImage(named:"tempTabbarImg" ), selectedImage: UIImage(named:"tempTabbarImg" ))
+        vc3.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"search_img" ), selectedImage: UIImage(named:"search_fill_img" ))
         
-        vc5.tabBarItem = UITabBarItem(title: "MY", image: UIImage(named:"tempTabbarImg" ), selectedImage: UIImage(named:"tempTabbarImg" ))
+        vc4.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"my_deal_img" ), selectedImage: UIImage(named:"my_deal_fill_img" ))
         
-        viewControllers = [homeViewController, vc2, vc3, vc4, vc5]
+        vc5.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"mypage_img" ), selectedImage: UIImage(named:"mypage_fill_img" ))
+        
+        viewControllers = [chatVC, homeViewController, vc3, vc4, vc5]
     }
 }
 

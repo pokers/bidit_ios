@@ -22,6 +22,8 @@ class ItemDetailImageCell : UITableViewCell, View, Reusable {
     //배너 이미지 -> ImageSlideShow
     var slideShow = ImageSlideshow()
     
+    var item : Item = Item()
+    
     //임시 배너
     let images = [
         ImageSource(image: UIImage(named: "tempBanner")!),
@@ -76,6 +78,8 @@ class ItemDetailImageCell : UITableViewCell, View, Reusable {
         //Action
       
             //State
+        
+        
         
         
           

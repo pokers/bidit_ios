@@ -1,0 +1,78 @@
+
+query Me {
+    me {
+        id
+        status
+        nickname
+        passwd
+        joinPath
+        email
+        phone
+        createdAt
+        deletedAt
+        description
+        items {
+            totalCount
+            pageInfo{
+                startCursor
+                endCursor
+                hasNextPage
+                hasPrevPage
+            }
+            edges{
+                node{
+                    id
+                    status
+                    createdAt
+                    name
+                    sPrice
+                    cPrice
+                    dueDate
+                    description {
+                        id
+                        status
+                        itemId
+                        description
+                        createdAt
+                        updatedAt
+                        deletedAt
+                    }
+                    image {
+                        id
+                        status
+                        itemId
+                        url
+                        createdAt
+                        updatedAt
+                        deletedAt
+                    }
+                }
+                cursor
+            }
+            
+
+        }
+        kakaoAccount {
+            id
+            status
+            userId
+            nickname
+            email
+            name
+            phone_number
+            
+
+        }
+        pushToken {
+            id
+            status
+            userId
+            token
+            createdAt
+            updatedAt
+
+        }
+
+        
+    }
+}

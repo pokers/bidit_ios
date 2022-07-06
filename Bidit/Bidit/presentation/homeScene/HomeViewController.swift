@@ -45,6 +45,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         cv.register(CategoryCell.self, forCellWithReuseIdentifier: "CategoryCell")
             return cv
     }()
+    
     //커스텀 스크롤 인디케이터 (왔다갔다 보여줌.)
     private let indicatorView = IndicatorView()
     
@@ -67,8 +68,9 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     
     let dataSource = RxCollectionViewSectionedReloadDataSource<CategorySection>{dataSource, collectionView, indexPath, item in
         switch item {
-        case .category:
-              let cell = collectionView.dequeueReusableCell(for: indexPath) as CategoryCell
+        case .category(let reactor):
+            let cell = collectionView.dequeueReusableCell(for: indexPath) as CategoryCell
+            cell.reactor = reactor
             print("category create")
               return cell
         }
@@ -128,21 +130,13 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         scrollView.delegate = self
-        
         layout()
         slideBannerSetting()
         setupView()
         setUpCollectionView()
         attribute()
-        
-    
         //startTimer()
-        
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -150,6 +144,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         startTimer()
         self.navigationController?.navigationBar.isHidden = true
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         stopTimer()
@@ -178,10 +173,11 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     }
 
     private func layout(){
-        scrollView.setContentOffset(CGPoint(x: 0, y: -50), animated: false)
+        //scrollView.setContentOffset(CGPoint(x: 0, y: -50), animated: false)
+        
         self.view.addSubview(scrollView)
         scrollView.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalToSuperview().offset(-48)
             $0.width.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.leading.equalToSuperview()

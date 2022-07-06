@@ -1,0 +1,15 @@
+
+mutation MyQuery {
+    addUser {
+        id
+        status
+
+        kakaoAccount {
+            id
+        }
+    }
+}
+
+
+
+

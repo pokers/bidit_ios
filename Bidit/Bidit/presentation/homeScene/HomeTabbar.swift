@@ -27,7 +27,7 @@ class HomeTabbar : TabmanViewController {
        //MARK: - 커스텀 탭바 추가.
        
         let vc2 = EndingSoonViewController()
-        vc2.reactor = EndingSoonReactor(initialState: EndingSoonReactor.State.init())
+        vc2.reactor = EndingSoonReactor(initialState: .init(itemSection: []))
         
        let vc3 = UIViewController()
         
@@ -75,8 +75,8 @@ extension HomeTabbar {
         }
         
         // 인디케이터 (아래 바 부분)
-        ctBar.indicator.weight = .custom(value: 3)
-        ctBar.indicator.tintColor = .white
+        ctBar.indicator.weight = .custom(value: 2)
+        ctBar.indicator.tintColor = .black
   
     }
 }

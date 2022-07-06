@@ -1,0 +1,15 @@
+
+query GetEndingSoonItems ($itemQuery: ItemQueryInput, $keyword : String, $count : Int){
+    getEndingSoonItems (itemQuery: $itemQuery,keyword: $keyword, count: $count ){
+        id
+        name
+        status
+        title
+        dueDate
+        sPrice
+        cPrice
+        buyNow
+        updatedAt
+        
+    }
+}
