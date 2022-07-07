@@ -56,7 +56,7 @@ class EndingSoonReactor : Reactor {
             ])
         case .updateSoon:
             print("update Soon 호출")
-            return Observable<Mutation>.just(.updateDataSource(itemList))
+            return getDataFromApi()
         
         }
       }
@@ -116,7 +116,7 @@ extension EndingSoonReactor {
                         self.updateList(decode.getEndingSoonItems)
                         //return 대신
                         emitter.onNext(.updateDataSource(decode.getEndingSoonItems))
-                        emitter.onCompleted()
+                        //emitter.onCompleted()
                        
                     }catch (let error) {
                         print("item load fail")

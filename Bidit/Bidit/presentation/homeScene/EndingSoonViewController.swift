@@ -12,15 +12,23 @@ import Differentiator
 import RxDataSources
 import RxSwift
 
+
 class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
     
     var disposeBag: DisposeBag = DisposeBag()
     typealias Reactor = EndingSoonReactor
     
-    private let tableView = UITableView().then {
+    var isEnableScroll = PublishRelay<Bool>() //view -> ViewModel //로그인 통과 여부 .
+
+   
+    
+    
+    let tableView = UITableView().then {
         $0.register(cellType: EndingSoonCell.self)
         $0.backgroundColor = .systemBackground
         $0.rowHeight = 140
+        
+        
 
     }
     
@@ -78,6 +86,9 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
     }
     
     
+    
+    
+    
     func bind(reactor: EndingSoonReactor) {
       //  Action
         
@@ -93,9 +104,19 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
             .map{Reactor.Action.cellSelected($0)}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
-        
-        
+//        테이블뷰 위로 올라왔을 때
+//        tableView.rx.reachedTop()
+//            .subscribe(onNext : {
+//                self.tableView.isScrollEnabled = false
+//
+//
+//            }).disposed(by: disposeBag)
+
+//        tableView.rx.reachedBottom()
+//            .subscribe(onNext : {
+//
+//            })
+//
         //State
         reactor.state
             .map { $0.itemSection }
@@ -122,6 +143,27 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
         
     }
 }
+import RxCocoa
+
+extension EndingSoonViewController {
+    
+//    func switchScrollEnable(_ status : Bool){
+//        if(status){
+//            isEnableScroll.accept(true)
+//        }else{
+//            isEnableScroll.accept(false)
+//        }
+//    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y <= 0 {
+          print("top!")
+            self.tableView.isScrollEnabled = false
+        }
+      }
+    
+//    self.tableView.rx.contentOffset
+}
+
 
 enum ProductListSection{
     case first([ProductListSectionItem])

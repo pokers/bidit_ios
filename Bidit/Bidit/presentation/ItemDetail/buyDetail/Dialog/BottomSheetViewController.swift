@@ -26,7 +26,7 @@ class BottomSheetViewController : UIViewController, View{
     let priceUnit = UILabel() // 원
     
     let inputNotice = UILabel() // ~이상 입력하셔야합니다.
-    
+    let warningNotice = UILabel() //가격을 다시 확인해주세요 .
     
     
     override func viewDidLoad() {
@@ -40,7 +40,7 @@ class BottomSheetViewController : UIViewController, View{
     
     func layout(){
         
-        [minusBtn, plusBtn, cancelBtn, biddingBtn,inputStackView, inputNotice]
+        [minusBtn, plusBtn, cancelBtn, biddingBtn,inputStackView, inputNotice, warningNotice]
             .forEach{self.view.addSubview($0)}
         
         minusBtn.snp.makeConstraints{
@@ -70,14 +70,12 @@ class BottomSheetViewController : UIViewController, View{
         
         inputStackView.snp.makeConstraints{
             $0.top.bottom.equalTo(minusBtn)
-            $0.leading.equalTo(minusBtn.snp.trailing)
-            $0.trailing.equalTo(plusBtn.snp.leading)
             $0.height.equalTo(24)
             $0.centerX.equalToSuperview()
         }
-        inputStackView.addSubview(priceLabel)
-        inputStackView.addSubview(priceUnit)
-        
+        inputStackView.addArrangedSubview(priceLabel)
+        inputStackView.addArrangedSubview(priceUnit)
+        inputStackView.spacing = 8
         //가격
         priceLabel.snp.makeConstraints{
             $0.top.equalToSuperview()
@@ -91,7 +89,16 @@ class BottomSheetViewController : UIViewController, View{
             $0.bottom.equalToSuperview()
             $0.leading.equalTo(priceLabel.snp.trailing).offset(8)
             $0.trailing.equalToSuperview()
+        }
+        
+        inputNotice.snp.makeConstraints{
+            $0.top.equalTo(priceLabel.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
             
+        }
+        warningNotice.snp.makeConstraints{
+            $0.top.equalTo(inputNotice.snp.bottom).offset(4)
+            $0.centerX.equalToSuperview()
             
         }
     }
@@ -103,9 +110,22 @@ class BottomSheetViewController : UIViewController, View{
         biddingBtn.setImage(UIImage(named: "bidding_btn"), for: .normal)
         
         priceLabel.text = "300,000"
+        priceLabel.font = .systemFont(ofSize: 24, weight: .bold)
         priceUnit.text = "원"
+        priceUnit.font = .systemFont(ofSize: 24, weight: .medium)
+        priceUnit.textColor = UIColor(cgColor: CGColor(red: 0.258, green: 0.258, blue: 0.258, alpha: 1))
         self.view.backgroundColor = .white
         self.view.layer.cornerRadius = 20
+        
+        inputNotice.text = "현재가인 0000000 이상 비딩하셔야합니다."
+        inputNotice.font = .systemFont(ofSize: 10, weight: .medium)
+        inputNotice.textColor = UIColor(cgColor: CGColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1))
+        
+        
+        warningNotice.text = "가격을 다시 한 번 확인해주세요."
+        warningNotice.isHidden = true
+        warningNotice.font = .systemFont(ofSize: 10, weight: .medium)
+        warningNotice.textColor = .red
     }
     
     func extendBind(){
@@ -139,12 +159,23 @@ class BottomSheetViewController : UIViewController, View{
         
             //입찰하기 버튼
         
-        self.biddingBtn.rx.tap.map{
-            Reactor.Action.tapBiddingBtn(
+        self.biddingBtn.rx.tap
+            .filter{_ in reactor.initialState.item.sPrice ?? 9999999 < resultPrice} // 참인경우만 이벤트 발생. 지금 가격보다 높은 가격을 비딩했을 때만가능. 
+            .map{
+                Reactor.Action.tapBiddingBtn(
                 id: reactor.initialState.item.id, price: resultPrice
             )}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        
+        self.biddingBtn.rx.tap.subscribe(onNext : {
+            var nowPrice = reactor.initialState.item.cPrice
+            var tryPrice = resultPrice
+            if nowPrice ?? 999999 > tryPrice {
+                self.warningNotice.isHidden = false
+            }
+        })
         
             //취소 버튼
         
@@ -156,6 +187,13 @@ class BottomSheetViewController : UIViewController, View{
             .subscribe(onNext : { result in
                 self.priceLabel.text = result
             }).disposed(by: disposeBag)
+        
+        reactor.state.map{
+            $0.item.sPrice?.description ?? "0"
+        }.subscribe(onNext : {result in
+            self.inputNotice.text = "현재가인 \(result)원 이상 비딩해야합니다."
+        })
+        
         
     }
     

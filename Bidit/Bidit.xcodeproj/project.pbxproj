@@ -35,6 +35,7 @@
 		EE5ECA6928663A16008B5398 /* ItemDetailBiddingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5ECA6828663A16008B5398 /* ItemDetailBiddingListCell.swift */; };
 		EE5ECA6B28663A26008B5398 /* ItemDetailBiddingListCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5ECA6A28663A26008B5398 /* ItemDetailBiddingListCellReactor.swift */; };
 		EE67CB2B285DB4E400FCC02E /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE67CB2A285DB4E400FCC02E /* UITextField+.swift */; };
+		EE6B34E1287696600028BEC0 /* Reactive+ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6B34E0287696600028BEC0 /* Reactive+ScrollView.swift */; };
 		EE76CCA2285A2BDA0078C906 /* EndingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE76CCA1285A2BDA0078C906 /* EndingSoonViewController.swift */; };
 		EE76CCA4285A2C600078C906 /* EndingSoonReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE76CCA3285A2C600078C906 /* EndingSoonReactor.swift */; };
 		EE7C1A052852516A00730E95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7C1A042852516A00730E95 /* AppDelegate.swift */; };
@@ -123,6 +124,7 @@
 		EE5ECA6828663A16008B5398 /* ItemDetailBiddingListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailBiddingListCell.swift; sourceTree = "<group>"; };
 		EE5ECA6A28663A26008B5398 /* ItemDetailBiddingListCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailBiddingListCellReactor.swift; sourceTree = "<group>"; };
 		EE67CB2A285DB4E400FCC02E /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		EE6B34E0287696600028BEC0 /* Reactive+ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+ScrollView.swift"; sourceTree = "<group>"; };
 		EE76CCA1285A2BDA0078C906 /* EndingSoonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonViewController.swift; sourceTree = "<group>"; };
 		EE76CCA3285A2C600078C906 /* EndingSoonReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonReactor.swift; sourceTree = "<group>"; };
 		EE7C1A012852516A00730E95 /* Bidit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bidit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -452,6 +454,7 @@
 				EEB3CD78285AD67E00DF7596 /* UIView+.swift */,
 				EE67CB2A285DB4E400FCC02E /* UITextField+.swift */,
 				EEC65F522873320F00C7A852 /* DateUtil.swift */,
+				EE6B34E0287696600028BEC0 /* Reactive+ScrollView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -773,6 +776,7 @@
 				EED180132855CF4800E17B06 /* MainViewController.swift in Sources */,
 				EEE64408285D208D009D92AA /* DetailFilterReactor.swift in Sources */,
 				EEB3CD73285AB36500DF7596 /* EndingSoonCell.swift in Sources */,
+				EE6B34E1287696600028BEC0 /* Reactive+ScrollView.swift in Sources */,
 				EE4CA219286A211200EAEA87 /* SearchViewController.swift in Sources */,
 				EE069C8328621F0A0033FA4E /* Network.swift in Sources */,
 				EE5ECA6B28663A26008B5398 /* ItemDetailBiddingListCellReactor.swift in Sources */,

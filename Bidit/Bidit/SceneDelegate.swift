@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
         let naviVC = LoginViewController()
         let vc = naviVC//() //TabbarController() //LoginViewController()
-        vc.reactor = LoginReactor()//LoginReactor()
+        vc.reactor = LoginReactor()
         
         //self.present(naviVC, animated: true)
         

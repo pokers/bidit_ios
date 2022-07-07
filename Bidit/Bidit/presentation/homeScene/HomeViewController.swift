@@ -30,6 +30,8 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
 
     //전체 스크롤뷰
     var scrollView = UIScrollView()
+    
+    
     var containerView = UIView() //스크롤뷰 안의 컨테이너 뷰
     //배너 이미지 -> ImageSlideShow
     var slideShow = ImageSlideshow()
@@ -76,52 +78,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         }
     }
     
-    // 탭바 리사이클러뷰
     
-    
-    //테이블뷰
-//    private lazy var tableView : UITableView = {
-//        let tableView = UITableView(frame: .zero)
-//        tableView.backgroundColor = .systemBackground
-//        tableView.separatorStyle = .none // 컬렉션 뷰 처럼 사용
-//        tableView.register(BannerCell.self, forCellReuseIdentifier: "BannerCell")
-//        return tableView
-//    }()
-    
-//    private let tableView = UITableView().then {
-//        $0.register(cellType: BannerCell.self)
-//        $0.register(cellType: DefaultCell.self)
-//        $0.rowHeight = UITableView.automaticDimension
-//        $0.estimatedRowHeight = 130;
-//      }
-    
-    
-//    let dataSource = RxTableViewSectionedReloadDataSource<SomeViewSection>{dataSource, tableView, indexPath, item in
-//
-//
-//
-//        switch item {
-//
-//        case .banner(let reactor):
-//              let cell = tableView.dequeueReusableCell(for: indexPath) as BannerCell
-//              cell.reactor = reactor
-//              return cell
-//
-//        case .def(let reactor):
-//              let cell = tableView.dequeueReusableCell(for: indexPath) as DefaultCell
-//              cell.reactor = reactor
-//              return cell
-//        case .category:
-//            let cell = tableView.dequeueReusableCell(for: indexPath) as DefaultCell
-//            return cell
-//
-//
-//        case .productSoon :
-//            let cell = tableView.dequeueReusableCell(for: indexPath) as DefaultCell
-//            return cell
-//        }
-//    }
-//
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -183,7 +140,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             $0.leading.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
-        
+        scrollView.isScrollEnabled = true
         
         scrollView.addSubview(containerView)
         containerView.snp.makeConstraints{
@@ -197,13 +154,14 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             $0.width.equalToSuperview()
             $0.height.equalTo(320)
         }
+        let screenHeight = UIScreen.main.bounds.size.height //화면 세로 크기
         
         containerView.addSubview(tabbarContainer)
         tabbarContainer.snp.makeConstraints{
             $0.top.equalToSuperview().offset(535)
             $0.leading.trailing.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(660)
+            $0.height.equalTo(screenHeight - 120)
             $0.bottom.equalToSuperview()
         }
         
@@ -217,7 +175,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         //homeTabbar.addBar(bar, dataSource: homeTabbar.self, at: .custom(view: tabbarContainer, layout: nil))
   
         
-        
+        //extendBind()
     }
     
     private func attribute(){
@@ -338,8 +296,13 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-//        reactor.state
-//            .bind(to: collectionView.rx.scrollsToTop)
+//        //하단으로 스크롤뷰 내려왔을 때 테이블뷰 활성화 & 스크롤뷰 고정
+//        scrollView.rx.reachedBottom()
+//            .subscribe(onNext : { result in
+//                self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = true
+//                self.scrollView.isScrollEnabled = false
+//            }).disposed(by: disposeBag)
+
               
             //State
         reactor.state
@@ -360,28 +323,36 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             }).disposed(by: disposeBag)
         
         
-//        //Action
-//        self.rx.viewDidLoad
-//              .mapVoid()
-//              .map(Reactor.Action.viewDidLoad)
-//              .bind(to: reactor.action)
-//              .disposed(by: self.disposeBag)
-//
-//            //State
-//            reactor.state
-//              .map { $0.messageSection }
-//              .bind(to: self.tableView.rx.items(dataSource: dataSource))
-//              .disposed(by: self.disposeBag)
-          
+
     }
     
 }
-//extension MainViewController: UITableViewDelegate {
-////  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-////      return UITableView.automaticDimension
-////
-////  }
-//}
+extension HomeViewController {
+
+    func extendBind(){
+        //테이블뷰 맨 위에 도착했을 때 스크롤뷰 활성화
+        self.homeTabbar.endingSoonVC.isEnableScroll.asDriver(onErrorJustReturn: true)
+            .drive(onNext :{[weak self] status in
+                guard let self = self else  { return }
+                if status == true{
+                    self.scrollView.isScrollEnabled = true
+                    self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = false
+                }
+                
+            }).disposed(by: disposeBag)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            //reach bottom
+            print("bottom!")
+             
+              self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = true
+        }
+       
+      }
+}
 
 
 

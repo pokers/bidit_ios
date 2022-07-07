@@ -14,6 +14,7 @@ class TabbarController : UITabBarController{
         
         let vc = HomeViewController()
         let reactor = HomeReactor(initialState: HomeReactor.State())
+        
         vc.reactor = reactor
         let homeViewController = UINavigationController(rootViewController: vc)
         
@@ -26,8 +27,11 @@ class TabbarController : UITabBarController{
         //() //TabbarController() //LoginViewController()
         
         //임시
-        let vc2 = UIViewController()
-        let vc3 = UIViewController()
+        
+        let searchVC = SearchViewController()
+        let searchViewController = UINavigationController(rootViewController: searchVC)
+        searchVC.reactor = SearchReactor()
+        
         let vc4 = UIViewController()
         let vc5 = UIViewController()
         
@@ -39,13 +43,13 @@ class TabbarController : UITabBarController{
         
         chatVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"chatting_img" ), selectedImage: UIImage(named:"chatting_fill_img" ))
         
-        vc3.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"search_img" ), selectedImage: UIImage(named:"search_fill_img" ))
+        searchVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"search_img" ), selectedImage: UIImage(named:"search_fill_img" ))
         
         vc4.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"my_deal_img" ), selectedImage: UIImage(named:"my_deal_fill_img" ))
         
         vc5.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"mypage_img" ), selectedImage: UIImage(named:"mypage_fill_img" ))
         
-        viewControllers = [chatVC, homeViewController, vc3, vc4, vc5]
+        viewControllers = [chatVC, homeViewController, searchViewController, vc4, vc5]
     }
 }
 
