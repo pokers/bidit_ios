@@ -16,6 +16,7 @@ class HomeReactor : Reactor{
     enum Action {
         case viewDidLoad
         case cellSelected(IndexPath)
+        
     }
       
       

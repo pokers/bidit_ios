@@ -17,6 +17,7 @@ class HomeTabbar : TabmanViewController {
     
     //delegate 중간 전달 임시 저장 변수
     //var scrollDelegate: NestedScrollDelegate?
+    let endingSoonVC = EndingSoonViewController()
     
 
    
@@ -25,9 +26,8 @@ class HomeTabbar : TabmanViewController {
        super.viewDidLoad()
        
        //MARK: - 커스텀 탭바 추가.
+        endingSoonVC.reactor = EndingSoonReactor(initialState: .init(itemSection: []))
        
-        let vc2 = EndingSoonViewController()
-        vc2.reactor = EndingSoonReactor(initialState: .init(itemSection: []))
         
        let vc3 = UIViewController()
         
@@ -40,7 +40,7 @@ class HomeTabbar : TabmanViewController {
 //        }
         
         
-       viewControllers.append(vc2)
+       viewControllers.append(endingSoonVC)
        viewControllers.append(vc3)
 //
        self.dataSource = self

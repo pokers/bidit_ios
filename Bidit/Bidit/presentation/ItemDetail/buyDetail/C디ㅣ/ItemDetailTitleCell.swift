@@ -329,28 +329,28 @@ extension ItemDetailTitleCell {
             .seconds(1),
             scheduler: MainScheduler.instance
         )
-        var now = Date()
-        let endTime = stringConvertToDateTime(time: endTime)
-        //출력 포맷 설정
-        let format = DateFormatter()
-        format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        var convertedEndTime = format.date(from: endTime) ?? now
-        
-        var interval = convertedEndTime.timeIntervalSince(now)
+//        let now = Date()
+//        let endTime = stringConvertToDateTime(time: endTime)
+//        //출력 포맷 설정
+//        let format = DateFormatter()
+//        format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+//        let convertedEndTime = format.date(from: endTime) ?? now
+//
+//        var interval = convertedEndTime.timeIntervalSince(now)
         
         
         
       timer.withUnretained(self)
         .do(onNext: { result in
            
-           
-            let restDay = Int(interval/(60*60*24))
-            let hour = Int(Int(interval) - restDay*60*60*24) / (60*60)
-            let minite = Int(Int(interval) - restDay*60*60*24 - hour * 60 * 60) / 60
-            let second = Int(Int(interval) - restDay*60*60*24 - hour * 60 * 60 - minite * 60) % 60
-            //시간
-            print("restDay is  : \(restDay)일 \(hour):\(minite):\(second)")
-            let result = "\(restDay)일 \(hour):\(minite):\(second)"
+         
+//            let restDay = Int(interval/(60*60*24))
+//            let hour = Int(Int(interval) - restDay*60*60*24) / (60*60)
+//            let minite = Int(Int(interval) - restDay*60*60*24 - hour * 60 * 60) / 60
+//            let second = Int(Int(interval) - restDay*60*60*24 - hour * 60 * 60 - minite * 60) % 60
+//            //시간
+//            print("restDay is  : \(restDay)일 \(hour):\(minite):\(second)")
+            let result =   calcRestDayAndTime(end: endTime)//"\(restDay)일 \(hour):\(minite):\(second)"
             self.remainingTime.text = result
         })
         .subscribe()

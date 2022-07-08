@@ -320,6 +320,7 @@ enum DetailCellSectionItem {
     case content(ItemDetailContentCellReactor)
     case bidding(ItemDetailBiddingListCellReactor)
 }
+
 extension DetailCellSection: SectionModelType {
     
     typealias Item = DetailCellSectionItem

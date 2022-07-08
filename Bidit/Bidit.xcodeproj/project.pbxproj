@@ -35,6 +35,7 @@
 		EE5ECA6928663A16008B5398 /* ItemDetailBiddingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5ECA6828663A16008B5398 /* ItemDetailBiddingListCell.swift */; };
 		EE5ECA6B28663A26008B5398 /* ItemDetailBiddingListCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5ECA6A28663A26008B5398 /* ItemDetailBiddingListCellReactor.swift */; };
 		EE67CB2B285DB4E400FCC02E /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE67CB2A285DB4E400FCC02E /* UITextField+.swift */; };
+		EE6B34E1287696600028BEC0 /* Reactive+ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6B34E0287696600028BEC0 /* Reactive+ScrollView.swift */; };
 		EE76CCA2285A2BDA0078C906 /* EndingSoonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE76CCA1285A2BDA0078C906 /* EndingSoonViewController.swift */; };
 		EE76CCA4285A2C600078C906 /* EndingSoonReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE76CCA3285A2C600078C906 /* EndingSoonReactor.swift */; };
 		EE7C1A052852516A00730E95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7C1A042852516A00730E95 /* AppDelegate.swift */; };
@@ -54,6 +55,13 @@
 		EE9E70E8286B1B6E00BBA69B /* UploadTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9E70E7286B1B6E00BBA69B /* UploadTestViewController.swift */; };
 		EEA07B022856D1FE002D4F57 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA07B012856D1FE002D4F57 /* CategoryCell.swift */; };
 		EEA07B042856D675002D4F57 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA07B032856D675002D4F57 /* Category.swift */; };
+		EEA63D782877F0720095A7E3 /* GetItemList.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEA63D772877F0720095A7E3 /* GetItemList.graphql */; };
+		EEA63D8428782E420095A7E3 /* RecentSearchModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8228782E420095A7E3 /* RecentSearchModel.xcdatamodeld */; };
+		EEA63D8628782F330095A7E3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8528782F330095A7E3 /* CoreDataManager.swift */; };
+		EEA63D8B28782F920095A7E3 /* RecentProduct+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8828782F920095A7E3 /* RecentProduct+CoreDataProperties.swift */; };
+		EEA63D8C28782F920095A7E3 /* RecentProduct+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8A28782F920095A7E3 /* RecentProduct+CoreDataClass.swift */; };
+		EEA63D8D28782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8728782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift */; };
+		EEA63D8E28782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8928782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift */; };
 		EEADAFBD285B6662004277F9 /* ItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEADAFBC285B6662004277F9 /* ItemListViewController.swift */; };
 		EEADAFBF285B66A3004277F9 /* ItemListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEADAFBE285B66A3004277F9 /* ItemListReactor.swift */; };
 		EEADFE3E2866E38A0097EBA2 /* BiddingListCellOfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEADFE3D2866E38A0097EBA2 /* BiddingListCellOfCell.swift */; };
@@ -123,6 +131,8 @@
 		EE5ECA6828663A16008B5398 /* ItemDetailBiddingListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailBiddingListCell.swift; sourceTree = "<group>"; };
 		EE5ECA6A28663A26008B5398 /* ItemDetailBiddingListCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailBiddingListCellReactor.swift; sourceTree = "<group>"; };
 		EE67CB2A285DB4E400FCC02E /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		EE6B34E0287696600028BEC0 /* Reactive+ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+ScrollView.swift"; sourceTree = "<group>"; };
+		EE6B34E42876D2060028BEC0 /* Bidit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bidit.entitlements; sourceTree = "<group>"; };
 		EE76CCA1285A2BDA0078C906 /* EndingSoonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonViewController.swift; sourceTree = "<group>"; };
 		EE76CCA3285A2C600078C906 /* EndingSoonReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonReactor.swift; sourceTree = "<group>"; };
 		EE7C1A012852516A00730E95 /* Bidit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bidit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,6 +153,13 @@
 		EE9E70E7286B1B6E00BBA69B /* UploadTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadTestViewController.swift; sourceTree = "<group>"; };
 		EEA07B012856D1FE002D4F57 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		EEA07B032856D675002D4F57 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		EEA63D772877F0720095A7E3 /* GetItemList.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetItemList.graphql; sourceTree = "<group>"; };
+		EEA63D8328782E420095A7E3 /* RecentSearchModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RecentSearchModel.xcdatamodel; sourceTree = "<group>"; };
+		EEA63D8528782F330095A7E3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		EEA63D8728782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecentSearchTerm+CoreDataClass.swift"; path = "/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentSearchTerm+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		EEA63D8828782F920095A7E3 /* RecentProduct+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecentProduct+CoreDataProperties.swift"; path = "/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentProduct+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		EEA63D8928782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecentSearchTerm+CoreDataProperties.swift"; path = "/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentSearchTerm+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		EEA63D8A28782F920095A7E3 /* RecentProduct+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecentProduct+CoreDataClass.swift"; path = "/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentProduct+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		EEADAFBC285B6662004277F9 /* ItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewController.swift; sourceTree = "<group>"; };
 		EEADAFBE285B66A3004277F9 /* ItemListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListReactor.swift; sourceTree = "<group>"; };
 		EEADFE3D2866E38A0097EBA2 /* BiddingListCellOfCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiddingListCellOfCell.swift; sourceTree = "<group>"; };
@@ -296,6 +313,12 @@
 		EE0D4300285350B3008464EA /* PersistentStorages */ = {
 			isa = PBXGroup;
 			children = (
+				EEA63D8728782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift */,
+				EEA63D8928782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift */,
+				EEA63D8A28782F920095A7E3 /* RecentProduct+CoreDataClass.swift */,
+				EEA63D8828782F920095A7E3 /* RecentProduct+CoreDataProperties.swift */,
+				EEA63D8228782E420095A7E3 /* RecentSearchModel.xcdatamodeld */,
+				EEA63D8528782F330095A7E3 /* CoreDataManager.swift */,
 			);
 			path = PersistentStorages;
 			sourceTree = "<group>";
@@ -395,6 +418,7 @@
 		EE7C1A032852516A00730E95 /* Bidit */ = {
 			isa = PBXGroup;
 			children = (
+				EE6B34E42876D2060028BEC0 /* Bidit.entitlements */,
 				EE579EBA28755DEE00866785 /* key */,
 				EEBD0AB62870633A0074AE5D /* query */,
 				EE9E70E6286B1B4200BBA69B /* Temp */,
@@ -452,6 +476,7 @@
 				EEB3CD78285AD67E00DF7596 /* UIView+.swift */,
 				EE67CB2A285DB4E400FCC02E /* UITextField+.swift */,
 				EEC65F522873320F00C7A852 /* DateUtil.swift */,
+				EE6B34E0287696600028BEC0 /* Reactive+ScrollView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -539,6 +564,7 @@
 		EEBD0AB62870633A0074AE5D /* query */ = {
 			isa = PBXGroup;
 			children = (
+				EEA63D772877F0720095A7E3 /* GetItemList.graphql */,
 				EEBD0AC228706CCA0074AE5D /* MyQuery.graphql */,
 				EEBD0AD2287071350074AE5D /* Me.graphql */,
 				EEC0060728707554001B86F7 /* GetEndingSoonItems.graphql */,
@@ -649,6 +675,7 @@
 			files = (
 				EEBD0AD3287071350074AE5D /* Me.graphql in Resources */,
 				EEBD0AC528706CCA0074AE5D /* MyQuery.graphql in Resources */,
+				EEA63D782877F0720095A7E3 /* GetItemList.graphql in Resources */,
 				EE3D822B287486D900C72830 /* requestBid.graphql in Resources */,
 				EEE64C9C286B8821007951B4 /* testImg.png in Resources */,
 				EEF04A0E286D52EE00A9D8A7 /* GoogleService-Info.plist in Resources */,
@@ -711,6 +738,7 @@
 			inputPaths = (
 				"$(SRCROOT)/{TargetName}/*.graphql",
 				"$(SRCROOT)/requestBid.graphql",
+				"$(SRCROOT)/GetItemList.graphql",
 			);
 			name = "Generate Apollo GraphQL API";
 			outputFileListPaths = (
@@ -732,7 +760,9 @@
 				EE51D5E1285628D100AF1BC5 /* SomeViewSection.swift in Sources */,
 				EE5ECA5728660DDF008B5398 /* ItemBuyDetailReactor.swift in Sources */,
 				EEB065542874379F007766B3 /* DirectBuyingPopupViewController.swift in Sources */,
+				EEA63D8B28782F920095A7E3 /* RecentProduct+CoreDataProperties.swift in Sources */,
 				EE9D99CD2856EA21005480C6 /* RxViewController.swift in Sources */,
+				EEA63D8428782E420095A7E3 /* RecentSearchModel.xcdatamodeld in Sources */,
 				EE9DA5DE285315E300E33800 /* HomeViewController.swift in Sources */,
 				EEE04FB928709A24008FE0B5 /* Items.swift in Sources */,
 				EED1802A2855F55E00E17B06 /* DefaultCell.swift in Sources */,
@@ -750,12 +780,14 @@
 				EE7C1A1D285255D100730E95 /* LoginViewController.swift in Sources */,
 				EE51D5DF2856288700AF1BC5 /* BannerCellReactor.swift in Sources */,
 				EE5ECA6328662C4E008B5398 /* ItemDetailTitleCellReactor.swift in Sources */,
+				EEA63D8628782F330095A7E3 /* CoreDataManager.swift in Sources */,
 				EE7C1A052852516A00730E95 /* AppDelegate.swift in Sources */,
 				EE5ECA5D28661C5E008B5398 /* ItemDetailImageCell.swift in Sources */,
 				EE579EBC28755E0500866785 /* PrivateKey.swift in Sources */,
 				EED180152855CF5100E17B06 /* MainReactor.swift in Sources */,
 				EE996A72285258A50045F40A /* LoginReactor.swift in Sources */,
 				EEB0655B2874527C007766B3 /* BottomSheetReactor.swift in Sources */,
+				EEA63D8E28782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift in Sources */,
 				EEF7953028658380000E3373 /* IndicatorView.swift in Sources */,
 				EE51D5E628562A3000AF1BC5 /* Banner.swift in Sources */,
 				EED180172855CFEB00E17B06 /* TabbarController.swift in Sources */,
@@ -763,6 +795,7 @@
 				EE76CCA2285A2BDA0078C906 /* EndingSoonViewController.swift in Sources */,
 				EE9D99D32856FD33005480C6 /* CategoryReactor.swift in Sources */,
 				EEB5E32D2871577D00F33F2A /* MessageList.swift in Sources */,
+				EEA63D8D28782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift in Sources */,
 				EE5ECA6728663A03008B5398 /* ItemDetailContentCellReactor.swift in Sources */,
 				EEE64406285D2062009D92AA /* DetailFilterViewController.swift in Sources */,
 				EE51D5E428562A2100AF1BC5 /* ModelType.swift in Sources */,
@@ -770,9 +803,11 @@
 				EE76CCA4285A2C600078C906 /* EndingSoonReactor.swift in Sources */,
 				EEB3CD79285AD67E00DF7596 /* UIView+.swift in Sources */,
 				EE9D99CF2856EBA1005480C6 /* Rx+map.swift in Sources */,
+				EEA63D8C28782F920095A7E3 /* RecentProduct+CoreDataClass.swift in Sources */,
 				EED180132855CF4800E17B06 /* MainViewController.swift in Sources */,
 				EEE64408285D208D009D92AA /* DetailFilterReactor.swift in Sources */,
 				EEB3CD73285AB36500DF7596 /* EndingSoonCell.swift in Sources */,
+				EE6B34E1287696600028BEC0 /* Reactive+ScrollView.swift in Sources */,
 				EE4CA219286A211200EAEA87 /* SearchViewController.swift in Sources */,
 				EE069C8328621F0A0033FA4E /* Network.swift in Sources */,
 				EE5ECA6B28663A26008B5398 /* ItemDetailBiddingListCellReactor.swift in Sources */,
@@ -939,12 +974,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to the photo library.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -955,7 +992,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -971,12 +1008,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to the photo library.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -987,7 +1026,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1038,6 +1077,19 @@
 			productName = SendBirdUIKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		EEA63D8228782E420095A7E3 /* RecentSearchModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EEA63D8328782E420095A7E3 /* RecentSearchModel.xcdatamodel */,
+			);
+			currentVersion = EEA63D8328782E420095A7E3 /* RecentSearchModel.xcdatamodel */;
+			path = RecentSearchModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = EE7C19F92852516A00730E95 /* Project object */;
 }
