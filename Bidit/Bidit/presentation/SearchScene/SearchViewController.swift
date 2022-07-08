@@ -13,6 +13,7 @@ import RxDataSources
 //검색 화면 뷰 컨
 class SearchViewController : UIViewController, View, UIScrollViewDelegate{
     
+    var commitTestVar = 0
     //검색바
     let searchBar = UISearchBar()
     //백 버튼
