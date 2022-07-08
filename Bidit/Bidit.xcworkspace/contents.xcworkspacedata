@@ -2,6 +2,18 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentSearchTerm+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentSearchTerm+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentProduct+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentProduct+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:Bidit.xcodeproj">
    </FileRef>
    <FileRef

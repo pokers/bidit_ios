@@ -11,7 +11,7 @@ import ReactorKit
 import RxDataSources
 
 //검색 화면 뷰 컨
-class SearchViewController : UIViewController, View{
+class SearchViewController : UIViewController, View, UIScrollViewDelegate{
     
     //검색바
     let searchBar = UISearchBar()
@@ -59,19 +59,23 @@ class SearchViewController : UIViewController, View{
     }
     
     
-    //최신순 인기순 마감임박
+    //최신순 인기순 마감임박 / 검색결과
     
     let containerSearchResult = UIView()
     
     let filterTitle = UILabel()
     
     let leftFilterBtn = UIButton()
+    let emptyImage = UIImageView()
     
     let resultTableView = UITableView().then {
         $0.register(cellType: EndingSoonCell.self)
         $0.backgroundColor = .systemBackground
         $0.rowHeight = 140
+        
+        
     }
+
     
     var resultDataSource = RxTableViewSectionedReloadDataSource<ProductListSection> { dataSource, tableView, indexPath, sectionItem in
         switch sectionItem {
@@ -101,11 +105,14 @@ class SearchViewController : UIViewController, View{
         
         layout()
         attribute()
-        
-        
+        //테이블뷰 딜리게이트
+        self.recentProductTableView.rx.setDelegate(self)
+          .disposed(by: disposeBag)
+        self.resultTableView.rx.setDelegate(self)
+          .disposed(by: disposeBag)
         
     }
-    
+    //레이아웃
     func layout(){
         
         //네비게이션바 쪽
@@ -117,25 +124,30 @@ class SearchViewController : UIViewController, View{
         
         scrollView.snp.makeConstraints{
             $0.width.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.top.bottom.equalToSuperview()
         }
+        scrollView.showsVerticalScrollIndicator = false
         
         //최근검색어
         self.scrollView.addSubview(containerRecentKeyword)
         containerRecentKeyword.snp.makeConstraints{
-            $0.top.leading.trailing.equalToSuperview().inset(18)
-            $0.top.equalToSuperview()
-            $0.width.equalTo(scrollView.snp.width)
+            $0.leading.trailing.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.top.equalToSuperview().offset(18)
+            
             $0.height.equalTo(163)
         }
         containerRecentKeyword.addSubview(recentKeywordTitle)
-        recentKeywordTitle.snp.makeConstraints{ //최금검색어 타이틀
-            $0.top.leading.equalToSuperview()
+        recentKeywordTitle.snp.makeConstraints{ //최근검색어 타이틀
+            $0.leading.equalToSuperview().offset(18)
+            $0.top.equalToSuperview()
         }
         containerRecentKeyword.addSubview(recentKeyDeleteAll)
         recentKeyDeleteAll.snp.makeConstraints{
             $0.top.equalToSuperview()
-            $0.trailing.equalTo(containerRecentKeyword.snp.trailing)
+            $0.trailing.equalToSuperview().inset(18)
         }
         containerRecentKeyword.addSubview(recentKeywordStackView)
         recentKeywordStackView.snp.makeConstraints{
@@ -166,10 +178,11 @@ class SearchViewController : UIViewController, View{
         recentKeyGroup1.addSubview(recentDeleteBtn1)
         recentKeyBtn1.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(18)
         }
         recentDeleteBtn1.snp.makeConstraints{
-            $0.trailing.centerY.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(18)
             $0.width.height.equalTo(8)
         }
         
@@ -178,10 +191,11 @@ class SearchViewController : UIViewController, View{
         recentKeyGroup2.addSubview(recentDeleteBtn2)
         recentKeyBtn2.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(18)
         }
         recentDeleteBtn2.snp.makeConstraints{
-            $0.trailing.centerY.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(18)
             $0.width.height.equalTo(8)
         }
         
@@ -189,10 +203,11 @@ class SearchViewController : UIViewController, View{
         recentKeyGroup3.addSubview(recentDeleteBtn3)
         recentKeyBtn3.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(18)
         }
         recentDeleteBtn3.snp.makeConstraints{
-            $0.trailing.centerY.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(18)
             $0.width.height.equalTo(8)
         }
         
@@ -201,17 +216,18 @@ class SearchViewController : UIViewController, View{
         self.containerSearchResult.addSubview(filterTitle)
         self.containerSearchResult.addSubview(leftFilterBtn)
         self.containerSearchResult.addSubview(resultTableView)
+        self.containerSearchResult.addSubview(emptyImage)
         
         containerSearchResult.snp.makeConstraints{// 컨테이너
             $0.leading.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(200)// 임시 -
+//            $0.height.equalTo(200)// 임시 -
             
             $0.top.equalTo(containerRecentKeyword.snp.bottom)
         }
         filterTitle.snp.makeConstraints{ //필터 타이틀
             $0.top.equalToSuperview().inset(18)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().inset(18)
             
         }
         leftFilterBtn.snp.makeConstraints{
@@ -226,6 +242,12 @@ class SearchViewController : UIViewController, View{
             $0.width.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
+        emptyImage.snp.makeConstraints{ //빈 리스트 이미지
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(53)
+            $0.width.equalTo(120)
+            $0.height.equalTo(110)
+        }
         
         //최근 검색 제품
         self.scrollView.addSubview(containerRecentProduct)
@@ -237,10 +259,11 @@ class SearchViewController : UIViewController, View{
             $0.height.equalTo(200)// 임시 -
             $0.leading.equalToSuperview()
             $0.top.equalTo(containerSearchResult.snp.bottom)
+            $0.bottom.equalToSuperview()
         }
         recentProductTitle.snp.makeConstraints{ //최근 검색 타이틀
             $0.top.equalToSuperview().inset(18)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().inset(18)
             
         }
         recentProductTableView.snp.makeConstraints{
@@ -286,11 +309,13 @@ class SearchViewController : UIViewController, View{
         leftFilterBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         
         leftFilterBtn.tintColor = .black
-        
+        emptyImage.image = UIImage(named: "blackhole_img")
+        emptyImage.isHidden = true
         
         //최근 검색 젶
         recentProductTitle.text = "최근 검색 제품"
         self.recentProductTitle.font = .systemFont(ofSize: 16, weight: .bold)
+        
     }
     
     func setSearchBar(){
@@ -315,6 +340,117 @@ class SearchViewController : UIViewController, View{
     }
     
     func bind(reactor: SearchReactor) {
+
+        //Action
+            //첫화면 불러왔을 때 -> 최근 검색어 및 검색제품 불러오기
+        self.rx.viewDidLoad
+              .mapVoid()
+              .map(Reactor.Action.viewDidLoad)
+              .bind(to: reactor.action)
+              .disposed(by: self.disposeBag)
+        
+            //넘겨줄 입력값
+        var inputKeyword = "dddd"
+        
+        self.searchBar.rx.text.map{
+            $0?.description ?? ""
+        }.subscribe(onNext : { result  in
+            inputKeyword = result
+            print("inputKeyword : \(inputKeyword)")
+        }).disposed(by: disposeBag)
+        
+            //검색결과 불러오기
+        self.searchBar.rx.searchButtonClicked
+            .map(Reactor.Action.tapSearchBtn(inputKeyword))
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        
+        
+        
+        //State
+            //최근 검색제품 리스트
+        reactor.state
+            .map { $0.recentItemSection }
+            .bind(to: self.recentProductTableView.rx.items(dataSource: recentDataSource))
+            .disposed(by: self.disposeBag)
+        
+            //검색 결과 리스트
+        reactor.state
+            .map { $0.resultItemSection}
+            .bind(to: self.resultTableView.rx.items(dataSource: resultDataSource))
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .filter{ $0.resultItemSection.count > 0}
+            .map{ $0.resultItemSection }
+            .subscribe(onNext : { result in
+                
+                
+                if result[0].items.count > 0{
+                    self.containerRecentKeyword.isHidden = true
+                    
+                    self.containerRecentKeyword.snp.makeConstraints{
+                        $0.height.equalTo(0)
+                    }
+                    self.containerRecentProduct.isHidden = true
+                    self.containerRecentProduct.snp.makeConstraints{
+                        $0.height.equalTo(0)
+                    }
+                    self.containerSearchResult.snp.makeConstraints{
+                        
+                        $0.leading.equalToSuperview()
+                        $0.width.equalToSuperview()
+                        $0.top.equalTo(self.containerRecentKeyword.snp.bottom)
+                        $0.height.equalTo(result[0].items.count * 140 + 60)
+                        $0.bottom.equalToSuperview()
+                    }
+
+                    self.resultTableView.snp.makeConstraints{
+                        $0.height.equalTo(result[0].items.count * 140)
+                    }
+                    
+                    print("result.count : \(result.count)")
+                    print("result[0].items.count : \(result[0].items.count)")
+                }else {
+                    //아이템이 없을 때
+                    self.emptyImage.isHidden = false
+                    
+                    self.containerSearchResult.snp.makeConstraints{
+                        
+                        $0.leading.equalToSuperview()
+                        $0.width.equalToSuperview()
+                        $0.top.equalTo(self.containerRecentKeyword.snp.bottom)
+                        $0.height.equalTo(260)
+                        $0.bottom.equalToSuperview()
+                    }
+
+                    self.resultTableView.snp.makeConstraints{
+                        $0.height.equalTo(0)
+                    }
+                    
+                }
+                
+            }).disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.recentKeyword }
+            .subscribe(onNext : {result in
+                if result.count != 0 {
+                    let keyTextArray = [self.recentKeyBtn1,self.recentKeyBtn2, self.recentKeyBtn3 ]
+                    for i in 0...result.count {
+                        if i > 2 {
+                            break
+                        }
+                        keyTextArray[i].setTitle(result[i]  , for: .normal)
+                       
+                    }
+                }
+                
+                
+            })
+            .disposed(by: self.disposeBag)
+        
         
     }
     

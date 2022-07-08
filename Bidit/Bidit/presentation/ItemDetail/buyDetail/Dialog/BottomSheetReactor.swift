@@ -36,6 +36,7 @@ extension BottomSheetReactor {
     
         switch action {
         case.tapBiddingBtn(let nowItemid , let price) :
+            print(" 비딩 id \(nowItemid),  가격 : \(price)")
             return requestBidAPI(itemId: nowItemid, price: price)
             
             

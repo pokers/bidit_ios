@@ -1,0 +1,23 @@
+
+query getItemList($itemQueryInfo:ItemQueryInput, $keywordInfo:String, $firstInfo:Int, $lastInfo:Int, $afterInfo:String, $beforeInfo:String, $cursorTypeInfo : CursorType){
+    getItemList(itemQuery: $itemQueryInfo, keyword: $keywordInfo,first: $firstInfo,last: $lastInfo,after: $afterInfo,before: $beforeInfo,cursorType: $cursorTypeInfo){
+        totalCount
+        pageInfo {
+            hasNextPage
+        }
+        edges {
+            node {
+                id
+                status
+                sPrice
+                cPrice
+                viewCount
+                title
+                dueDate
+                image {
+                    url
+                }
+            }
+        }
+    }
+}

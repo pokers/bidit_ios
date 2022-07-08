@@ -77,9 +77,7 @@ class EndingSoonReactor : Reactor {
             
         
           case .setSelectedIndexPath(let indexPath):
-            
               state.selectedIndexPath = indexPath
-            
               print("reactor endingSoon : ")
               break
         
@@ -91,17 +89,14 @@ class EndingSoonReactor : Reactor {
 
           return state
       }
-  
-//
-    
 }
 extension EndingSoonReactor {
-    
+    //EndingSoon 리스트 불러오기 요청
     func getDataFromApi() -> Observable<Mutation>{
+       
         return Observable<Mutation>.create(){ emitter in
             
-            Network.shared.apollo.fetch(query: GetEndingSoonItemsQuery()){ result in
-                
+            Network.shared.apollo.fetch(query: GetItemListQuery()){ result in
                 switch result {
                 case .success(let data) :
                     print("success \(data)")
@@ -116,7 +111,7 @@ extension EndingSoonReactor {
                         self.updateList(decode.getEndingSoonItems)
                         //return 대신
                         emitter.onNext(.updateDataSource(decode.getEndingSoonItems))
-                        //emitter.onCompleted()
+                        emitter.onCompleted()
                        
                     }catch (let error) {
                         print("item load fail")
