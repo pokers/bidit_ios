@@ -175,7 +175,7 @@ class BottomSheetViewController : UIViewController, View{
             if nowPrice ?? 999999 > tryPrice {
                 self.warningNotice.isHidden = false
             }
-        })
+        }).disposed(by: disposeBag)
         
             //취소 버튼
         
@@ -192,7 +192,7 @@ class BottomSheetViewController : UIViewController, View{
             $0.item.sPrice?.description ?? "0"
         }.subscribe(onNext : {result in
             self.inputNotice.text = "현재가인 \(result)원 이상 비딩해야합니다."
-        })
+        }).disposed(by: disposeBag)
         
         
     }

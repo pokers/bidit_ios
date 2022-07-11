@@ -78,5 +78,13 @@ public extension Reactive where Base: UIViewController {
     let source = self.sentMessage(#selector(Base.dismiss)).map { $0.first as? Bool ?? false }
     return ControlEvent(events: source)
   }
+    
+    
+
+    var convertAssetToImages : ControlEvent<Void>{
+        let source = self.methodInvoked(#selector(UploadProductViewController.convertAssetToImages)).map { _ in }
+        return ControlEvent(events: source)
+    }
+    
 }
 #endif

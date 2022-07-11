@@ -25,7 +25,8 @@ target 'Bidit' do
     pod 'MaterialComponents/BottomSheet'
     pod 'Firebase/Analytics'
     pod 'Firebase/Messaging'
- 
+    pod "BSImagePicker", "~> 3.1"
+    pod 'FSCalendar'
   
 
   # Pods for Bidit

@@ -77,6 +77,8 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
               return cell
         }
     }
+    //플로팅 버튼 (판매글 올리기 이동.)
+    let floatingBtn = UIButton()
     
     
     
@@ -164,7 +166,15 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             $0.height.equalTo(screenHeight - 120)
             $0.bottom.equalToSuperview()
         }
+        //플로팅 버튼 추가 (판매글 올리기)
+        self.view.addSubview(floatingBtn)
         
+        floatingBtn.snp.makeConstraints{
+            $0.width.height.equalTo(80)
+            $0.trailing.equalToSuperview().inset(17)
+            $0.top.equalToSuperview().offset(700)
+        }
+        //아이템 리스트 뷰컨 추가.(탭바)
         addChild(homeTabbar)
         homeTabbar.view.frame = tabbarContainer.frame
         tabbarContainer.addSubview(homeTabbar.view)
@@ -189,6 +199,8 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         containerView.backgroundColor = .systemBackground
         tabbarContainer.backgroundColor = .systemBackground
         
+        //플로팅 버튼 이미지 설정.
+        floatingBtn.setImage(UIImage(named: "floating_btn_img"), for: .normal)
     }
     
     func setUpCollectionView(){
@@ -295,6 +307,15 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             .map{Reactor.Action.cellSelected($0)}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+         //플로팅 버튼 클릭시 이벤트
+        self.floatingBtn.rx.tap
+            .subscribe(onNext : {
+                let uploadVc = UploadProductViewController()
+                let uploadReactor = UploadProductReactor()
+                uploadVc.reactor = uploadReactor
+               // vc.bind(reactor: listReactor)
+                self.navigationController?.pushViewController(uploadVc, animated: true)
+            }).disposed(by: disposeBag)
         
 //        //하단으로 스크롤뷰 내려왔을 때 테이블뷰 활성화 & 스크롤뷰 고정
 //        scrollView.rx.reachedBottom()

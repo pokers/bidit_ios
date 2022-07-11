@@ -6,6 +6,7 @@ PODS:
   - AWSCore (2.27.10)
   - AWSS3 (2.27.10):
     - AWSCore (= 2.27.10)
+  - BSImagePicker (3.3.1)
   - Differentiator (5.0.0)
   - Firebase/Analytics (9.2.0):
     - Firebase/Core
@@ -61,6 +62,7 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
+  - FSCalendar (2.8.4)
   - GoogleAppMeasurement (9.2.0):
     - GoogleAppMeasurement/AdIdSupport (= 9.2.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
@@ -186,8 +188,10 @@ PODS:
 DEPENDENCIES:
   - Apollo (~> 0.50.0)
   - AWSS3
+  - BSImagePicker (~> 3.1)
   - Firebase/Analytics
   - Firebase/Messaging
+  - FSCalendar
   - ImageSlideshow (~> 1.9.0)
   - KakaoSDKAuth
   - KakaoSDKCommon
@@ -211,6 +215,7 @@ SPEC REPOS:
     - Apollo
     - AWSCore
     - AWSS3
+    - BSImagePicker
     - Differentiator
     - Firebase
     - FirebaseAnalytics
@@ -219,6 +224,7 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - FirebaseInstallations
     - FirebaseMessaging
+    - FSCalendar
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleUtilities
@@ -249,6 +255,7 @@ SPEC CHECKSUMS:
   Apollo: 5e4476a3236bd576686085b7cd99655c788e4d74
   AWSCore: dbad318b7ff0fd86fb8387d3ad1f30049c05bc58
   AWSS3: 0cf2cedb263368f624ca721e5c56a8cb59fc44bc
+  BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Firebase: 4ba896cb8e5105d4b9e247e1c1b6222b548df55a
   FirebaseAnalytics: af5a03a8dff7648c7b8486f6a78b1368e0268dd3
@@ -257,6 +264,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: cb966328b6985dbd6f535e1461291063e1c4a00f
   FirebaseInstallations: 21186f0ca7849f90f4a3219fa31a5eca2e30f113
   FirebaseMessaging: 4eaf1b8a7464b2c5e619ad66e9b20ee3e3206b24
+  FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
   GoogleAppMeasurement: 7a33224321f975d58c166657260526775d9c6b1a
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
@@ -282,6 +290,6 @@ SPEC CHECKSUMS:
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 3ee6c3f67d9c45d3013f57549ff71012cfab7191
+PODFILE CHECKSUM: 0ac7e963306b761b6432dff9e225e2fc44a1f22e
 
 COCOAPODS: 1.11.3
