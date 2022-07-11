@@ -73,8 +73,6 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         $0.register(cellType: EndingSoonCell.self)
         $0.backgroundColor = .systemBackground
         $0.rowHeight = 140
-        
-        
     }
 
     

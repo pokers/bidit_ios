@@ -265,15 +265,12 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         self.directBuyBtn.rx.tap.subscribe(onNext :{
             self.setDirectPopup()
         }).disposed(by: disposeBag)
-        //State
-                
         
+        
+        //State
         reactor.state.map{$0.isOpenDirectBuying}
             .asObservable().subscribe(onNext : { result in
-                
                 //self.setDirectPopup()
-                
-               
             }).disposed(by: disposeBag)
        
         reactor.state

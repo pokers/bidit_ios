@@ -19,15 +19,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
        
-        let naviVC = LoginViewController()
-        let vc = naviVC//() //TabbarController() //LoginViewController()
-        vc.reactor = LoginReactor()
+        let vc = MyPageViewController()//UploadProductViewController()
+        let naviVC = UINavigationController(rootViewController: vc)//LoginViewController()
+       //() //TabbarController() //LoginViewController()
+        vc.reactor = MyPageReactor()//UploadProductReactor()
         
         //self.present(naviVC, animated: true)
         
         //vc.view.backgroundColor = .black
         
-        window?.rootViewController = vc
+        window?.rootViewController = naviVC
         //vc.reactor = HomeReactor() as! HomeViewController.Reactor //LoginReactor() as! LoginViewController.Reactor
         window?.makeKeyAndVisible()
 

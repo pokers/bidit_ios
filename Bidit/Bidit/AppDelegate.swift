@@ -22,8 +22,6 @@ import Firebase
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-    
     // MARK: - Core Data
         lazy var persistentContainer: NSPersistentContainer = {
             // name: Core Data 만든 파일명 지정

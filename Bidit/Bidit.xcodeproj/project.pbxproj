@@ -44,6 +44,10 @@
 		EE7C1A112852516D00730E95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE7C1A0F2852516D00730E95 /* LaunchScreen.storyboard */; };
 		EE7C1A1D285255D100730E95 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7C1A1C285255D100730E95 /* LoginViewController.swift */; };
 		EE7DE8F82873041D007CEE18 /* SendBirdUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = EE7DE8F72873041D007CEE18 /* SendBirdUIKit */; };
+		EE91EDE9287C413E00F068A8 /* ProfileChangeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE91EDE8287C413E00F068A8 /* ProfileChangeVC.swift */; };
+		EE91EDEB287C414900F068A8 /* ProfileChangeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE91EDEA287C414900F068A8 /* ProfileChangeReactor.swift */; };
+		EE91EDF0287C832300F068A8 /* WithdrawalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE91EDEF287C832300F068A8 /* WithdrawalVC.swift */; };
+		EE91EDF2287C834C00F068A8 /* ReasonOptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE91EDF1287C834C00F068A8 /* ReasonOptionVC.swift */; };
 		EE996A72285258A50045F40A /* LoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE996A71285258A50045F40A /* LoginReactor.swift */; };
 		EE9D99CD2856EA21005480C6 /* RxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D99CC2856EA21005480C6 /* RxViewController.swift */; };
 		EE9D99CF2856EBA1005480C6 /* Rx+map.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9D99CE2856EBA1005480C6 /* Rx+map.swift */; };
@@ -79,6 +83,10 @@
 		EEB5E3282871458000F33F2A /* ChannelListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB5E3272871458000F33F2A /* ChannelListViewController.swift */; };
 		EEB5E32B287149EC00F33F2A /* CustomChatChannelListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB5E32A287149EC00F33F2A /* CustomChatChannelListCell.swift */; };
 		EEB5E32D2871577D00F33F2A /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB5E32C2871577D00F33F2A /* MessageList.swift */; };
+		EEB6DDFC28789FF700771427 /* UploadProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB6DDFB28789FF700771427 /* UploadProductViewController.swift */; };
+		EEB6DDFE2878A02800771427 /* UploadProductReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB6DDFD2878A02800771427 /* UploadProductReactor.swift */; };
+		EEB6DE012878ADD400771427 /* PickedImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB6DE002878ADD400771427 /* PickedImageCell.swift */; };
+		EEB6DE032878ADF400771427 /* PickedImageReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB6DE022878ADF400771427 /* PickedImageReactor.swift */; };
 		EEBC50D92859BC1E00F1EE26 /* HomeTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC50D82859BC1E00F1EE26 /* HomeTabbar.swift */; };
 		EEBD01CC28577A2100368533 /* HomeProductListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBD01CB28577A2100368533 /* HomeProductListCell.swift */; };
 		EEBD01CE28577A7600368533 /* HomeProductListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBD01CD28577A7600368533 /* HomeProductListReactor.swift */; };
@@ -86,7 +94,18 @@
 		EEBD0ACD28706FCF0074AE5D /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBD0ACC28706FCF0074AE5D /* TokenManager.swift */; };
 		EEBD0AD3287071350074AE5D /* Me.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEBD0AD2287071350074AE5D /* Me.graphql */; };
 		EEC0060828707554001B86F7 /* GetEndingSoonItems.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEC0060728707554001B86F7 /* GetEndingSoonItems.graphql */; };
+		EEC523E2287ABD89005D4673 /* TimePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523E1287ABD89005D4673 /* TimePickerVC.swift */; };
+		EEC523E5287ACD1F005D4673 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523E4287ACD1F005D4673 /* MyPageViewController.swift */; };
+		EEC523E7287ACD40005D4673 /* MyPageReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523E6287ACD40005D4673 /* MyPageReactor.swift */; };
+		EEC523EA287AE852005D4673 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523E9287AE852005D4673 /* UserInfoViewController.swift */; };
+		EEC523EC287AE866005D4673 /* UserInfoReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523EB287AE866005D4673 /* UserInfoReactor.swift */; };
+		EEC523EF287AE882005D4673 /* AlarmSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523EE287AE882005D4673 /* AlarmSettingVC.swift */; };
+		EEC523F1287AE897005D4673 /* AlarmSettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523F0287AE897005D4673 /* AlarmSettingReactor.swift */; };
+		EEC523F4287AE8D4005D4673 /* PolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523F3287AE8D4005D4673 /* PolicyVC.swift */; };
+		EEC523F6287AE8F9005D4673 /* PrivatePolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523F5287AE8F9005D4673 /* PrivatePolicyVC.swift */; };
 		EEC65F532873320F00C7A852 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC65F522873320F00C7A852 /* DateUtil.swift */; };
+		EECCABC8287A01D90085017A /* SelectCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECCABC7287A01D90085017A /* SelectCategoryVC.swift */; };
+		EECCABCC287A0EC60085017A /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECCABCB287A0EC60085017A /* CalendarVC.swift */; };
 		EED180132855CF4800E17B06 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180122855CF4800E17B06 /* MainViewController.swift */; };
 		EED180152855CF5100E17B06 /* MainReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180142855CF5100E17B06 /* MainReactor.swift */; };
 		EED180172855CFEB00E17B06 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180162855CFEB00E17B06 /* TabbarController.swift */; };
@@ -142,6 +161,10 @@
 		EE7C1A102852516D00730E95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE7C1A122852516D00730E95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE7C1A1C285255D100730E95 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		EE91EDE8287C413E00F068A8 /* ProfileChangeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChangeVC.swift; sourceTree = "<group>"; };
+		EE91EDEA287C414900F068A8 /* ProfileChangeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileChangeReactor.swift; sourceTree = "<group>"; };
+		EE91EDEF287C832300F068A8 /* WithdrawalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalVC.swift; sourceTree = "<group>"; };
+		EE91EDF1287C834C00F068A8 /* ReasonOptionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonOptionVC.swift; sourceTree = "<group>"; };
 		EE996A71285258A50045F40A /* LoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginReactor.swift; sourceTree = "<group>"; };
 		EE9D99CC2856EA21005480C6 /* RxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxViewController.swift; sourceTree = "<group>"; };
 		EE9D99CE2856EBA1005480C6 /* Rx+map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+map.swift"; sourceTree = "<group>"; };
@@ -177,6 +200,10 @@
 		EEB5E3272871458000F33F2A /* ChannelListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListViewController.swift; sourceTree = "<group>"; };
 		EEB5E32A287149EC00F33F2A /* CustomChatChannelListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomChatChannelListCell.swift; sourceTree = "<group>"; };
 		EEB5E32C2871577D00F33F2A /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
+		EEB6DDFB28789FF700771427 /* UploadProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProductViewController.swift; sourceTree = "<group>"; };
+		EEB6DDFD2878A02800771427 /* UploadProductReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProductReactor.swift; sourceTree = "<group>"; };
+		EEB6DE002878ADD400771427 /* PickedImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedImageCell.swift; sourceTree = "<group>"; };
+		EEB6DE022878ADF400771427 /* PickedImageReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickedImageReactor.swift; sourceTree = "<group>"; };
 		EEBC50D82859BC1E00F1EE26 /* HomeTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabbar.swift; sourceTree = "<group>"; };
 		EEBD01CB28577A2100368533 /* HomeProductListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProductListCell.swift; sourceTree = "<group>"; };
 		EEBD01CD28577A7600368533 /* HomeProductListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeProductListReactor.swift; sourceTree = "<group>"; };
@@ -184,7 +211,18 @@
 		EEBD0ACC28706FCF0074AE5D /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		EEBD0AD2287071350074AE5D /* Me.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Me.graphql; sourceTree = "<group>"; };
 		EEC0060728707554001B86F7 /* GetEndingSoonItems.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetEndingSoonItems.graphql; sourceTree = "<group>"; };
+		EEC523E1287ABD89005D4673 /* TimePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerVC.swift; sourceTree = "<group>"; };
+		EEC523E4287ACD1F005D4673 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		EEC523E6287ACD40005D4673 /* MyPageReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageReactor.swift; sourceTree = "<group>"; };
+		EEC523E9287AE852005D4673 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
+		EEC523EB287AE866005D4673 /* UserInfoReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoReactor.swift; sourceTree = "<group>"; };
+		EEC523EE287AE882005D4673 /* AlarmSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingVC.swift; sourceTree = "<group>"; };
+		EEC523F0287AE897005D4673 /* AlarmSettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingReactor.swift; sourceTree = "<group>"; };
+		EEC523F3287AE8D4005D4673 /* PolicyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolicyVC.swift; sourceTree = "<group>"; };
+		EEC523F5287AE8F9005D4673 /* PrivatePolicyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivatePolicyVC.swift; sourceTree = "<group>"; };
 		EEC65F522873320F00C7A852 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
+		EECCABC7287A01D90085017A /* SelectCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryVC.swift; sourceTree = "<group>"; };
+		EECCABCB287A0EC60085017A /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
 		EED180122855CF4800E17B06 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EED180142855CF5100E17B06 /* MainReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainReactor.swift; sourceTree = "<group>"; };
 		EED180162855CFEB00E17B06 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
@@ -443,6 +481,8 @@
 		EE7C1A192852522E00730E95 /* presentation */ = {
 			isa = PBXGroup;
 			children = (
+				EEC523E3287ACD01005D4673 /* MyPage */,
+				EEB6DDFA28789EFC00771427 /* UploadProductScene */,
 				EEB5E3262871383400F33F2A /* Chat */,
 				EE4CA217286A20E400EAEA87 /* SearchScene */,
 				EE5ECA4F28660A78008B5398 /* ItemDetail */,
@@ -464,6 +504,24 @@
 				EE996A71285258A50045F40A /* LoginReactor.swift */,
 			);
 			path = loginScene;
+			sourceTree = "<group>";
+		};
+		EE91EDE7287C411E00F068A8 /* ProfileChange */ = {
+			isa = PBXGroup;
+			children = (
+				EE91EDE8287C413E00F068A8 /* ProfileChangeVC.swift */,
+				EE91EDEA287C414900F068A8 /* ProfileChangeReactor.swift */,
+			);
+			path = ProfileChange;
+			sourceTree = "<group>";
+		};
+		EE91EDEE287C82FD00F068A8 /* Withdrawal */ = {
+			isa = PBXGroup;
+			children = (
+				EE91EDEF287C832300F068A8 /* WithdrawalVC.swift */,
+				EE91EDF1287C834C00F068A8 /* ReasonOptionVC.swift */,
+			);
+			path = Withdrawal;
 			sourceTree = "<group>";
 		};
 		EE9D99CB2856EA10005480C6 /* Utils */ = {
@@ -561,6 +619,28 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
+		EEB6DDFA28789EFC00771427 /* UploadProductScene */ = {
+			isa = PBXGroup;
+			children = (
+				EEC523E0287ABD72005D4673 /* TimePicker */,
+				EECCABCA287A0D840085017A /* Calendar */,
+				EECCABC6287A01AF0085017A /* SelectCategory */,
+				EEB6DDFF2878ADA900771427 /* cell */,
+				EEB6DDFB28789FF700771427 /* UploadProductViewController.swift */,
+				EEB6DDFD2878A02800771427 /* UploadProductReactor.swift */,
+			);
+			path = UploadProductScene;
+			sourceTree = "<group>";
+		};
+		EEB6DDFF2878ADA900771427 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				EEB6DE002878ADD400771427 /* PickedImageCell.swift */,
+				EEB6DE022878ADF400771427 /* PickedImageReactor.swift */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
 		EEBD0AB62870633A0074AE5D /* query */ = {
 			isa = PBXGroup;
 			children = (
@@ -571,6 +651,71 @@
 				EE3D822A287486D900C72830 /* requestBid.graphql */,
 			);
 			path = query;
+			sourceTree = "<group>";
+		};
+		EEC523E0287ABD72005D4673 /* TimePicker */ = {
+			isa = PBXGroup;
+			children = (
+				EEC523E1287ABD89005D4673 /* TimePickerVC.swift */,
+			);
+			path = TimePicker;
+			sourceTree = "<group>";
+		};
+		EEC523E3287ACD01005D4673 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				EE91EDE7287C411E00F068A8 /* ProfileChange */,
+				EEC523F2287AE89A005D4673 /* Policy */,
+				EEC523ED287AE86B005D4673 /* AlarmSetting */,
+				EEC523E8287AE81E005D4673 /* UserInfo */,
+				EEC523E4287ACD1F005D4673 /* MyPageViewController.swift */,
+				EEC523E6287ACD40005D4673 /* MyPageReactor.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		EEC523E8287AE81E005D4673 /* UserInfo */ = {
+			isa = PBXGroup;
+			children = (
+				EE91EDEE287C82FD00F068A8 /* Withdrawal */,
+				EEC523E9287AE852005D4673 /* UserInfoViewController.swift */,
+				EEC523EB287AE866005D4673 /* UserInfoReactor.swift */,
+			);
+			path = UserInfo;
+			sourceTree = "<group>";
+		};
+		EEC523ED287AE86B005D4673 /* AlarmSetting */ = {
+			isa = PBXGroup;
+			children = (
+				EEC523EE287AE882005D4673 /* AlarmSettingVC.swift */,
+				EEC523F0287AE897005D4673 /* AlarmSettingReactor.swift */,
+			);
+			path = AlarmSetting;
+			sourceTree = "<group>";
+		};
+		EEC523F2287AE89A005D4673 /* Policy */ = {
+			isa = PBXGroup;
+			children = (
+				EEC523F3287AE8D4005D4673 /* PolicyVC.swift */,
+				EEC523F5287AE8F9005D4673 /* PrivatePolicyVC.swift */,
+			);
+			path = Policy;
+			sourceTree = "<group>";
+		};
+		EECCABC6287A01AF0085017A /* SelectCategory */ = {
+			isa = PBXGroup;
+			children = (
+				EECCABC7287A01D90085017A /* SelectCategoryVC.swift */,
+			);
+			path = SelectCategory;
+			sourceTree = "<group>";
+		};
+		EECCABCA287A0D840085017A /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				EECCABCB287A0EC60085017A /* CalendarVC.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 		EED180222855EA0400E17B06 /* cell */ = {
@@ -757,29 +902,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE91EDE9287C413E00F068A8 /* ProfileChangeVC.swift in Sources */,
 				EE51D5E1285628D100AF1BC5 /* SomeViewSection.swift in Sources */,
 				EE5ECA5728660DDF008B5398 /* ItemBuyDetailReactor.swift in Sources */,
+				EEB6DE032878ADF400771427 /* PickedImageReactor.swift in Sources */,
 				EEB065542874379F007766B3 /* DirectBuyingPopupViewController.swift in Sources */,
 				EEA63D8B28782F920095A7E3 /* RecentProduct+CoreDataProperties.swift in Sources */,
 				EE9D99CD2856EA21005480C6 /* RxViewController.swift in Sources */,
 				EEA63D8428782E420095A7E3 /* RecentSearchModel.xcdatamodeld in Sources */,
 				EE9DA5DE285315E300E33800 /* HomeViewController.swift in Sources */,
 				EEE04FB928709A24008FE0B5 /* Items.swift in Sources */,
+				EEC523E7287ACD40005D4673 /* MyPageReactor.swift in Sources */,
 				EED1802A2855F55E00E17B06 /* DefaultCell.swift in Sources */,
 				EE0D4304285351F9008464EA /* DefaultTempRepository.swift in Sources */,
 				EED180282855F14F00E17B06 /* DefaultCellReactor.swift in Sources */,
 				EEA07B022856D1FE002D4F57 /* CategoryCell.swift in Sources */,
 				EEADFE402866E3980097EBA2 /* BiddingListCellOfCellReactor.swift in Sources */,
 				EE51D5E828562A3F00AF1BC5 /* Default.swift in Sources */,
+				EE91EDF0287C832300F068A8 /* WithdrawalVC.swift in Sources */,
 				EE0D430228535131008464EA /* TempRepository.swift in Sources */,
 				EE67CB2B285DB4E400FCC02E /* UITextField+.swift in Sources */,
 				EED180242855EA3900E17B06 /* BannerCell.swift in Sources */,
+				EEB6DDFE2878A02800771427 /* UploadProductReactor.swift in Sources */,
 				EEBD01CC28577A2100368533 /* HomeProductListCell.swift in Sources */,
 				EEC65F532873320F00C7A852 /* DateUtil.swift in Sources */,
 				EEADAFBD285B6662004277F9 /* ItemListViewController.swift in Sources */,
+				EEC523EF287AE882005D4673 /* AlarmSettingVC.swift in Sources */,
+				EE91EDF2287C834C00F068A8 /* ReasonOptionVC.swift in Sources */,
 				EE7C1A1D285255D100730E95 /* LoginViewController.swift in Sources */,
 				EE51D5DF2856288700AF1BC5 /* BannerCellReactor.swift in Sources */,
 				EE5ECA6328662C4E008B5398 /* ItemDetailTitleCellReactor.swift in Sources */,
+				EE91EDEB287C414900F068A8 /* ProfileChangeReactor.swift in Sources */,
 				EEA63D8628782F330095A7E3 /* CoreDataManager.swift in Sources */,
 				EE7C1A052852516A00730E95 /* AppDelegate.swift in Sources */,
 				EE5ECA5D28661C5E008B5398 /* ItemDetailImageCell.swift in Sources */,
@@ -787,16 +940,22 @@
 				EED180152855CF5100E17B06 /* MainReactor.swift in Sources */,
 				EE996A72285258A50045F40A /* LoginReactor.swift in Sources */,
 				EEB0655B2874527C007766B3 /* BottomSheetReactor.swift in Sources */,
+				EECCABCC287A0EC60085017A /* CalendarVC.swift in Sources */,
 				EEA63D8E28782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift in Sources */,
+				EEC523F4287AE8D4005D4673 /* PolicyVC.swift in Sources */,
+				EEC523F6287AE8F9005D4673 /* PrivatePolicyVC.swift in Sources */,
 				EEF7953028658380000E3373 /* IndicatorView.swift in Sources */,
 				EE51D5E628562A3000AF1BC5 /* Banner.swift in Sources */,
+				EEB6DE012878ADD400771427 /* PickedImageCell.swift in Sources */,
 				EED180172855CFEB00E17B06 /* TabbarController.swift in Sources */,
 				EE9D99D12856F991005480C6 /* CategorySection.swift in Sources */,
+				EEC523E5287ACD1F005D4673 /* MyPageViewController.swift in Sources */,
 				EE76CCA2285A2BDA0078C906 /* EndingSoonViewController.swift in Sources */,
 				EE9D99D32856FD33005480C6 /* CategoryReactor.swift in Sources */,
 				EEB5E32D2871577D00F33F2A /* MessageList.swift in Sources */,
 				EEA63D8D28782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift in Sources */,
 				EE5ECA6728663A03008B5398 /* ItemDetailContentCellReactor.swift in Sources */,
+				EEC523EC287AE866005D4673 /* UserInfoReactor.swift in Sources */,
 				EEE64406285D2062009D92AA /* DetailFilterViewController.swift in Sources */,
 				EE51D5E428562A2100AF1BC5 /* ModelType.swift in Sources */,
 				EEB3CD75285AB37300DF7596 /* EndingSoonCellReactor.swift in Sources */,
@@ -817,6 +976,9 @@
 				EEADAFBF285B66A3004277F9 /* ItemListReactor.swift in Sources */,
 				EEB5E3282871458000F33F2A /* ChannelListViewController.swift in Sources */,
 				EE5ECA6928663A16008B5398 /* ItemDetailBiddingListCell.swift in Sources */,
+				EECCABC8287A01D90085017A /* SelectCategoryVC.swift in Sources */,
+				EEC523EA287AE852005D4673 /* UserInfoViewController.swift in Sources */,
+				EEC523F1287AE897005D4673 /* AlarmSettingReactor.swift in Sources */,
 				EE5ECA5328660C44008B5398 /* ItemBuyDetailViewController.swift in Sources */,
 				EE5ECA65286639F3008B5398 /* ItemDetailContentCell.swift in Sources */,
 				EEB3CD71285AB2D400DF7596 /* Item.swift in Sources */,
@@ -831,11 +993,13 @@
 				EE9DA5E0285315F200E33800 /* HomeReactor.swift in Sources */,
 				EEADFE3E2866E38A0097EBA2 /* BiddingListCellOfCell.swift in Sources */,
 				EEB065522874113B007766B3 /* BottomSheetViewController.swift in Sources */,
+				EEC523E2287ABD89005D4673 /* TimePickerVC.swift in Sources */,
 				EE5ECA5528660DB6008B5398 /* ItemSellDetailViewController.swift in Sources */,
 				EEB0655928744DE9007766B3 /* CompleteBiddingReactor.swift in Sources */,
 				EE9E70E8286B1B6E00BBA69B /* UploadTestViewController.swift in Sources */,
 				EE4CA21B286A212000EAEA87 /* SearchReactor.swift in Sources */,
 				EE3D822D2874886A00C72830 /* API.swift in Sources */,
+				EEB6DDFC28789FF700771427 /* UploadProductViewController.swift in Sources */,
 				EEA07B042856D675002D4F57 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

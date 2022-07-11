@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Then
-
+// 홈화면 카테고리 컬렉션뷰 인디케이터
 final class IndicatorView: UIView {
   // MARK: UI
   private let trackView = UIView().then {
