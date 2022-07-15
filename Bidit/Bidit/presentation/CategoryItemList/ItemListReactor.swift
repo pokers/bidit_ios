@@ -8,7 +8,7 @@
 import Foundation
 import ReactorKit
 
-
+//카테고리별 아이템 리스트
 class ItemListReactor : Reactor{
     
     enum Action {
@@ -34,6 +34,9 @@ class ItemListReactor : Reactor{
         case sortLatest
         case openFilter
         case closeFilter
+        
+        case loadListResult([ProductListSection])// 가져온 리스트 결과
+        
     }
       
     
@@ -43,6 +46,8 @@ class ItemListReactor : Reactor{
         var isSortListOpened : Bool = false
         var sortState : SortState = .latest
         var isFilterOpened : Bool = false
+        var resultItemSection : [ProductListSection] = []
+        var categoryId : Int
       }
       
       let initialState: State
@@ -57,7 +62,7 @@ class ItemListReactor : Reactor{
         switch action {
             
         case .viewDidLoad:
-          return Observable<Mutation>.just(.updateDataSource)
+            return requestItemList(category: self.initialState.categoryId)// 임시로 입력
             
         case .cellSelected(let indexPath):
             return Observable.concat([
@@ -119,6 +124,12 @@ class ItemListReactor : Reactor{
             
         case .closeFilter:
             state.isFilterOpened = false
+            
+        case .loadListResult(let result):
+          
+            state.itemSection = result
+            break
+            
         }
         return state
       }
@@ -128,6 +139,95 @@ class ItemListReactor : Reactor{
         case popularity
         case endingSoon
         case latest
+    }
+}
+extension ItemListReactor{
+    
+    //검색결과 요청
+    func requestItemList(category : Int) -> Observable<Mutation>{
+        return Observable<Mutation>.create(){ emitter in
+
+            let itemQuery = ItemQueryInput.init(id: nil, status: nil, userId: nil, categoryId: category, name: nil, dueDate: nil, deliveryType: nil, sCondition: nil, aCondition: nil, createdAt: nil)
+            Network.shared.apollo.fetch(
+                query:GetItemListQuery(itemQueryInfo: itemQuery,
+                                       keywordInfo: nil,
+                                       firstInfo: nil,
+                                       lastInfo: nil,
+                                       afterInfo: nil,
+                                       beforeInfo: nil,
+                                       cursorTypeInfo: nil
+                                      )){ result in
+                
+                switch result {
+                case .success(let data) :
+                    print("success \(data)")
+                    do {
+                        //let data = try JSONSerialization.data(withJSONObject: data.data!.jsonObject, options: .fragmentsAllowed)//
+                        //let decode : ItemConnection = try JSONDecoder().decode(ItemConnection.self, from: data)
+                        //print("item's id is \(decode.getEndingSoonItems[1] ?? nil)")
+//                        decode.getEndingSoonItems.forEach{
+//                            self.itemList.append($0)
+//                        }
+                        var tempList = Array<Item>()
+                        data.data!.getItemList!.edges!.forEach{item in
+                            var node = item?.node
+                            var tempItem = Item(id: node?.id,
+                                                status: node?.status,
+                                                userId: node?.userId,
+                                                createdAt: node?.createdAt)
+                            
+                            
+                            
+                            
+                            tempList.append(tempItem)
+                            
+                        }
+                        var items = tempList
+                        
+                        let convertedData = self.convertItemToSection(items: items)
+                        emitter.onNext(.loadListResult(convertedData))
+                        //emitter.onCompleted()
+                       
+                    }catch (let error) {
+                        print("item load fail")
+                        print(error.localizedDescription)
+                    }
+                    break
+                case .failure(let error) :
+                    print("error : \(error)")
+                    //self.passed = false
+                }
+                
+            }
+            return Disposables.create()
+        }
+     
+        
+    }
+    
+    
+    //데이터를 테이블뷰에 뿌려줄 형태로 변환
+    func convertItemToSection(items : [Item]) -> [ProductListSection]{
+        
+        let list : [Item] = items
+        print("list 개수 : \(list.count)")
+        var array = Array<ProductListSectionItem>()
+        
+        items.forEach{
+            array.append( ProductListSectionItem.item(EndingSoonCellReactor(item : $0)))
+        }
+        print("array 개수 : \(array.count)")
+        
+        let itemInFirstSection = array
+        let firstSection = ProductListSection(
+            original:
+                ProductListSection(
+                    original: .first(array),
+                    items: array)
+            ,items: array)
+        print("firstSection 개수 : \(firstSection.items)")
+        return [firstSection]
+ 
     }
 }
 

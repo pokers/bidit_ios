@@ -69,27 +69,42 @@ class LoginReactor : Reactor {
                   }
                   else {
                       print("loginWithKakaoTalk() success.")
-                      print("token : \(oauthToken?.accessToken)")
+                      print("token : \(String(describing: oauthToken?.accessToken))")
                       //do something
+                      UserDefaults.standard.set("kakao", forKey: "LoginState")
                       let keyChain = TokenManager.sharedKeyChain
-                      keyChain.set((oauthToken?.accessToken)!,forKey: "loginKeychainKey")
-                      // let signInRequest = SignInRequest(name : "")
-//                      return Observable.just(URLs[index])
-//                          .flatMap({ self.network.load(url: $0) })
-//                          .map({ Mutation.setImage(image: $0) })
-                      
-                      Network.shared.apollo.perform(mutation: MyQueryMutation()){result in
+                      keyChain.set((oauthToken?.accessToken)!,forKey: "kakao")
+                   //me호출 먼저 실행하여 로그인 시도
+                      Network.shared.apollo.fetch(query: MeQuery()){result in
                           switch result {
                           case .success(let data) :
                               print("success \(data)")
-
                               self.switchLoginPassed(true)
                               break
                           case .failure(let error) :
                               print("error : \(error)")
                               //self.passed = false
+                              //실패하면 가입 시도
+                              
+                              Network.shared.apollo.perform(mutation: MyQueryMutation()){result in
+                                  switch result {
+                                  case .success(let data) :
+                                      print("success \(data)")
+                                      UserDefaults.standard.set("kakao", forKey: "LoginState")
+
+                                      self.switchLoginPassed(true)
+                                      break
+                                  case .failure(let error) :
+                                      print("error : \(error)")
+                                      //self.passed = false
+                                  }
+                              }
                           }
                       }
+                      
+                      
+                      
+                      
                   }
               }
           }
@@ -125,7 +140,7 @@ class LoginReactor : Reactor {
                               print("token : \(oauthToken?.accessToken)")
                               //do something
                               let keyChain = TokenManager.sharedKeyChain
-                              keyChain.set((oauthToken?.accessToken)!,forKey: "loginKeychainKey")
+                              keyChain.set((oauthToken?.accessToken)!,forKey: "Kakao")
                               keyChain.set((oauthToken?.accessToken)!,forKey: "meKeychainKey")
                               
                               Network.shared.apollo.fetch(query: MeQuery()){result in

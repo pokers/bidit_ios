@@ -78,6 +78,10 @@ class MyPageViewController : UIViewController ,View{
         layout()
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     
     private func layout(){
         
@@ -119,8 +123,10 @@ class MyPageViewController : UIViewController ,View{
             $0.top.equalToSuperview().offset(65)
             $0.leading.equalToSuperview().offset(44)
             $0.width.height.equalTo(56)
+            
         }
-        imageView.image = UIImage(named: "temp")
+        imageView.image = UIImage(named: "temp_profile")
+        imageView.layer.cornerRadius = 100
         
         nameText.snp.makeConstraints{
             $0.centerX.equalTo(imageView.snp.centerX)
@@ -207,7 +213,7 @@ class MyPageViewController : UIViewController ,View{
         infoContainer.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(separator1.snp.bottom)
-            $0.height.equalTo(57)
+            $0.height.equalTo(58)
             $0.width.equalToSuperview()
         }
         
@@ -217,7 +223,7 @@ class MyPageViewController : UIViewController ,View{
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.width.equalTo(200)
-            $0.height.equalTo(40)
+            //$0.height.equalTo(40)
         }
         infoBtn.setTitle("계정 기본정보", for: .normal)
         infoBtn.setTitleColor(.black, for: .normal)
@@ -235,7 +241,7 @@ class MyPageViewController : UIViewController ,View{
         alarmConainer.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(separator2.snp.bottom)
-            $0.height.equalTo(57)
+            $0.height.equalTo(58)
             $0.width.equalToSuperview()
         }
         alarmConainer.addSubview(alarmBtn)
@@ -243,7 +249,7 @@ class MyPageViewController : UIViewController ,View{
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.width.equalTo(200)
-            $0.height.equalTo(40)
+            //$0.height.equalTo(40)
         }
         alarmBtn.setTitle("알림 설정", for: .normal)
         alarmBtn.setTitleColor(.black, for: .normal)
@@ -262,7 +268,7 @@ class MyPageViewController : UIViewController ,View{
         versionConainer.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(separator3.snp.bottom)
-            $0.height.equalTo(57)
+            $0.height.equalTo(58)
             $0.width.equalToSuperview()
         }
         versionConainer.addSubview(versionTitle)
@@ -294,7 +300,7 @@ class MyPageViewController : UIViewController ,View{
         developerConainer.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(separator4.snp.bottom)
-            $0.height.equalTo(57)
+            $0.height.equalTo(58)
             $0.width.equalToSuperview()
         }
         developerConainer.addSubview(developerTitle)
@@ -326,7 +332,7 @@ class MyPageViewController : UIViewController ,View{
         privateContainer.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(separator5.snp.bottom)
-            $0.height.equalTo(57)
+            $0.height.equalTo(58)
             $0.width.equalToSuperview()
         }
         privateContainer.addSubview(privateBtn)
@@ -353,7 +359,7 @@ class MyPageViewController : UIViewController ,View{
         policyContainer.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(separator6.snp.bottom)
-            $0.height.equalTo(57)
+            $0.height.equalTo(58)
             $0.width.equalToSuperview()
         }
         policyContainer.addSubview(policyBtn)
@@ -365,18 +371,26 @@ class MyPageViewController : UIViewController ,View{
         }
         (policyBtn).setTitle("서비스 이용약관", for: .normal)
         (policyBtn).setTitleColor(.black, for: .normal)
-        
-        
     }
     
     func bind(reactor: MyPageReactor) {
+        
+        self.rx.viewDidLoad
+              .mapVoid()
+              .map(Reactor.Action.viewDidLoad)
+              .bind(to: reactor.action)
+              .disposed(by: self.disposeBag)
+        
+        var currentUser : User? = nil
         
         //계정 기본 정보 클릭 이벤트
         self.infoBtn.rx.tap
             .subscribe(onNext : {
                 let vc = UserInfoViewController()
-                let reactor = UserInfoReactor()
-                vc.reactor = reactor
+                
+                let reactorVC = UserInfoReactor(user: currentUser!)
+                print("\(currentUser) 현재 유저")
+                vc.reactor = reactorVC
                // vc.bind(reactor: listReactor)
                 self.navigationController?.pushViewController(vc, animated: true)
             }).disposed(by: disposeBag)
@@ -397,11 +411,27 @@ class MyPageViewController : UIViewController ,View{
         self.changeBtn.rx.tap
             .subscribe(onNext : {
                 let vc = ProfileChangeVC()
-                let reactor = ProfileChangeReactor()
+                let reactor = ProfileChangeReactor(user: currentUser!)
                 vc.reactor = reactor
                // vc.bind(reactor: listReactor)
                 self.navigationController?.pushViewController(vc, animated: true)
             }).disposed(by: disposeBag)
+        
+        
+        reactor.state
+            .map { $0.user }
+            .subscribe(onNext : { user in
+                
+                if user?.nickname != nil{
+                    self.nameText.text = user?.nickname
+                }else{
+                    self.nameText.text  = "닉네임 필요"
+                }
+                
+                currentUser = user
+                
+            })
+            .disposed(by: self.disposeBag)
         
         
     }

@@ -7,9 +7,18 @@
 
 import Foundation
 import UIKit
+
+import RxSwift
+
+
+
 //카테고리 선택
 class SellectCategoryVC : UIViewController{
     
+   
+    
+    var selected = 0
+    var disposeBag: DisposeBag  = DisposeBag()
     
     let scrollView = UIScrollView()
     let iphoneBtn = UIButton() //아이폰
@@ -38,11 +47,14 @@ class SellectCategoryVC : UIViewController{
     let separator12 = UIView() //
     
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNavigationBar()
         layout()
+        bind()
     }
     
     
@@ -346,6 +358,103 @@ class SellectCategoryVC : UIViewController{
             $0.top.equalTo(etcBtn.snp.bottom).offset(20)
             $0.bottom.equalToSuperview().inset(20)
         }
+        
+        
+        
+    }
+    
+    func bind(){
+        
+        
+        let btnList = [iphoneBtn, gallaxyBtn, etcPhoneBtn,watchBtn, laptopBtn, tabletBtn, tvBtn, gameBtn, soundBtn, cameraBtn, droneBtn, etcBtn]
+        
+        self.iphoneBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 0
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+            print("색상변경")
+        }).disposed(by: disposeBag)
+        
+        self.gallaxyBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 1
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.etcPhoneBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 2
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.watchBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 3
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.laptopBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 4
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.tabletBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 5
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.tvBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 6
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.gameBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 7
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.soundBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 8
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.cameraBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 9
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.droneBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 10
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        self.etcBtn.rx.tap.subscribe(onNext : {
+            btnList[self.selected].setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+            self.selected = 11
+            btnList[self.selected].setTitleColor(UIColor(red: 0.059, green: 0.259, blue: 0.957, alpha: 1), for: .normal)
+        }).disposed(by: disposeBag)
+        
+        //닫을 때 이벤트
+        self.rx.viewWillDisappear
+            .subscribe(onNext : {result in
+               
+                let preVC = self.navigationController?.viewControllers.last
+                       guard let vc = preVC as? UploadProductViewController else {
+                           return
+                       }
+                       // 값을 전달한다.
+                vc.categoryBtn.setTitle(btnList[self.selected].currentTitle, for: .normal)
+                vc.categoryBtn.setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+                print(" 카테고리 선택 : \(btnList[self.selected].currentTitle)")
+            }).disposed(by: disposeBag)
+        
         
         
         

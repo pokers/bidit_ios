@@ -11,7 +11,8 @@ import UIKit
 class ReasonOptionVC : UIViewController {
     
     let containerView = UIView()
-    
+    //이전 화면
+    var preVC : WithdrawalVC? = nil
     //기록삭제목적
     let deleteContainer = UIView()
     let deleteTitle = UILabel()
@@ -53,6 +54,7 @@ class ReasonOptionVC : UIViewController {
         super.viewDidLoad()
         
         layout()
+        bind()
     }
     
     func layout(){
@@ -268,6 +270,102 @@ class ReasonOptionVC : UIViewController {
             $0.centerY.equalToSuperview()
         }
         ninthBtn.setImage(UIImage(named: "radio_unchecked_img"), for: .normal)
+        
+    }
+    
+    
+    func bind(){
+        self.deleteBtn.rx.tap.subscribe(onNext : {
+            self.deleteBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
+            
+            self.preVC?.btnLabel.text = "기록 삭제 목적"
+            
+            print(" 이유 선택 : 기록 삭제 목적")
+            self.dismiss(animated: false)
+            
+        })
+        
+        self.secondBtn.rx.tap.subscribe(onNext : {
+            self.secondBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
+            
+            self.preVC?.btnLabel.text = "이용이 불편하고 오류가 많아서"
+            
+            print(" 이유 선택 : 이용이 불편하고 오류가 많아서")
+            self.dismiss(animated: false)
+            
+        })
+        
+        self.thirdBtn.rx.tap.subscribe(onNext : {
+            self.thirdBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
+            
+            self.preVC?.btnLabel.text = "신뢰도가 떨어져서"
+            
+            print(" 이유 선택 : 신뢰도가 떨어져서")
+            self.dismiss(animated: false)
+            
+        })
+        
+        self.fourthBtn.rx.tap.subscribe(onNext : {
+            self.fourthBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
+            
+            self.preVC?.btnLabel.text = "찾는 상품이 없어서"
+            
+            print(" 이유 선택 : 찾는 상품이 없어서")
+            self.dismiss(animated: false)
+            
+        })
+        
+        self.fifthBtn.rx.tap.subscribe(onNext : {
+            self.fifthBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
+            
+            self.preVC?.btnLabel.text = "사용자들이 불친절해서"
+            
+            print(" 이유 선택 : 사용자들이 불친절해서")
+            self.dismiss(animated: false)
+            
+        })
+        
+        self.sixBtn.rx.tap.subscribe(onNext : {
+            self.sixBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
+            
+            self.preVC?.btnLabel.text = "타 플랫폼을 더 사용해서"
+            
+            print(" 이유 선택 : 타 플랫폼을 더 사용해서")
+            self.dismiss(animated: false)
+            
+        })
+        
+        self.seventhBtn.rx.tap.subscribe(onNext : {
+            self.seventhBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
+            
+            self.preVC?.btnLabel.text = "콘텐츠 불만"
+            
+            print(" 이유 선택 : 콘텐츠 불만")
+            self.dismiss(animated: false)
+            
+        })
+        
+        self.eighthBtn.rx.tap.subscribe(onNext : {
+            self.eighthBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
+            
+            self.preVC?.btnLabel.text = "사용빈도가 낮아서"
+            
+            print(" 이유 선택 : 사용빈도가 낮아서")
+            self.dismiss(animated: false)
+            
+        })
+        
+        self.ninthBtn.rx.tap.subscribe(onNext : {
+            self.ninthBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
+            
+            self.preVC?.btnLabel.text = "기타"
+            
+            print(" 이유 선택 : 기타")
+            self.dismiss(animated: false)
+            
+        })
+        
+        
         
     }
 }

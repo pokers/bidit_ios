@@ -10,20 +10,42 @@ import ReactorKit
 
 class UserInfoReactor : Reactor {
     enum Action {
-        case touchButton(index: Int)
+        
+        case viewDidLoad
     }
     
     enum Mutation {
-        case setImage(image: UIImage?)
+        case loadMyInfo(User)
     }
     
     struct State {
-        var image: UIImage?
+        var user : User? = nil
     }
     
     let initialState: State
     
-    init() {
-        self.initialState = State()
+    init(user : User) {
+        self.initialState = .init(user: user)
     }
+}
+
+extension UserInfoReactor{
+//    func mutate(action: Action) -> Observable<Mutation> {
+//        switch action {
+//        case .viewDidLoad :
+//
+//            return requestMyInfo()
+//
+//        }
+//    }
+//
+//    func reduce(state: State, mutation: Mutation) -> State {
+//        var state = state
+//        switch mutation {
+//        case .loadMyInfo(let user) :
+//            state.user = user
+//
+//        }
+//        return state
+//    }
 }

@@ -21,8 +21,10 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
     //선택한 이미지를 담아둘 변수
     var selectedAssets : [PHAsset] = []
     var userSelectedImages : [UIImage] = [UIImage()]
-    
     let scrollView = UIScrollView()
+    
+    
+    
     //고른 사진 컬렉션 뷰
     let imgCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -37,12 +39,23 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
     
     
     
+    
     //RxCollectionViewDataSourceType
     let dataSource = RxCollectionViewSectionedReloadDataSource<UploadAlbumSection>{dataSource, collectionView, indexPath, item in
         switch item {
         case .album(let reactor):
             let cell = collectionView.dequeueReusableCell(for: indexPath) as PickedImageCell
             cell.reactor = reactor
+            
+            cell.imgDelete = {
+                print("누른 index.row = \(indexPath.row)")
+                
+                //collectionView.deleteItems(at: [indexPath])
+                collectionView.reloadData()
+                
+            }
+            
+            
             if indexPath.row == 0 {
                 cell.photoContainer.isHidden = true
                 cell.deleteButton.isHidden = true
@@ -58,6 +71,8 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             
             if indexPath.row != 1{
                 cell.representer.isHidden = true
+            }else{
+                cell.representer.isHidden = false
             }
             
             
@@ -73,8 +88,10 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
     let categoryBtn = UIButton() // 카테고리
     let separator3 = UIView()
     let sPriceBtn = UIButton() // 비딩 시작가
+    let sPriceField = UITextField()
     let separator4 = UIView()
     let buyNowPriceBtn = UIButton() // 즉시 구매가
+    let buyNowPriceField = UITextField()
     let separator5 = UIView()
     let dueDateBtn = UIButton() // 경매 마감 날짜
     let separator6 = UIView()
@@ -107,18 +124,19 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         
         extendBind()
         textSetUp()
+        //checkCameraPermission()
+        checkAlbumPermission()
     }
     
     func layout(){
         //스크롤뷰
         self.view.addSubview(scrollView)
-        var screenWidth = UIScreen.main.bounds.width
+        let screenWidth = UIScreen.main.bounds.width
         scrollView.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.width.equalTo(screenWidth - 36)
         }
-        
         //이미지 뷰 컬렉션뷰
         scrollView.addSubview(imgCollectionView)
         imgCollectionView.snp.makeConstraints{
@@ -128,17 +146,15 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             $0.height.equalTo(98)
             $0.width.equalToSuperview()
         }
-        
-    
         scrollView.addSubview(separator1) //줄 1
         separator1.backgroundColor = .separator
         separator1.snp.makeConstraints{
-
             $0.centerX.equalToSuperview()
             $0.width.equalToSuperview()
             $0.height.equalTo(1)
             $0.top.equalTo(imgCollectionView.snp.bottom)
         }
+        
         //타이틀
         scrollView.addSubview(titleField)
         titleField.text = "글 제목"
@@ -146,7 +162,8 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         titleField.font = .systemFont(ofSize: 14, weight: .regular)
         // titleField.contentHorizontalAlignment = .left //버튼 타이틀 정렬
         titleField.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.leading.equalTo(16)
             $0.width.equalToSuperview()
             $0.height.equalTo(24)
             $0.top.equalTo(separator1.snp.bottom).offset(20)
@@ -163,10 +180,11 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         //카테고리
         scrollView.addSubview(categoryBtn)
         categoryBtn.setTitle("카테고리", for: .normal)
+        categoryBtn.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
         categoryBtn.setTitleColor(.separator, for: .normal)
         categoryBtn.contentHorizontalAlignment = .left //버튼 타이틀 정렬
         categoryBtn.snp.makeConstraints{
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(16)
             $0.top.equalTo(separator2.snp.bottom).offset(20)
             $0.height.equalTo(24)
             $0.width.equalTo(72)
@@ -183,16 +201,24 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         
         //startPrice
         scrollView.addSubview(sPriceBtn)
-        sPriceBtn.setTitle("₩ 비딩 시작가", for: .normal)
+        scrollView.addSubview(sPriceField)
+        sPriceBtn.setTitle("₩", for: .normal)
         sPriceBtn.setTitleColor(.separator, for: .normal)
+        sPriceBtn.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
         sPriceBtn.contentHorizontalAlignment = .left //버튼 타이틀 정렬
         sPriceBtn.snp.makeConstraints{
-            $0.leading.equalToSuperview()
-            $0.width.equalTo(200)
+            $0.leading.equalToSuperview().offset(16)
+            $0.width.equalTo(20)
             $0.top.equalTo(separator3.snp.bottom).offset(20)
             $0.height.equalTo(28)
-            
         }
+        sPriceField.snp.makeConstraints{
+            $0.leading.equalTo(sPriceBtn.snp.trailing)
+            $0.centerY.equalTo(sPriceBtn.snp.centerY)
+        }
+        sPriceField.placeholder = "비딩 시작가"
+        sPriceField.font = .systemFont(ofSize: 14, weight: .regular)
+        
         
         scrollView.addSubview(separator4) //줄 4
         separator4.backgroundColor = .separator
@@ -205,16 +231,24 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         
         //buyNowPrice
         scrollView.addSubview(buyNowPriceBtn)
-        buyNowPriceBtn.setTitle("₩ 즉시 구매가", for: .normal)
+        scrollView.addSubview(buyNowPriceField)
+        buyNowPriceBtn.setTitle("₩", for: .normal)
         buyNowPriceBtn.setTitleColor(.separator, for: .normal)
+        buyNowPriceBtn.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
         buyNowPriceBtn.contentHorizontalAlignment = .left //버튼 타이틀 정렬
         buyNowPriceBtn.snp.makeConstraints{
-            $0.leading.equalToSuperview()
-            $0.width.equalTo(200)
+            $0.leading.equalToSuperview().offset(16)
+            $0.width.equalTo(20)
             $0.top.equalTo(separator4.snp.bottom).offset(20)
             $0.height.equalTo(28)
-            
         }
+        buyNowPriceField.snp.makeConstraints{
+            $0.leading.equalTo(buyNowPriceBtn.snp.trailing)
+            $0.centerY.equalTo(buyNowPriceBtn.snp.centerY)
+        }
+        buyNowPriceField.placeholder = "즉시 구매가"
+        buyNowPriceField.font = .systemFont(ofSize: 14, weight: .regular)
+        
         
         scrollView.addSubview(separator5) //줄 5
         separator5.backgroundColor = .separator
@@ -229,9 +263,10 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         scrollView.addSubview(dueDateBtn)
         dueDateBtn.setTitle("경매 마감 날짜", for: .normal)
         dueDateBtn.setTitleColor(.separator, for: .normal)
+        dueDateBtn.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
         dueDateBtn.contentHorizontalAlignment = .left //버튼 타이틀 정렬
         dueDateBtn.snp.makeConstraints{
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(16)
             $0.width.equalTo(200)
             $0.top.equalTo(separator5.snp.bottom).offset(20)
             $0.height.equalTo(28)
@@ -250,10 +285,12 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         //경매 마감 시간
         scrollView.addSubview(dueTimeBtn)
         dueTimeBtn.setTitle("경매 마감 시간", for: .normal)
+        
         dueTimeBtn.setTitleColor(.separator, for: .normal)
+        dueTimeBtn.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
         dueTimeBtn.contentHorizontalAlignment = .left //버튼 타이틀 정렬
         dueTimeBtn.snp.makeConstraints{
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(16)
             $0.width.equalTo(200)
             $0.top.equalTo(separator6.snp.bottom).offset(20)
             $0.height.equalTo(28)
@@ -297,6 +334,33 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         
         
     }
+    /*
+     권한 체크
+     */
+    
+    func checkCameraPermission(){
+          AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
+              if granted {
+                  print("Camera: 권한 허용")
+              } else {
+                  print("Camera: 권한 거부")
+              }
+          })
+       }
+    func checkAlbumPermission(){
+            PHPhotoLibrary.requestAuthorization( { status in
+                switch status{
+                case .authorized:
+                    print("Album: 권한 허용")
+                case .denied:
+                    print("Album: 권한 거부")
+                case .restricted, .notDetermined:
+                    print("Album: 선택하지 않음")
+                default:
+                    break
+                }
+            })
+        }
     
     func attribute(){
         
@@ -366,19 +430,27 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 .bind(to: reactor!.action)
                 .disposed(by: disposeBag)
             
+            reactor?.deleteImgRelay.asDriver(onErrorJustReturn: UIImage()).asObservable()
+                .subscribe{
+                result in
+                   
+                
+                    var temp = self.userSelectedImages.filter{ $0 != result.element!}
+                    self.userSelectedImages = temp
+                    
+                    self.updateList(self.userSelectedImages)
+                
+            }.disposed(by: disposeBag)
             
         
-            listRelay.asDriver(onErrorJustReturn: []).drive(onNext : {result in
-                let numbering = self.dataSource.sectionModels[0].items.count ?? 0
-                print("숫자 \(numbering)")
-                if numbering > 0 {
-                    print("숫자 수정")
-                    
-                
-                    
-                }
-                
-            }).disposed(by: disposeBag)
+//            listRelay.asDriver(onErrorJustReturn: []).drive(onNext : {result in
+//                let numbering = self.dataSource.sectionModels[0].items.count ?? 0
+//                print("숫자 \(numbering)")
+//                if numbering > 0 {
+//                    print("숫자 수정")
+//                }
+//
+//            }).disposed(by: disposeBag)
                     
         }
     
@@ -389,6 +461,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
     private func setBottomSheet(){
         // 바텀 시트로 쓰일 뷰컨트롤러 생성
         let vc = CalendarVC()
+        vc.preVC = self
         //vc.reactor = BottomSheetReactor(item: item)
         // MDC 바텀 시트로 설정
         let bottomSheet: MDCBottomSheetController = MDCBottomSheetController(contentViewController: vc)
@@ -406,6 +479,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
     private func setTimeBottomSheet(){
         // 바텀 시트로 쓰일 뷰컨트롤러 생성
         let vc = TimePickerVC()
+        vc.preVC = self
         //vc.reactor = BottomSheetReactor(item: item)
         // MDC 바텀 시트로 설정
         let bottomSheet: MDCBottomSheetController = MDCBottomSheetController(contentViewController: vc)
@@ -462,24 +536,58 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        
+        //판매글 등록 버튼 이벤트
+        self.uploadBtn.rx.tap.filter{
+            !(self.imgCollectionView.numberOfItems(inSection: 0) < 2
+                || self.titleField.text == "" || self.titleField.text == "글 제목"
+                || self.categoryBtn.titleLabel?.text == "카테고리"
+                || self.sPriceField.text == "비딩 시작가" || self.sPriceField.text == "0"
+                || self.buyNowPriceField.text == "즉시 구매가" || self.buyNowPriceField.text == "0"
+                || self.dueDateBtn.titleLabel?.text == "경매 마감 날짜"
+                || self.dueTimeBtn.titleLabel?.text == "경매 마감 시간")
+        }.map{Reactor.Action.tapUpload(
+            imgs: [],
+            status: 1,
+            buyNow : 1000,
+            title: "임시 타이틀",
+            categoryId: 0,
+            sPrice: 2222,
+            name: "노키아폰",
+            dueDate: "2022-07-26T23:58:00.000Z", 
+            deliveryType: 0,
+            sCondition: 1,
+            aCondition: 1,
+            description: "판매글 등록 테스트")
+        }.bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        
+        self.rx.viewDidLoad
+              .mapVoid()
+              .map(Reactor.Action.viewDidLoad)
+              .bind(to: reactor.action)
+              .disposed(by: self.disposeBag)
+        
         //카테고리 선택 화면으로 이동.
         self.categoryBtn.rx.tap.subscribe(onNext : {result in
             print("카테고리 선택 화면 이동")
             let selectCategory = SellectCategoryVC()
+           
             self.navigationController?.pushViewController(selectCategory, animated: true)
         }).disposed(by: disposeBag)
-        
+        //이미지 추가 버튼 이벤트
         imgCollectionView.rx.itemSelected.filter{$0.row == 0} //카메라 버튼만 이벤트 허용
             .subscribe(onNext : { result in
                 self.addProductImg()
                 
             }).disposed(by: disposeBag)
         
-        
+        //마감 기한 선택 이벤트
         self.dueDateBtn.rx.tap.subscribe(onNext : {
             self.setBottomSheet()
         }).disposed(by: disposeBag)
-        
+        //마감 시간 선택 이벤트
         self.dueTimeBtn.rx.tap.subscribe(onNext : {
             self.setTimeBottomSheet()
         }).disposed(by: disposeBag)
@@ -495,6 +603,8 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             .map { $0.imageSection }
             .bind(to: imgCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
+        
+        
         
     }
     

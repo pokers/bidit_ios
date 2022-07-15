@@ -33,8 +33,9 @@ class TabbarController : UITabBarController{
         searchVC.reactor = SearchReactor()
         
         let vc4 = UIViewController()
-        let vc5 = UIViewController()
-        
+        let myPageVC = MyPageViewController()
+        let myPageNavigationVC = UINavigationController(rootViewController: myPageVC)
+        myPageVC.reactor = MyPageReactor()
         tabBar.barTintColor = .white
         tabBar.tintColor = .black
         
@@ -47,9 +48,9 @@ class TabbarController : UITabBarController{
         
         vc4.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"my_deal_img" ), selectedImage: UIImage(named:"my_deal_fill_img" ))
         
-        vc5.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"mypage_img" ), selectedImage: UIImage(named:"mypage_fill_img" ))
+        myPageVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"mypage_img" ), selectedImage: UIImage(named:"mypage_fill_img" ))
         
-        viewControllers = [chatVC, homeViewController, searchViewController, vc4, vc5]
+        viewControllers = [chatVC, homeViewController, searchViewController, vc4, myPageNavigationVC]
     }
 }
 

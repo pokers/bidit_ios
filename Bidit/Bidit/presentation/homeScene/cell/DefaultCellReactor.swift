@@ -65,18 +65,18 @@ class DefaultCellReactor: Reactor{
     }
 
     func getMockSections() -> [CategorySection] {
-        let mainItem1 = CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem2 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem3 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem4 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem5 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem6 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem7 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem8 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem9 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem10 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem11 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
-        let mainItem12 =  CategorySectionItem.category(CategoryReactor(category: Category(categoryName: "1")))
+        let mainItem1 = CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem2 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem3 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem4 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem5 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem6 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem7 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem8 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem9 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem10 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem11 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
+        let mainItem12 =  CategorySectionItem.category(CategoryReactor(category: CategoryEntity(categoryName: "1")))
         
       
       let itemsInFirstSection = [mainItem1, mainItem2, mainItem3,mainItem4, mainItem5,mainItem6,

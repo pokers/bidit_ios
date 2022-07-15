@@ -9,10 +9,13 @@ query getItemList($itemQueryInfo:ItemQueryInput, $keywordInfo:String, $firstInfo
             node {
                 id
                 status
-                sPrice
-                cPrice
+                userId
+                createdAt
+                categoryId
                 viewCount
+                cPrice
                 title
+                deliveryType
                 dueDate
                 image {
                     url

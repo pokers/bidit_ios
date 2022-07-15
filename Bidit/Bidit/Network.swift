@@ -16,7 +16,7 @@ class Network{
     static let shared = Network()
     
     
-//    private(set) lazy var apollo = ApolloClient(url: URL(string:
+//    private(set) lazy var apollo =  ApolloClient(url: URL(string:
 //    var token = ""
 
         private(set) lazy var apollo: ApolloClient = {
@@ -76,12 +76,22 @@ class TokenAddingInterceptor: ApolloInterceptor {
         response: HTTPResponse<Operation>?,
         completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void) {
 
+            //현재 로그인 SNS확인
+            let nowLoginState = UserDefaults.standard.string(forKey: "LoginState")
+            var forKey = ""
+            if nowLoginState!.elementsEqual("kakao") {
+                forKey = "kakao"
+            }else if nowLoginState!.elementsEqual("apple"){
+                forKey = "apple"
+            }
         // TODO
         let keychain = TokenManager.sharedKeyChain
-        let token = keychain.get("loginKeychainKey")
-            print("token : \(token)")
+            let token = "\(String(describing: keychain.get(forKey)!)) \(forKey)"
+            print("login token : \(token)")
+            
+            
         
-            request.addHeader(name: "Authorization", value: "Bearer \((token)!)")
+            request.addHeader(name: "Authorization", value: "Bearer \((token))")
            
         // else do nothing
 

@@ -31,7 +31,7 @@ class EndingSoonCellReactor : Reactor{
     
     
     init(item : Item){
-        self.initialState = .init(item: item, timeInterval: calcRestDay(end: item.dueDate!))
+        self.initialState = .init(item: item, timeInterval: calcRestDay(end: item.dueDate ?? ""))
 
     }
     

@@ -18,9 +18,6 @@ import Reusable
 //제품 사진 셀
 class PickedImageCell : UICollectionViewCell, View, Reusable{
     
-    
-    
-    
     typealias Reactor = PickedImageReactor
     
     // MARK: - Property
@@ -35,6 +32,10 @@ class PickedImageCell : UICollectionViewCell, View, Reusable{
     let deleteButton = UIButton() // X 버튼
     let imageView = UIButton() //사진
     
+    
+    
+    //이미지 삭제 이벤트
+    var imgDelete : (() -> ()) = {}
     
     
     override func layoutSubviews() {
@@ -52,7 +53,7 @@ class PickedImageCell : UICollectionViewCell, View, Reusable{
         self.contentView.addSubview(containerView)
         containerView.snp.makeConstraints{
             $0.top.bottom.trailing.leading.equalToSuperview()
-            $0.width.height.equalTo(78)
+            //$0.width.height.equalTo(78)
         }
         //고른 사진 이미지
         containerView.addSubview(photoContainer)
@@ -128,13 +129,19 @@ class PickedImageCell : UICollectionViewCell, View, Reusable{
     func bind(reactor: PickedImageReactor) {
         //Action
         self.deleteButton.rx.tap.subscribe(onNext : {
-            reactor.initialState.image = nil
+            self.imgDelete()
             print("삭제")
             
-        })
+        }).disposed(by: disposeBag)
+        
+        self.deleteButton.rx.tap
+            .map(Reactor.Action.deleteImg)
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         reactor.state.map{$0.image}.subscribe(onNext : {result in
             self.imageView.setImage(result, for: .normal)
-        })
+        }).disposed(by: disposeBag)
         
         
         
@@ -151,6 +158,18 @@ class PickedImageCell : UICollectionViewCell, View, Reusable{
                 self.numberText.text = "\(result)/10"
             })
             .disposed(by: self.disposeBag)
+        
+        
+//        reactor.state.map{$0.image}
+//            .subscribe(onNext : {result in
+//                if result == nil{
+//                    self.contentView.snp.makeConstraints{
+//                        $0.width.equalTo(0)
+//                        
+//                    }
+//                }
+//                
+//            })
         
 //        self.rx.layoutSubviews
 //              .mapVoid()

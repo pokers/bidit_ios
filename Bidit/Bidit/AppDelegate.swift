@@ -68,19 +68,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
        // SBUGlobals.CurrentUser = SBUUser(userId: "USER_ID3", nickname:"USER_ID3", profileUrl: "USER_ID")
        
-        //파이어베이스
-        UNUserNotificationCenter.current().delegate = self
-                Messaging.messaging().delegate = self
-                
-                let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-                UNUserNotificationCenter
-                  .current()
-                  .requestAuthorization(
-                    options: authOptions,completionHandler: { (_, _) in }
-                  )
-                application.registerForRemoteNotifications()
+        //파이어베이스 푸시알림
+        FirebaseApp.configure()
         
-          
+        UNUserNotificationCenter.current().delegate = self
+        Messaging.messaging().delegate = self
+        // FCM 다시 사용 설정
+        Messaging.messaging().isAutoInitEnabled = true
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter
+            .current()
+            .requestAuthorization(
+                options: authOptions,completionHandler: { (_, _) in }
+            )
+        application.registerForRemoteNotifications()
+        
+        // device token 요청.
+        UIApplication.shared.registerForRemoteNotifications()
+        
         return true
     }
     
@@ -115,9 +121,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
     
+    
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+          print("[Log] deviceToken :", deviceTokenString)
+        
+        
+          Messaging.messaging().apnsToken = deviceToken
+    }
+    
     public func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         let firebaseToken = fcmToken ?? ""
         print("firebase token: \(firebaseToken)")
+        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+            
+            NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
     }
     
     public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

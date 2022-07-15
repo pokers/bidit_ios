@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import ReactorKit
-
+//프로필 수정.
 class ProfileChangeVC : UIViewController, View{
     
     let profileImg = UIImageView()
@@ -80,6 +80,18 @@ class ProfileChangeVC : UIViewController, View{
     
     func bind(reactor: ProfileChangeReactor) {
         
+        
+        var inputStr = ""
+        
+        self.nameField.rx.text.subscribe(onNext : {result in
+            inputStr = result!
+        })
+        
+        // 뒤로가기할 때 프로필 수정
+      self.rx.viewWillDisappear.mapVoid()
+          .map(Reactor.Action.updateProfile(inputStr))
+          .bind(to: reactor.action)
+          .disposed(by: disposeBag)
     }
     
     /*

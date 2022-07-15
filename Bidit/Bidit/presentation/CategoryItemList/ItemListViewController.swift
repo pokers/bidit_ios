@@ -10,13 +10,10 @@ import UIKit
 import ReactorKit
 import RxDataSources
 import SideMenu
-
+//각 카테고리별 아이템 리스트 화면
 class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
-    
     var disposeBag = DisposeBag()
-    
     typealias Reactor = ItemListReactor
-    
     var subToolBarContainer = UIView() //상단 툴바
     var sortLabel = UILabel() // 최신순 글자.
     var sortButton = UIButton() // 정렬 기준 버튼
@@ -26,14 +23,13 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     
    // let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(back))
     
-    
     var popularityBtn = UIButton()
     var endingSoonBtn = UIButton()
     var latestBtn = UIButton()
-    
+    //테이블 뷰
     private let tableView = UITableView().then {
         $0.register(cellType: EndingSoonCell.self)
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .blue
         $0.rowHeight = 140
     }
     
@@ -115,6 +111,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
         tableView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(subToolBarContainer.snp.bottom)
+            
             $0.bottom.equalToSuperview()
         }
         
