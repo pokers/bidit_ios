@@ -121,6 +121,7 @@ PODS:
   - KakaoSDKUser (2.11.0):
     - KakaoSDKAuth (= 2.11.0)
   - KeychainSwift (20.0.0)
+  - Kingfisher (7.3.0)
   - MaterialComponents/Availability (124.2.0)
   - MaterialComponents/BottomSheet (124.2.0):
     - MaterialComponents/Elevation
@@ -198,6 +199,7 @@ DEPENDENCIES:
   - KakaoSDKCommon
   - KakaoSDKUser
   - KeychainSwift (~> 20.0)
+  - Kingfisher (~> 7.0)
   - MaterialComponents/BottomSheet
   - ReactorKit
   - Reusable
@@ -234,6 +236,7 @@ SPEC REPOS:
     - KakaoSDKCommon
     - KakaoSDKUser
     - KeychainSwift
+    - Kingfisher
     - MaterialComponents
     - nanopb
     - Pageboy
@@ -274,6 +277,7 @@ SPEC CHECKSUMS:
   KakaoSDKCommon: 0f59f2c1aead6012d92758e8ca46b63ea11c408b
   KakaoSDKUser: 5dbefe494c50dfdc87e4072710e503d39b41a609
   KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
+  Kingfisher: cdb1189a9223b1bc028816bd47c8b8101a58831c
   MaterialComponents: 1a9b2d9d45b1601ae544de85089adc4c464306d4
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   Pageboy: cf121b9dd48c63f3f281b2a9ec93d02e0f23879b
@@ -291,6 +295,6 @@ SPEC CHECKSUMS:
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 23e8fa98520de2f1d170362e93ea601d22b7767d
+PODFILE CHECKSUM: 852aafeba16d176e06ac177c3259ec3420282d8d
 
 COCOAPODS: 1.11.3

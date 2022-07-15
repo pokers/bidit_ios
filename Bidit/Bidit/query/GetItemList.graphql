@@ -18,6 +18,7 @@ query getItemList($itemQueryInfo:ItemQueryInput, $keywordInfo:String, $firstInfo
                 deliveryType
                 dueDate
                 image {
+                    
                     url
                 }
             }

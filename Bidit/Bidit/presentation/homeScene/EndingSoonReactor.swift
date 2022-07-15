@@ -10,6 +10,9 @@ import Apollo
 import RxSwift
 import RxCocoa
 import RxApolloClient
+
+import Kingfisher
+
 class EndingSoonReactor : Reactor {
     
     var itemList : [Item] = []
@@ -107,13 +110,22 @@ extension EndingSoonReactor {
                         var tempList = Array<Item>()
                         data.data!.getItemList!.edges!.forEach{item in
                             var node = item?.node
+                            var images = Array<ItemImage>()
+                            
+                            node?.image?.forEach{
+                                
+                                images.append(ItemImage(url : $0?.url ?? ""))
+                                
+                            }
+                            
                             var tempItem = Item(id: node?.id,
                                                 status: node?.status,
                                                 userId: node?.userId,
                                                 cPrice : node?.cPrice,
                                                 title : node?.title,
                                                 dueDate : node?.dueDate,
-                                                createdAt: node?.createdAt
+                                                createdAt: node?.createdAt,
+                                                image: images
                             )
                             
                             
@@ -123,6 +135,7 @@ extension EndingSoonReactor {
                             
                         }
                         var items = tempList
+                            self.itemList = tempList
                         
                         
                         //self.updateList(decode.getEndingSoonItems)

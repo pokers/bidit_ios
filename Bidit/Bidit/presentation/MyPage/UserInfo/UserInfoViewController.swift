@@ -178,6 +178,14 @@ class UserInfoViewController : UIViewController, View{
         }
         snsImg.image = UIImage(systemName: "chevron.left")
         
+        var nowLoginState = UserDefaults.standard.string(forKey: "LoginState")
+        
+        if nowLoginState!.elementsEqual("kakao"){
+            self.snsImg.image = UIImage(named: "kakao_sns_img")//카카오
+        }else if nowLoginState!.elementsEqual("apple"){
+            self.snsImg.image = UIImage(named: "apple_sns_img")
+        }
+        
         //줄4
         view.addSubview(separator4)
         separator4.snp.makeConstraints{
@@ -227,6 +235,12 @@ class UserInfoViewController : UIViewController, View{
                // vc.bind(reactor: listReactor)
                 self.navigationController?.pushViewController(vc, animated: true)
             })
+//
+        
+        self.rx.viewDidLoad.mapVoid()
+            .map(Reactor.Action.viewDidLoad)
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
         reactor.state
             .map { $0.user }
@@ -243,11 +257,13 @@ class UserInfoViewController : UIViewController, View{
                 }
                 
                 //현재 로그인 SNS확인
+                //현재 로그인 SNS확인
+                
                 var nowLoginState = UserDefaults.standard.string(forKey: "LoginState")
-                var forKey = ""
-                if nowLoginState == "Kakao"{
+                
+                if nowLoginState!.elementsEqual("kakao"){
                     self.snsImg.image = UIImage(named: "kakao_sns_img")//카카오
-                }else if nowLoginState == "Apple"{
+                }else if nowLoginState!.elementsEqual("apple"){
                     self.snsImg.image = UIImage(named: "apple_sns_img")
                 }
                 

@@ -6,15 +6,14 @@
 //
 
 import Foundation
-
+//이비지
 struct ItemImage : Codable{
-
-    let id: Int!
-    let status: Int!
-    let itemId: Int!
-    let type: Int
-    let url: String
-    let createdAt: String!
-    let updatedAt: String
-    let deletedAt: String
+    var id: Int? = 0
+    var status: Int? = 0
+    var itemId: Int? = 0
+    var type: Int? = 0
+    var url: String
+    var createdAt: String? = ""
+    var updatedAt: String? = ""
+    var deletedAt: String? = ""
 }
