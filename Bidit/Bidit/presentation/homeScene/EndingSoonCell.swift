@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 import ReactorKit
 import Reusable
+import Kingfisher
+
 
 class EndingSoonCell : UITableViewCell, View, Reusable {
     
@@ -125,6 +127,16 @@ class EndingSoonCell : UITableViewCell, View, Reusable {
             .map { "\((String(describing: $0.item.cPrice?.description ?? $0.item.sPrice!.description))) 원" }
             .bind(to: self.itemPrice.rx.text)
             .disposed(by: self.disposeBag)
+        
+      //  guard let url = URL(string: "https://live.staticflickr.com/65535/51734305911_f4541d7629_m.jpg") else { return }
+       //myImageView.kf.setImage(with: url)
+        //이미지 불러오기
+        reactor.state.filter{$0.item.image?.count ?? 0 > 0}
+            .subscribe(onNext : {
+                var url = URL(string: $0.item.image?[0].url ?? "")
+                self.itemImage.kf.setImage(with: url)
+            })
+            .disposed(by: disposeBag)
         
     
        

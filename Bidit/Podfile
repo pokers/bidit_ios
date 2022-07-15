@@ -28,6 +28,7 @@ target 'Bidit' do
     pod 'Firebase/Messaging'
     pod "BSImagePicker", "~> 3.1"
     pod 'FSCalendar'
+    pod 'Kingfisher', '~> 7.0'
   
 
   # Pods for Bidit

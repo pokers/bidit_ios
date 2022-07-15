@@ -189,22 +189,22 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let accessToken = String(data: idToken, encoding: .ascii) ?? ""
             UserDefaults.standard.set("apple", forKey: "LoginState")
             let keyChain = TokenManager.sharedKeyChain
-            keyChain.set((tokeStr!),forKey: "apple")
+            keyChain.set((accessToken),forKey: "apple")
             //서버 요청
             
             
-            
+            //애플에서 토큰을 받은 후 me 호출
             Network.shared.apollo.fetch(query: MeQuery()){result in
                 switch result {
                 case .success(let data) :
-                    //로그인이 된다면 me 호출
+                    //me 요청이 성공하면 홈화면으로 이동.
                     self.movingHomeView()
                     break
                 case .failure(let error) :
                     print("로그인 실패 error : \(error)")
                     //self.passed = false
                     
-                    //안된다면 가입
+                    //안된다면 가입 addUser호출
                     Network.shared.apollo.perform(mutation: MyQueryMutation()){result in
                         switch result {
                         case .success(let data) :

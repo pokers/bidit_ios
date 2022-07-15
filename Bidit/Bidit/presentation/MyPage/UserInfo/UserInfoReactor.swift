@@ -30,22 +30,22 @@ class UserInfoReactor : Reactor {
 }
 
 extension UserInfoReactor{
-//    func mutate(action: Action) -> Observable<Mutation> {
-//        switch action {
-//        case .viewDidLoad :
+    func mutate(action: Action) -> Observable<Mutation> {
+        switch action {
+        case .viewDidLoad :
+
+            return Observable<Mutation>.just(.loadMyInfo(initialState.user!))
+
+        }
+    }
 //
-//            return requestMyInfo()
-//
-//        }
-//    }
-//
-//    func reduce(state: State, mutation: Mutation) -> State {
-//        var state = state
-//        switch mutation {
-//        case .loadMyInfo(let user) :
-//            state.user = user
-//
-//        }
-//        return state
-//    }
+    func reduce(state: State, mutation: Mutation) -> State {
+        var state = state
+        switch mutation {
+        case .loadMyInfo(let user) :
+            state.user = user
+
+        }
+        return state
+    }
 }
