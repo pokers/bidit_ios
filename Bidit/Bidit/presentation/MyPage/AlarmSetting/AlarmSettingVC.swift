@@ -217,6 +217,21 @@ class AlarmSettingVC : UIViewController, View{
     
     func bind(reactor: AlarmSettingReactor) {
         
+        //전체 푸시 설정
+        self.allPushSwitch.rx.value.subscribe(onNext : {result in
+            if result == false {
+                print("알림 끔")
+                // disable
+                UIApplication.shared.unregisterForRemoteNotifications()
+
+                
+            }else{
+                // enable
+                print("알림 켬")
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+            
+        }).disposed(by: disposeBag)
     }
     
 

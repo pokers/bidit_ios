@@ -218,7 +218,7 @@ class UserInfoViewController : UIViewController, View{
     func bind(reactor: UserInfoReactor) {
         
         
-        
+        //탈퇴 버튼
         self.withdrawBtn.rx.tap
             .subscribe(onNext : {
                 let vc = WithdrawalVC()
@@ -227,6 +227,40 @@ class UserInfoViewController : UIViewController, View{
                // vc.bind(reactor: listReactor)
                 self.navigationController?.pushViewController(vc, animated: true)
             })
+        
+        reactor.state
+            .map { $0.user }
+            .subscribe(onNext : { user in
+                
+                if user?.kakaoAccount != nil{
+                    self.nameText.text = user?.kakaoAccount?.name
+                    self.emailText.text = user?.kakaoAccount?.email
+                    self.phoneText.text = user?.kakaoAccount?.phoneNumber
+                }else if user?.appleAccount != nil{
+                    self.nameText.text = "없음"
+                    self.emailText.text = user?.appleAccount?.email
+                    self.phoneText.text = "없음"
+                }
+                
+                //현재 로그인 SNS확인
+                var nowLoginState = UserDefaults.standard.string(forKey: "LoginState")
+                var forKey = ""
+                if nowLoginState == "Kakao"{
+                    self.snsImg.image = UIImage(named: "kakao_sns_img")//카카오
+                }else if nowLoginState == "Apple"{
+                    self.snsImg.image = UIImage(named: "apple_sns_img")
+                }
+                
+//                if user?.kakaoAccount != nil{
+//                    
+//                }else if user?.appleAccount != nil{
+//                    
+//                }
+                
+                
+                
+            })
+            .disposed(by: self.disposeBag)
     }
     
 

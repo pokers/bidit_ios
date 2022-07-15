@@ -7,8 +7,19 @@
 
 import Foundation
 import ReactorKit
+
+protocol DeleteDelegate : class {
+    func deleteImage(image : UIImage)
+}
+
 //제품 사진 셀 리액터
 class PickedImageReactor : Reactor{
+    
+    
+    weak var delegate : DeleteDelegate?
+    func didDelete(image : UIImage){
+        delegate?.deleteImage(image: image)
+    }
     var initialState: State
     
     
@@ -16,12 +27,14 @@ class PickedImageReactor : Reactor{
     enum Action {
         case layoutSubviews
        
+        case deleteImg
     }
       
       
     enum Mutation {
         case updateDataSource
       
+        case deleteImg
     }
       
       
@@ -41,6 +54,8 @@ class PickedImageReactor : Reactor{
         case .layoutSubviews:
           return Observable<Mutation>.just(.updateDataSource)
             
+        case .deleteImg :
+            return Observable<Mutation>.just(.deleteImg)
             
         
         }
@@ -52,6 +67,9 @@ class PickedImageReactor : Reactor{
         case .updateDataSource:
          // state.messageSection = getMockSections()
             break
+        case .deleteImg :
+            didDelete(image: state.image!)
+            state.image = nil
             
         }
         return state

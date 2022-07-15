@@ -11,9 +11,9 @@ class CategoryReactor: Reactor {
 
     
     typealias Action = NoAction
-    let initialState: Category
+    let initialState: CategoryEntity
     
-    init(category : Category){
+    init(category : CategoryEntity){
         self.initialState = category
         
     }

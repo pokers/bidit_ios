@@ -6,9 +6,12 @@ query Me {
         nickname
         passwd
         joinPath
+        
+        birth
         email
         phone
         createdAt
+        updatedAt
         deletedAt
         description
         items {
@@ -23,29 +26,13 @@ query Me {
                 node{
                     id
                     status
-                    createdAt
+                    
                     name
-                    sPrice
-                    cPrice
-                    dueDate
-                    description {
-                        id
-                        status
-                        itemId
-                        description
-                        createdAt
-                        updatedAt
-                        deletedAt
-                    }
-                    image {
-                        id
-                        status
-                        itemId
-                        url
-                        createdAt
-                        updatedAt
-                        deletedAt
-                    }
+                    
+                    createdAt
+                    updatedAt
+                    deletedAt
+                    
                 }
                 cursor
             }
@@ -56,11 +43,53 @@ query Me {
             id
             status
             userId
-            nickname
-            email
+            profile_needs_agreement
+            profile_nickname_needs_agreement
+            profile_image_needs_agreement
+            name_needs_agreement
             name
+            email_needs_agreement
+            is_email_valid
+            is_email_verified
+            email
+            age_range_needs_agreement
+            age_range
+            birthyear_needs_agreement
+            birthyear
+            birthday_needs_agreement
+            birthday
+            birthday_type
+            gender_needs_agreement
+            gender
+            phone_number_needs_agreement
             phone_number
+            ci_needs_agreement
+            ci
+            ci_authenticated_at
+            nickname
+            thumbnail_image_url
+            profile_image_url
+            is_default_image
+            createdAt
+            updatedAt
+            deletedAt
+            description
             
+
+        }
+        appleAccount {
+           id
+            status
+            userId
+            sub
+            email
+            email_verified
+            is_private_email
+            real_user_status
+            createdAt
+            updatedAt
+            deletedAt
+            description
 
         }
         pushToken {

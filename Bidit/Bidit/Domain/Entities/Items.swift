@@ -9,5 +9,5 @@ import Foundation
 
 struct Items : Codable{
     
-    let getEndingSoonItems : [Item]
+    var getEndingSoonItems : [Item]
 }

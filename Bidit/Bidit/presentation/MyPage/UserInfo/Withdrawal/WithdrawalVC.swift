@@ -21,7 +21,7 @@ class WithdrawalVC : UIViewController {
     
     let reasonTitle = UILabel()
     let resonBtn = UIButton()
-    
+    let btnLabel = UILabel()
     let withdrawalBtn = UIButton()
     
     override func viewDidLoad() {
@@ -131,7 +131,7 @@ class WithdrawalVC : UIViewController {
             $0.height.equalTo(44)
         }
         resonBtn.setImage(UIImage(named: "reason_btn_img"), for: .normal)
-        let btnLabel = UILabel()
+        
         resonBtn.addSubview(btnLabel)
         btnLabel.snp.makeConstraints{
             $0.centerY.equalToSuperview()
@@ -182,6 +182,12 @@ class WithdrawalVC : UIViewController {
         self.resonBtn.rx.tap
             .subscribe(onNext : {
                 self.setPopup()
+            })
+        
+        
+        self.withdrawalBtn.rx.tap
+            .subscribe(onNext: {
+                
             })
     }
 }

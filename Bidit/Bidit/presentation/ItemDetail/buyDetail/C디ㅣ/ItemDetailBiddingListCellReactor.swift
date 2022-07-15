@@ -78,11 +78,11 @@ class ItemDetailBiddingListCellReactor : Reactor{
 }
 func getBiddingListMock() -> [BiddingListSection]{
     print("입찰 내역 생성")
-    let tempItem1 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
-    let tempItem2 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
-    let tempItem3 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
-    let tempItem4 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
-    let tempItem5 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item()))
+    let tempItem1 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id: 1, status: 1, userId: 1, createdAt: "")))
+    let tempItem2 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id: 1, status: 1, userId: 1, createdAt: "")))
+    let tempItem3 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id: 1, status: 1, userId: 1, createdAt: "")))
+    let tempItem4 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id: 1, status: 1, userId: 1, createdAt: "")))
+    let tempItem5 = BiddingListSectionItem.item(BiddingListCellOfCellReactor(item : Item(id: 1, status: 1, userId: 1, createdAt: "")))
 
     let itemInFirstSection = [tempItem1, tempItem2, tempItem3, tempItem4, tempItem5]
 

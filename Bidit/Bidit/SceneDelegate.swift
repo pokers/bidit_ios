@@ -6,6 +6,7 @@
 import UIKit
 import KakaoSDKAuth
 import SendBirdUIKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,10 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
        
-        let vc = MyPageViewController()//UploadProductViewController()
+        let vc = LoginViewController() //UploadProductViewController()//
         let naviVC = UINavigationController(rootViewController: vc)//LoginViewController()
        //() //TabbarController() //LoginViewController()
-        vc.reactor = MyPageReactor()//UploadProductReactor()
+        vc.reactor = LoginReactor()//UploadProductReactor()
         
         //self.present(naviVC, animated: true)
         
@@ -33,7 +34,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
 
         
-        
+        Messaging.messaging().token { token, error in
+          if let error = error {
+            print("Error fetching FCM registration token: \(error)")
+          } else if let token = token {
+            print("FCM registration token: \(token)")
+            //self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
+          }
+        }
         
     }
     

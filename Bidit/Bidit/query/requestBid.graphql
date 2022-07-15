@@ -1,8 +1,6 @@
 
 mutation requestBid($bidInfo:BidInput!){
     bid(bid: $bidInfo){
-
-        
         id
         status
         userId

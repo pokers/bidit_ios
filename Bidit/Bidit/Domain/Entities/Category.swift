@@ -2,19 +2,19 @@
 //  Category.swift
 //  Bidit
 //
-//  Created by JeongMin Ko on 2022/06/13.
+//  Created by JeongMin Ko on 2022/07/13.
 //
 
 import Foundation
 
-struct Category : ModelType{
-    var categoryName : String
-    var isDone = false
+struct Category : Codable {
+    let id: Int!
+    let status: Int!
+    //let parentId: Int
+    let name: String?
+    //let depth: Int
+    let createdAt: String!
+    let updatedAt: String?
+    let deletedAt: String?
+    
 }
-
-extension Category : Equatable{
-    static func == (lhs : Category, rhs : Category) -> Bool{
-        lhs.categoryName == rhs.categoryName
-    }
-}
-

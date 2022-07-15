@@ -10,6 +10,7 @@ import ReactorKit
 import RxCocoa
 import RxSwift
 
+import AuthenticationServices
 
 class LoginViewController : UIViewController, View{
     var disposeBag: DisposeBag = DisposeBag()
@@ -28,7 +29,7 @@ class LoginViewController : UIViewController, View{
         attribute()
         extendBind()
         
-        
+       
         
         
     }
@@ -103,11 +104,24 @@ class LoginViewController : UIViewController, View{
 //        reactor.state
 //            .bind(to: collectionView.rx.scrollsToTop)
         
-        self.rx.viewDidLoad
-              .mapVoid()
-              .map(Reactor.Action.viewDidLoad)
-              .bind(to: reactor.action)
-              .disposed(by: self.disposeBag)
+//        self.rx.viewDidLoad
+//              .mapVoid()
+//              .map(Reactor.Action.viewDidLoad)
+//              .bind(to: reactor.action)
+//              .disposed(by: self.disposeBag)
+        //애플 로그인
+        self.appleLoginBtn.rx.tap
+            .asObservable()
+            .subscribe(onNext : {
+                let request = ASAuthorizationAppleIDProvider().createRequest()
+                request.requestedScopes = [.fullName, .email]
+                UserDefaults.standard.set("apple", forKey: "LoginState")
+
+                let controller = ASAuthorizationController(authorizationRequests: [request])
+                controller.delegate = self as? ASAuthorizationControllerDelegate
+                controller.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
+                controller.performRequests()
+            })
               
             //State
         reactor.state
@@ -129,6 +143,8 @@ class LoginViewController : UIViewController, View{
                 
             })
             .disposed(by: self.disposeBag)
+        
+
         
         
         
@@ -155,4 +171,76 @@ class LoginViewController : UIViewController, View{
         //self.present(vc, animated: true)
     }
    
+}
+//애플로그인
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    // 성공 후 동작
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
+
+            let idToken = credential.identityToken!
+            let tokeStr = String(data: idToken, encoding: .utf8)
+            guard let code = credential.authorizationCode else { return }
+                        let codeStr = String(data: code, encoding: .utf8)
+                        print(codeStr)
+
+                        let user = credential.user
+                        print(user)
+            let accessToken = String(data: idToken, encoding: .ascii) ?? ""
+            UserDefaults.standard.set("apple", forKey: "LoginState")
+            let keyChain = TokenManager.sharedKeyChain
+            keyChain.set((tokeStr!),forKey: "apple")
+            //서버 요청
+            
+            
+            
+            Network.shared.apollo.fetch(query: MeQuery()){result in
+                switch result {
+                case .success(let data) :
+                    //로그인이 된다면 me 호출
+                    self.movingHomeView()
+                    break
+                case .failure(let error) :
+                    print("로그인 실패 error : \(error)")
+                    //self.passed = false
+                    
+                    //안된다면 가입
+                    Network.shared.apollo.perform(mutation: MyQueryMutation()){result in
+                        switch result {
+                        case .success(let data) :
+                            print("success \(data)")
+                            //현재 로그인 상태 갱신 (애플, 카카오 등)
+                            UserDefaults.standard.set("apple", forKey: "LoginState")
+                            
+                            //홈화면 이동
+                            let vc = TabbarController()
+                            vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+                            self.view.backgroundColor = .systemBackground
+                            self.dismiss(animated: true) {
+                                self.present(vc, animated: true, completion: nil)
+                            }
+
+                            
+                            break
+                        case .failure(let error) :
+                            print("error : \(error)")
+                            //self.passed = false
+                        }
+                    }
+                    
+                }
+            }
+            
+            
+            
+           
+            
+
+        }
+    }
+
+    // 실패 후 동작
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("로그인 error")
+    }
 }

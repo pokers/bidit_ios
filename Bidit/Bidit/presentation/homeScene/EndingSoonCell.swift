@@ -116,13 +116,13 @@ class EndingSoonCell : UITableViewCell, View, Reusable {
         
         reactor.state
             .map {
-                calcRestDay(end:$0.item.dueDate!).description
+                calcRestDay(end:$0.item.dueDate ?? "").description
                 }
             .bind(to: self.nowText.rx.text)
             .disposed(by: self.disposeBag)
         
         reactor.state
-            .map { "\((String(describing: $0.item.cPrice?.description ?? ""))) 원" }
+            .map { "\((String(describing: $0.item.cPrice?.description ?? $0.item.sPrice!.description))) 원" }
             .bind(to: self.itemPrice.rx.text)
             .disposed(by: self.disposeBag)
         

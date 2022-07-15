@@ -330,12 +330,12 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             .map { $0.messageSection }
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
-        
+        //카테고리 버튼 선택
         reactor.state.map{ $0.selectedIndexPath}
             .compactMap{$0}
             .subscribe(onNext : { [weak self] indexPath in
                 let vc = ItemListViewController()
-                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init())
+                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init(categoryId: 1)) //임시로 입력
                 vc.reactor = listReactor
                // vc.bind(reactor: listReactor)
                 self?.navigationController?.pushViewController(vc, animated: true)

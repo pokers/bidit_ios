@@ -10,10 +10,11 @@ import UIKit
 import FSCalendar
 import RxSwift
 
-class CalendarVC : UIViewController{
+class CalendarVC : UIViewController, FSCalendarDelegate, FSCalendarDataSource{
     
     let disPoseBag = DisposeBag()
     let calendarContainer = UIView()
+    var selected = ""
     
     let prevBtn = UIButton()
     let nextBtn = UIButton()
@@ -21,6 +22,12 @@ class CalendarVC : UIViewController{
     var calendar = FSCalendar()
     //확인 버튼
     let checkBtn = UIButton()
+    
+    var preVC : UploadProductViewController? = nil
+    
+    let dateFormatter = DateFormatter()
+    
+
     
     
     private var currentPage: Date?
@@ -33,8 +40,13 @@ class CalendarVC : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         layout()
-        bind()
+        
+        
+        calendar.delegate = self
+        calendar.dataSource = self
         
         self.view.backgroundColor = .systemBackground
         self.dateComponents = DateComponents()
@@ -46,6 +58,7 @@ class CalendarVC : UIViewController{
 
         // Weekday 폰트 설정
         calendar.appearance.weekdayFont = UIFont(name: "NotoSansKR-Regular", size: 10)
+        calendar.appearance.weekdayTextColor = UIColor(red: 0.258, green: 0.258, blue: 0.258, alpha: 1)
 
         // 각각의 일(날짜) 폰트 설정 (ex. 1 2 3 4 5 6 ...)
         calendar.appearance.titleFont = UIFont(name: "NotoSansKR-Regular", size: 14)
@@ -76,6 +89,8 @@ class CalendarVC : UIViewController{
             $0.width.equalTo(280)
             $0.height.equalTo(20)
         }
+        
+        bind()
     }
     
     
@@ -84,9 +99,9 @@ class CalendarVC : UIViewController{
         self.view.layer.cornerRadius = 20
         self.view.addSubview(calendarContainer)
         calendarContainer.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(16)
             $0.top.trailing.equalToSuperview().offset(16)
-            $0.width.equalTo(view.snp.width)
+           // $0.width.equalTo(view.snp.width)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(288)
         }
@@ -140,16 +155,43 @@ class CalendarVC : UIViewController{
     }
     
     func bind(){
+        
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일" // 2022-07-13
         self.prevBtn.rx.tap
             .subscribe(onNext : {
+                print(" pre ")
                 self.scrollCurrentPage(isPrev: true)
             }).disposed(by: disPoseBag)
         
         self.nextBtn.rx.tap
             .subscribe(onNext : {
                 self.scrollCurrentPage(isPrev: false)
+                print(" next ")
+            }).disposed(by: disPoseBag)
+        
+        
+        //닫을 때 이벤트
+        self.checkBtn.rx.tap
+            .subscribe(onNext : {
+                print(" 확인")
+                
+                       // 값을 전달한다.
+                
+                self.preVC?.dueDateBtn.setTitle(self.selected, for: .normal)
+                self.preVC?.dueDateBtn.setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+                print(" 날짜 선택 : \(self.selected)")
+                self.dismiss(animated: true)
             }).disposed(by: disPoseBag)
     }
    
     
+}
+
+
+extension CalendarVC {
+    // 날짜 선택 시 콜백 메소드
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        print(dateFormatter.string(from: date) + " 날짜가 선택되었습니다.")
+        selected = dateFormatter.string(from: date)
+    }
 }

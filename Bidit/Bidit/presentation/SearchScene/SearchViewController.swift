@@ -156,6 +156,8 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         }
         recentKeywordStackView.axis = .vertical
         recentKeywordStackView.spacing = 24
+        recentKeywordStackView.alignment = .top
+        
         recentKeywordStackView.addArrangedSubview(recentKeyGroup1)
         recentKeywordStackView.addArrangedSubview(recentKeyGroup2)
         recentKeywordStackView.addArrangedSubview(recentKeyGroup3)
@@ -163,6 +165,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         recentKeyGroup1.snp.makeConstraints{
             $0.width.equalToSuperview()
             $0.height.equalTo(21)
+        
         }
         recentKeyGroup2.snp.makeConstraints{
             $0.width.equalToSuperview()
@@ -212,6 +215,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         
         //검색 결과
         self.scrollView.addSubview(containerSearchResult)
+        containerSearchResult.isHidden = true
         self.containerSearchResult.addSubview(filterTitle)
         self.containerSearchResult.addSubview(leftFilterBtn)
         self.containerSearchResult.addSubview(resultTableView)
@@ -286,19 +290,25 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         //최근검색어123
         recentKeyBtn1.setTitle("최근검색어1", for: .normal)
         recentKeyBtn1.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        recentKeyBtn1.isHidden = true
         recentDeleteBtn1.setImage(UIImage(systemName: "xmark"), for: .normal)
+        recentDeleteBtn1.isHidden = true
         recentDeleteBtn1.tintColor = .gray
         recentKeyBtn1.setTitleColor( .black, for: .normal)
         
         recentKeyBtn2.setTitle("최근검색어2", for: .normal)
+        recentKeyBtn2.isHidden = true
         recentDeleteBtn2.setImage(UIImage(systemName: "xmark"), for: .normal)
+        recentDeleteBtn2.isHidden = true
         recentKeyBtn2.setTitleColor( .black, for: .normal)
         recentKeyBtn2.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         recentDeleteBtn2.tintColor = .gray
         
         recentKeyBtn3.setTitle("최근검색어3", for: .normal)
+        recentKeyBtn3.isHidden = true
         recentDeleteBtn3.setImage(UIImage(systemName: "xmark"), for: .normal)
         recentKeyBtn3.setTitleColor( .black, for: .normal)
+        recentDeleteBtn3.isHidden = true
         recentKeyBtn3.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         recentDeleteBtn3.tintColor = .gray
         
@@ -334,6 +344,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             $0.top.bottom.equalToSuperview()
         }
         backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        backButton.tintColor = .gray
         let barButtonItem = UIBarButtonItem(customView: backButtonView)
         self.navigationItem.leftBarButtonItem = barButtonItem
     }
@@ -342,9 +353,9 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
 
         //Action
             //첫화면 불러왔을 때 -> 최근 검색어 및 검색제품 불러오기
-        self.rx.viewDidLoad
+        self.rx.viewWillAppear
               .mapVoid()
-              .map(Reactor.Action.viewDidLoad)
+              .map{Reactor.Action.viewDidLoad}
               .bind(to: reactor.action)
               .disposed(by: self.disposeBag)
         
@@ -360,10 +371,57 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         
             //검색결과 불러오기
         self.searchBar.rx.searchButtonClicked
-            .map(Reactor.Action.tapSearchBtn(inputKeyword))
+            .map{Reactor.Action.tapSearchBtn(keyword: inputKeyword)}
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
+        self.backButton.rx.tap
+            .subscribe(onNext : {
+                self.tabBarController?.selectedIndex = 1 // 홈화면으로 이동.
+            }).disposed(by: disposeBag)
+        
+        //모두 지우기
+        self.recentKeyDeleteAll.rx.tap
+            .subscribe(onNext : {
+                let isDeleted = CoreDataManager.shared.deleteAll(request: RecentSearchTerm.fetchRequest())
+                self.recentKeywordStackView.isHidden = true
+                print("삭제 여부 \(isDeleted)")
+            })
+        
+        //최근 검색 키워드 삭제
+        self.recentDeleteBtn1.rx.tap
+            .subscribe(onNext : {
+                let keyword = self.recentKeyBtn1.titleLabel?.text ?? ""
+                let isDeleted = CoreDataManager.shared.delete(keyword : keyword, request: RecentSearchTerm.fetchRequest())
+                self.recentKeyGroup1.isHidden = true
+                print("삭제 여부 \(isDeleted)")
+//                self.recentKeywordStackView.snp.makeConstraints{
+//                    $0.height.equalTo(self.recentKeywordStackView.snp.height).inset(21)
+//                }
+            }).disposed(by: disposeBag)
+        
+        self.recentDeleteBtn2.rx.tap
+            .subscribe(onNext : {
+                let keyword = self.recentKeyBtn2.titleLabel?.text ?? ""
+                let isDeleted = CoreDataManager.shared.delete(keyword : keyword, request: RecentSearchTerm.fetchRequest())
+                self.recentKeyGroup2.isHidden = true
+                print("삭제 여부 \(isDeleted)")
+//                self.recentKeywordStackView.snp.makeConstraints{
+//                    $0.height.equalTo(self.recentKeywordStackView.snp.height).inset(21)
+//                }
+            }).disposed(by: disposeBag)
+        
+        self.recentDeleteBtn3.rx.tap
+            .subscribe(onNext : {
+                let keyword = self.recentKeyBtn3.titleLabel?.text ?? ""
+                let isDeleted = CoreDataManager.shared.delete(keyword : keyword, request: RecentSearchTerm.fetchRequest())
+                self.recentKeyGroup3.isHidden = true
+//                self.recentKeywordStackView.snp.makeConstraints{
+//                    $0.height.equalTo(self.recentKeywordStackView.snp.height).inset(21)
+//                }
+                
+                print("삭제 여부 \(isDeleted)")
+            }).disposed(by: disposeBag)
         
         
         
@@ -385,7 +443,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             .map{ $0.resultItemSection }
             .subscribe(onNext : { result in
                 
-                
+                self.containerSearchResult.isHidden = false // 검색결과 보이기
                 if result[0].items.count > 0{
                     self.containerRecentKeyword.isHidden = true
                     
@@ -414,7 +472,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
                 }else {
                     //아이템이 없을 때
                     self.emptyImage.isHidden = false
-                    
+                    self.containerSearchResult.isHidden = true // 검색결과 보이기
                     self.containerSearchResult.snp.makeConstraints{
                         
                         $0.leading.equalToSuperview()
@@ -432,16 +490,22 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
                 
             }).disposed(by: disposeBag)
         
+        //최근 검색 키워드
         reactor.state
             .map { $0.recentKeyword }
             .subscribe(onNext : {result in
                 if result.count != 0 {
                     let keyTextArray = [self.recentKeyBtn1,self.recentKeyBtn2, self.recentKeyBtn3 ]
+                    let deleteBtnArray = [self.recentDeleteBtn1,self.recentDeleteBtn2,self.recentDeleteBtn3]
                     for i in 0...result.count {
                         if i > 2 {
                             break
+                        }else if i == result.count {
+                            break
                         }
-                        keyTextArray[i].setTitle(result[i]  , for: .normal)
+                        keyTextArray[i].setTitle(result[result.count - i - 1]  , for: .normal)
+                        keyTextArray[i].isHidden = false
+                        deleteBtnArray[i].isHidden = false
                        
                     }
                 }
@@ -449,6 +513,9 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
                 
             })
             .disposed(by: self.disposeBag)
+        
+        
+        
         
         
     }

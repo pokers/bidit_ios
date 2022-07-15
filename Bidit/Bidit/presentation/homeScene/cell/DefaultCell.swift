@@ -99,7 +99,7 @@ class DefaultCell: UITableViewCell, View, Reusable {
             .compactMap{$0}
             .subscribe(onNext : { [weak self] indexPath in
                 let vc = ItemListViewController()
-                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init())
+                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init(categoryId: 1)) //임시로 입력
                 vc.reactor = listReactor
                // vc.bind(reactor: listReactor)
                 //self?.navigationController?.pushViewController(vc, animated: true)

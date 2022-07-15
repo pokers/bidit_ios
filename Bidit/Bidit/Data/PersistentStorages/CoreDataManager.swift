@@ -16,14 +16,29 @@ class CoreDataManager {
     static let shared: CoreDataManager = CoreDataManager()
     
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    
+    
+    
+//    lazy var persistentContainer: NSPersistentContainer? = {
+//        let container = NSPersistentContainer(name: "RecentSearchModel")
+//        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+//
+//            if let error = error as NSError? {
+//                fatalError("Unresolved error \(error), \(error.userInfo)")
+//            }
+//        })
+//        return container
+//    }()
     private lazy var context = appDelegate?.persistentContainer.viewContext
     
     
     // MARK: - 최근 검색 제품으로 저장한다
     func saveRecentProduct(id: Int, title: String, image: String, dueDate : String, cPrice : Int, completion: @escaping (Bool) -> Void) {
         guard let context = self.context,
-            let entity = NSEntityDescription.entity(forEntityName: CoreDataName.recentResearch.rawValue, in: context)
-            else { return }
+            let entity = NSEntityDescription.entity(forEntityName: "RecentProduct", in: context)
+            else {
+            print("context is null")
+            return }
 
         guard let recentTerms = NSManagedObject(entity: entity, insertInto: context) as? RecentProduct else { return }
         
@@ -44,8 +59,10 @@ class CoreDataManager {
     // MARK: - 최근 검색 키워드로 저장한다
     func saveRecentKeyword(keyword : String, completion: @escaping (Bool) -> Void) {
         guard let context = self.context,
-            let entity = NSEntityDescription.entity(forEntityName: CoreDataName.recentResearch.rawValue, in: context)
-            else { return }
+              let entity = NSEntityDescription.entity(forEntityName: "RecentSearchTerm", in: context)
+            else {
+            print("context is null")
+            return }
 
         guard let recentTerms = NSManagedObject(entity: entity, insertInto: context) as? RecentSearchTerm else { return }
         
@@ -54,8 +71,10 @@ class CoreDataManager {
 
         do {
             try context.save()
+            print("키워드 저장 성공")
             completion(true)
         } catch {
+            print("키워드 저장 실패")
             print(error.localizedDescription)
             completion(false)
         }
@@ -72,10 +91,10 @@ class CoreDataManager {
             return []
         }
     }
-    
+//    keypath index not found in entity
     // MARK: - 특정 index 번호 삭제
-    func delete<T: NSManagedObject>(at index: Int, request: NSFetchRequest<T>) -> Bool {
-        request.predicate = NSPredicate(format: "index = %@", NSNumber(value: index))
+    func delete<T: NSManagedObject>(keyword: String, request: NSFetchRequest<T>) -> Bool {
+        request.predicate = NSPredicate(format: "keyword = %@", NSString(string: keyword))
 
         do {
             if let recentTerms = try context?.fetch(request) {
@@ -92,7 +111,31 @@ class CoreDataManager {
         return false
     }
     
+    // MARK: - 키워드 삭제
+    @discardableResult
+    func deleteKeyword(object: NSManagedObject) -> Bool {
+        self.context?.delete(object)
+        do {
+            try context?.save()
+            return true
+        } catch {
+            return false
+        }
+    }
     
+    @discardableResult
+    
+    func deleteAll<T: NSManagedObject>(request: NSFetchRequest<T>) -> Bool {
+        let request: NSFetchRequest<NSFetchRequestResult> = T.fetchRequest()
+        let delete = NSBatchDeleteRequest(fetchRequest: request)
+        do {
+            try self.context?.execute(delete)
+            return true
+        } catch {
+            return false
+
+        }
+    }
     
     
 }

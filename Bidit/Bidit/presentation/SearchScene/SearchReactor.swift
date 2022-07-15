@@ -14,7 +14,7 @@ class SearchReactor : Reactor {
     
     enum Action {
         case viewDidLoad //처음 화면 로드
-        case tapSearchBtn(String) // 검색하기 실행
+        case tapSearchBtn(keyword : String) // 검색하기 실행
     }
     
     enum Mutation {
@@ -42,9 +42,10 @@ extension SearchReactor {
         switch action {
             
         case .viewDidLoad:
+            
             return Observable.just(Mutation.loadRecentData)
             
-        case let .tapSearchBtn(keyword):
+        case .tapSearchBtn(let keyword):
             print("뮤테이션 키워드 : \(keyword)")
             updateRecentKeyword(input: keyword) //검색키워드 추가.
             return getSearchResultFromApi(keyword: keyword)
@@ -58,10 +59,9 @@ extension SearchReactor {
           switch mutation {
               
           case .loadRecentData:
-              
               //최근 검색 키워드 불러오기
               let data = requestRecentKeyword()
-              print( " 최근 검색 키워드 불러오기 : \(data)")
+              print( "최근 검색 키워드 불러오기 : \(data)")
               data.forEach{
                   state.recentKeyword.append($0.keyword ?? "")
               }
@@ -87,16 +87,12 @@ extension SearchReactor {
     
     //검색결과 요청
     func getSearchResultFromApi(keyword : String) -> Observable<Mutation>{
-        
-        
-        
         return Observable<Mutation>.create(){ emitter in
 
             let itemQuery = ItemQueryInput.init()
             let inputKeyword = keyword
             let inputCount : Int? = nil
-                
-            
+
             Network.shared.apollo.fetch(
                 query:GetEndingSoonItemsQuery(
                 
@@ -110,7 +106,7 @@ extension SearchReactor {
                     do {
                         let data = try JSONSerialization.data(withJSONObject: data.data!.jsonObject, options: .fragmentsAllowed)
                         let decode : Items = try JSONDecoder().decode(Items.self, from: data)
-                        print("item's id is \(decode.getEndingSoonItems[1])")
+                        //print("item's id is \(decode.getEndingSoonItems[1] ?? nil)")
 //                        decode.getEndingSoonItems.forEach{
 //                            self.itemList.append($0)
 //                        }
@@ -137,12 +133,12 @@ extension SearchReactor {
     
     //최근 검색 데이터 불러오기
     func requestRecentKeyword() -> [RecentSearchTerm]{
-        
+        print("최근 검색 키워드 불러오기 함수 requestRecentKeyword")
         return CoreDataManager.shared.loadRecentKeyword(request: RecentSearchTerm.fetchRequest())
     }
     //최근 검색 제품 불러오기
     func requestRecentProduct() -> [RecentProduct]{
-        
+        print("최근 검색 제품 불러오기")
         return CoreDataManager.shared.loadRecentKeyword(request: RecentProduct.fetchRequest())
     }
     //최근 검색 키워드에 추가. //검색 요청시
@@ -150,6 +146,19 @@ extension SearchReactor {
         print( " 최근 검색 키워드 추가  : \(input)")
         CoreDataManager.shared.saveRecentKeyword(keyword: input, completion: {_ in
         })
+        
+        let count = requestRecentKeyword().count
+        let last = requestRecentKeyword().first?.keyword ?? ""
+        if  count > 3{
+            let isDeleted = CoreDataManager.shared.delete(keyword : last, request: RecentSearchTerm.fetchRequest())
+            print("삭제 여부 \(isDeleted)")
+        }
+        
+//        let fetchResult = PersistenceManager.shared.fetch(request: request)
+//        PersistenceManager.shared.delete(object: fetchResult.last!)
+        
+        
+        
     }// 최근 검색 제품에 추가.
     func updateRecentProduct(item : Item){
         return CoreDataManager.shared.saveRecentProduct(id: item.id, title: item.title ?? "", image: "", dueDate: item.dueDate ?? "", cPrice: item.cPrice ?? 0 , completion: {_ in
@@ -177,10 +186,11 @@ extension SearchReactor {
             ,items: array)
         print("firstSection 개수 : \(firstSection.items)")
         return [firstSection]
-        
-        
-        
-
+ 
+    }
+    func deleteKey(keyword : String){
+        let isDeleted = CoreDataManager.shared.delete(keyword : keyword, request: RecentSearchTerm.fetchRequest())
+        print("삭제 여부 \(isDeleted)")
     }
     
 }

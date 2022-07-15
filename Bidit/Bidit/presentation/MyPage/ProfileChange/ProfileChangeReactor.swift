@@ -9,22 +9,88 @@ import Foundation
 import ReactorKit
 
 class ProfileChangeReactor : Reactor{
-    
     enum Action {
-        case touchButton(index: Int)
+        
+        case viewDidLoad
+        case updateProfile(String)
     }
     
     enum Mutation {
-        case setImage(image: UIImage?)
+        case loadMyInfo(User)
+        case modifyProfile(String)
     }
     
     struct State {
-        var image: UIImage?
+        var user : User? = nil
     }
     
     let initialState: State
     
-    init() {
-        self.initialState = State()
+    init(user : User) {
+        self.initialState = .init(user: user)
+    }
+}
+
+extension ProfileChangeReactor{
+    func mutate(action: Action) -> Observable<Mutation> {
+        switch action {
+        case .viewDidLoad :
+
+            return Observable<Mutation>.just(.loadMyInfo(initialState.user!))
+        case .updateProfile(let nickName):
+            return requestProfileUpdate(nickName: nickName)
+
+        }
+    }
+//
+    func reduce(state: State, mutation: Mutation) -> State {
+        var state = state
+        switch mutation {
+        case .loadMyInfo(let user) :
+            state.user = user
+            break
+            
+        case.modifyProfile(let nickName):
+            state.user?.nickname = nickName
+            break
+
+        }
+        return state
+    }
+    
+    func requestProfileUpdate(nickName : String) -> Observable<Mutation>{
+        return Observable<Mutation>.create(){ emitter in
+            
+            Network.shared.apollo.perform(mutation: UpdateNickNameMutation(userUpdate: .init(status: nil,
+                                                                                             nickname: nickName,
+                                                                                             gender: nil,
+                                                                                             birth: nil,
+                                                                                             deletedAt: nil,
+                                                                                             description: nil))){result in
+                switch result {
+                case .success(let data) :
+                    print("success \(data)")
+                    do {
+                        print("modify result is :  \(data)")
+//
+                        emitter.onNext(.modifyProfile(nickName))
+                        emitter.onCompleted()
+                       
+                    }catch (let error) {
+                        print("upload fail")
+                        print(error.localizedDescription)
+                    }
+                    break
+                case .failure(let error) :
+                    print("error : \(error)")
+                    //self.passed = false
+                }
+                
+            }
+                                          
+            return Disposables.create()
+        }
+    
+
     }
 }

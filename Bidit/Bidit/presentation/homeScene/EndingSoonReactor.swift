@@ -68,7 +68,7 @@ class EndingSoonReactor : Reactor {
         
           switch mutation {
         
-          case .updateDataSource(itemList):
+          case .updateDataSource(let itemList):
             
               state.itemSection = getItemListMock(items: itemList).self
               print("\(state.itemSection.description) 결과 state 개수")
@@ -93,7 +93,7 @@ class EndingSoonReactor : Reactor {
 extension EndingSoonReactor {
     //EndingSoon 리스트 불러오기 요청
     func getDataFromApi() -> Observable<Mutation>{
-       
+        
         return Observable<Mutation>.create(){ emitter in
             
             Network.shared.apollo.fetch(query: GetItemListQuery()){ result in
@@ -101,16 +101,33 @@ extension EndingSoonReactor {
                 case .success(let data) :
                     print("success \(data)")
                     do {
-                        let data = try JSONSerialization.data(withJSONObject: data.data!.jsonObject, options: .fragmentsAllowed)
-                        let decode : Items = try JSONDecoder().decode(Items.self, from: data)
-                        print("item's id is \(decode.getEndingSoonItems[1])")
-                        decode.getEndingSoonItems.forEach{
-                            self.itemList.append($0)
-                        }
+                        //let data = try JSONSerialization.data(withJSONObject: data.data!.jsonObject, options: .fragmentsAllowed)
+                        //let decode : Items = try JSONDecoder().decode(Items.self, from: data)
                         
-                        self.updateList(decode.getEndingSoonItems)
+                        var tempList = Array<Item>()
+                        data.data!.getItemList!.edges!.forEach{item in
+                            var node = item?.node
+                            var tempItem = Item(id: node?.id,
+                                                status: node?.status,
+                                                userId: node?.userId,
+                                                cPrice : node?.cPrice,
+                                                title : node?.title,
+                                                dueDate : node?.dueDate,
+                                                createdAt: node?.createdAt
+                            )
+                            
+                            
+                            
+                            
+                            tempList.append(tempItem)
+                            
+                        }
+                        var items = tempList
+                        
+                        
+                        //self.updateList(decode.getEndingSoonItems)
                         //return 대신
-                        emitter.onNext(.updateDataSource(decode.getEndingSoonItems))
+                        emitter.onNext(.updateDataSource(items))
                         emitter.onCompleted()
                        
                     }catch (let error) {

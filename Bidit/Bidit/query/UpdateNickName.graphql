@@ -1,0 +1,8 @@
+mutation UpdateNickName($userUpdate: userUpdateInput){
+    updateUser (userUpdate: $userUpdate){
+
+        nickname
+
+    }
+}
+

@@ -1,0 +1,13 @@
+
+mutation AddItem($itemAdd: ItemAddInput, $description : String, $images : [String]){
+    addItem (itemAdd: $itemAdd,description: $description, images: $images ){
+
+        userId
+        id
+        status
+        name
+        dueDate
+        createdAt
+
+    }
+}
