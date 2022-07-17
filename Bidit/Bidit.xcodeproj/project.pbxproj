@@ -20,7 +20,6 @@
 		EE51D5E428562A2100AF1BC5 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE51D5E328562A2100AF1BC5 /* ModelType.swift */; };
 		EE51D5E628562A3000AF1BC5 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE51D5E528562A3000AF1BC5 /* Banner.swift */; };
 		EE51D5E828562A3F00AF1BC5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE51D5E728562A3F00AF1BC5 /* Default.swift */; };
-		EE579EBC28755E0500866785 /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE579EBB28755E0500866785 /* PrivateKey.swift */; };
 		EE5ECA5328660C44008B5398 /* ItemBuyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5ECA5228660C44008B5398 /* ItemBuyDetailViewController.swift */; };
 		EE5ECA5528660DB6008B5398 /* ItemSellDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5ECA5428660DB6008B5398 /* ItemSellDetailViewController.swift */; };
 		EE5ECA5728660DDF008B5398 /* ItemBuyDetailReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE5ECA5628660DDF008B5398 /* ItemBuyDetailReactor.swift */; };
@@ -61,10 +60,6 @@
 		EEA63D782877F0720095A7E3 /* GetItemList.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEA63D772877F0720095A7E3 /* GetItemList.graphql */; };
 		EEA63D8428782E420095A7E3 /* RecentSearchModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8228782E420095A7E3 /* RecentSearchModel.xcdatamodeld */; };
 		EEA63D8628782F330095A7E3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8528782F330095A7E3 /* CoreDataManager.swift */; };
-		EEA63D8B28782F920095A7E3 /* RecentProduct+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8828782F920095A7E3 /* RecentProduct+CoreDataProperties.swift */; };
-		EEA63D8C28782F920095A7E3 /* RecentProduct+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8A28782F920095A7E3 /* RecentProduct+CoreDataClass.swift */; };
-		EEA63D8D28782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8728782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift */; };
-		EEA63D8E28782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA63D8928782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift */; };
 		EEADAFBD285B6662004277F9 /* ItemListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEADAFBC285B6662004277F9 /* ItemListViewController.swift */; };
 		EEADAFBF285B66A3004277F9 /* ItemListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEADAFBE285B66A3004277F9 /* ItemListReactor.swift */; };
 		EEADFE3E2866E38A0097EBA2 /* BiddingListCellOfCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEADFE3D2866E38A0097EBA2 /* BiddingListCellOfCell.swift */; };
@@ -157,7 +152,6 @@
 		EE51D5E328562A2100AF1BC5 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		EE51D5E528562A3000AF1BC5 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		EE51D5E728562A3F00AF1BC5 /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
-		EE579EBB28755E0500866785 /* PrivateKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
 		EE5ECA5228660C44008B5398 /* ItemBuyDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemBuyDetailViewController.swift; sourceTree = "<group>"; };
 		EE5ECA5428660DB6008B5398 /* ItemSellDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSellDetailViewController.swift; sourceTree = "<group>"; };
 		EE5ECA5628660DDF008B5398 /* ItemBuyDetailReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemBuyDetailReactor.swift; sourceTree = "<group>"; };
@@ -200,10 +194,6 @@
 		EEA63D772877F0720095A7E3 /* GetItemList.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetItemList.graphql; sourceTree = "<group>"; };
 		EEA63D8328782E420095A7E3 /* RecentSearchModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RecentSearchModel.xcdatamodel; sourceTree = "<group>"; };
 		EEA63D8528782F330095A7E3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		EEA63D8728782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecentSearchTerm+CoreDataClass.swift"; path = "/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentSearchTerm+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		EEA63D8828782F920095A7E3 /* RecentProduct+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecentProduct+CoreDataProperties.swift"; path = "/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentProduct+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		EEA63D8928782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecentSearchTerm+CoreDataProperties.swift"; path = "/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentSearchTerm+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		EEA63D8A28782F920095A7E3 /* RecentProduct+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RecentProduct+CoreDataClass.swift"; path = "/Users/jeongminko/Desktop/biditProject/bidit_ios/Bidit/Bidit/Data/PersistentStorages/RecentProduct+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		EEADAFBC285B6662004277F9 /* ItemListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListViewController.swift; sourceTree = "<group>"; };
 		EEADAFBE285B66A3004277F9 /* ItemListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListReactor.swift; sourceTree = "<group>"; };
 		EEADFE3D2866E38A0097EBA2 /* BiddingListCellOfCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiddingListCellOfCell.swift; sourceTree = "<group>"; };
@@ -325,7 +315,6 @@
 			isa = PBXGroup;
 			children = (
 				EE0D42FC2853507C008464EA /* Interfaces */,
-				EE0D42FB28535075008464EA /* UseCases */,
 				EE0D42FA2853505B008464EA /* Entities */,
 			);
 			path = Domain;
@@ -335,7 +324,6 @@
 			isa = PBXGroup;
 			children = (
 				EE0D4300285350B3008464EA /* PersistentStorages */,
-				EE0D42FF285350AA008464EA /* Network */,
 				EE0D42FE285350A0008464EA /* Repositories */,
 			);
 			path = Data;
@@ -367,13 +355,6 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
-		EE0D42FB28535075008464EA /* UseCases */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UseCases;
-			sourceTree = "<group>";
-		};
 		EE0D42FC2853507C008464EA /* Interfaces */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,20 +379,9 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
-		EE0D42FF285350AA008464EA /* Network */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		EE0D4300285350B3008464EA /* PersistentStorages */ = {
 			isa = PBXGroup;
 			children = (
-				EEA63D8728782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift */,
-				EEA63D8928782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift */,
-				EEA63D8A28782F920095A7E3 /* RecentProduct+CoreDataClass.swift */,
-				EEA63D8828782F920095A7E3 /* RecentProduct+CoreDataProperties.swift */,
 				EEA63D8228782E420095A7E3 /* RecentSearchModel.xcdatamodeld */,
 				EEA63D8528782F330095A7E3 /* CoreDataManager.swift */,
 			);
@@ -439,7 +409,6 @@
 		EE579EBA28755DEE00866785 /* key */ = {
 			isa = PBXGroup;
 			children = (
-				EE579EBB28755E0500866785 /* PrivateKey.swift */,
 			);
 			path = key;
 			sourceTree = "<group>";
@@ -996,7 +965,6 @@
 				EE5ECA5728660DDF008B5398 /* ItemBuyDetailReactor.swift in Sources */,
 				EEB6DE032878ADF400771427 /* PickedImageReactor.swift in Sources */,
 				EEB065542874379F007766B3 /* DirectBuyingPopupViewController.swift in Sources */,
-				EEA63D8B28782F920095A7E3 /* RecentProduct+CoreDataProperties.swift in Sources */,
 				EE9D99CD2856EA21005480C6 /* RxViewController.swift in Sources */,
 				EEA63D8428782E420095A7E3 /* RecentSearchModel.xcdatamodeld in Sources */,
 				EE9DA5DE285315E300E33800 /* HomeViewController.swift in Sources */,
@@ -1028,7 +996,6 @@
 				EEAE99E9287E76EB00805D99 /* ItemEdge.swift in Sources */,
 				EE5ECA5D28661C5E008B5398 /* ItemDetailImageCell.swift in Sources */,
 				EEAE99E3287E752E00805D99 /* Penalty.swift in Sources */,
-				EE579EBC28755E0500866785 /* PrivateKey.swift in Sources */,
 				EED180152855CF5100E17B06 /* MainReactor.swift in Sources */,
 				EEBA584E28839A83004EEE50 /* RecentProduct+CoreDataClass.swift in Sources */,
 				EE996A72285258A50045F40A /* LoginReactor.swift in Sources */,
@@ -1036,7 +1003,6 @@
 				EEB0655B2874527C007766B3 /* BottomSheetReactor.swift in Sources */,
 				EEAE99DF287E6D8A00805D99 /* User.swift in Sources */,
 				EECCABCC287A0EC60085017A /* CalendarVC.swift in Sources */,
-				EEA63D8E28782F920095A7E3 /* RecentSearchTerm+CoreDataProperties.swift in Sources */,
 				EEC523F4287AE8D4005D4673 /* PolicyVC.swift in Sources */,
 				EEC523F6287AE8F9005D4673 /* PrivatePolicyVC.swift in Sources */,
 				EEF7953028658380000E3373 /* IndicatorView.swift in Sources */,
@@ -1048,7 +1014,6 @@
 				EE76CCA2285A2BDA0078C906 /* EndingSoonViewController.swift in Sources */,
 				EE9D99D32856FD33005480C6 /* CategoryReactor.swift in Sources */,
 				EEB5E32D2871577D00F33F2A /* MessageList.swift in Sources */,
-				EEA63D8D28782F920095A7E3 /* RecentSearchTerm+CoreDataClass.swift in Sources */,
 				EE5ECA6728663A03008B5398 /* ItemDetailContentCellReactor.swift in Sources */,
 				EEC523EC287AE866005D4673 /* UserInfoReactor.swift in Sources */,
 				EEE64406285D2062009D92AA /* DetailFilterViewController.swift in Sources */,
@@ -1058,7 +1023,6 @@
 				EE76CCA4285A2C600078C906 /* EndingSoonReactor.swift in Sources */,
 				EEB3CD79285AD67E00DF7596 /* UIView+.swift in Sources */,
 				EE9D99CF2856EBA1005480C6 /* Rx+map.swift in Sources */,
-				EEA63D8C28782F920095A7E3 /* RecentProduct+CoreDataClass.swift in Sources */,
 				EEBA584D28839A83004EEE50 /* RecentProduct+CoreDataProperties.swift in Sources */,
 				EEC5EE0D287E183A0000B40E /* DetailFilterVC.swift in Sources */,
 				EED180132855CF4800E17B06 /* MainViewController.swift in Sources */,
