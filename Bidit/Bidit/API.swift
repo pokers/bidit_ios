@@ -545,6 +545,125 @@ public struct BidInput: GraphQLMapConvertible {
   }
 }
 
+public struct ItemUpdateInput: GraphQLMapConvertible {
+  public var graphQLMap: GraphQLMap
+
+  /// - Parameters:
+  ///   - status
+  ///   - categoryId
+  ///   - sPrice
+  ///   - buyNow
+  ///   - name
+  ///   - title
+  ///   - dueDate
+  ///   - deliveryType
+  ///   - sCondition
+  ///   - aCondition
+  ///   - detail
+  public init(status: Swift.Optional<Int?> = nil, categoryId: Swift.Optional<Int?> = nil, sPrice: Swift.Optional<Int?> = nil, buyNow: Swift.Optional<Int?> = nil, name: Swift.Optional<String?> = nil, title: Swift.Optional<String?> = nil, dueDate: Swift.Optional<String?> = nil, deliveryType: Swift.Optional<Int?> = nil, sCondition: Swift.Optional<Int?> = nil, aCondition: Swift.Optional<Int?> = nil, detail: Swift.Optional<ItemDetailInput?> = nil) {
+    graphQLMap = ["status": status, "categoryId": categoryId, "sPrice": sPrice, "buyNow": buyNow, "name": name, "title": title, "dueDate": dueDate, "deliveryType": deliveryType, "sCondition": sCondition, "aCondition": aCondition, "detail": detail]
+  }
+
+  public var status: Swift.Optional<Int?> {
+    get {
+      return graphQLMap["status"] as? Swift.Optional<Int?> ?? Swift.Optional<Int?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "status")
+    }
+  }
+
+  public var categoryId: Swift.Optional<Int?> {
+    get {
+      return graphQLMap["categoryId"] as? Swift.Optional<Int?> ?? Swift.Optional<Int?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "categoryId")
+    }
+  }
+
+  public var sPrice: Swift.Optional<Int?> {
+    get {
+      return graphQLMap["sPrice"] as? Swift.Optional<Int?> ?? Swift.Optional<Int?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "sPrice")
+    }
+  }
+
+  public var buyNow: Swift.Optional<Int?> {
+    get {
+      return graphQLMap["buyNow"] as? Swift.Optional<Int?> ?? Swift.Optional<Int?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "buyNow")
+    }
+  }
+
+  public var name: Swift.Optional<String?> {
+    get {
+      return graphQLMap["name"] as? Swift.Optional<String?> ?? Swift.Optional<String?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "name")
+    }
+  }
+
+  public var title: Swift.Optional<String?> {
+    get {
+      return graphQLMap["title"] as? Swift.Optional<String?> ?? Swift.Optional<String?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "title")
+    }
+  }
+
+  public var dueDate: Swift.Optional<String?> {
+    get {
+      return graphQLMap["dueDate"] as? Swift.Optional<String?> ?? Swift.Optional<String?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "dueDate")
+    }
+  }
+
+  public var deliveryType: Swift.Optional<Int?> {
+    get {
+      return graphQLMap["deliveryType"] as? Swift.Optional<Int?> ?? Swift.Optional<Int?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "deliveryType")
+    }
+  }
+
+  public var sCondition: Swift.Optional<Int?> {
+    get {
+      return graphQLMap["sCondition"] as? Swift.Optional<Int?> ?? Swift.Optional<Int?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "sCondition")
+    }
+  }
+
+  public var aCondition: Swift.Optional<Int?> {
+    get {
+      return graphQLMap["aCondition"] as? Swift.Optional<Int?> ?? Swift.Optional<Int?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "aCondition")
+    }
+  }
+
+  public var detail: Swift.Optional<ItemDetailInput?> {
+    get {
+      return graphQLMap["detail"] as? Swift.Optional<ItemDetailInput?> ?? Swift.Optional<ItemDetailInput?>.none
+    }
+    set {
+      graphQLMap.updateValue(newValue, forKey: "detail")
+    }
+  }
+}
+
 public struct userUpdateInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
@@ -3452,6 +3571,136 @@ public final class RequestBidMutation: GraphQLMutation {
           set {
             resultMap.updateValue(newValue, forKey: "createdAt")
           }
+        }
+      }
+    }
+  }
+}
+
+public final class UpdateItemMutation: GraphQLMutation {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    mutation UpdateItem($itemId: Int, $itemUpdate: ItemUpdateInput, $description: String) {
+      updateItem(itemId: $itemId, itemUpdate: $itemUpdate, description: $description) {
+        __typename
+        id
+        status
+        userId
+        createdAt
+      }
+    }
+    """
+
+  public let operationName: String = "UpdateItem"
+
+  public var itemId: Int?
+  public var itemUpdate: ItemUpdateInput?
+  public var description: String?
+
+  public init(itemId: Int? = nil, itemUpdate: ItemUpdateInput? = nil, description: String? = nil) {
+    self.itemId = itemId
+    self.itemUpdate = itemUpdate
+    self.description = description
+  }
+
+  public var variables: GraphQLMap? {
+    return ["itemId": itemId, "itemUpdate": itemUpdate, "description": description]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Mutation"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("updateItem", arguments: ["itemId": GraphQLVariable("itemId"), "itemUpdate": GraphQLVariable("itemUpdate"), "description": GraphQLVariable("description")], type: .object(UpdateItem.selections)),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(updateItem: UpdateItem? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Mutation", "updateItem": updateItem.flatMap { (value: UpdateItem) -> ResultMap in value.resultMap }])
+    }
+
+    public var updateItem: UpdateItem? {
+      get {
+        return (resultMap["updateItem"] as? ResultMap).flatMap { UpdateItem(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "updateItem")
+      }
+    }
+
+    public struct UpdateItem: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["Item"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("status", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("userId", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(id: Int, status: Int, userId: Int, createdAt: String) {
+        self.init(unsafeResultMap: ["__typename": "Item", "id": id, "status": status, "userId": userId, "createdAt": createdAt])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: Int {
+        get {
+          return resultMap["id"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var status: Int {
+        get {
+          return resultMap["status"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "status")
+        }
+      }
+
+      public var userId: Int {
+        get {
+          return resultMap["userId"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var createdAt: String {
+        get {
+          return resultMap["createdAt"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "createdAt")
         }
       }
     }
