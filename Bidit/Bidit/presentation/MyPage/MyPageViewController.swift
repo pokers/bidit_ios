@@ -8,7 +8,9 @@
 import Foundation
 import UIKit
 import ReactorKit
-    
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 //My
 class MyPageViewController : UIViewController ,View{
     
@@ -76,6 +78,7 @@ class MyPageViewController : UIViewController ,View{
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
+       
         
     }
     override func viewWillAppear(_ animated: Bool) {

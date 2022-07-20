@@ -32,6 +32,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
     
     //판매중 상태
     var sellStatusBtn = UIButton()
+    var statusDes = UIImageView()
     var statusImg = UIImageView()
     var statusDescription = UILabel()
     
@@ -47,11 +48,11 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
     var divider1 = UIView()
     var divider2 = UIView()
     
+    var timer : Observable<Int>?
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-
         
         layout()
         attribute()
@@ -60,6 +61,8 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     //UI 배치
     private func layout(){
         
@@ -142,12 +145,28 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         }
         
         self.contentView.addSubview(sellStatusBtn)
-       
+        sellStatusBtn.isHidden = true
         sellStatusBtn.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.top.equalTo(sellerProfileImg.snp.bottom).offset(20)
-            $0.height.equalTo(68)
+            $0.height.equalTo(44)
         }
+        self.contentView.addSubview(statusDes)
+        statusDes.isHidden = true
+        statusDes.snp.makeConstraints{
+            $0.leading.equalToSuperview().inset(18)
+            $0.top.equalTo(sellStatusBtn.snp.bottom).offset(8)
+            $0.height.equalTo(16)
+            $0.width.equalTo(199)
+        }
+        //판매상태 텍스트
+        self.contentView.addSubview(statusDescription)
+        statusDescription.isHidden = true
+        statusDescription.snp.makeConstraints{
+            $0.centerX.equalTo(sellStatusBtn)
+            $0.centerY.equalTo(sellStatusBtn)
+        }
+        
         
             
         
@@ -226,8 +245,8 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         
         
         //판매중 상태
-        sellStatusBtn.setImage(UIImage(named: "statusOfSelling"), for: .normal)
-        
+        sellStatusBtn.setImage(UIImage(named: "product_status_btn_img"), for: .normal)
+        statusDes.image = UIImage(named: "status_description_img")
         //판매자 정보
         sellerProfileImg.image = UIImage(named: "tempIcon")
         sellerNameText.text = "판매자 이름"
@@ -252,12 +271,24 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         writeTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
         
     }
+    
    
     
     func bind(reactor: ItemDetailTitleCellReactor) {
+        
         //Action
-        
-        
+        self.sellStatusBtn.rx.tap
+            .subscribe(onNext : {
+                let vc = ProductStatusDialogVC()
+                vc.currItem = reactor.initialState.item
+                vc.preVC = self
+                vc.modalPresentationStyle = .overFullScreen
+                // 보여주기
+                UIApplication.topViewController()?.present(vc, animated: true, completion: nil)
+                //self.window!.rootViewController!.present(vc, animated: true, completion: nil)
+                
+                
+            }).disposed(by: disposeBag)
         
         
         //State
@@ -309,6 +340,24 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
             self.setupOnlyForegroundTimer(endTime: dueDate)
         }).disposed(by: disposeBag)
         
+        //유저 제품 구분(판매중 버튼)
+        reactor.state.subscribe(onNext : {
+            if $0.item.userId == UserDefaults.standard.integer(forKey: "userId") {
+                self.sellStatusBtn.isHidden = false
+                self.statusDes.isHidden = false
+                self.statusDescription.isHidden = false
+                if $0.item.status == 0{
+                    self.statusDescription.text = "판매중"
+                    //self.sellStatusBtn.setTitle("판매중", for: .normal)
+                }else if $0.item.status == 1{
+                    self.statusDescription.text = "예약중"
+                    //self.sellStatusBtn.setTitle("예약중", for: .normal)
+                }else if $0.item.status == 2{
+                    self.statusDescription.text = "판매완료"
+                   // self.sellStatusBtn.setTitle("판매완료", for: .normal)
+                }
+            }
+        }).disposed(by: disposeBag)
         
     }
     
@@ -325,7 +374,7 @@ extension ItemDetailTitleCell {
      
        
         
-        let timer = Observable<Int>.interval(
+        timer = Observable<Int>.interval(
             .seconds(1),
             scheduler: MainScheduler.instance
         )
@@ -340,7 +389,7 @@ extension ItemDetailTitleCell {
         
         
         
-      timer.withUnretained(self)
+        timer!.withUnretained(self)
         .do(onNext: { result in
            
          
@@ -355,7 +404,10 @@ extension ItemDetailTitleCell {
         })
         .subscribe()
         .disposed(by: disposeBag)
+            
+            
     }
+    
 
 }
 

@@ -122,6 +122,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
             $0.height.equalTo(100)
             $0.leading.equalToSuperview().offset(44)
         }
+        sortList.isHidden = true
         //말풍선 필터에 버튼 추가.
         [popularityBtn, endingSoonBtn, latestBtn].forEach{
             sortList.addSubview($0)

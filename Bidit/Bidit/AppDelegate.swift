@@ -135,7 +135,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate, MessagingDelegate {
         let firebaseToken = fcmToken ?? ""
         print("firebase token: \(firebaseToken)")
         let dataDict: [String: String] = ["token": fcmToken ?? ""]
-            
+        //키체인 푸시토큰 저장.
+        let keyChain = TokenManager.sharedKeyChain
+        keyChain.set((dataDict["token"]!),forKey: "FCMToken")
+        print("token in keychain : \(String(describing: dataDict["token"]!))")
             NotificationCenter.default.post(name: Notification.Name("FCMToken"), object: nil, userInfo: dataDict)
     }
     

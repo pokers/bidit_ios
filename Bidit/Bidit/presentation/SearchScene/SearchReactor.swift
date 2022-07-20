@@ -15,12 +15,21 @@ class SearchReactor : Reactor {
     enum Action {
         case viewDidLoad //처음 화면 로드
         case tapSearchBtn(keyword : String) // 검색하기 실행
+        case tapSortButton(isOpened : Bool) // 유저 정렬버튼 클릭 -> mutate()를 통해 Mutation반환
+        case tapPopularityBtn(keyword : String)
+        case tapEndingSoonBtn(keyword : String)
+        case tapLatestBtn(keyword : String)
+        
     }
     
     enum Mutation {
         case loadRecentData//(String)
         case loadSearchResult([ProductListSection])
         
+        case sortListOpen(isOpened : Bool) // -> reduce()를 통해 State반환하여 UI정보 업데이트
+        case sortPopularity
+        case sortEndingSoon
+        case sortLatest
     }
     
     struct State {
@@ -28,6 +37,16 @@ class SearchReactor : Reactor {
         var recentItemSection : [ProductListSection] = []
         var resultItemSection : [ProductListSection] = []
         var recentKeyword : [String] = []
+        
+        var isSortListOpened : Bool = false //닫혀있는 상태
+        var sortState : SortState = .latest //처음은 최신순
+    }
+    
+    enum SortState{
+        case null
+        case popularity
+        case endingSoon
+        case latest
     }
     
     let initialState: State
@@ -40,15 +59,38 @@ class SearchReactor : Reactor {
 extension SearchReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-            
         case .viewDidLoad:
-            
             return Observable.just(Mutation.loadRecentData)
             
         case .tapSearchBtn(let keyword):
             print("뮤테이션 키워드 : \(keyword)")
             updateRecentKeyword(input: keyword) //검색키워드 추가.
-            return getSearchResultFromApi(keyword: keyword)
+            return getSearchResultFromApi(keyword: keyword, sortType: .latest)
+            
+        case .tapSortButton(let isOpened): // isOpened : 누르기 전 상태
+            print( "isOpened 열렸니? : \(isOpened)")
+            return Observable<Mutation>.just(Mutation.sortListOpen(isOpened: isOpened))
+            
+        case .tapPopularityBtn(let keyword):
+            print("reactor : 인기순 버튼 클릭")
+            
+            return Observable.concat([
+                Observable<Mutation>.just(Mutation.sortPopularity),
+                getSearchResultFromApi(keyword: keyword, sortType: .popularity)
+            ])
+        
+        case .tapEndingSoonBtn(let keyword):
+            print("reactor : 마감직전 버튼 클릭")
+            return Observable.concat([
+                Observable<Mutation>.just(Mutation.sortEndingSoon),
+                getSearchResultFromApi(keyword: keyword, sortType: .endingSoon)
+            ])
+        case .tapLatestBtn(let keyword):
+            print("reactor : 최신순 버튼 클릭")
+            return Observable.concat([
+                Observable<Mutation>.just(Mutation.sortLatest),
+                getSearchResultFromApi(keyword: keyword, sortType: .latest)
+            ])
         }
     }
     
@@ -75,6 +117,27 @@ extension SearchReactor {
             
               state.resultItemSection = result
               break
+              
+              
+          case .sortListOpen(let isOpened):
+              state.isSortListOpened = isOpened
+              print("reactor sortList \(isOpened)")
+              break
+              
+          case .sortPopularity:
+              print("reactor 인기순")
+              state.sortState = .popularity
+            
+              
+              break
+              
+          case .sortEndingSoon:
+              state.sortState = .endingSoon
+              break
+              
+          case .sortLatest:
+              state.sortState = .latest
+              break
             
           }
           
@@ -85,8 +148,10 @@ extension SearchReactor {
 
 extension SearchReactor {
     
+    
+    
     //검색결과 요청
-    func getSearchResultFromApi(keyword : String) -> Observable<Mutation>{
+    func getSearchResultFromApi(keyword : String, sortType : SortState) -> Observable<Mutation>{
         return Observable<Mutation>.create(){ emitter in
 
             let itemQuery = ItemQueryInput.init()
@@ -104,15 +169,64 @@ extension SearchReactor {
                 case .success(let data) :
                     print("success \(data)")
                     do {
-                        let data = try JSONSerialization.data(withJSONObject: data.data!.jsonObject, options: .fragmentsAllowed)
-                        let decode : Items = try JSONDecoder().decode(Items.self, from: data)
+                       // let data = try JSONSerialization.data(withJSONObject: data.data!.jsonObject, options: .fragmentsAllowed)
+                        //let decode : Items = try JSONDecoder().decode(Items.self, from: data)
                         //print("item's id is \(decode.getEndingSoonItems[1] ?? nil)")
 //                        decode.getEndingSoonItems.forEach{
 //                            self.itemList.append($0)
 //                        }
-                        let convertedData = self.convertItemToSection(items: decode.getEndingSoonItems)
+                        var tempList = Array<Item>()
+                        data.data?.getEndingSoonItems!.forEach{item in
+                            var node = item
+                            var images = Array<ItemImage>()
+
+                            node?.image?.forEach{
+
+                                images.append(ItemImage(url : $0?.url ?? ""))
+
+                            }
+
+                            var tempItem = Item(id: node?.id,
+                                                status: node?.status,
+                                                cPrice : node?.cPrice,
+                                                viewCount: node?.viewCount,
+                                                title : node?.title,
+                                                dueDate : node?.dueDate,
+                                                createdAt: node?.createdAt,
+                                                image: images
+                            )
+
+                            tempList.append(tempItem)
+
+                        }
+                        
+                        
+                        
+                        var items = tempList
+                        let df = DateFormatter()
+                        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                        df.locale = Locale(identifier: "ko_KR")
+                        df.timeZone = TimeZone(identifier: "UTC")!
+                        //마감순
+                        var sortedArray = tempList.sorted(by: {df.date(from: $0.dueDate!)! < df.date(from: $1.dueDate!)!})
+                        if sortType == .endingSoon {
+                            print("마감순 출력")
+                            sortedArray = tempList.sorted(by: {df.date(from: $0.dueDate!)! < df.date(from: $1.dueDate!)!})
+                        }else if sortType == .latest {
+                            //최신순
+                            print("최신순 출력")
+                            sortedArray = tempList.sorted(by: {df.date(from: $0.createdAt!)! < df.date(from: $1.createdAt!)!})
+                        }else if sortType == .popularity {
+                            //인기순'
+                            print("인기순 출력")
+                            sortedArray = tempList.sorted(by:  {$0.viewCount! < $1.viewCount!})
+                        }
+                        
+
+
+                        let convertedData = self.convertItemToSection(items: sortedArray)
                         emitter.onNext(.loadSearchResult(convertedData))
-                        //emitter.onCompleted()
+//                        //emitter.onCompleted()
                        
                     }catch (let error) {
                         print("item load fail")
@@ -130,6 +244,8 @@ extension SearchReactor {
      
         
     }
+    
+
     
     //최근 검색 데이터 불러오기
     func requestRecentKeyword() -> [RecentSearchTerm]{

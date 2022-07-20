@@ -11,6 +11,7 @@ import RxCocoa
 import AVFoundation
 //판매글 올리기 리액터
 class UploadProductReactor : Reactor , DeleteDelegate{
+    
     func deleteImage(image : UIImage) {
         updateDeleteImg(image)
     }
@@ -38,7 +39,9 @@ class UploadProductReactor : Reactor , DeleteDelegate{
                        deliveryType : Int,
                        sCondition : Int,
                        aCondition : Int,
-                       description : String)
+                       description : String,
+                       detail : Int
+        )
     }
     
     enum Mutation {
@@ -82,7 +85,7 @@ class UploadProductReactor : Reactor , DeleteDelegate{
             print("이미지 삭제 : \(index)")
             return Observable<Mutation>.just(.deletePhoto(index))
             
-        case .tapUpload(let imgs,let status,let buyNow, let title, let categoryId, let sPrice, let name, let dueDate, let deliveryType, let sCondition, let aCondition, let description) :
+        case .tapUpload(let imgs,let status,let buyNow, let title, let categoryId, let sPrice, let name, let dueDate, let deliveryType, let sCondition, let aCondition, let description, let detail) :
             return requestAddItem(
                 itemAddInput:
                         .init(
@@ -96,7 +99,7 @@ class UploadProductReactor : Reactor , DeleteDelegate{
                             deliveryType: deliveryType,
                             sCondition: sCondition,
                             aCondition: aCondition,
-                            detail: .init()),
+                            detail: .init(id: nil, status: nil, categoryId: nil, period: detail, type: nil, vendor: nil, battery: nil, flash: nil, ram: nil, size: nil, networkType: nil, weight: nil, cpu: nil, wire: nil, lens: nil, resolution: nil, cam: nil, warranty: nil)),
                 description: description,
                 images: imgs)
         }
@@ -191,9 +194,6 @@ extension UploadProductReactor {
                     print("success \(data)")
                     do {
                         print("upload result :  \(data)")
-//                        decode.getEndingSoonItems.forEach{
-//                            self.itemList.append($0)
-//                        }
 //
 //                        self.updateList(decode.getEndingSoonItems)
                         //return 대신

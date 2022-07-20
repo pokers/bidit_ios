@@ -5,11 +5,13 @@
 //  Created by JeongMin Ko on 2022/06/25.
 //
 
+
 import Foundation
 import UIKit
 import ReactorKit
 import ImageSlideshow
 import Reusable
+import Kingfisher
 
 //물건 상세 화면 테이블뷰 셀(이미지 슬라이드)
 class ItemDetailImageCell : UITableViewCell, View, Reusable {
@@ -25,12 +27,25 @@ class ItemDetailImageCell : UITableViewCell, View, Reusable {
     var item : Item = Item()
     
     //임시 배너
-    let images = [
-        ImageSource(image: UIImage(named: "tempBanner")!),
-        ImageSource(image: UIImage(named: "tempBanner")!),
-        ImageSource(image: UIImage(named: "tempBanner")!),
-        ImageSource(image: UIImage(named: "tempBanner")!)
-        ]
+    var images : [ImageSource] = []
+    //이미지 로드 -> UIImage() -> ImageSource()
+    func loadImg(url : String) -> ImageSource{
+        var imageSource : ImageSource?
+        if let thumbnailUrl = URL(string: url) {
+            KingfisherManager.shared.retrieveImage(with: thumbnailUrl, completionHandler: { result in
+            switch(result) {
+                case .success(let imageResult):
+//                    let resized = imageResult.image.resizedImageWithContentMode(.scaleAspectFit, bounds: CGSize(width: 84, height: 84), interpolationQuality: .medium)
+                    //imageView.isHidden = false
+                imageSource = ImageSource(image: imageResult.image)
+                case .failure(let error):
+                    
+                break
+                }
+            })
+        }
+        return imageSource ?? ImageSource(image: UIImage())
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -86,3 +101,4 @@ class ItemDetailImageCell : UITableViewCell, View, Reusable {
     }
     
 }
+

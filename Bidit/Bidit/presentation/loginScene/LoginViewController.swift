@@ -15,7 +15,6 @@ import AuthenticationServices
 class LoginViewController : UIViewController, View{
     var disposeBag: DisposeBag = DisposeBag()
     
-    
     var logoImg = UIImageView()
     var openningText = UIImageView()
     var kakaoLoginBtn = UIButton()
@@ -28,15 +27,8 @@ class LoginViewController : UIViewController, View{
         layout()
         attribute()
         extendBind()
-        
-       
-        
-        
     }
     
-    
-
-
     private func layout(){
         self.view.addSubview(logoImg)
         logoImg.snp.makeConstraints{
@@ -82,13 +74,9 @@ class LoginViewController : UIViewController, View{
         self.view.backgroundColor = .black
         
         logoImg.image = UIImage(named: "logoImg")
-        
         openningText.image = UIImage(named: "openLogo")
-        
         kakaoLoginBtn.setImage(UIImage(named: "kakaoLoginBtn"), for: .normal)
-        
         naverLoginBtn.setImage(UIImage(named: "naverLoginBtn"), for: .normal)
-        
         appleLoginBtn.setImage(UIImage(named: "appleLoginBtn"), for: .normal)
     }
     
@@ -109,6 +97,7 @@ class LoginViewController : UIViewController, View{
 //              .map(Reactor.Action.viewDidLoad)
 //              .bind(to: reactor.action)
 //              .disposed(by: self.disposeBag)
+        
         //애플 로그인
         self.appleLoginBtn.rx.tap
             .asObservable()
@@ -197,6 +186,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             Network.shared.apollo.fetch(query: MeQuery()){result in
                 switch result {
                 case .success(let data) :
+                    
+                    //푸시 토큰 갱신
+                    //self.updatePushToken()
                     //me 요청이 성공하면 홈화면으로 이동.
                     self.movingHomeView()
                     break
@@ -211,7 +203,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             print("success \(data)")
                             //현재 로그인 상태 갱신 (애플, 카카오 등)
                             UserDefaults.standard.set("apple", forKey: "LoginState")
-                            
+                            //푸시 토큰 갱신
+                            //self.updatePushToken()
                             //홈화면 이동
                             let vc = TabbarController()
                             vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
@@ -230,12 +223,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     
                 }
             }
-            
-            
-            
-           
-            
-
         }
     }
 
@@ -243,4 +230,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("로그인 error")
     }
+    
+    
 }
