@@ -112,7 +112,7 @@ class EndingSoonCell : UITableViewCell, View, Reusable {
         //액션
         //State
         reactor.state
-            .map { $0.item.name }
+            .map { $0.item.title }
             .bind(to: self.itemName.rx.text)
             .disposed(by: self.disposeBag)
         

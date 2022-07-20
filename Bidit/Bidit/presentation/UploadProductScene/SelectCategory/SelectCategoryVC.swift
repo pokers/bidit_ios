@@ -16,7 +16,8 @@ import RxSwift
 class SellectCategoryVC : UIViewController{
     
    
-    
+    var preVC : UploadProductViewController? = nil
+    var saveImageList : [UIImage]? = nil
     var selected = 0
     var disposeBag: DisposeBag  = DisposeBag()
     
@@ -452,6 +453,8 @@ class SellectCategoryVC : UIViewController{
                        // 값을 전달한다.
                 vc.categoryBtn.setTitle(btnList[self.selected].currentTitle, for: .normal)
                 vc.categoryBtn.setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
+                vc.userSelectedImages = self.saveImageList ?? []
+                
                 print(" 카테고리 선택 : \(btnList[self.selected].currentTitle)")
             }).disposed(by: disposeBag)
         

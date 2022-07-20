@@ -10,6 +10,16 @@ query GetEndingSoonItems ($itemQuery: ItemQueryInput, $keyword : String, $count 
         cPrice
         buyNow
         updatedAt
+        createdAt
+        viewCount
+        
+        image {
+            id
+            url
+            
+        
+
+        }
         
     }
 }

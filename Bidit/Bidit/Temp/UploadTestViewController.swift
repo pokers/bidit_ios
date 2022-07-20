@@ -10,14 +10,12 @@ import UIKit
 import AWSS3
 class UploadTestViewController: UIViewController {
 
-    var temp = 13
     
     let bucketName = PrivateKey().BUCKET_NAME
     let accessKey = PrivateKey().ACCESS_KEY
     let secretKey = PrivateKey().SECRET_KEY
     let utilityKey = PrivateKey().UTILITY_KEY
     var fileKey = PrivateKey().FILE_KEY
-    
     
     var downloadBtn = UIButton()
     var uploadBtn = UIButton()
@@ -55,7 +53,7 @@ class UploadTestViewController: UIViewController {
         self.uploadBtn.rx.tap.subscribe(onNext : {
             self.upload()
             print("업로드")
-            self.uploadFile(withImage: UIImage(named: "testImg")!)
+           // self.uploadFile(withImage: UIImage(named: "testImg")!)
         })
         
     }
@@ -81,8 +79,8 @@ class UploadTestViewController: UIViewController {
         
         let dateFormat = DateFormatter()
         dateFormat.dateFormat = "yyyyMMdd/"
-        //fileKey += dateFormat.string(from: Date())
-        //fileKey += String(Int64(Date().timeIntervalSince1970)) + "_"
+        fileKey += dateFormat.string(from: Date())
+        fileKey += String(Int64(Date().timeIntervalSince1970)) + "_"
         fileKey += UUID().uuidString + ".png"
         
     }
@@ -120,7 +118,7 @@ class UploadTestViewController: UIViewController {
                var removeQueryUrlString = task.request?.url?.absoluteString.replacingOccurrences(of: query, with: "") {
                 removeQueryUrlString.removeLast() // 맨 뒤 물음표 삭제
                 print("업로드 리퀘스트에서 쿼리만 제거한 url ↓↓") //이 주소도 파일 열림
-                print(removeQueryUrlString)
+                print(" 업로드 URL : \(removeQueryUrlString)")
             }
         }
 
@@ -151,8 +149,6 @@ class UploadTestViewController: UIViewController {
     }
     
     func download() {
-        
-        
         guard let transferUtility = AWSS3TransferUtility.s3TransferUtility(forKey: utilityKey)
         else
         {

@@ -11,7 +11,7 @@ class TabbarController : UITabBarController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        updatePushToken()
         let vc = HomeViewController()
         let reactor = HomeReactor(initialState: HomeReactor.State())
         
@@ -36,8 +36,8 @@ class TabbarController : UITabBarController{
         let myPageVC = MyPageViewController()
         let myPageNavigationVC = UINavigationController(rootViewController: myPageVC)
         myPageVC.reactor = MyPageReactor()
-        tabBar.barTintColor = .white
-        tabBar.tintColor = .black
+        //tabBar.barTintColor = .white
+        //tabBar.tintColor = .black
         
         
         homeViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"home_img" ), selectedImage: UIImage(named:"home_fill_img" ))
@@ -50,7 +50,48 @@ class TabbarController : UITabBarController{
         
         myPageVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"mypage_img" ), selectedImage: UIImage(named:"mypage_fill_img" ))
         
-        viewControllers = [chatVC, homeViewController, searchViewController, vc4, myPageNavigationVC]
+        viewControllers = [chatVC,searchViewController, homeViewController,  vc4, myPageNavigationVC]
+        
+        self.selectedIndex = 2 //첫화면 설정 (홈화면)
+    }
+}
+
+extension TabbarController{
+    func updatePushToken(){
+        
+        let keychain = TokenManager.sharedKeyChain
+            let fcmToken = "\(String(describing: keychain.get("FCMToken")!))"
+            print("push token : \(fcmToken)")
+        
+        
+            
+            Network.shared.apollo.perform(mutation: UpdatePushTokenMutation(pushTokenUpdate: .init(status: nil,
+                                                                                                   token: fcmToken)))
+            { result in
+                switch result {
+                case .success(let data) :
+                    print("success \(data)")
+                    do {
+                        print("updatePushToken result :  \(data)")
+//
+//                        self.updateList(decode.getEndingSoonItems)
+                        //return 대신
+                       
+                    }catch (let error) {
+                        print("updatePushToken fail")
+                        print(error.localizedDescription)
+                    }
+                    break
+                case .failure(let error) :
+                    print("error : \(error)")
+                    //self.passed = false
+                }
+                
+            }
+            
+        
+    
+
     }
 }
 

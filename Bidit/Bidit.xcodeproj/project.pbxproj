@@ -12,6 +12,7 @@
 		EE069C8328621F0A0033FA4E /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE069C8228621F090033FA4E /* Network.swift */; };
 		EE0D430228535131008464EA /* TempRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0D430128535131008464EA /* TempRepository.swift */; };
 		EE0D4304285351F9008464EA /* DefaultTempRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0D4303285351F9008464EA /* DefaultTempRepository.swift */; };
+		EE0E283C2884262A004DAF7B /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0E283B2884262A004DAF7B /* PrivateKey.swift */; };
 		EE3D822B287486D900C72830 /* requestBid.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EE3D822A287486D900C72830 /* requestBid.graphql */; };
 		EE4CA219286A211200EAEA87 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4CA218286A211200EAEA87 /* SearchViewController.swift */; };
 		EE4CA21B286A212000EAEA87 /* SearchReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4CA21A286A212000EAEA87 /* SearchReactor.swift */; };
@@ -83,6 +84,8 @@
 		EEB0655B2874527C007766B3 /* BottomSheetReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB0655A2874527C007766B3 /* BottomSheetReactor.swift */; };
 		EEB24C032880439A003A2398 /* UpdateNickName.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEB24C022880439A003A2398 /* UpdateNickName.graphql */; };
 		EEB25F6B287ED93700310AC6 /* ProfileEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB25F6A287ED93700310AC6 /* ProfileEntity.swift */; };
+		EEB35D562885C53D001796E2 /* DeleteCheckDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB35D552885C53D001796E2 /* DeleteCheckDialogVC.swift */; };
+		EEB35D582885C55F001796E2 /* FailDeleteDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB35D572885C55F001796E2 /* FailDeleteDialogVC.swift */; };
 		EEB3CD71285AB2D400DF7596 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3CD70285AB2D400DF7596 /* Item.swift */; };
 		EEB3CD73285AB36500DF7596 /* EndingSoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3CD72285AB36500DF7596 /* EndingSoonCell.swift */; };
 		EEB3CD75285AB37300DF7596 /* EndingSoonCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3CD74285AB37300DF7596 /* EndingSoonCellReactor.swift */; };
@@ -106,6 +109,10 @@
 		EEBD0ACD28706FCF0074AE5D /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBD0ACC28706FCF0074AE5D /* TokenManager.swift */; };
 		EEBD0AD3287071350074AE5D /* Me.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEBD0AD2287071350074AE5D /* Me.graphql */; };
 		EEC0060828707554001B86F7 /* GetEndingSoonItems.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEC0060728707554001B86F7 /* GetEndingSoonItems.graphql */; };
+		EEC212602887CABA00C5B77C /* UpdatePushToken.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEC2125F2887CABA00C5B77C /* UpdatePushToken.graphql */; };
+		EEC240262886559000187869 /* ProductStatusDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC240252886559000187869 /* ProductStatusDialogVC.swift */; };
+		EEC2402828865F4400187869 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC2402728865F4400187869 /* UIApplication+.swift */; };
+		EEC2402A2886748D00187869 /* UpdateItemImage.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEC240292886748D00187869 /* UpdateItemImage.graphql */; };
 		EEC447B9287FE90E0026E7E6 /* MeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC447B8287FE90E0026E7E6 /* MeEntity.swift */; };
 		EEC523E2287ABD89005D4673 /* TimePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523E1287ABD89005D4673 /* TimePickerVC.swift */; };
 		EEC523E5287ACD1F005D4673 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC523E4287ACD1F005D4673 /* MyPageViewController.swift */; };
@@ -135,6 +142,14 @@
 		EEE64C9C286B8821007951B4 /* testImg.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE64C9B286B8821007951B4 /* testImg.png */; };
 		EEF04A0E286D52EE00A9D8A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEF04A0D286D52EE00A9D8A7 /* GoogleService-Info.plist */; };
 		EEF7953028658380000E3373 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF7952F28658380000E3373 /* IndicatorView.swift */; };
+		EEFD585F288565F800D68E67 /* ModifyTimePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFD5856288565F800D68E67 /* ModifyTimePickerVC.swift */; };
+		EEFD5860288565F800D68E67 /* ModifyDetailFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFD5858288565F800D68E67 /* ModifyDetailFilterVC.swift */; };
+		EEFD5861288565F800D68E67 /* ModifyCalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFD585A288565F800D68E67 /* ModifyCalendarVC.swift */; };
+		EEFD5862288565F800D68E67 /* ModifyProductVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFD585B288565F800D68E67 /* ModifyProductVC.swift */; };
+		EEFD5863288565F800D68E67 /* ModifyCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFD585D288565F800D68E67 /* ModifyCategoryVC.swift */; };
+		EEFD5864288565F800D68E67 /* ModifyProductReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFD585E288565F800D68E67 /* ModifyProductReactor.swift */; };
+		EEFD586B28856DA400D68E67 /* UpdateItem.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEFD586A28856DA400D68E67 /* UpdateItem.graphql */; };
+		EEFD586D28856EDB00D68E67 /* S3Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFD586C28856EDB00D68E67 /* S3Manager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,6 +159,7 @@
 		EE069C8228621F090033FA4E /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		EE0D430128535131008464EA /* TempRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempRepository.swift; sourceTree = "<group>"; };
 		EE0D4303285351F9008464EA /* DefaultTempRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTempRepository.swift; sourceTree = "<group>"; };
+		EE0E283B2884262A004DAF7B /* PrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
 		EE3D822A287486D900C72830 /* requestBid.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = requestBid.graphql; sourceTree = "<group>"; };
 		EE4CA218286A211200EAEA87 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EE4CA21A286A212000EAEA87 /* SearchReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReactor.swift; sourceTree = "<group>"; };
@@ -217,6 +233,8 @@
 		EEB0655A2874527C007766B3 /* BottomSheetReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetReactor.swift; sourceTree = "<group>"; };
 		EEB24C022880439A003A2398 /* UpdateNickName.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UpdateNickName.graphql; sourceTree = "<group>"; };
 		EEB25F6A287ED93700310AC6 /* ProfileEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEntity.swift; sourceTree = "<group>"; };
+		EEB35D552885C53D001796E2 /* DeleteCheckDialogVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteCheckDialogVC.swift; sourceTree = "<group>"; };
+		EEB35D572885C55F001796E2 /* FailDeleteDialogVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailDeleteDialogVC.swift; sourceTree = "<group>"; };
 		EEB3CD70285AB2D400DF7596 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		EEB3CD72285AB36500DF7596 /* EndingSoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonCell.swift; sourceTree = "<group>"; };
 		EEB3CD74285AB37300DF7596 /* EndingSoonCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonCellReactor.swift; sourceTree = "<group>"; };
@@ -240,6 +258,10 @@
 		EEBD0ACC28706FCF0074AE5D /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		EEBD0AD2287071350074AE5D /* Me.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Me.graphql; sourceTree = "<group>"; };
 		EEC0060728707554001B86F7 /* GetEndingSoonItems.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetEndingSoonItems.graphql; sourceTree = "<group>"; };
+		EEC2125F2887CABA00C5B77C /* UpdatePushToken.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UpdatePushToken.graphql; sourceTree = "<group>"; };
+		EEC240252886559000187869 /* ProductStatusDialogVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductStatusDialogVC.swift; sourceTree = "<group>"; };
+		EEC2402728865F4400187869 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
+		EEC240292886748D00187869 /* UpdateItemImage.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UpdateItemImage.graphql; sourceTree = "<group>"; };
 		EEC447B8287FE90E0026E7E6 /* MeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeEntity.swift; sourceTree = "<group>"; };
 		EEC523E1287ABD89005D4673 /* TimePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerVC.swift; sourceTree = "<group>"; };
 		EEC523E4287ACD1F005D4673 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
@@ -269,6 +291,14 @@
 		EEE64C9B286B8821007951B4 /* testImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImg.png; sourceTree = "<group>"; };
 		EEF04A0D286D52EE00A9D8A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EEF7952F28658380000E3373 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
+		EEFD5856288565F800D68E67 /* ModifyTimePickerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyTimePickerVC.swift; sourceTree = "<group>"; };
+		EEFD5858288565F800D68E67 /* ModifyDetailFilterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyDetailFilterVC.swift; sourceTree = "<group>"; };
+		EEFD585A288565F800D68E67 /* ModifyCalendarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyCalendarVC.swift; sourceTree = "<group>"; };
+		EEFD585B288565F800D68E67 /* ModifyProductVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyProductVC.swift; sourceTree = "<group>"; };
+		EEFD585D288565F800D68E67 /* ModifyCategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyCategoryVC.swift; sourceTree = "<group>"; };
+		EEFD585E288565F800D68E67 /* ModifyProductReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModifyProductReactor.swift; sourceTree = "<group>"; };
+		EEFD586A28856DA400D68E67 /* UpdateItem.graphql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UpdateItem.graphql; sourceTree = "<group>"; };
+		EEFD586C28856EDB00D68E67 /* S3Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Manager.swift; sourceTree = "<group>"; };
 		F79703A5ED2C12DFEFEB295F /* Pods-Bidit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bidit.debug.xcconfig"; path = "Target Support Files/Pods-Bidit/Pods-Bidit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -306,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				EEBD0ACC28706FCF0074AE5D /* TokenManager.swift */,
+				EEFD586C28856EDB00D68E67 /* S3Manager.swift */,
 			);
 			name = API;
 			path = "몌ㅑ";
@@ -409,6 +440,7 @@
 		EE579EBA28755DEE00866785 /* key */ = {
 			isa = PBXGroup;
 			children = (
+				EE0E283B2884262A004DAF7B /* PrivateKey.swift */,
 			);
 			path = key;
 			sourceTree = "<group>";
@@ -509,6 +541,7 @@
 		EE7C1A192852522E00730E95 /* presentation */ = {
 			isa = PBXGroup;
 			children = (
+				EEFD5854288565F800D68E67 /* ModifyItem */,
 				EEC523E3287ACD01005D4673 /* MyPage */,
 				EEB6DDFA28789EFC00771427 /* UploadProductScene */,
 				EEB5E3262871383400F33F2A /* Chat */,
@@ -564,6 +597,7 @@
 				EE67CB2A285DB4E400FCC02E /* UITextField+.swift */,
 				EEC65F522873320F00C7A852 /* DateUtil.swift */,
 				EE6B34E0287696600028BEC0 /* Reactive+ScrollView.swift */,
+				EEC2402728865F4400187869 /* UIApplication+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -614,9 +648,12 @@
 		EEB065502874111A007766B3 /* Dialog */ = {
 			isa = PBXGroup;
 			children = (
+				EEB35D552885C53D001796E2 /* DeleteCheckDialogVC.swift */,
+				EEB35D572885C55F001796E2 /* FailDeleteDialogVC.swift */,
 				EEB065512874113B007766B3 /* BottomSheetViewController.swift */,
 				EEB065532874379F007766B3 /* DirectBuyingPopupViewController.swift */,
 				EEB0655A2874527C007766B3 /* BottomSheetReactor.swift */,
+				EEC240252886559000187869 /* ProductStatusDialogVC.swift */,
 			);
 			path = Dialog;
 			sourceTree = "<group>";
@@ -691,7 +728,10 @@
 				EEBD0AD2287071350074AE5D /* Me.graphql */,
 				EEC0060728707554001B86F7 /* GetEndingSoonItems.graphql */,
 				EE3D822A287486D900C72830 /* requestBid.graphql */,
+				EEFD586A28856DA400D68E67 /* UpdateItem.graphql */,
 				EEB24C022880439A003A2398 /* UpdateNickName.graphql */,
+				EEC240292886748D00187869 /* UpdateItemImage.graphql */,
+				EEC2125F2887CABA00C5B77C /* UpdatePushToken.graphql */,
 			);
 			path = query;
 			sourceTree = "<group>";
@@ -802,6 +842,52 @@
 			path = "퍋ㅈ";
 			sourceTree = "<group>";
 		};
+		EEFD5854288565F800D68E67 /* ModifyItem */ = {
+			isa = PBXGroup;
+			children = (
+				EEFD5855288565F800D68E67 /* TimePicker */,
+				EEFD5857288565F800D68E67 /* DetailFilter */,
+				EEFD5859288565F800D68E67 /* Calendar */,
+				EEFD585B288565F800D68E67 /* ModifyProductVC.swift */,
+				EEFD585C288565F800D68E67 /* SelectCategory */,
+				EEFD585E288565F800D68E67 /* ModifyProductReactor.swift */,
+			);
+			name = ModifyItem;
+			path = Bidit/presentation/ModifyItem;
+			sourceTree = SOURCE_ROOT;
+		};
+		EEFD5855288565F800D68E67 /* TimePicker */ = {
+			isa = PBXGroup;
+			children = (
+				EEFD5856288565F800D68E67 /* ModifyTimePickerVC.swift */,
+			);
+			path = TimePicker;
+			sourceTree = "<group>";
+		};
+		EEFD5857288565F800D68E67 /* DetailFilter */ = {
+			isa = PBXGroup;
+			children = (
+				EEFD5858288565F800D68E67 /* ModifyDetailFilterVC.swift */,
+			);
+			path = DetailFilter;
+			sourceTree = "<group>";
+		};
+		EEFD5859288565F800D68E67 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				EEFD585A288565F800D68E67 /* ModifyCalendarVC.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		EEFD585C288565F800D68E67 /* SelectCategory */ = {
+			isa = PBXGroup;
+			children = (
+				EEFD585D288565F800D68E67 /* ModifyCategoryVC.swift */,
+			);
+			path = SelectCategory;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -876,12 +962,15 @@
 				EEA63D782877F0720095A7E3 /* GetItemList.graphql in Resources */,
 				EE3D822B287486D900C72830 /* requestBid.graphql in Resources */,
 				EEE64C9C286B8821007951B4 /* testImg.png in Resources */,
+				EEFD586B28856DA400D68E67 /* UpdateItem.graphql in Resources */,
+				EEC212602887CABA00C5B77C /* UpdatePushToken.graphql in Resources */,
 				EEF04A0E286D52EE00A9D8A7 /* GoogleService-Info.plist in Resources */,
 				EE069C7F286213320033FA4E /* schema.json in Resources */,
 				EEC0060828707554001B86F7 /* GetEndingSoonItems.graphql in Resources */,
 				EE7C1A112852516D00730E95 /* LaunchScreen.storyboard in Resources */,
 				EE7C1A0E2852516D00730E95 /* Assets.xcassets in Resources */,
 				EEC5EE0F287E238A0000B40E /* AddItem.graphql in Resources */,
+				EEC2402A2886748D00187869 /* UpdateItemImage.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -940,7 +1029,11 @@
 				"$(SRCROOT)/AddItem.graphql",
 				"$(SRCROOT)/MyPageMe.graphql",
 				"$(SRCROOT)/UpdateNickName.graphql",
+				"$(SRCROOT)/UpdateItem.graphql",
+				"$(SRCROOT)/UpdateItemImage.graphql",
+				"$(SRCROOT)/UpdatePushToken.graphql",
 				"$(SRCROOT)/GetItemList.graphql",
+				"$(SRCROOT)/GetEndingSoonItems.graphql",
 			);
 			name = "Generate Apollo GraphQL API";
 			outputFileListPaths = (
@@ -971,6 +1064,7 @@
 				EEE04FB928709A24008FE0B5 /* Items.swift in Sources */,
 				EEC523E7287ACD40005D4673 /* MyPageReactor.swift in Sources */,
 				EED1802A2855F55E00E17B06 /* DefaultCell.swift in Sources */,
+				EEC240262886559000187869 /* ProductStatusDialogVC.swift in Sources */,
 				EE0D4304285351F9008464EA /* DefaultTempRepository.swift in Sources */,
 				EED180282855F14F00E17B06 /* DefaultCellReactor.swift in Sources */,
 				EEA07B022856D1FE002D4F57 /* CategoryCell.swift in Sources */,
@@ -988,6 +1082,7 @@
 				EEC523EF287AE882005D4673 /* AlarmSettingVC.swift in Sources */,
 				EE91EDF2287C834C00F068A8 /* ReasonOptionVC.swift in Sources */,
 				EE7C1A1D285255D100730E95 /* LoginViewController.swift in Sources */,
+				EEC2402828865F4400187869 /* UIApplication+.swift in Sources */,
 				EE51D5DF2856288700AF1BC5 /* BannerCellReactor.swift in Sources */,
 				EE5ECA6328662C4E008B5398 /* ItemDetailTitleCellReactor.swift in Sources */,
 				EE91EDEB287C414900F068A8 /* ProfileChangeReactor.swift in Sources */,
@@ -1004,8 +1099,10 @@
 				EEAE99DF287E6D8A00805D99 /* User.swift in Sources */,
 				EECCABCC287A0EC60085017A /* CalendarVC.swift in Sources */,
 				EEC523F4287AE8D4005D4673 /* PolicyVC.swift in Sources */,
+				EEB35D582885C55F001796E2 /* FailDeleteDialogVC.swift in Sources */,
 				EEC523F6287AE8F9005D4673 /* PrivatePolicyVC.swift in Sources */,
 				EEF7953028658380000E3373 /* IndicatorView.swift in Sources */,
+				EE0E283C2884262A004DAF7B /* PrivateKey.swift in Sources */,
 				EE51D5E628562A3000AF1BC5 /* Banner.swift in Sources */,
 				EEB6DE012878ADD400771427 /* PickedImageCell.swift in Sources */,
 				EED180172855CFEB00E17B06 /* TabbarController.swift in Sources */,
@@ -1020,13 +1117,17 @@
 				EE51D5E428562A2100AF1BC5 /* ModelType.swift in Sources */,
 				EEC7EDF62880A4440085C936 /* AppleLoginManager.swift in Sources */,
 				EEB3CD75285AB37300DF7596 /* EndingSoonCellReactor.swift in Sources */,
+				EEFD5864288565F800D68E67 /* ModifyProductReactor.swift in Sources */,
+				EEFD5861288565F800D68E67 /* ModifyCalendarVC.swift in Sources */,
 				EE76CCA4285A2C600078C906 /* EndingSoonReactor.swift in Sources */,
 				EEB3CD79285AD67E00DF7596 /* UIView+.swift in Sources */,
 				EE9D99CF2856EBA1005480C6 /* Rx+map.swift in Sources */,
 				EEBA584D28839A83004EEE50 /* RecentProduct+CoreDataProperties.swift in Sources */,
 				EEC5EE0D287E183A0000B40E /* DetailFilterVC.swift in Sources */,
+				EEFD5863288565F800D68E67 /* ModifyCategoryVC.swift in Sources */,
 				EED180132855CF4800E17B06 /* MainViewController.swift in Sources */,
 				EEBA584C28839A83004EEE50 /* RecentSearchTerm+CoreDataProperties.swift in Sources */,
+				EEB35D562885C53D001796E2 /* DeleteCheckDialogVC.swift in Sources */,
 				EEAE99EB287E770F00805D99 /* PageInfo.swift in Sources */,
 				EEAE99ED287E777B00805D99 /* AppleAccount.swift in Sources */,
 				EEE64408285D208D009D92AA /* DetailFilterReactor.swift in Sources */,
@@ -1035,6 +1136,7 @@
 				EE4CA219286A211200EAEA87 /* SearchViewController.swift in Sources */,
 				EEAE99E5287E761E00805D99 /* UserAlarm.swift in Sources */,
 				EE069C8328621F0A0033FA4E /* Network.swift in Sources */,
+				EEFD586D28856EDB00D68E67 /* S3Manager.swift in Sources */,
 				EE5ECA6B28663A26008B5398 /* ItemDetailBiddingListCellReactor.swift in Sources */,
 				EE7C1A072852516A00730E95 /* SceneDelegate.swift in Sources */,
 				EEBC50D92859BC1E00F1EE26 /* HomeTabbar.swift in Sources */,
@@ -1050,8 +1152,10 @@
 				EE5ECA5328660C44008B5398 /* ItemBuyDetailViewController.swift in Sources */,
 				EE5ECA65286639F3008B5398 /* ItemDetailContentCell.swift in Sources */,
 				EEB3CD71285AB2D400DF7596 /* Item.swift in Sources */,
+				EEFD585F288565F800D68E67 /* ModifyTimePickerVC.swift in Sources */,
 				EE5ECA6128662C39008B5398 /* ItemDetailTitleCell.swift in Sources */,
 				EEB0655728744C07007766B3 /* CompleteBiddingViewController.swift in Sources */,
+				EEFD5862288565F800D68E67 /* ModifyProductVC.swift in Sources */,
 				EEAE99E1287E6E1200805D99 /* KakaoAccount.swift in Sources */,
 				EEB3CD77285AD27F00DF7596 /* UILayoutPriority.swift in Sources */,
 				EEB5E32B287149EC00F33F2A /* CustomChatChannelListCell.swift in Sources */,
@@ -1064,6 +1168,7 @@
 				EEADFE3E2866E38A0097EBA2 /* BiddingListCellOfCell.swift in Sources */,
 				EEB065522874113B007766B3 /* BottomSheetViewController.swift in Sources */,
 				EEC523E2287ABD89005D4673 /* TimePickerVC.swift in Sources */,
+				EEFD5860288565F800D68E67 /* ModifyDetailFilterVC.swift in Sources */,
 				EEC447B9287FE90E0026E7E6 /* MeEntity.swift in Sources */,
 				EE5ECA5528660DB6008B5398 /* ItemSellDetailViewController.swift in Sources */,
 				EEB0655928744DE9007766B3 /* CompleteBiddingReactor.swift in Sources */,

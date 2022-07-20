@@ -10,10 +10,20 @@ import UIKit
 import ReactorKit
 import RxDataSources
 import MaterialComponents.MaterialBottomSheet
+import ImageSlideshow
 
 //물건 상세 페이지(구매자)
 class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate{
     
+    //네비게이션 바 버튼 (우측)
+    let menuView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    let zzimView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 18))
+    let shareView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
+    
+    let zzimBtn = UIButton()
+    let shareBtn = UIButton()
+    let menuBtn = UIButton()
+
     //테이블 뷰
     
     private let tableView = UITableView().then {
@@ -49,6 +59,17 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         switch item {
         case.photo(let reactor) :
             let cell = tableView.dequeueReusableCell(for: indexPath) as ItemDetailImageCell
+            var tempList = Array<String>()
+            if reactor.initialState.item.image?.count == 0 {
+                cell.images.append(ImageSource(image: UIImage(named: "empty_product_img")!)  )
+            }
+            
+            reactor.initialState.item.image?.forEach{result in
+                cell.images.append(cell.loadImg(url: result.url))
+
+            }
+           
+            cell.slideShow.setImageInputs(cell.images)
             //tableView.rowHeight = 320
             
             cell.reactor = reactor
@@ -112,6 +133,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
     }
     
+    
     private func layout(){
         
         
@@ -151,7 +173,6 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         self.view.backgroundColor = .systemBackground
         
-       
        // let zzimBtn = UIBarButtonItem(customView: zzimView)
         //let shareBtn = UIBarButtonItem(customView: shareView)
         buttonContainer.backgroundColor = .white
@@ -195,6 +216,20 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
     }
     
+    /*
+     삭제하기 팝업창
+     */
+    private func setDeletePopup(){
+    
+        let vc = DeleteCheckDialogVC()
+        vc.modalPresentationStyle = .overFullScreen
+       
+        // 보여주기
+        present(vc, animated: false, completion: nil)
+        
+        
+    }
+    
     //네비게이션바 세팅
     private func setNavigationBarButton(){
         //네비게이션 바 투명하게
@@ -205,14 +240,9 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         self.navigationController?.navigationBar.tintColor = . white
         self.navigationController?.navigationBar.isHidden = false
         
-        let menuView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        let zzimView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 18))
-        let shareView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 20))
-    
         
-        let zzimBtn = UIButton()
-        let shareBtn = UIButton()
-        let menuBtn = UIButton()
+        
+        
         zzimView.addSubview(zzimBtn)
         shareView.addSubview(shareBtn)
         menuView.addSubview(menuBtn)
@@ -261,27 +291,80 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         self.biddingBtn.rx.tap.subscribe(onNext : {
             self.setBottomSheet(item: reactor.initialState.item) //입찰하기 버튼
         }).disposed(by: disposeBag)
-        
+        //즉시 구매 버튼 이벤트
         self.directBuyBtn.rx.tap.subscribe(onNext :{
             self.setDirectPopup()
         }).disposed(by: disposeBag)
         
-        
-        //State
-        reactor.state.map{$0.isOpenDirectBuying}
-            .asObservable().subscribe(onNext : { result in
-                //self.setDirectPopup()
+        //메뉴버튼 이벤트
+        self.menuBtn.rx.tap
+            .subscribe(onNext : {
+                self.setActionSheet()
             }).disposed(by: disposeBag)
+        
+        
+        
        
         reactor.state
             .map { $0.sections }
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
+        //유저 제품 구분 (하단 구매하기 버튼)
+        reactor.state.subscribe(onNext : {state in
+            if state.item.userId == UserDefaults.standard.integer(forKey: "userId") {
+                self.buttonContainer.isHidden = true
+                self.menuView.isHidden = false
+            }else{
+                self.buttonContainer.isHidden = false
+                self.menuView.isHidden = true
+            }
+        }).disposed(by: disposeBag)
         
-       
+        
         
     }
     
+    
+    private func setActionSheet(){
+        //action sheet title 지정
+
+               let optionMenu = UIAlertController(title: nil, message: "", preferredStyle: .actionSheet)
+
+               //옵션 초기화
+
+        //제품 수정
+               let modifyAction = UIAlertAction(title: "수정하기", style: .default, handler: {
+                   (alert: UIAlertAction!) -> Void in
+                   //수정하기 뷰컨트롤러 호출
+                   let vc = ModifyProductVC()
+                   vc.currItem = self.reactor?.initialState.item
+                   let modifyReactor = ModifyProductReactor(currItem: self.reactor!.initialState.item) //임시로 입력
+                   vc.reactor = modifyReactor
+                  // vc.bind(reactor: listReactor)
+                   self.navigationController?.pushViewController(vc, animated: true)
+               })
+               let deleteAction = UIAlertAction(title: "삭제하기", style: .default, handler: {
+                   (alert: UIAlertAction!) -> Void in
+                   self.setDeletePopup()
+               })
+               let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: {
+                   (alert: UIAlertAction!) -> Void in
+             })
+
+              //action sheet에 옵션 추가.
+
+               optionMenu.addAction(modifyAction)
+               optionMenu.addAction(deleteAction)
+               optionMenu.addAction(cancelAction)
+
+               
+
+              //show
+
+               self.present(optionMenu, animated: true, completion: nil)
+
+
+    }
 
     
 }

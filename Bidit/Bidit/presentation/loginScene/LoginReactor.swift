@@ -51,10 +51,10 @@ class LoginReactor : Reactor {
     }
     
     let initialState: State
-    
     init(){
         self.initialState = State()
     }
+    
     //API요청과 같은 side effect가 mutate에서 수행
     func mutate(action: Action) -> Observable<Mutation> {
         var observable : Observable<Mutation>!
@@ -79,6 +79,7 @@ class LoginReactor : Reactor {
                           switch result {
                           case .success(let data) :
                               print("success \(data)")
+                              
                               self.switchLoginPassed(true)
                               break
                           case .failure(let error) :
@@ -101,10 +102,6 @@ class LoginReactor : Reactor {
                               }
                           }
                       }
-                      
-                      
-                      
-                      
                   }
               }
           }
@@ -136,7 +133,6 @@ class LoginReactor : Reactor {
                           }
                           else {
                               print("loginWithKakaoTalk() success.")
-
                               print("token : \(oauthToken?.accessToken)")
                               //do something
                               let keyChain = TokenManager.sharedKeyChain
@@ -147,6 +143,7 @@ class LoginReactor : Reactor {
                                   switch result {
                                   case .success(let data) :
                                       print("success \(data)")
+                                      
                                       self.switchLoginPassed(true)
                                       break
                                   case .failure(let error) :
@@ -159,6 +156,7 @@ class LoginReactor : Reactor {
                   }
               }
           }
+              
           }
           else {
               //로그인 필요
@@ -192,16 +190,10 @@ class LoginReactor : Reactor {
 //              state.loginPassed = false
 //          }
           print("로그인 성공")
-              
       case .autoLogin :
           state.autoLogin = true
-          
       }
       return state
-    
     }
-    
-}
-    
-    
+    }
 }

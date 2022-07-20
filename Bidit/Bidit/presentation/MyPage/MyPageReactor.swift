@@ -73,7 +73,7 @@ extension MyPageReactor {
                         var nickname : String? = datas.nickname
                         
                         var kakao = datas.kakaoAccount
-                        
+                       
                         var kakaoAccount : KakaoAccount? = KakaoAccount(id: Double(kakao!.id),
                                                         status: kakao!.status,
                                                         userId: kakao!.userId,

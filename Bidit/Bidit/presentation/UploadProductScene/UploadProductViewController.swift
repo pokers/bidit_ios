@@ -13,14 +13,24 @@ import RxCocoa
 import Photos
 import BSImagePicker
 import MaterialComponents.MaterialBottomSheet
-
+import AWSS3
 
 //판매글 올리기 뷰컨트롤러
 class UploadProductViewController : UIViewController, View, UIScrollViewDelegate{
     
+    let bucketName = PrivateKey().BUCKET_NAME
+    let accessKey = PrivateKey().ACCESS_KEY
+    let secretKey = PrivateKey().SECRET_KEY
+    let utilityKey = PrivateKey().UTILITY_KEY
+    
+    
     //선택한 이미지를 담아둘 변수
     var selectedAssets : [PHAsset] = []
     var userSelectedImages : [UIImage] = [UIImage()]
+    
+    var userSelectedUrls : [String] = [String]()
+    var urls  : [UIImage : String] = [UIImage : String]()
+    
     let scrollView = UIScrollView()
     
     
@@ -97,9 +107,14 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
     let separator6 = UIView()
     let dueTimeBtn = UIButton() // 경매 마감 시간
     let separator7 = UIView()
+    let detailFilter = UIButton() //상세필터
+    let detailSeparator = UIView() // 상세필터 추가하면서 생긴 줄
     let uploadBtn = UIButton() //판매글 등록 버튼
     let descriptionField = UITextView() //게시글 내용.
     
+    //임시 상세필터 데이터
+    var deliveryType = 0 //0 : 직접, 1 : 택배거래 , 2: 둘다.
+    var periodResult = 0
     
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -126,6 +141,25 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         textSetUp()
         //checkCameraPermission()
         checkAlbumPermission()
+        
+        let credentialsProvider = AWSStaticCredentialsProvider(accessKey: accessKey, secretKey: secretKey)
+        
+        let configuration = AWSServiceConfiguration(region:.APNortheast2, credentialsProvider:credentialsProvider)
+        
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
+        
+        let tuConf = AWSS3TransferUtilityConfiguration()
+        tuConf.isAccelerateModeEnabled = false
+        
+        AWSS3TransferUtility.register(
+            with: configuration!,
+            transferUtilityConfiguration: tuConf,
+            forKey: utilityKey
+        )
+        
+        
+        
+        
     }
     
     func layout(){
@@ -296,6 +330,33 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             $0.height.equalTo(28)
             
         }
+        
+        scrollView.addSubview(detailSeparator) //줄 6
+        detailSeparator.backgroundColor = .separator
+        detailSeparator.snp.makeConstraints{
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview()
+            $0.height.equalTo(1)
+            $0.top.equalTo(dueTimeBtn.snp.bottom).offset(20)
+        }
+        detailSeparator.backgroundColor = .separator
+        
+        //상세필터 버튼
+        scrollView.addSubview(detailFilter)
+        
+        detailFilter.setTitle("싱세필터", for: .normal)
+        
+        detailFilter.setTitleColor(.separator, for: .normal)
+        detailFilter.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
+        detailFilter.contentHorizontalAlignment = .left //버튼 타이틀 정렬
+        detailFilter.snp.makeConstraints{
+            $0.leading.equalToSuperview().offset(16)
+            $0.width.equalTo(200)
+            $0.top.equalTo(detailSeparator.snp.bottom).offset(20)
+            $0.height.equalTo(28)
+        }
+        
+        
         //판매글 등록 버튼
         scrollView.addSubview(uploadBtn)
         uploadBtn.setImage(UIImage(named: "upload_btn_img"), for: .normal)
@@ -303,7 +364,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             $0.centerX.equalToSuperview()
             $0.width.equalTo(340)
             $0.height.equalTo(42)
-            $0.top.equalTo(dueTimeBtn.snp.bottom).offset(16)
+            $0.top.equalTo(detailFilter.snp.bottom).offset(16)
         }
         
         scrollView.addSubview(separator7) //줄 7
@@ -435,8 +496,15 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 result in
                    
                 
-                    var temp = self.userSelectedImages.filter{ $0 != result.element!}
+                    let temp = self.userSelectedImages.filter{ $0 != result.element!}
                     self.userSelectedImages = temp
+                    
+                    let tempURL = self.urls.filter{$0.key != result.element!}
+                    self.userSelectedUrls.removeAll()
+                    
+                    tempURL.keys.forEach{str in
+                        self.userSelectedUrls.append(str.description)
+                    }
                     
                     self.updateList(self.userSelectedImages)
                 
@@ -475,7 +543,9 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         
         
     }
-    
+    /*
+     시간 설정.
+     */
     private func setTimeBottomSheet(){
         // 바텀 시트로 쓰일 뷰컨트롤러 생성
         let vc = TimePickerVC()
@@ -513,9 +583,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         self.navigationController?.navigationBar.isHidden = false
         self.title = "판매글 올리기"
         
-        
-        
-        
+    
         self.tabBarController?.tabBar.isHidden = true
     }
     
@@ -536,6 +604,16 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        //임시 테스트
+        self.rx.viewDidLoad.subscribe(onNext : {
+            print("viewDidLoad")
+        }).disposed(by: disposeBag)
+        
+        self.rx.viewWillAppear.subscribe(onNext : {_ in
+            self.updateList(self.userSelectedImages)
+           // self.imgCollectionView.reloadData()
+        }).disposed(by: disposeBag)
+        
         
         //판매글 등록 버튼 이벤트
         self.uploadBtn.rx.tap.filter{
@@ -547,32 +625,31 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 || self.dueDateBtn.titleLabel?.text == "경매 마감 날짜"
                 || self.dueTimeBtn.titleLabel?.text == "경매 마감 시간")
         }.map{Reactor.Action.tapUpload(
-            imgs: [],
-            status: 1,
-            buyNow : 1000,
-            title: "임시 타이틀",
-            categoryId: 0,
-            sPrice: 2222,
-            name: "노키아폰",
+            imgs: self.userSelectedUrls,
+            status: 0,
+            buyNow : Int(self.buyNowPriceField.text!)! ,
+            title: self.titleField.text,
+            categoryId: 1,
+            sPrice: Int(self.sPriceField.text!)!,
+            name: self.categoryBtn.titleLabel!.text!,
             dueDate: "2022-07-26T23:58:00.000Z", 
-            deliveryType: 0,
+            deliveryType: self.deliveryType,
             sCondition: 1,
             aCondition: 1,
-            description: "판매글 등록 테스트")
+            description: "판매글 등록 테스트",
+            detail : self.periodResult
+        
+        )
         }.bind(to: reactor.action)
             .disposed(by: disposeBag)
-        
-        
-        self.rx.viewDidLoad
-              .mapVoid()
-              .map(Reactor.Action.viewDidLoad)
-              .bind(to: reactor.action)
-              .disposed(by: self.disposeBag)
         
         //카테고리 선택 화면으로 이동.
         self.categoryBtn.rx.tap.subscribe(onNext : {result in
             print("카테고리 선택 화면 이동")
             let selectCategory = SellectCategoryVC()
+            selectCategory.preVC = self
+            selectCategory.saveImageList = self.userSelectedImages
+            
            
             self.navigationController?.pushViewController(selectCategory, animated: true)
         }).disposed(by: disposeBag)
@@ -591,21 +668,24 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         self.dueTimeBtn.rx.tap.subscribe(onNext : {
             self.setTimeBottomSheet()
         }).disposed(by: disposeBag)
+        //상세필터 버튼 이벤트
+        self.detailFilter.rx.tap.subscribe(onNext : {
+            print("상세필터 선택 화면 이동")
+            let detailFilterVC = DetailFilterVC()
+            detailFilterVC.preVC = self
+            self.navigationController?.pushViewController(detailFilterVC, animated: true)
+        }).disposed(by: disposeBag)
        
 //        imgCollectionView.rx.itemSelected.filter{$0.row == 0} //카메라 버튼만 이벤트 허용
 //              .map{Reactor.Action.cellSelected($0)}
 //              .bind(to: reactor.action)
 //              .disposed(by: disposeBag)
-        
         //State
    
         reactor.state
             .map { $0.imageSection }
             .bind(to: imgCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
-        
-        
-        
     }
     
     
@@ -614,15 +694,12 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             imagePicker.settings.selection.max = 5
             imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
                 
-        let vc = self//.window?.rootViewController
+        let vc = self //.window?.rootViewController
                 
         vc.presentImagePicker(imagePicker, select: { (asset) in
-                    
                     // User selected an asset. Do something with it. Perhaps begin processing/upload?
-           
             }, deselect: { (asset) in
                     // User deselected an asset. Cancel whatever you did when asset was selected.
-          
             }, cancel: { (assets) in
                     // User canceled selection.
 
@@ -660,26 +737,101 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                         
                     }
                     
-                    let data = thumbnail.jpegData(compressionQuality: 0.7)
+                    let data = thumbnail.jpegData(compressionQuality: 1.0)
                     let newImage = UIImage(data: data!)
                     //updateList(newImage! as UIImage)
                     self.userSelectedImages.append(newImage! as UIImage)
+                    getURL(image: newImage!)
+                    //S3
+                    //print("resultURL : \(resultURL) " )
+                    //S3Manager.shared.getURL(image: newImage!)
+                    //self.userSelectedUrls.append()
+                    //self.urls[newImage!] = S3Manager.shared.getURL(image: newImage!)
                     
-
                 }
             }
         }
     
-
-    
+    func getURL(image : UIImage) -> String {
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "yyyyMMdd/"
+        
+        var fileKey = PrivateKey().FILE_KEY
+        
+        fileKey += dateFormat.string(from: Date())
+        fileKey += String(Int64(Date().timeIntervalSince1970)) + "_"
+        fileKey += UUID().uuidString + " \(Date().description)" + ".png"
+        
+        var photoUrl = ""
+        guard let transferUtility = AWSS3TransferUtility.s3TransferUtility(forKey: utilityKey)
+        else
+        {
+            return ""
+        }
+        
+        let expression = AWSS3TransferUtilityUploadExpression()
+        expression.setValue("public-read", forRequestHeader: "x-amz-acl") //URL로 이미지 읽을 수 있도록 권한 설정 (이 헤더 없으면 못읽음)
+        expression.progressBlock = {(task, progress) in
+            print("progress \(progress.fractionCompleted)")
+        }
+        
+        
+        var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
+        completionHandler = { [weak self] (task, error) -> Void in
+            guard let self = self else { return }
+            print("task finished")
+            //??????
+            let url = AWSS3.default().configuration.endpoint.url
+            //
+            let publicURL = url?.appendingPathComponent(self.bucketName).appendingPathComponent(fileKey)
+            if let absoluteString = publicURL?.absoluteString {
+                print("image url ↓↓")
+                print(absoluteString)
+            }
+            
+            if let query = task.request?.url?.query,
+               var removeQueryUrlString = task.request?.url?.absoluteString.replacingOccurrences(of: query, with: "") {
+                removeQueryUrlString.removeLast() // 맨 뒤 물음표 삭제
+                print("업로드 리퀘스트에서 쿼리만 제거한 url ↓↓") //이 주소도 파일 열림
+                print(" 업로드 URL : \(removeQueryUrlString)")
+                //print(removeQueryUrlString)
+                photoUrl =  removeQueryUrlString
+                self.userSelectedUrls.append(photoUrl)
+                self.urls[image] = photoUrl
+                print("photoURL is \(photoUrl)")
+            }
+        }
+        
+        
+        
+        //올릴 사진
+        guard let data = image.pngData() //UIImage(named: "testImg")?.pngData()
+        else
+        {
+            return photoUrl
+        }
+        
+        
+        transferUtility.uploadData(data as Data, bucket: bucketName, key: fileKey, contentType: "image/png", expression: expression,
+                                   completionHandler: completionHandler).continueWith
+        {
+            (task) -> AnyObject? in
+            if let error = task.error {
+                print("Error: \(error.localizedDescription)")
+                
+            }
+            
+            if let _ = task.result {
+                print ("upload successful.")
+            }
+            return photoUrl as AnyObject
+        }
+        return photoUrl
+    }
 }
 
-
-
 enum UploadAlbumSection {
-    
     case album([UploadAlbumSectionItem])
-    
 }
 
 enum UploadAlbumSectionItem {

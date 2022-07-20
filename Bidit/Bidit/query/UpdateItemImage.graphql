@@ -1,0 +1,6 @@
+mutation UpdateItemImage($itemId:Int, $itemImageUpdate: ItemImageUpdateInput){
+    updateItemImage (itemId : $itemId, itemImageUpdate: $itemImageUpdate){
+        name
+
+    }
+}
