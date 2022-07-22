@@ -12,6 +12,8 @@ import UIKit
 //검색 뷰 컨트롤러 리액터
 class SearchReactor : Reactor {
     
+    var itemList : [Item] = []
+    
     enum Action {
         case viewDidLoad //처음 화면 로드
         case tapSearchBtn(keyword : String) // 검색하기 실행
@@ -19,7 +21,7 @@ class SearchReactor : Reactor {
         case tapPopularityBtn(keyword : String)
         case tapEndingSoonBtn(keyword : String)
         case tapLatestBtn(keyword : String)
-        
+        case cellSelected(IndexPath) //셀 클릭 액션
     }
     
     enum Mutation {
@@ -30,6 +32,7 @@ class SearchReactor : Reactor {
         case sortPopularity
         case sortEndingSoon
         case sortLatest
+        case setSelectedIndexPath(IndexPath?) //셀 클릭
     }
     
     struct State {
@@ -40,6 +43,7 @@ class SearchReactor : Reactor {
         
         var isSortListOpened : Bool = false //닫혀있는 상태
         var sortState : SortState = .latest //처음은 최신순
+        var selectedIndexPath : IndexPath?
     }
     
     enum SortState{
@@ -91,6 +95,12 @@ extension SearchReactor {
                 Observable<Mutation>.just(Mutation.sortLatest),
                 getSearchResultFromApi(keyword: keyword, sortType: .latest)
             ])
+            //셀 클릭
+        case .cellSelected(let indexPath):
+            return Observable.concat([
+                Observable.just(Mutation.setSelectedIndexPath(indexPath)),
+                Observable.just(Mutation.setSelectedIndexPath(nil))
+            ])
         }
     }
     
@@ -137,6 +147,11 @@ extension SearchReactor {
               
           case .sortLatest:
               state.sortState = .latest
+              break
+              
+          case .setSelectedIndexPath(let indexPath):
+              state.selectedIndexPath = indexPath
+              print("reactor endingSoon : ")
               break
             
           }
@@ -221,7 +236,7 @@ extension SearchReactor {
                             print("인기순 출력")
                             sortedArray = tempList.sorted(by:  {$0.viewCount! < $1.viewCount!})
                         }
-                        
+                        self.itemList = sortedArray
 
 
                         let convertedData = self.convertItemToSection(items: sortedArray)

@@ -18,6 +18,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     var sortLabel = UILabel() // 최신순 글자.
     var sortButton = UIButton() // 정렬 기준 버튼
     var filterButton = UIButton()// 필터 버튼
+    var appliedFilter = false
     
     var sortList = UIImageView(image: UIImage(named: "balloonFilterImg"))
     
@@ -29,7 +30,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     //테이블 뷰
     private let tableView = UITableView().then {
         $0.register(cellType: EndingSoonCell.self)
-        $0.backgroundColor = .blue
+        $0.backgroundColor = .white
         $0.rowHeight = 140
     }
     
@@ -50,13 +51,17 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     //filterVC.reactor = DetailFilterReactor()
     var menu : SideMenuNavigationController? = nil
     
-    
+   
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         filterVC.reactor = reactorOfFilter
         menu = SideMenuNavigationController(rootViewController: filterVC)
+        menu?.presentationStyle = .menuSlideIn
+        
+
+        
     }
     
     required init?(coder: NSCoder) {
@@ -65,8 +70,12 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        attribute()
+        
+        
         layout()
+        attribute()
+        
+        
         
         
         
@@ -157,8 +166,8 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     
     
     private func attribute(){
-        subToolBarContainer.backgroundColor = .systemBackground
-        self.view.backgroundColor = .systemBackground
+        subToolBarContainer.backgroundColor = .white
+        self.view.backgroundColor = .white
         
         //self.navigationItem.leftBarButtonItem = backButton
         self.navigationController?.navigationBar.topItem?.title = ""
@@ -199,15 +208,15 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
         
         //오른쪽 사이드 메뉴 추가.
         SideMenuManager.default.rightMenuNavigationController = menu
-        menu!.menuWidth = 300 //사이드 메뉴 너비 설정
-    
+        menu?.menuWidth = 300 //사이드 메뉴 너비 설정
+        self.tableView.rx.setDelegate(self)
+          .disposed(by: disposeBag)
         
     }
     
     func bind(reactor: ItemListReactor) {
         
-        self.tableView.rx.setDelegate(self)
-          .disposed(by: disposeBag)
+        
         
         //  Action
           self.rx.viewDidLoad // 뷰 로드
@@ -216,7 +225,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
               .bind(to: reactor.action)
               .disposed(by: self.disposeBag)
         
-        tableView.rx.itemSelected //아이템 클릭 액션
+        self.tableView.rx.itemSelected //아이템 클릭 액션
             .map{Reactor.Action.cellSelected($0)}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -244,12 +253,44 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
             .map(Reactor.Action.tapFilterBtn)
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
-        
-        self.menu!.rx.viewWillDisappear
-            .map(Reactor.Action.disappearFilter)
+//
+        //필터 적용 시점.(필터 활성화 appliedFilter)
+         
+       
+        self.menu!.rx.viewDidDisappear
+            //.filter{ _ in self.appliedFilter == true }
+            .map{_ in
+               
+                var deliveryType = 0
+                if self.filterVC.availDirect == true && self.filterVC.availPost == true {
+                    deliveryType = 2
+                }else if self.filterVC.availPost == false && self.filterVC.availDirect == true{
+                    deliveryType = 0
+                }else if self.filterVC.availPost == true && self.filterVC.availDirect == false{
+                    deliveryType = 1
+                }else if self.filterVC.availPost == true && self.filterVC.availDirect == false{
+                    deliveryType = 4 //없음.
+                }
+                print("필터 적용 \(deliveryType)")
+                let minPeriod = Int(self.filterVC.minPeriodText.text!) ?? 0
+                let maxPeriod = Int(self.filterVC.maxPeriodText.text!) ?? 0
+                let minStartPrice = Int(self.filterVC.minStartPrice.text!) ?? 0
+                let maxStartPrice = Int(self.filterVC.maxStartPrice.text!) ?? 0
+                let minInstantPrice = Int(self.filterVC.minInstantPrice.text!) ?? 0
+                let maxInstantPrice = Int(self.filterVC.maxInstantPrice.text!) ?? 0
+                
+                return Reactor.Action.disappearFilter(deliveryType: deliveryType,
+                                                      minPeriod: minPeriod,
+                                                      maxPeriod: maxPeriod,
+                                                      minStartPrice: minStartPrice,
+                                                      maxStartPrice: maxStartPrice,
+                                                      minInstantPrice: minInstantPrice,
+                                                      maxInstantPrice: maxInstantPrice)
+                
+            }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
-        
+//        
         
         //State
           
@@ -266,7 +307,11 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
                 print("cell clicked")
                 //구매자 아이템 디테일 화면
                 var itemDetailVC = ItemBuyDetailViewController()
-                itemDetailVC.reactor = ItemBuyDetailReactor(item: Item()) //수정 필요
+                itemDetailVC.reactor = ItemBuyDetailReactor(item: reactor.itemList[indexPath.row]) //수정 필요
+                print("\(reactor.itemList[indexPath.row]) indexpath is ")
+                itemDetailVC.currItem = reactor.itemList[indexPath.row]
+                self.tabBarController?.tabBar.isHidden = true
+                self.navigationController?.navigationBar.isHidden = false
                 self.navigationController?.pushViewController(itemDetailVC, animated: true)
                 self.tableView.deselectRow(at: indexPath, animated: true)
             }).disposed(by: disposeBag)
@@ -303,19 +348,49 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
                 }
                 
             }).disposed(by: self.disposeBag)
-        
-        reactor.state
-            .map{$0.isFilterOpened}
-            .subscribe(onNext : { isOpened in
-                if isOpened == true{
-                    self.present(self.menu!, animated: true, completion: nil)
-                }
-                
+//        //상세필터
+//        reactor.state
+//            .map{$0.isFilterOpened}
+//            .subscribe(onNext : { isOpened in
+//                if isOpened == false && self.appliedFilter == true{
+//
+//
+//                }
+//
+//            }).disposed(by: self.disposeBag)
+//
+        self.filterButton.rx.tap
+            .subscribe(onNext : {
+                self.navigationController?.present(self.menu!, animated: true, completion: nil)
             }).disposed(by: self.disposeBag)
+        
     }
+    
+    
      
     
    // @objc func back(){
    //     self.navigationController?.popViewController(animated: true)
    // }
+}
+extension ItemListViewController : SideMenuNavigationControllerDelegate{
+    func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
+        
+           print("SideMenu Appearing! (animated: \(animated))")
+       }
+
+       func sideMenuDidAppear(menu: SideMenuNavigationController, animated: Bool) {
+           print("SideMenu Appeared! (animated: \(animated))")
+           
+       }
+
+       func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
+           print("SideMenu Disappearing! (animated: \(animated))")
+       }
+
+       func sideMenuDidDisappear(menu: SideMenuNavigationController, animated: Bool) {
+           print("SideMenu Disappeared! (animated: \(animated))")
+          
+        
+       }
 }

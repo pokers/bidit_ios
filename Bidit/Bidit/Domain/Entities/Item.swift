@@ -22,10 +22,11 @@ struct Item : ModelType, Codable{
     var deliveryType: Int?  = 0//# 0=DIRECT, 1=PARCEL, 2=BOTH
     var sCondition: Int? = 0
     var aCondition: Int? = 0
-    var createdAt: String! = ""
+    var createdAt: String? = ""
     var updatedAt: String? = ""
     var deletedAt: String? = ""
     var image : [ItemImage]? = []
+    var user : User?
    // let description: ItemDescription
     //let  image: [ItemImage]
    // let category: Category

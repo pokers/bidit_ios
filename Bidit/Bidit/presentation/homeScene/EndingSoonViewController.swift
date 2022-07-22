@@ -17,6 +17,7 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
     
     var disposeBag: DisposeBag = DisposeBag()
     typealias Reactor = EndingSoonReactor
+    var homeVC : HomeViewController? = nil
     
     var isEnableScroll = PublishRelay<Bool>() //view -> ViewModel //로그인 통과 여부 .
 
@@ -24,8 +25,9 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
     
     
     let tableView = UITableView().then {
+
         $0.register(cellType: EndingSoonCell.self)
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .white
         $0.rowHeight = 140
         
         
@@ -57,13 +59,15 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
           .disposed(by: disposeBag)
         
         extendBind()
+        tableView.isScrollEnabled = false
         
     }
     
     private func layout(){
         view.addSubview(tableView)
         tableView.snp.makeConstraints{
-            $0.top.trailing.leading.bottom.equalToSuperview()
+            $0.top.equalToSuperview().offset(40)
+            $0.trailing.leading.bottom.equalToSuperview()
             $0.height.equalTo(1000)
         }
     }
@@ -93,7 +97,12 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
       //  Action
         
         
-        self.rx.viewDidLoad
+//        self.rx.viewDidLoad
+//            .mapVoid()
+//            .map(Reactor.Action.viewDidLoad)
+//            .bind(to: reactor.action)
+//            .disposed(by: self.disposeBag)
+        self.rx.viewWillAppear
             .mapVoid()
             .map(Reactor.Action.viewDidLoad)
             .bind(to: reactor.action)
@@ -119,7 +128,30 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
 //
         //State
         reactor.state
-            .map { $0.itemSection }
+            .map {
+                var count = 0
+                if $0.itemSection.count > 0 {
+                    count = $0.itemSection[0].items.count
+                    //테이블뷰 컨테이너 크기 재조정
+                    self.homeVC?.tabbarContainer.snp.makeConstraints{
+                        $0.top.equalToSuperview().offset(535)
+                        $0.leading.trailing.equalToSuperview()
+                        $0.width.equalToSuperview()
+                        $0.height.equalTo(140 * count + 120)
+                        $0.bottom.equalToSuperview()
+                    }
+                    //테이블뷰 크기 재조정.
+                    self.tableView.snp.makeConstraints{
+                        $0.top.equalToSuperview().offset(40)
+                        $0.trailing.leading.bottom.equalToSuperview()
+                        $0.height.equalTo(140 * count)
+                        
+                    }
+                    
+                }
+                
+                
+                return $0.itemSection }
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
         
@@ -154,13 +186,13 @@ extension EndingSoonViewController {
 //            isEnableScroll.accept(false)
 //        }
 //    }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y <= 0 {
-          print("top!")
-            self.tableView.isScrollEnabled = false
-        }
-      }
-    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y <= 0 {
+//          print("top!")
+//            self.tableView.isScrollEnabled = false
+//        }
+//      }
+//    
 //    self.tableView.rx.contentOffset
 }
 

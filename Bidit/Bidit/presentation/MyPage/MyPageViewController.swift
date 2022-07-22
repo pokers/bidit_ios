@@ -11,6 +11,7 @@ import ReactorKit
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
+import Kingfisher
 //My
 class MyPageViewController : UIViewController ,View{
     
@@ -123,25 +124,27 @@ class MyPageViewController : UIViewController ,View{
             profileContainer.addSubview($0)
         }
         imageView.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(65)
+            $0.top.equalToSuperview().offset(48)
             $0.leading.equalToSuperview().offset(44)
             $0.width.height.equalTo(56)
-            
         }
+        
         imageView.image = UIImage(named: "temp_profile")
         imageView.layer.cornerRadius = 100
         
         nameText.snp.makeConstraints{
             $0.centerX.equalTo(imageView.snp.centerX)
-            $0.top.equalTo(imageView.snp.bottom)
+            $0.top.equalTo(imageView.snp.bottom).offset(12)
             
         }
         nameText.text = "닉네임닉네임닉네임"
+        nameText.font = .systemFont(ofSize: 12, weight: .bold)
         
         sellCount.snp.makeConstraints{
             $0.top.equalTo(imageView.snp.top)
             $0.centerX.equalToSuperview()
         }
+        
         sellCount.text = "300,000"
         sellCountTitle.snp.makeConstraints{
             $0.top.equalTo(sellCount.snp.bottom).offset(4)
@@ -175,7 +178,7 @@ class MyPageViewController : UIViewController ,View{
             $0.leading.equalToSuperview().offset(54)
             $0.width.equalTo(37)
             $0.height.equalTo(54)
-            $0.top.equalTo(nameText.snp.bottom).offset(28)
+            $0.top.equalTo(changeBtn.snp.bottom).offset(28)
         }
         sellRecordBtn.setImage(UIImage(named: "sell_record_img"), for: .normal)
         
@@ -184,7 +187,7 @@ class MyPageViewController : UIViewController ,View{
             $0.centerX.equalToSuperview()
             $0.width.equalTo(37)
             $0.height.equalTo(54)
-            $0.top.equalTo(nameText.snp.bottom).offset(28)
+            $0.top.equalTo(changeBtn.snp.bottom).offset(28)
         }
         
         buyRecordBtn.setImage(UIImage(named: "buy_record_img"), for: .normal)
@@ -193,7 +196,7 @@ class MyPageViewController : UIViewController ,View{
             $0.trailing.equalToSuperview().inset(54)
             $0.width.equalTo(37)
             $0.height.equalTo(54)
-            $0.top.equalTo(nameText.snp.bottom).offset(28)
+            $0.top.equalTo(changeBtn.snp.bottom).offset(28)
         }
         
         zzimRecordBtn.setImage(UIImage(named: "zzim_record_img"), for: .normal)
@@ -228,8 +231,10 @@ class MyPageViewController : UIViewController ,View{
             $0.width.equalTo(200)
             //$0.height.equalTo(40)
         }
+        infoBtn.alignTextLeft(spacing: 16)
         infoBtn.setTitle("계정 기본정보", for: .normal)
         infoBtn.setTitleColor(.black, for: .normal)
+        infoBtn.titleLabel?.textAlignment = .left
         
         scrollView.addSubview(separator2)
         separator2.snp.makeConstraints{
@@ -254,6 +259,7 @@ class MyPageViewController : UIViewController ,View{
             $0.width.equalTo(200)
             //$0.height.equalTo(40)
         }
+        alarmBtn.alignTextLeft(spacing: 16)
         alarmBtn.setTitle("알림 설정", for: .normal)
         alarmBtn.setTitleColor(.black, for: .normal)
         //줄3
@@ -347,6 +353,7 @@ class MyPageViewController : UIViewController ,View{
         }
         privateBtn.setTitle("개인정보 수집 및 이용방침", for: .normal)
         privateBtn.setTitleColor(.black, for: .normal)
+        privateBtn.alignTextLeft(spacing: 16)
         //줄6
         scrollView.addSubview(separator6)
         separator6.snp.makeConstraints{
@@ -374,11 +381,18 @@ class MyPageViewController : UIViewController ,View{
         }
         (policyBtn).setTitle("서비스 이용약관", for: .normal)
         (policyBtn).setTitleColor(.black, for: .normal)
+        policyBtn.alignTextLeft(spacing: 16)
     }
     
     func bind(reactor: MyPageReactor) {
         
-        self.rx.viewDidLoad
+//        self.rx.viewDidDisappear
+//              .mapVoid()
+//              .map(Reactor.Action.viewDidLoad)
+//              .bind(to: reactor.action)
+//              .disposed(by: self.disposeBag)
+        
+        self.rx.viewWillAppear
               .mapVoid()
               .map(Reactor.Action.viewDidLoad)
               .bind(to: reactor.action)
@@ -430,6 +444,8 @@ class MyPageViewController : UIViewController ,View{
                 }else{
                     self.nameText.text  = "닉네임 필요"
                 }
+               
+                self.imageView.image = self.loadProfileImg(url: user?.kakaoAccount?.profile_image_url?.description ?? "")
                 
                 currentUser = user
                 
@@ -437,6 +453,24 @@ class MyPageViewController : UIViewController ,View{
             .disposed(by: self.disposeBag)
         
         
+    }
+    
+    func loadProfileImg(url : String) -> UIImage{
+        var resultImage : UIImage?
+        if let thumbnailUrl = URL(string: url) {
+            KingfisherManager.shared.retrieveImage(with: thumbnailUrl, completionHandler: { result in
+            switch(result) {
+                case .success(let imageResult):
+//                    let resized = imageResult.image.resizedImageWithContentMode(.scaleAspectFit, bounds: CGSize(width: 84, height: 84), interpolationQuality: .medium)
+                    //imageView.isHidden = false
+                resultImage = imageResult.image
+                case .failure(let error):
+                    
+                break
+                }
+            })
+        }
+        return resultImage ?? UIImage(named: "basic_profile_img")!
     }
     
 

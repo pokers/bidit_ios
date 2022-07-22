@@ -73,6 +73,7 @@ extension MyPageReactor {
                         var nickname : String? = datas.nickname
                         
                         var kakao = datas.kakaoAccount
+                        var apple = datas.appleAccount
                        
                         var kakaoAccount : KakaoAccount? = KakaoAccount(id: Double(kakao!.id),
                                                         status: kakao!.status,
@@ -87,9 +88,15 @@ extension MyPageReactor {
                                                         profile_image_url: kakao?.profileImageUrl,
                                                         is_default_image: kakao?.isDefaultImage)
                        
-                        var appleAccount = datas.appleAccount
+                        var appleAccount : AppleAccount? = AppleAccount(id: apple?.id,
+                                                                        status: apple?.status,
+                                                                        userId: apple?.userId,
+                                                                        email: apple?.email,
+                                                                        createdAt: apple?.createdAt,
+                                                                        updatedAt: apple?.updatedAt,
+                                                                        deletedAt: apple?.deletedAt)
                         
-                        var user = User(id: id, status: status, nickname: nickname, kakaoAccount: kakaoAccount, appleAccount: nil)
+                        var user = User(id: id, status: status, nickname: nickname, kakaoAccount: kakaoAccount, appleAccount: appleAccount)
                         
                         
                         

@@ -9,6 +9,8 @@ import UIKit
 import SendBirdUIKit
 class TabbarController : UITabBarController{
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updatePushToken()
@@ -32,7 +34,7 @@ class TabbarController : UITabBarController{
         let searchViewController = UINavigationController(rootViewController: searchVC)
         searchVC.reactor = SearchReactor()
         
-        let vc4 = UIViewController()
+        let tradeTabbarVC = TradeTabbarVC()
         let myPageVC = MyPageViewController()
         let myPageNavigationVC = UINavigationController(rootViewController: myPageVC)
         myPageVC.reactor = MyPageReactor()
@@ -46,13 +48,15 @@ class TabbarController : UITabBarController{
         
         searchVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"search_img" ), selectedImage: UIImage(named:"search_fill_img" ))
         
-        vc4.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"my_deal_img" ), selectedImage: UIImage(named:"my_deal_fill_img" ))
+        tradeTabbarVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"my_deal_img" ), selectedImage: UIImage(named:"my_deal_fill_img" ))
         
         myPageVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"mypage_img" ), selectedImage: UIImage(named:"mypage_fill_img" ))
         
-        viewControllers = [chatVC,searchViewController, homeViewController,  vc4, myPageNavigationVC]
-        
+        viewControllers = [chatVC,searchViewController, homeViewController,  tradeTabbarVC, myPageNavigationVC]
+        self.tabBar.tintColor = .black
         self.selectedIndex = 2 //첫화면 설정 (홈화면)
+        self.view.backgroundColor = .white
+        self.tabBar.barTintColor = .white
     }
 }
 

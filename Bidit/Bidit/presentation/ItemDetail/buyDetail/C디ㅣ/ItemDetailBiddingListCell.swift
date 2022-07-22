@@ -67,7 +67,7 @@ class ItemDetailBiddingListCell : UITableViewCell, View, Reusable, UIScrollViewD
             $0.top.equalTo(cellTitle.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
-            $0.height.equalTo(420)
+            $0.height.equalTo(60)
         }
     }
     

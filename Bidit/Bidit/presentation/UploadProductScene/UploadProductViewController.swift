@@ -47,7 +47,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             return cv
     }()
     
-    
+    let imageCountLabel = UILabel()
     
     
     //RxCollectionViewDataSourceType
@@ -116,6 +116,8 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
     var deliveryType = 0 //0 : 직접, 1 : 택배거래 , 2: 둘다.
     var periodResult = 0
     
+    let df = DateFormatter()
+    
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -180,6 +182,15 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             $0.height.equalTo(98)
             $0.width.equalToSuperview()
         }
+        //이미지 개수
+        scrollView.addSubview(imageCountLabel)
+        imageCountLabel.snp.makeConstraints{
+            $0.top.equalToSuperview().offset(76)
+            $0.leading.equalToSuperview().offset(26)
+        }
+        imageCountLabel.font = .systemFont(ofSize: 12, weight: .medium)
+        imageCountLabel.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
+        self.imageCountLabel.text = "\(self.userSelectedImages.count - 1)/10"
         scrollView.addSubview(separator1) //줄 1
         separator1.backgroundColor = .separator
         separator1.snp.makeConstraints{
@@ -614,6 +625,26 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
            // self.imgCollectionView.reloadData()
         }).disposed(by: disposeBag)
         
+        df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        df.locale = Locale(identifier: "ko_KR")
+    
+        
+        
+        self.uploadBtn.rx.tap
+            .subscribe(onNext : {
+                if (self.imgCollectionView.numberOfItems(inSection: 0) < 2
+                    || self.titleField.text == "" || self.titleField.text == "글 제목"
+                    || self.categoryBtn.titleLabel?.text == "카테고리"
+                    || self.sPriceField.text == "비딩 시작가" || self.sPriceField.text == "0"
+                    || self.buyNowPriceField.text == "즉시 구매가" || self.buyNowPriceField.text == "0"
+                    || self.dueDateBtn.titleLabel?.text == "경매 마감 날짜"
+                    || self.dueTimeBtn.titleLabel?.text == "경매 마감 시간"){
+                    //아직 작성되지 않은 항목이 있어요.팝업창 띄우기
+                    let warningVC = WarningBlankVC()
+                    
+                    self.present(warningVC, animated: false)
+                }
+            })
         
         //판매글 등록 버튼 이벤트
         self.uploadBtn.rx.tap.filter{
@@ -624,7 +655,57 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 || self.buyNowPriceField.text == "즉시 구매가" || self.buyNowPriceField.text == "0"
                 || self.dueDateBtn.titleLabel?.text == "경매 마감 날짜"
                 || self.dueTimeBtn.titleLabel?.text == "경매 마감 시간")
-        }.map{Reactor.Action.tapUpload(
+        }.map{
+            //년
+            var year_str = self.dueDateBtn.titleLabel?.text ?? "2022_22222222"
+            var startIndex = year_str.index(year_str.startIndex, offsetBy: 0)// 사용자지정 시작인덱스
+            var endIndex = year_str.index(year_str.startIndex, offsetBy: 3)// 사용자지정 끝인덱스
+            var sliced_year = year_str[startIndex ..< endIndex]
+            print(sliced_year)
+            
+            //월
+            var month_str = self.dueDateBtn.titleLabel?.text ?? "2022_22222222"
+            startIndex = month_str.index(month_str.startIndex, offsetBy: 6)// 사용자지정 시작인덱스
+            endIndex = month_str.index(month_str.startIndex, offsetBy: 7)// 사용자지정 끝인덱스
+            var sliced_month = month_str[startIndex ..< endIndex]
+            print(sliced_month)
+            
+            //일
+            var day_str = self.dueDateBtn.titleLabel?.text ?? "2022_22222222"
+            startIndex = day_str.index(day_str.startIndex, offsetBy: 6)// 사용자지정 시작인덱스
+            endIndex = day_str.index(day_str.startIndex, offsetBy: 7)// 사용자지정 끝인덱스
+            var sliced_day = day_str[startIndex ..< endIndex]
+            print(sliced_day)
+            
+            
+            //오전오후
+            var day_ampm = self.dueTimeBtn.titleLabel?.text ?? "2022_22222222"
+            startIndex = day_ampm.index(day_ampm.startIndex, offsetBy: 0)// 사용자지정 시작인덱스
+            endIndex = day_ampm.index(day_ampm.startIndex, offsetBy: 1)// 사용자지정 끝인덱스
+            var sliced_ampm = day_ampm[startIndex ..< endIndex]
+            print(sliced_ampm)
+            
+            //시간
+            var day_hour = self.dueTimeBtn.titleLabel?.text ?? "2022_22222222"
+            startIndex = day_hour.index(day_hour.startIndex, offsetBy: 3)// 사용자지정 시작인덱스
+            endIndex = day_hour.index(day_hour.startIndex, offsetBy: 4)// 사용자지정 끝인덱스
+            var sliced_hour = day_hour[startIndex ..< endIndex]
+            var result_hour = sliced_hour.description
+            if day_ampm == "오후"{
+                result_hour = (Int(sliced_hour.description)! + 12 ).description
+            }
+            print(result_hour)
+            
+            //분
+            var day_minute = self.dueTimeBtn.titleLabel?.text ?? "2022_22222222"
+            startIndex = day_minute.index(day_minute.startIndex, offsetBy: 7)// 사용자지정 시작인덱스
+            endIndex = day_minute.index(day_minute.startIndex, offsetBy: 8)// 사용자지정 끝인덱스
+            var sliced_minute = day_minute[startIndex ..< endIndex]
+            print(sliced_minute)
+            
+            
+            
+            return Reactor.Action.tapUpload(
             imgs: self.userSelectedUrls,
             status: 0,
             buyNow : Int(self.buyNowPriceField.text!)! ,
@@ -632,7 +713,8 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             categoryId: 1,
             sPrice: Int(self.sPriceField.text!)!,
             name: self.categoryBtn.titleLabel!.text!,
-            dueDate: "2022-07-26T23:58:00.000Z", 
+            dueDate:
+                "\(sliced_year)-\(sliced_month)-\(sliced_day)T\(result_hour):\(day_minute):00.000Z", //"2022-07-26T23:58:00.000Z"
             deliveryType: self.deliveryType,
             sCondition: 1,
             aCondition: 1,
@@ -649,8 +731,6 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             let selectCategory = SellectCategoryVC()
             selectCategory.preVC = self
             selectCategory.saveImageList = self.userSelectedImages
-            
-           
             self.navigationController?.pushViewController(selectCategory, animated: true)
         }).disposed(by: disposeBag)
         //이미지 추가 버튼 이벤트
@@ -683,7 +763,8 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         //State
    
         reactor.state
-            .map { $0.imageSection }
+            .map {
+                return $0.imageSection }
             .bind(to: imgCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
     }
@@ -712,6 +793,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 
                 self.convertAssetToImages()
                 self.updateList(self.userSelectedImages)
+                self.imageCountLabel.text = "\(self.userSelectedImages.count - 1)/10"
                 self.selectedAssets = []
 //                self.userSelectedImages = []
                  //self.delegate?.didPickImagesToUpload(images: self.userSelectedImages)
@@ -751,6 +833,26 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 }
             }
         }
+    
+    //변환
+    func stringConvertToDateTime(time : String) -> String {
+        let date = Date()
+        
+           let stringFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+           let formatter = DateFormatter()
+           formatter.dateFormat = stringFormat
+           formatter.locale = Locale(identifier: "ko")
+           guard let tempDate = formatter.date(from: time) else {
+               return ""
+           }
+        print("not yet transform time is \(tempDate)")
+           formatter.dateFormat = "yyyy"
+        
+        //print("not yet transform time is \(tempDate)")
+         
+        
+           return formatter.string(from: tempDate)
+       }
     
     func getURL(image : UIImage) -> String {
         let dateFormat = DateFormatter()

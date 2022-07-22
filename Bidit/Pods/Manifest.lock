@@ -207,7 +207,7 @@ DEPENDENCIES:
   - RxCocoa (= 6.5.0)
   - RxDataSources (~> 5.0)
   - RxSwift (= 6.5.0)
-  - SideMenu
+  - SideMenu (~> 6.0)
   - SnapKit (~> 5.0.0)
   - Tabman (~> 2.9)
   - Then
@@ -295,6 +295,6 @@ SPEC CHECKSUMS:
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 852aafeba16d176e06ac177c3259ec3420282d8d
+PODFILE CHECKSUM: 5773b59323daa39de0e59cc86c35795e98849ba8
 
 COCOAPODS: 1.11.3

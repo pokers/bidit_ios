@@ -11,8 +11,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 import ReactorKit
+//입찰하기 하단 시트 뷰
 class BottomSheetViewController : UIViewController, View{
-    
+    var preVC : ItemBuyDetailViewController? = nil
     var disposeBag: DisposeBag  = DisposeBag()
     
     let minusBtn = UIButton()
@@ -39,7 +40,6 @@ class BottomSheetViewController : UIViewController, View{
     
     
     func layout(){
-        
         [minusBtn, plusBtn, cancelBtn, biddingBtn,inputStackView, inputNotice, warningNotice]
             .forEach{self.view.addSubview($0)}
         
@@ -111,6 +111,9 @@ class BottomSheetViewController : UIViewController, View{
         
         priceLabel.text = "300,000"
         priceLabel.font = .systemFont(ofSize: 24, weight: .bold)
+        priceLabel.keyboardType = .numberPad
+        priceLabel.textContentType
+        
         priceUnit.text = "원"
         priceUnit.font = .systemFont(ofSize: 24, weight: .medium)
         priceUnit.textColor = UIColor(cgColor: CGColor(red: 0.258, green: 0.258, blue: 0.258, alpha: 1))
@@ -127,6 +130,14 @@ class BottomSheetViewController : UIViewController, View{
         warningNotice.font = .systemFont(ofSize: 10, weight: .medium)
         warningNotice.textColor = .red
     }
+    //가격 형식 쉼표찍기
+    func decimalWon(value: Int) -> String{
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            let result = numberFormatter.string(from: NSNumber(value: value))!
+            
+            return result
+        }
     
     func extendBind(){
         self.cancelBtn.rx.tap.subscribe(onNext : {
@@ -148,32 +159,83 @@ class BottomSheetViewController : UIViewController, View{
         //서버에 넘겨줄 입력값 감지
         var resultPrice = 0
         self.priceLabel.rx.text.map{
-            Int($0?.description ?? "0") ?? 0
+            var text = $0?.description ?? "0"
+            //text = text.components(separatedBy: [","]).joined() //쉼표 제거
+            text = text.replacingOccurrences(of: ",", with: "")
+            return Int(text.description ?? "0") ?? 0
+            print("입력된 가격 : \(text)")
         }.subscribe(onNext : { result  in
             resultPrice = result
+            
         }).disposed(by: disposeBag)
         
             //마이너스 버튼
+        self.minusBtn.rx.tap
+            .subscribe(onNext : {
+                var text = self.priceLabel.text ?? "0"
+                //text = text.components(separatedBy: [","]).joined() //쉼표 제거
+                text = text.replacingOccurrences(of: ",", with: "")
+                var initialPrice = Int( text ?? "0")
+                if initialPrice! > 100{
+                    initialPrice = initialPrice! - 100
+                }
+                let result = self.decimalWon(value: initialPrice!)
+                self.priceLabel.text = result
+            }).disposed(by: disposeBag)
         
             //플러스 버튼
-        
+        self.plusBtn.rx.tap
+            .subscribe(onNext : {
+                var text = self.priceLabel.text ?? "0"
+//                text.components(separatedBy: ",").joined() //쉼표 제거
+                text = text.replacingOccurrences(of: ",", with: "")
+                var initialPrice = Int( text )
+                
+                
+                initialPrice = initialPrice! + 100
+                
+                let result = self.decimalWon(value: initialPrice!)
+                self.priceLabel.text = result
+            }).disposed(by: disposeBag)
             //입찰하기 버튼
         
         self.biddingBtn.rx.tap
-            .filter{_ in reactor.initialState.item.sPrice ?? 9999999 < resultPrice} // 참인경우만 이벤트 발생. 지금 가격보다 높은 가격을 비딩했을 때만가능. 
+            .filter{_ in
+                
+                var text = self.priceLabel.text ?? "0" //현재 입력된 가격 텍스트
+                text = text.replacingOccurrences(of: ",", with: "") //쉼표 제거
+                var tryPrice = Int( text ) ?? 0
+                var nowPrice = reactor.initialState.item.cPrice ?? reactor.initialState.item.sPrice
+                
+                
+                return nowPrice! < tryPrice} // 참인경우만 이벤트 발생. 지금 가격보다 높은 가격을 비딩했을 때만가능.
             .map{
-                Reactor.Action.tapBiddingBtn(
-                id: reactor.initialState.item.id, price: resultPrice
+                var text = self.priceLabel.text ?? "0" //현재 입력된 가격 텍스트
+                text = text.replacingOccurrences(of: ",", with: "") //쉼표 제거
+                var tryPrice = Int( text ) ?? 0
+                
+                //즉구 가격 이상일때
+                if tryPrice >= reactor.initialState.item.buyNow ?? 999999999{
+                    tryPrice = reactor.initialState.item.buyNow!
+                    print("즉시 구매 채팅")
+                }
+                
+                return Reactor.Action.tapBiddingBtn(
+                id: reactor.initialState.item.id, price: tryPrice
             )}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         
         self.biddingBtn.rx.tap.subscribe(onNext : {
-            var nowPrice = reactor.initialState.item.cPrice
-            var tryPrice = resultPrice
+            var nowPrice = reactor.initialState.item.cPrice ?? reactor.initialState.item.sPrice
+            var text = self.priceLabel.text ?? "0" //현재 입력된 가격 텍스트
+            text = text.replacingOccurrences(of: ",", with: "") //쉼표 제거
+            var tryPrice = Int( text ) ?? 0
             if nowPrice ?? 999999 > tryPrice {
                 self.warningNotice.isHidden = false
+            }else {
+                self.warningNotice.isHidden = true
             }
         }).disposed(by: disposeBag)
         
@@ -183,16 +245,46 @@ class BottomSheetViewController : UIViewController, View{
         //Status
         
         reactor.state
-            .map { $0.item.sPrice?.description ?? "" }
+            .map { $0.item.cPrice?.description ?? $0.item.sPrice!.description}
             .subscribe(onNext : { result in
-                self.priceLabel.text = result
+                
+                self.priceLabel.text = self.decimalWon(value: Int(result)!)
             }).disposed(by: disposeBag)
         
+        
+        
         reactor.state.map{
-            $0.item.sPrice?.description ?? "0"
+            $0.item.cPrice?.description ?? $0.item.sPrice!.description
         }.subscribe(onNext : {result in
-            self.inputNotice.text = "현재가인 \(result)원 이상 비딩해야합니다."
+            self.inputNotice.text = "현재가인 \((self.decimalWon(value: Int(result)!))) 원 이상 비딩해야합니다."
         }).disposed(by: disposeBag)
+        
+        
+        //비딩 성공시 화면 전환
+        reactor.state
+            .map { $0.biddingSuccess }
+            .subscribe(onNext : {
+                if $0 > 0{
+                    // rootVC -> FirstVC -> SecondVC
+                    
+                    var text = $0.description //현재 입력된 가격 텍스트
+                    text = text.replacingOccurrences(of: ",", with: "") //쉼표 제거
+                    var tryPrice = Int( text ) ?? 0
+                    guard let pvc = self.presentingViewController
+                    else {
+                        print("no navigation")
+                        return}
+
+                    self.dismiss(animated: true) {
+                        var nextVC =  CompleteBiddingViewController()
+                        nextVC.preVC = self.preVC
+                        nextVC.reactor = CompleteBiddingReactor(price: tryPrice )
+                        pvc.modalPresentationStyle = .fullScreen
+                        pvc.present( nextVC, animated: true, completion: nil)
+                        
+                    }
+                }
+            }).disposed(by: disposeBag)
         
         
     }

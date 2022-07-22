@@ -188,6 +188,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     private func setBottomSheet(item : Item){
         // 바텀 시트로 쓰일 뷰컨트롤러 생성
         let vc = BottomSheetViewController()
+        vc.preVC = self
         vc.reactor = BottomSheetReactor(item: item)
         // MDC 바텀 시트로 설정
         let bottomSheet: MDCBottomSheetController = MDCBottomSheetController(contentViewController: vc)
@@ -197,7 +198,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         // 높이
         bottomSheet.mdc_bottomSheetPresentationController?.preferredSheetHeight = 200
         // 보여주기
-        present(bottomSheet, animated: true, completion: nil)
+        self.present(bottomSheet, animated: true, completion: nil)
         
         
     }
