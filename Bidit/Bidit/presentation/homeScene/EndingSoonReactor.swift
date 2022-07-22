@@ -110,7 +110,13 @@ extension EndingSoonReactor {
                         data.data!.getItemList!.edges!.forEach{item in
                             var node = item?.node
                             var images = Array<ItemImage>()
-                            
+                            var userInfo = User(id: node!.id,
+                                                status: node!.status,
+                                                nickname: node?.user?.nickname,
+                                                email: node?.user?.email,
+                                                kakaoAccount: nil,
+                                                appleAccount: nil
+                            )
                             node?.image!.forEach{ result in
                                 
                                 
@@ -125,18 +131,29 @@ extension EndingSoonReactor {
                                 
                             }
                             
-                            var tempItem = Item(id: node?.id,
-                                                status: node?.status,
-                                                userId: node?.userId,
-                                                cPrice : node?.cPrice,
-                                                title : node?.title,
-                                                dueDate : node?.dueDate,
-                                                createdAt: node?.createdAt,
-                                                image: images
+                            var tempItem = Item( id: node!.id,
+                                                       status:  node?.status,
+                                                       categoryId: node?.categoryId,
+                                                      userId: node?.userId,
+                                                      sPrice: node?.sPrice,
+                                                      cPrice: node?.cPrice,
+                                                       buyNow: node?.buyNow,
+                                                       viewCount: node?.viewCount,
+                                                       name: node?.name,
+                                                      title: node?.title,
+                                                      dueDate: node?.dueDate,
+                                                       deliveryType: node?.deliveryType,
+
+                                                      createdAt: node?.createdAt,
+
+                                                      image: images,
+                                                      user:  userInfo
                             )
-                            
+//                            var tempItem1 = Item(id: node!.id, status: node?.status, categoryId: node?.categoryId, userId: node?.userId, sPrice: node?.sPrice, cPrice: node?.cPrice, buyNow: node?.buyNow, viewCount: node?.viewCount, name: node?.name, title: node?.title, dueDate: node?.dueDate, deliveryType: node?.deliveryType, sCondition: nil, aCondition: nil, createdAt: node?.createdAt, updatedAt: nil, deletedAt: nil, image: images, user: nil)
+//
                             tempList.append(tempItem)
                             
+                        
                         }
                         var items = tempList
                             self.itemList = tempList

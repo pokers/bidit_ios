@@ -67,7 +67,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
     private func layout(){
         
         self.contentView.snp.makeConstraints{
-            $0.height.equalTo(394)
+            $0.height.equalTo(340)
         }
         
         //현재가
@@ -176,7 +176,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         self.contentView.addSubview(divider2)
         divider2.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(17)
-            $0.top.equalTo(sellStatusBtn.snp.bottom).offset(20)
+            $0.top.equalTo(sellStatusBtn.snp.bottom).offset(26)
             $0.height.equalTo(1)
         }
         
@@ -187,6 +187,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
             $0.top.equalTo(divider2.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(18)
         }
+        
         instantPrice.snp.makeConstraints{
             $0.top.equalTo(instantPriceTitle.snp.top)
             $0.leading.equalTo(instantPriceTitle.snp.trailing).offset(24)
@@ -257,19 +258,20 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         instantPrice.font = .systemFont(ofSize: 12, weight: .medium)
         instantPriceTitle.text = "즉시구매가"
         instantPriceTitle.font = .systemFont(ofSize: 12, weight: .light)
+        instantPriceTitle.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
         
         //마감시간
         endTime.text = "6월6일 20:00"
         endTime.font = .systemFont(ofSize: 12, weight: .medium)
         endTimeTitle.text = "마감시간"
         endTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
-        
+        endTimeTitle.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
         //작성시간
         writeTime.text = "6월6일 10:00"
         writeTime.font = .systemFont(ofSize: 12, weight: .medium)
         writeTimeTitle.text = "작성일"
         writeTimeTitle.font = .systemFont(ofSize: 12, weight: .light)
-        
+        writeTimeTitle.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
     }
     
    
@@ -292,13 +294,14 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         
         
         //State
+        //현재 가격
         reactor.state
-            .map { "\(String(describing: $0.item.sPrice?.description ?? "") )원"}
+            .map { "\(String(describing: $0.item.cPrice?.description ?? $0.item.sPrice!.description) )원"}
             .bind(to: self.nowPrice.rx.text)
             .disposed(by: self.disposeBag)
         
         reactor.state
-            .map { "\(String(describing: $0.item.buyNow?.description ?? "") )명"}
+            .map { "\(String(describing: $0.item.viewCount?.description ?? "0") )명"}
             .bind(to: self.participants.rx.text)
             .disposed(by: self.disposeBag)
         
@@ -312,8 +315,8 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         reactor.state.map{$0.item.title}
             .bind(to: self.itemTitle.rx.text)
             .disposed(by: disposeBag)
-        
-        reactor.state.map{$0.item.userId?.description }
+        //유저 이름
+        reactor.state.map{$0.item.user?.nickname?.description ?? $0.item.user?.email?.description }
             .bind(to: self.sellerNameText.rx.text)
             .disposed(by: disposeBag)
         //즉시 구매가
@@ -340,9 +343,37 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
             self.setupOnlyForegroundTimer(endTime: dueDate)
         }).disposed(by: disposeBag)
         
+        
+        self.rx.layoutSubviews.subscribe(onNext : {_ in
+            print("상태 표시 \(reactor.initialState.item.userId) ")
+            if reactor.initialState.item.userId! == UserDefaults.standard.integer(forKey: "userId") {
+                
+                self.sellStatusBtn.isHidden = false
+                self.statusDes.isHidden = false
+                self.statusDescription.isHidden = false
+                if reactor.initialState.item.status == 0{
+                    self.statusDescription.text = "판매중"
+                    //self.sellStatusBtn.setTitle("판매중", for: .normal)
+                }else if reactor.initialState.item.status == 1{
+                    self.statusDescription.text = "예약중"
+                    //self.sellStatusBtn.setTitle("예약중", for: .normal)
+                }else if reactor.initialState.item.status == 2{
+                    self.statusDescription.text = "판매완료"
+                   // self.sellStatusBtn.setTitle("판매완료", for: .normal)
+                }
+            }else {
+                
+                self.divider2.snp.makeConstraints{
+                    $0.leading.trailing.equalToSuperview().inset(17)
+                    $0.top.equalTo(self.sellerNameText.snp.bottom).offset(25)
+                    $0.height.equalTo(1)
+                }
+            }
+        }).disposed(by: disposeBag)
+        
         //유저 제품 구분(판매중 버튼)
         reactor.state.subscribe(onNext : {
-            if $0.item.userId == UserDefaults.standard.integer(forKey: "userId") {
+            if $0.item.userId! == UserDefaults.standard.integer(forKey: "userId") {
                 self.sellStatusBtn.isHidden = false
                 self.statusDes.isHidden = false
                 self.statusDescription.isHidden = false

@@ -79,7 +79,7 @@ class LoginReactor : Reactor {
                           switch result {
                           case .success(let data) :
                               print("success \(data)")
-                              
+                              UserDefaults.standard.set(data.data?.me?.id, forKey: "userId")
                               self.switchLoginPassed(true)
                               break
                           case .failure(let error) :
@@ -92,6 +92,7 @@ class LoginReactor : Reactor {
                                   case .success(let data) :
                                       print("success \(data)")
                                       UserDefaults.standard.set("kakao", forKey: "LoginState")
+                                      UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
 
                                       self.switchLoginPassed(true)
                                       break

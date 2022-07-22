@@ -10,6 +10,7 @@ struct User : Codable{
     var id : Int
     var status : Int
     var nickname : String?
+    var email : String?
     //let joinPath : String
     
     var kakaoAccount : KakaoAccount?

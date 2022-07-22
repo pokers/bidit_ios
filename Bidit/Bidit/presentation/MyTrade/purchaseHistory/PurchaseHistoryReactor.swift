@@ -1,14 +1,13 @@
 //
-//  CompleteBiddingReactor.swift
+//  PurchaseHistoryReactor.swift
 //  Bidit
 //
-//  Created by JeongMin Ko on 2022/07/05.
+//  Created by JeongMin Ko on 2022/07/22.
 //
 
 import Foundation
 import ReactorKit
-
-class CompleteBiddingReactor : Reactor{
+class PurchaseHistoryReactor : Reactor {
     enum Action {
         case touchButton(index: Int)
     }
@@ -19,13 +18,11 @@ class CompleteBiddingReactor : Reactor{
     
     struct State {
         var image: UIImage?
-        
-        var biddingPrice : Int
     }
     
     let initialState: State
     
-    init(price : Int) {
-        self.initialState = State( biddingPrice: price)
+    init() {
+        self.initialState = State()
     }
 }

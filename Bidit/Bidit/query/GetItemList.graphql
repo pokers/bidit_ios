@@ -13,10 +13,14 @@ query getItemList($itemQueryInfo:ItemQueryInput, $keywordInfo:String, $firstInfo
                 createdAt
                 categoryId
                 viewCount
+                sPrice
                 cPrice
                 title
                 deliveryType
                 dueDate
+                buyNow
+                name
+                deliveryType
                 image {
                     id
                     status
@@ -26,9 +30,14 @@ query getItemList($itemQueryInfo:ItemQueryInput, $keywordInfo:String, $firstInfo
                     createdAt
                     updatedAt
                     deletedAt
-                    
-                
                 }
+                
+                user {
+                    id
+                    nickname
+                    email
+                }
+                
             }
         }
     }

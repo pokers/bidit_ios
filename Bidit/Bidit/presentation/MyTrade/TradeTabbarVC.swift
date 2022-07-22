@@ -1,23 +1,25 @@
 //
-//  HomeTabbar.swift
+//  TradeTabbarVC.swift
 //  Bidit
 //
-
+//  Created by JeongMin Ko on 2022/07/22.
 //
 
 import Foundation
 import UIKit
 import Tabman
 import Pageboy
-
-class HomeTabbar : TabmanViewController {
+//내 거래 내역 탭바
+class TradeTabbarVC : TabmanViewController {
     
     private var viewControllers: Array<UIViewController> = []
     
-    var homeVC : HomeViewController? = nil
-    //delegate 중간 전달 임시 저장 변수
-    //var scrollDelegate: NestedScrollDelegate?
-    let endingSoonVC = EndingSoonViewController()
+   
+    let salesHistoryVC = SalesHistoryVC()
+    let salesReactor = SalesHistoryReactor()
+    
+    let purchaseHistoryVC = PurchaseHistoryVC()
+    let purchaseReactor = PurchaseHistoryReactor()
     
 
    
@@ -26,10 +28,7 @@ class HomeTabbar : TabmanViewController {
        super.viewDidLoad()
        
        //MARK: - 커스텀 탭바 추가.
-        endingSoonVC.reactor = EndingSoonReactor(initialState: .init(itemSection: []))
-        endingSoonVC.homeVC = homeVC
         
-       let vc3 = UIViewController()
         
         
         //중첩 스크롤 delegate 중간 전달.
@@ -39,9 +38,11 @@ class HomeTabbar : TabmanViewController {
 //           print("scrollDelegate 중간 전달 실패 : nil")
 //        }
         
+        salesHistoryVC.reactor = salesReactor
+        purchaseHistoryVC.reactor = purchaseReactor
         
-       viewControllers.append(endingSoonVC)
-       viewControllers.append(vc3)
+       viewControllers.append(salesHistoryVC)
+       viewControllers.append(purchaseHistoryVC)
 //
        self.dataSource = self
 
@@ -55,9 +56,18 @@ class HomeTabbar : TabmanViewController {
 }
 
 
-extension HomeTabbar {
+extension TradeTabbarVC {
     func settingTabBar (ctBar : TMBar.ButtonBar) {
+        
+        var bound = UIScreen.main.bounds
+        var width = bound.size.width
+        var height = bound.size.height
+        
+        
         ctBar.layout.transitionStyle = .snap
+        ctBar.snp.makeConstraints{
+            $0.width.equalTo(height/2)
+        }
         // 왼쪽 여백주기
         ctBar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 20.0)
         
@@ -77,11 +87,15 @@ extension HomeTabbar {
         // 인디케이터 (아래 바 부분)
         ctBar.indicator.weight = .custom(value: 2)
         ctBar.indicator.tintColor = .black
+        ctBar.indicator.snp.makeConstraints{
+            $0.width.equalTo(height/2)
+            
+        }   //탭바 길이
   
     }
 }
 
-extension HomeTabbar: PageboyViewControllerDataSource, TMBarDataSource {
+extension TradeTabbarVC: PageboyViewControllerDataSource, TMBarDataSource {
     
     //bar item 별 설정.
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
@@ -90,9 +104,10 @@ extension HomeTabbar: PageboyViewControllerDataSource, TMBarDataSource {
         
         switch index {
         case 0:
-            return TMBarItem(title: "Ending Soon")
+            return TMBarItem(title: "    판매내역                    ")
         case 1:
-            let item = TMBarItem(title: "최신순")
+            let item = TMBarItem(title: "    구매내역                    ")
+        
             //item.badgeValue = " "
             
             return item
@@ -114,3 +129,4 @@ extension HomeTabbar: PageboyViewControllerDataSource, TMBarDataSource {
         return nil
     }
 }
+

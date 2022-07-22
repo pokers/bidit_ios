@@ -470,10 +470,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-//        self.sortButton.rx.tap // 정렬 필터 클릭 액션
-//            .map(Reactor.Action.tapSortButton(isOpened: self.sortList.isHidden)) //처음에 가려진 상태 -> 열리지 않음(false)전달
-//            .bind(to: reactor.action)
-//            .disposed(by: self.disposeBag)
+
         self.sortButton.rx.tap // 정렬 필터 클릭 액션
             .subscribe(onNext : {
                 self.sortList.isHidden = !self.sortList.isHidden
@@ -735,6 +732,28 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         
         
         
+        //아이템 클릭
+        self.resultTableView.rx.itemSelected
+            .map{Reactor.Action.cellSelected($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map{ $0.selectedIndexPath}
+            .compactMap{$0}
+            .subscribe(onNext : { [weak self] indexPath in
+                let vc = ItemBuyDetailViewController()//ItemListViewController()
+                //let listReactor = ItemListReactor(initialState: ItemListReactor.State.init())
+                let detailReactor = ItemBuyDetailReactor(item: reactor.itemList[indexPath.row])
+                print("\(reactor.itemList[indexPath.row]) indexpath is ")
+                vc.currItem = reactor.itemList[indexPath.row]
+                vc.reactor = detailReactor
+               // vc.bind(reactor: listReactor)
+                self?.tabBarController?.tabBar.isHidden = true
+                self?.navigationController?.navigationBar.isHidden = false
+                self?.navigationController?.pushViewController(vc, animated: true)
+                guard let self = self else { return }
+                self.resultTableView.deselectRow(at: indexPath, animated: true)
+            }).disposed(by: disposeBag)
         
         
     }

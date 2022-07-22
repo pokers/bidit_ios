@@ -130,12 +130,20 @@
 		EEC7EDF62880A4440085C936 /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC7EDF52880A4440085C936 /* AppleLoginManager.swift */; };
 		EECCABC8287A01D90085017A /* SelectCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECCABC7287A01D90085017A /* SelectCategoryVC.swift */; };
 		EECCABCC287A0EC60085017A /* CalendarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECCABCB287A0EC60085017A /* CalendarVC.swift */; };
+		EECD0DA228896B5400F84C58 /* WarningBlankVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECD0DA128896B5400F84C58 /* WarningBlankVC.swift */; };
+		EECD0DA428896E7B00F84C58 /* NotOpenDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECD0DA328896E7B00F84C58 /* NotOpenDialogVC.swift */; };
 		EED180132855CF4800E17B06 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180122855CF4800E17B06 /* MainViewController.swift */; };
 		EED180152855CF5100E17B06 /* MainReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180142855CF5100E17B06 /* MainReactor.swift */; };
 		EED180172855CFEB00E17B06 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180162855CFEB00E17B06 /* TabbarController.swift */; };
 		EED180242855EA3900E17B06 /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180232855EA3900E17B06 /* BannerCell.swift */; };
 		EED180282855F14F00E17B06 /* DefaultCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180272855F14F00E17B06 /* DefaultCellReactor.swift */; };
 		EED1802A2855F55E00E17B06 /* DefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED180292855F55E00E17B06 /* DefaultCell.swift */; };
+		EED5636C288A8CDC0071E02C /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED5636B288A8CDC0071E02C /* UIButton+.swift */; };
+		EED5636F288AA2AD0071E02C /* TradeTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED5636E288AA2AD0071E02C /* TradeTabbarVC.swift */; };
+		EED56373288AA34B0071E02C /* PurchaseHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED56372288AA34B0071E02C /* PurchaseHistoryVC.swift */; };
+		EED56375288AA3540071E02C /* SalesHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED56374288AA3540071E02C /* SalesHistoryVC.swift */; };
+		EED56377288AA5E20071E02C /* SalesHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED56376288AA5E20071E02C /* SalesHistoryReactor.swift */; };
+		EED56379288AA6410071E02C /* PurchaseHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED56378288AA6410071E02C /* PurchaseHistoryReactor.swift */; };
 		EEE04FB928709A24008FE0B5 /* Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE04FB828709A24008FE0B5 /* Items.swift */; };
 		EEE64406285D2062009D92AA /* DetailFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE64405285D2062009D92AA /* DetailFilterViewController.swift */; };
 		EEE64408285D208D009D92AA /* DetailFilterReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE64407285D208D009D92AA /* DetailFilterReactor.swift */; };
@@ -279,12 +287,20 @@
 		EEC7EDF52880A4440085C936 /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
 		EECCABC7287A01D90085017A /* SelectCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryVC.swift; sourceTree = "<group>"; };
 		EECCABCB287A0EC60085017A /* CalendarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarVC.swift; sourceTree = "<group>"; };
+		EECD0DA128896B5400F84C58 /* WarningBlankVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningBlankVC.swift; sourceTree = "<group>"; };
+		EECD0DA328896E7B00F84C58 /* NotOpenDialogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotOpenDialogVC.swift; sourceTree = "<group>"; };
 		EED180122855CF4800E17B06 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		EED180142855CF5100E17B06 /* MainReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainReactor.swift; sourceTree = "<group>"; };
 		EED180162855CFEB00E17B06 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		EED180232855EA3900E17B06 /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
 		EED180272855F14F00E17B06 /* DefaultCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCellReactor.swift; sourceTree = "<group>"; };
 		EED180292855F55E00E17B06 /* DefaultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCell.swift; sourceTree = "<group>"; };
+		EED5636B288A8CDC0071E02C /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
+		EED5636E288AA2AD0071E02C /* TradeTabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradeTabbarVC.swift; sourceTree = "<group>"; };
+		EED56372288AA34B0071E02C /* PurchaseHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryVC.swift; sourceTree = "<group>"; };
+		EED56374288AA3540071E02C /* SalesHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesHistoryVC.swift; sourceTree = "<group>"; };
+		EED56376288AA5E20071E02C /* SalesHistoryReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesHistoryReactor.swift; sourceTree = "<group>"; };
+		EED56378288AA6410071E02C /* PurchaseHistoryReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryReactor.swift; sourceTree = "<group>"; };
 		EEE04FB828709A24008FE0B5 /* Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Items.swift; sourceTree = "<group>"; };
 		EEE64405285D2062009D92AA /* DetailFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFilterViewController.swift; sourceTree = "<group>"; };
 		EEE64407285D208D009D92AA /* DetailFilterReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFilterReactor.swift; sourceTree = "<group>"; };
@@ -541,6 +557,7 @@
 		EE7C1A192852522E00730E95 /* presentation */ = {
 			isa = PBXGroup;
 			children = (
+				EED5636D288AA2420071E02C /* MyTrade */,
 				EEFD5854288565F800D68E67 /* ModifyItem */,
 				EEC523E3287ACD01005D4673 /* MyPage */,
 				EEB6DDFA28789EFC00771427 /* UploadProductScene */,
@@ -554,6 +571,7 @@
 				EED180122855CF4800E17B06 /* MainViewController.swift */,
 				EED180142855CF5100E17B06 /* MainReactor.swift */,
 				EED180162855CFEB00E17B06 /* TabbarController.swift */,
+				EECD0DA328896E7B00F84C58 /* NotOpenDialogVC.swift */,
 			);
 			path = presentation;
 			sourceTree = "<group>";
@@ -598,6 +616,7 @@
 				EEC65F522873320F00C7A852 /* DateUtil.swift */,
 				EE6B34E0287696600028BEC0 /* Reactive+ScrollView.swift */,
 				EEC2402728865F4400187869 /* UIApplication+.swift */,
+				EED5636B288A8CDC0071E02C /* UIButton+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -688,6 +707,7 @@
 		EEB6DDFA28789EFC00771427 /* UploadProductScene */ = {
 			isa = PBXGroup;
 			children = (
+				EECD0DA028896AFF00F84C58 /* dialog */,
 				EEC5EE0B287E18200000B40E /* DetailFilter */,
 				EEC523E0287ABD72005D4673 /* TimePicker */,
 				EECCABCA287A0D840085017A /* Calendar */,
@@ -809,6 +829,14 @@
 			path = Calendar;
 			sourceTree = "<group>";
 		};
+		EECD0DA028896AFF00F84C58 /* dialog */ = {
+			isa = PBXGroup;
+			children = (
+				EECD0DA128896B5400F84C58 /* WarningBlankVC.swift */,
+			);
+			path = dialog;
+			sourceTree = "<group>";
+		};
 		EED180222855EA0400E17B06 /* cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -822,6 +850,34 @@
 				EEBD01CD28577A7600368533 /* HomeProductListReactor.swift */,
 			);
 			path = cell;
+			sourceTree = "<group>";
+		};
+		EED5636D288AA2420071E02C /* MyTrade */ = {
+			isa = PBXGroup;
+			children = (
+				EED56371288AA3300071E02C /* purchaseHistory */,
+				EED56370288AA3250071E02C /* salesHistory */,
+				EED5636E288AA2AD0071E02C /* TradeTabbarVC.swift */,
+			);
+			path = MyTrade;
+			sourceTree = "<group>";
+		};
+		EED56370288AA3250071E02C /* salesHistory */ = {
+			isa = PBXGroup;
+			children = (
+				EED56374288AA3540071E02C /* SalesHistoryVC.swift */,
+				EED56376288AA5E20071E02C /* SalesHistoryReactor.swift */,
+			);
+			path = salesHistory;
+			sourceTree = "<group>";
+		};
+		EED56371288AA3300071E02C /* purchaseHistory */ = {
+			isa = PBXGroup;
+			children = (
+				EED56372288AA34B0071E02C /* PurchaseHistoryVC.swift */,
+				EED56378288AA6410071E02C /* PurchaseHistoryReactor.swift */,
+			);
+			path = purchaseHistory;
 			sourceTree = "<group>";
 		};
 		EEE64404285D2019009D92AA /* DetailFilter */ = {
@@ -1033,6 +1089,7 @@
 				"$(SRCROOT)/UpdateItemImage.graphql",
 				"$(SRCROOT)/UpdatePushToken.graphql",
 				"$(SRCROOT)/GetItemList.graphql",
+				"$(SRCROOT)/requestBid.graphql",
 				"$(SRCROOT)/GetEndingSoonItems.graphql",
 			);
 			name = "Generate Apollo GraphQL API";
@@ -1083,15 +1140,18 @@
 				EE91EDF2287C834C00F068A8 /* ReasonOptionVC.swift in Sources */,
 				EE7C1A1D285255D100730E95 /* LoginViewController.swift in Sources */,
 				EEC2402828865F4400187869 /* UIApplication+.swift in Sources */,
+				EED56375288AA3540071E02C /* SalesHistoryVC.swift in Sources */,
 				EE51D5DF2856288700AF1BC5 /* BannerCellReactor.swift in Sources */,
 				EE5ECA6328662C4E008B5398 /* ItemDetailTitleCellReactor.swift in Sources */,
 				EE91EDEB287C414900F068A8 /* ProfileChangeReactor.swift in Sources */,
 				EEA63D8628782F330095A7E3 /* CoreDataManager.swift in Sources */,
 				EE7C1A052852516A00730E95 /* AppDelegate.swift in Sources */,
 				EEAE99E9287E76EB00805D99 /* ItemEdge.swift in Sources */,
+				EED56377288AA5E20071E02C /* SalesHistoryReactor.swift in Sources */,
 				EE5ECA5D28661C5E008B5398 /* ItemDetailImageCell.swift in Sources */,
 				EEAE99E3287E752E00805D99 /* Penalty.swift in Sources */,
 				EED180152855CF5100E17B06 /* MainReactor.swift in Sources */,
+				EED56379288AA6410071E02C /* PurchaseHistoryReactor.swift in Sources */,
 				EEBA584E28839A83004EEE50 /* RecentProduct+CoreDataClass.swift in Sources */,
 				EE996A72285258A50045F40A /* LoginReactor.swift in Sources */,
 				EEAE99DD287E53F500805D99 /* API.swift in Sources */,
@@ -1099,6 +1159,7 @@
 				EEAE99DF287E6D8A00805D99 /* User.swift in Sources */,
 				EECCABCC287A0EC60085017A /* CalendarVC.swift in Sources */,
 				EEC523F4287AE8D4005D4673 /* PolicyVC.swift in Sources */,
+				EED5636C288A8CDC0071E02C /* UIButton+.swift in Sources */,
 				EEB35D582885C55F001796E2 /* FailDeleteDialogVC.swift in Sources */,
 				EEC523F6287AE8F9005D4673 /* PrivatePolicyVC.swift in Sources */,
 				EEF7953028658380000E3373 /* IndicatorView.swift in Sources */,
@@ -1146,6 +1207,7 @@
 				EEB5E3282871458000F33F2A /* ChannelListViewController.swift in Sources */,
 				EE5ECA6928663A16008B5398 /* ItemDetailBiddingListCell.swift in Sources */,
 				EEBA584B28839A83004EEE50 /* RecentSearchTerm+CoreDataClass.swift in Sources */,
+				EED5636F288AA2AD0071E02C /* TradeTabbarVC.swift in Sources */,
 				EECCABC8287A01D90085017A /* SelectCategoryVC.swift in Sources */,
 				EEC523EA287AE852005D4673 /* UserInfoViewController.swift in Sources */,
 				EEC523F1287AE897005D4673 /* AlarmSettingReactor.swift in Sources */,
@@ -1153,6 +1215,7 @@
 				EE5ECA65286639F3008B5398 /* ItemDetailContentCell.swift in Sources */,
 				EEB3CD71285AB2D400DF7596 /* Item.swift in Sources */,
 				EEFD585F288565F800D68E67 /* ModifyTimePickerVC.swift in Sources */,
+				EECD0DA428896E7B00F84C58 /* NotOpenDialogVC.swift in Sources */,
 				EE5ECA6128662C39008B5398 /* ItemDetailTitleCell.swift in Sources */,
 				EEB0655728744C07007766B3 /* CompleteBiddingViewController.swift in Sources */,
 				EEFD5862288565F800D68E67 /* ModifyProductVC.swift in Sources */,
@@ -1168,8 +1231,10 @@
 				EEADFE3E2866E38A0097EBA2 /* BiddingListCellOfCell.swift in Sources */,
 				EEB065522874113B007766B3 /* BottomSheetViewController.swift in Sources */,
 				EEC523E2287ABD89005D4673 /* TimePickerVC.swift in Sources */,
+				EECD0DA228896B5400F84C58 /* WarningBlankVC.swift in Sources */,
 				EEFD5860288565F800D68E67 /* ModifyDetailFilterVC.swift in Sources */,
 				EEC447B9287FE90E0026E7E6 /* MeEntity.swift in Sources */,
+				EED56373288AA34B0071E02C /* PurchaseHistoryVC.swift in Sources */,
 				EE5ECA5528660DB6008B5398 /* ItemSellDetailViewController.swift in Sources */,
 				EEB0655928744DE9007766B3 /* CompleteBiddingReactor.swift in Sources */,
 				EE9E70E8286B1B6E00BBA69B /* UploadTestViewController.swift in Sources */,
@@ -1322,6 +1387,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to the photo library.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1332,7 +1398,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1356,6 +1422,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to the photo library.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1366,7 +1433,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

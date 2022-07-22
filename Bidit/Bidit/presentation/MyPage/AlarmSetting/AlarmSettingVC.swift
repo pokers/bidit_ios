@@ -11,6 +11,7 @@ import ReactorKit
 
 class AlarmSettingVC : UIViewController, View{
     
+    
     //전체 푸시알림
     let allPushContainer = UIView()
     let allPushTitle = UILabel()
@@ -51,6 +52,8 @@ class AlarmSettingVC : UIViewController, View{
     
     
     
+    
+    
     private func layout(){
         //전체 푸시알림
         view.addSubview(allPushContainer)
@@ -60,6 +63,7 @@ class AlarmSettingVC : UIViewController, View{
             $0.height.equalTo(62)
             $0.width.equalToSuperview()
         }
+        
         allPushContainer.addSubview(allPushTitle)
         allPushContainer.addSubview(allPushSwitch)
         allPushTitle.snp.makeConstraints{
@@ -145,6 +149,7 @@ class AlarmSettingVC : UIViewController, View{
             $0.height.equalTo(62)
             $0.width.equalToSuperview()
         }
+        
         endPushContinaer.addSubview(endPushTitle)
         endPushContinaer.addSubview(endPushSwitch)
         endPushTitle.snp.makeConstraints{
@@ -198,6 +203,16 @@ class AlarmSettingVC : UIViewController, View{
         setNavigationBar()
         layout()
         
+        let isPushOn = UIApplication.shared.isRegisteredForRemoteNotifications
+
+        if isPushOn {
+            print("push on")
+            self.allPushSwitch.setOn(true, animated: true)
+        } else {
+            print("push off")
+            
+            self.allPushSwitch.setOn(false, animated: true)
+        }
     }
     
     
@@ -216,6 +231,8 @@ class AlarmSettingVC : UIViewController, View{
     
     
     func bind(reactor: AlarmSettingReactor) {
+        
+        
         
         //전체 푸시 설정
         self.allPushSwitch.rx.value.subscribe(onNext : {result in

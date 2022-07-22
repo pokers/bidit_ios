@@ -190,6 +190,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     //푸시 토큰 갱신
                     //self.updatePushToken()
                     //me 요청이 성공하면 홈화면으로 이동.
+                    UserDefaults.standard.set(data.data?.me?.id, forKey: "userId")
                     self.movingHomeView()
                     break
                 case .failure(let error) :
@@ -203,6 +204,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             print("success \(data)")
                             //현재 로그인 상태 갱신 (애플, 카카오 등)
                             UserDefaults.standard.set("apple", forKey: "LoginState")
+                            UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
                             //푸시 토큰 갱신
                             //self.updatePushToken()
                             //홈화면 이동

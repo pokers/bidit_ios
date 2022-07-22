@@ -18,6 +18,10 @@ class ItemDetailContentCell : UITableViewCell, View, Reusable{
     var contentText = UILabel()
     var filterStack = UIStackView()
     
+    var filter1 = UILabel()
+    var filter2 = UILabel()
+   
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -40,11 +44,38 @@ class ItemDetailContentCell : UITableViewCell, View, Reusable{
         }
         
         filterStack.snp.makeConstraints{
-            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.leading.equalToSuperview().inset(18)
             $0.height.equalTo(24)
             $0.top.equalTo(contentText.snp.bottom).offset(12)
             $0.bottom.equalToSuperview().inset(20)
         }
+        filterStack.addArrangedSubview(filter1)
+        filterStack.addArrangedSubview(filter2)
+        filterStack.axis = .horizontal
+        filterStack.alignment = .top
+        filterStack.spacing = 12
+        filter1.snp.makeConstraints{
+            $0.width.equalTo(71)
+            $0.height.equalTo(24)
+        }
+        filter1.textAlignment = .center
+        filter1.text  = "직거래"
+        filter1.font = .systemFont(ofSize: 12, weight: .medium)
+        filter1.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
+        filter1.backgroundColor = UIColor(red: 0.962, green: 0.962, blue: 0.962, alpha: 1)
+        filter1.layer.cornerRadius = 4
+        
+        filter2.snp.makeConstraints{
+            $0.width.equalTo(71)
+            $0.height.equalTo(24)
+        }
+        filter2.text  = "택배거래"
+        filter2.font = .systemFont(ofSize: 12, weight: .medium)
+        filter2.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
+        filter2.backgroundColor = UIColor(red: 0.962, green: 0.962, blue: 0.962, alpha: 1)
+        filter2.layer.cornerRadius = 4
+        filter2.textAlignment = .center
+        
         
         
     }
@@ -59,5 +90,22 @@ class ItemDetailContentCell : UITableViewCell, View, Reusable{
     func bind(reactor: ItemDetailContentCellReactor) {
         //Action
             //State
+        self.rx.layoutSubviews.subscribe(onNext : {
+            switch reactor.initialState.item.deliveryType{
+            case 0 :
+                self.filter2.isHidden = true
+                break
+            case 1 :
+                self.filter1.isHidden = true
+                break
+            case 2:
+                break
+                
+            default :
+                break
+                
+            }
+            return
+        }).disposed(by: disposeBag)
     }
 }

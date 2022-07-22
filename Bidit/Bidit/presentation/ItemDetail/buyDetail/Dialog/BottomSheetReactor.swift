@@ -15,12 +15,13 @@ class BottomSheetReactor : Reactor {
     
     enum Mutation {
         case updateData
-        case requestBidding
+        case requestBidding(price : Int)
     }
     
     struct State {
         var item : Item
         var biddingPrice : Int
+        var biddingSuccess = 0
     }
     
     let initialState: State
@@ -54,7 +55,9 @@ extension BottomSheetReactor {
           break
        
           
-      case .requestBidding:
+      case .requestBidding(let price):
+          //비딩 성공 시 넘어가기
+          state.biddingSuccess  = price
           break
           
       }
@@ -86,7 +89,7 @@ extension BottomSheetReactor {
 //
 //                        self.updateList(decode.getEndingSoonItems)
                         //return 대신
-                        emitter.onNext(.requestBidding)
+                        emitter.onNext(.requestBidding(price: price))
                         emitter.onCompleted()
                        
                     }catch (let error) {

@@ -157,13 +157,13 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             $0.height.equalTo(320)
         }
         let screenHeight = UIScreen.main.bounds.size.height //화면 세로 크기
-        
+        //탭바 컨테이너
         containerView.addSubview(tabbarContainer)
         tabbarContainer.snp.makeConstraints{
             $0.top.equalToSuperview().offset(535)
             $0.leading.trailing.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(screenHeight - 120)
+//            $0.height.equalTo(screenHeight - 120)
             $0.bottom.equalToSuperview()
         }
         //플로팅 버튼 추가 (판매글 올리기)
@@ -176,6 +176,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         }
         //아이템 리스트 뷰컨 추가.(탭바)
         addChild(homeTabbar)
+        homeTabbar.homeVC = self
         homeTabbar.view.frame = tabbarContainer.frame
         tabbarContainer.addSubview(homeTabbar.view)
         homeTabbar.didMove(toParent: self)
@@ -192,17 +193,18 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         
 
         self.navigationController?.navigationBar.isHidden = true
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .white
         scrollView.showsHorizontalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        scrollView.backgroundColor = .systemBackground
-        containerView.backgroundColor = .systemBackground
-        tabbarContainer.backgroundColor = .systemBackground
+        collectionView.backgroundColor = .white
+        scrollView.backgroundColor = .white
+        containerView.backgroundColor = .white
+        tabbarContainer.backgroundColor = .white
         
         //플로팅 버튼 이미지 설정.
         floatingBtn.setImage(UIImage(named: "floating_btn_img"), for: .normal)
     }
-    
+    //카테고리 컬렉션 뷰
     func setUpCollectionView(){
         containerView.addSubview(collectionView)
         collectionView.snp.makeConstraints{
@@ -304,7 +306,8 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
               .disposed(by: self.disposeBag)
         
         collectionView.rx.itemSelected //아이템 클릭
-            .map{Reactor.Action.cellSelected($0)}
+            .map{
+                 Reactor.Action.cellSelected($0)}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
          //플로팅 버튼 클릭시 이벤트
@@ -327,9 +330,11 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
               
             //State
         reactor.state
-            .map { $0.messageSection }
+            .map { //카테고리 버튼 리스트 바인딩
+                return $0.messageSection }
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
+        
         //카테고리 버튼 선택
         reactor.state.map{ $0.selectedIndexPath}
             .compactMap{$0}
@@ -350,29 +355,29 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
 }
 extension HomeViewController {
 
-    func extendBind(){
-        //테이블뷰 맨 위에 도착했을 때 스크롤뷰 활성화
-        self.homeTabbar.endingSoonVC.isEnableScroll.asDriver(onErrorJustReturn: true)
-            .drive(onNext :{[weak self] status in
-                guard let self = self else  { return }
-                if status == true{
-                    self.scrollView.isScrollEnabled = true
-                    self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = false
-                }
-                
-            }).disposed(by: disposeBag)
-    }
+//    func extendBind(){
+//        //테이블뷰 맨 위에 도착했을 때 스크롤뷰 활성화
+//        self.homeTabbar.endingSoonVC.isEnableScroll.asDriver(onErrorJustReturn: true)
+//            .drive(onNext :{[weak self] status in
+//                guard let self = self else  { return }
+//                if status == true{
+//                    self.scrollView.isScrollEnabled = true
+//                    self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = false
+//                }
+//
+//            }).disposed(by: disposeBag)
+//    }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            //reach bottom
-            print("bottom!")
-             
-              self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = true
-        }
-       
-      }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            //reach bottom
+//            print("bottom!")
+//
+//              self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = true
+//        }
+//
+//      }
 }
 
 
