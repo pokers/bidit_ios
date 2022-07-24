@@ -17,7 +17,8 @@ import AWSS3
 
 //판매글 올리기 뷰컨트롤러
 class UploadProductViewController : UIViewController, View, UIScrollViewDelegate{
-    
+    let categoryList =  [ "디지털","아이폰", "갤럭시", "안드로이드","스마트워치","노트북/PC",
+                          "태블릿","TV/모니터","게임","음향기기","카메라","드론","기타"]
     let bucketName = PrivateKey().BUCKET_NAME
     let accessKey = PrivateKey().ACCESS_KEY
     let secretKey = PrivateKey().SECRET_KEY
@@ -263,6 +264,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         }
         sPriceField.placeholder = "비딩 시작가"
         sPriceField.font = .systemFont(ofSize: 14, weight: .regular)
+        sPriceField.keyboardType = .numberPad
         
         
         scrollView.addSubview(separator4) //줄 4
@@ -293,6 +295,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         }
         buyNowPriceField.placeholder = "즉시 구매가"
         buyNowPriceField.font = .systemFont(ofSize: 14, weight: .regular)
+        buyNowPriceField.keyboardType = .numberPad
         
         
         scrollView.addSubview(separator5) //줄 5
@@ -442,9 +445,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             
             titleField.rx.didBeginEditing
                 .subscribe(onNext: { [self] in
-                if(titleField.text ==
-                            "글 제목"
-                            ){
+                if(titleField.text == "글 제목"){
                     titleField.text = nil
                     titleField.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)        //글자 색도 진한 색으로 바꿔줘야한다!
                     
@@ -646,6 +647,9 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 }
             })
         
+        
+        
+        
         //판매글 등록 버튼 이벤트
         self.uploadBtn.rx.tap.filter{
             !(self.imgCollectionView.numberOfItems(inSection: 0) < 2
@@ -710,15 +714,15 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             status: 0,
             buyNow : Int(self.buyNowPriceField.text!)! ,
             title: self.titleField.text,
-            categoryId: 1,
+            categoryId: self.categoryList.firstIndex(of: self.categoryBtn.titleLabel?.text ?? "아이폰")! + 1,
             sPrice: Int(self.sPriceField.text!)!,
             name: self.categoryBtn.titleLabel!.text!,
-            dueDate:
-                "\(sliced_year)-\(sliced_month)-\(sliced_day)T\(result_hour):\(day_minute):00.000Z", //"2022-07-26T23:58:00.000Z"
+            dueDate: "2022-07-29T23:58:00.000Z",
+                //"\(sliced_year)-\(sliced_month)-\(sliced_day)T\(result_hour):\(day_minute):00.000Z", //"2022-07-26T23:58:00.000Z"
             deliveryType: self.deliveryType,
             sCondition: 1,
             aCondition: 1,
-            description: "판매글 등록 테스트",
+            description: self.descriptionField.text.description,
             detail : self.periodResult
         
         )
@@ -767,7 +771,24 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 return $0.imageSection }
             .bind(to: imgCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
+        //업로드 결과
+        self.reactor?.state
+            .map{$0.uploadState}
+            .subscribe(onNext : { uploadResult in
+                
+                if uploadResult {
+                    
+                    //상품이 정상적으로 등록되었습니다. 메시지
+                    self.navigationController?.presentingViewController?.showToast(message: "상품이 정상적으로 등록되었습니다.")
+                    self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.topViewController?.showToast(message: "상품이 정상적으로 등록되었습니다.")
+                    
+                }
+                
+            }).disposed(by: disposeBag)
     }
+   
+    
     
     
     private func addProductImg(){
@@ -799,6 +820,12 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                  //self.delegate?.didPickImagesToUpload(images: self.userSelectedImages)
              })
     }
+    //키보드 내리기
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+          self.view.endEditing(true)
+        
+    }
+    
     
     @objc func convertAssetToImages() {
             print("convertAssetToImages()")

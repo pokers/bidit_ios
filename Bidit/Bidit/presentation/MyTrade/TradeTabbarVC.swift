@@ -21,7 +21,7 @@ class TradeTabbarVC : TabmanViewController {
     let purchaseHistoryVC = PurchaseHistoryVC()
     let purchaseReactor = PurchaseHistoryReactor()
     
-
+    
    
    
     override func viewDidLoad() {
@@ -31,21 +31,16 @@ class TradeTabbarVC : TabmanViewController {
         
         
         
-        //중첩 스크롤 delegate 중간 전달.
-//        if let scrollDelegate = scrollDelegate {
-//            vc2.scrollDelegate = scrollDelegate
-//        } else {
-//           print("scrollDelegate 중간 전달 실패 : nil")
-//        }
-        
         salesHistoryVC.reactor = salesReactor
         purchaseHistoryVC.reactor = purchaseReactor
+
         
        viewControllers.append(salesHistoryVC)
        viewControllers.append(purchaseHistoryVC)
-//
+
        self.dataSource = self
 
+       
        // Create bar
        let bar = TMBar.ButtonBar()
        bar.layout.transitionStyle = .snap // Customize
@@ -53,6 +48,12 @@ class TradeTabbarVC : TabmanViewController {
        // Add to view
        addBar(bar, dataSource: self, at: .top)
    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        self.tabBarController?.tabBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = true
+    }
 }
 
 

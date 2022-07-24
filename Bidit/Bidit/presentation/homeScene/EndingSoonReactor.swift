@@ -95,7 +95,8 @@ class EndingSoonReactor : Reactor {
 extension EndingSoonReactor {
     //EndingSoon 리스트 불러오기 요청
     func getDataFromApi() -> Observable<Mutation>{
-        
+        //로딩 Indicator
+        LoadingIndicator.showLoading()
         return Observable<Mutation>.create(){ emitter in
             
             Network.shared.apollo.fetch(query: GetItemListQuery()){ result in
@@ -160,6 +161,7 @@ extension EndingSoonReactor {
                         
                         //self.updateList(decode.getEndingSoonItems)
                         //return 대신
+                        LoadingIndicator.hideLoading()
                         emitter.onNext(.updateDataSource(items))
                         emitter.onCompleted()
                        

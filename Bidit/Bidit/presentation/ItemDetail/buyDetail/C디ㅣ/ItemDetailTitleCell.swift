@@ -346,7 +346,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         
         self.rx.layoutSubviews.subscribe(onNext : {_ in
             print("상태 표시 \(reactor.initialState.item.userId) ")
-            if reactor.initialState.item.userId! == UserDefaults.standard.integer(forKey: "userId") {
+            if reactor.initialState.item.userId ?? 0 == UserDefaults.standard.integer(forKey: "userId") {
                 
                 self.sellStatusBtn.isHidden = false
                 self.statusDes.isHidden = false
@@ -373,7 +373,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         
         //유저 제품 구분(판매중 버튼)
         reactor.state.subscribe(onNext : {
-            if $0.item.userId! == UserDefaults.standard.integer(forKey: "userId") {
+            if $0.item.userId ?? 0 == UserDefaults.standard.integer(forKey: "userId") {
                 self.sellStatusBtn.isHidden = false
                 self.statusDes.isHidden = false
                 self.statusDescription.isHidden = false

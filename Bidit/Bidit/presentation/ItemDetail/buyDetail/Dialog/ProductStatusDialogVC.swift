@@ -96,6 +96,7 @@ class ProductStatusDialogVC : UIViewController{
             $0.width.height.equalTo(24)
             $0.centerY.equalToSuperview()
         }
+        
         secondBtn.setImage(UIImage(named: "radio_unchecked_img"), for: .normal)
         
         //신뢰도가 떨어져서
@@ -130,17 +131,25 @@ class ProductStatusDialogVC : UIViewController{
         self.firstBtn.rx.tap.subscribe(onNext : {
             self.firstBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
             print(" 선택 : 판매중.")
-            self.changeItemStatus(itemId: self.currItem!.id, status: 0)
+            var inputStatus = 0
+            
+            if self.currItem?.cPrice == 0{
+                inputStatus = 0
+            }else {
+                inputStatus = 1
+            }
+            
+            self.changeItemStatus(itemId: self.currItem!.id, status: inputStatus)
             self.preVC?.statusDescription.text = "판매중"
             self.dismiss(animated: false)
             
         }).disposed(by: disposeBag)
         
+        //예약중 버튼 이벤트
         self.secondBtn.rx.tap.subscribe(onNext : {
             self.secondBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
             
-          
-            self.changeItemStatus(itemId: self.currItem!.id, status: 1)
+            self.changeItemStatus(itemId: self.currItem!.id, status: 2)
             print(" 선택 : 예약중")
             self.preVC?.statusDescription.text = "예약중"
             self.dismiss(animated: false)
@@ -151,7 +160,7 @@ class ProductStatusDialogVC : UIViewController{
             self.thirdBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
             
           //  self.preVC?.btnLabel.text = "신뢰도가 떨어져서"
-            self.changeItemStatus(itemId: self.currItem!.id, status: 2)
+            self.changeItemStatus(itemId: self.currItem!.id, status: 3)
             print(" 선택 : 판매완료")
             self.preVC?.statusDescription.text = "판매완료"
             self.dismiss(animated: false)

@@ -55,6 +55,7 @@ class UploadProductReactor : Reactor , DeleteDelegate{
     struct State {
         var imageSection : [UploadAlbumSection] = []
         var selectedIndexPath : IndexPath?
+        var uploadState : Bool = false
       }
 
       
@@ -99,7 +100,7 @@ class UploadProductReactor : Reactor , DeleteDelegate{
                             deliveryType: deliveryType,
                             sCondition: sCondition,
                             aCondition: aCondition,
-                            detail: .init(id: nil, status: nil, categoryId: nil, period: detail, type: nil, vendor: nil, battery: nil, flash: nil, ram: nil, size: nil, networkType: nil, weight: nil, cpu: nil, wire: nil, lens: nil, resolution: nil, cam: nil, warranty: nil)),
+                            detail: .init(id: nil, status: nil, categoryId: categoryId, period: detail, type: nil, vendor: nil, battery: nil, flash: nil, ram: nil, size: nil, networkType: nil, weight: nil, cpu: nil, wire: nil, lens: nil, resolution: nil, cam: nil, warranty: nil)),
                 description: description,
                 images: imgs)
         }
@@ -132,7 +133,9 @@ class UploadProductReactor : Reactor , DeleteDelegate{
                                    ,items: tempList
                                   )
             ]
+            //업로드 성공시
         case .uploadRequest:
+            state.uploadState = true
             break
         }
         return state
@@ -151,7 +154,6 @@ class UploadProductReactor : Reactor , DeleteDelegate{
             array.append( UploadAlbumSectionItem.album(tempReactor))
         }
         print("array 개수 : \(array.count)")
-        
         let itemInFirstSection = array
         
         let firstSection = UploadAlbumSection(

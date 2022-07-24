@@ -12,6 +12,10 @@ import RxDataSources
 import SideMenu
 //각 카테고리별 아이템 리스트 화면
 class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
+    
+    let categoryList = [ "디지털","아이폰", "갤럭시", "안드로이드","스마트워치","노트북",
+    "태블릿","TV/모니터","게임","음향기기","카메라","드론","기타"]
+    
     var disposeBag = DisposeBag()
     typealias Reactor = ItemListReactor
     var subToolBarContainer = UIView() //상단 툴바
@@ -47,6 +51,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     
     //사이드 필터
     var filterVC = DetailFilterViewController()
+    
     var reactorOfFilter = DetailFilterReactor()
     //filterVC.reactor = DetailFilterReactor()
     var menu : SideMenuNavigationController? = nil
@@ -57,6 +62,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         filterVC.reactor = reactorOfFilter
+        filterVC.preVC = self
         menu = SideMenuNavigationController(rootViewController: filterVC)
         menu?.presentationStyle = .menuSlideIn
         
@@ -249,16 +255,15 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        self.filterButton.rx.tap //상세 필터 버튼클릭
-            .map(Reactor.Action.tapFilterBtn)
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-//
+//        self.filterButton.rx.tap //상세 필터 버튼클릭
+//            .map(Reactor.Action.tapFilterBtn)
+//            .bind(to: reactor.action)
+//            .disposed(by: self.disposeBag)
+
         //필터 적용 시점.(필터 활성화 appliedFilter)
-         
-       
+        //필터 닫힐때
         self.menu!.rx.viewDidDisappear
-            //.filter{ _ in self.appliedFilter == true }
+            .filter{_ in self.appliedFilter}
             .map{_ in
                
                 var deliveryType = 0
@@ -268,7 +273,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
                     deliveryType = 0
                 }else if self.filterVC.availPost == true && self.filterVC.availDirect == false{
                     deliveryType = 1
-                }else if self.filterVC.availPost == true && self.filterVC.availDirect == false{
+                }else if self.filterVC.availPost == false && self.filterVC.availDirect == false{
                     deliveryType = 4 //없음.
                 }
                 print("필터 적용 \(deliveryType)")
@@ -278,6 +283,8 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
                 let maxStartPrice = Int(self.filterVC.maxStartPrice.text!) ?? 0
                 let minInstantPrice = Int(self.filterVC.minInstantPrice.text!) ?? 0
                 let maxInstantPrice = Int(self.filterVC.maxInstantPrice.text!) ?? 0
+                
+                self.appliedFilter = false //필터 활성화 다시 꺼두기
                 
                 return Reactor.Action.disappearFilter(deliveryType: deliveryType,
                                                       minPeriod: minPeriod,
@@ -298,6 +305,13 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
               .map { $0.itemSection }
               .bind(to: self.tableView.rx.items(dataSource: dataSource))
               .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map{ self.categoryList[$0.categoryId] }
+            .subscribe(onNext : {
+                self.title = $0
+            })
+            .disposed(by: disposeBag)
         
         reactor.state.map{ $0.selectedIndexPath}
             .compactMap{$0}
