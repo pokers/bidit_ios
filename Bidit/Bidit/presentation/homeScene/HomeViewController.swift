@@ -340,7 +340,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             .compactMap{$0}
             .subscribe(onNext : { [weak self] indexPath in
                 let vc = ItemListViewController()
-                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init(categoryId: 1)) //임시로 입력
+                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init(categoryId: indexPath.row)) //임시로 입력
                 vc.reactor = listReactor
                // vc.bind(reactor: listReactor)
                 self?.navigationController?.pushViewController(vc, animated: true)

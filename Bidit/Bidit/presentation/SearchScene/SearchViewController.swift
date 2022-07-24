@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import ReactorKit
 import RxDataSources
+import SideMenu
 
 //검색 화면 뷰 컨
 class SearchViewController : UIViewController, View, UIScrollViewDelegate{
@@ -45,7 +46,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
     let recentProductTitle = UILabel()
     let recentProductTableView = UITableView().then {
         $0.register(cellType: EndingSoonCell.self)
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .white
         $0.rowHeight = 140
     }
     
@@ -69,13 +70,17 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
     var sortButton = UIButton() // 정렬 기준 버튼
     var filterButton = UIButton()// 필터 버튼
     
+    //정렬
+    var sortContainer = UIView()
     var sortList = UIImageView(image: UIImage(named: "balloonFilterImg"))
     var popularityBtn = UIButton() //인기순
     var endingSoonBtn = UIButton() //마감순
     var latestBtn = UIButton() // 최신순
+    
     //임시
     let filterTitle = UILabel()
     let leftFilterBtn = UIButton()
+    //비어있을 때 이미지
     let emptyImage = UIImageView()
     
     let resultTableView = UITableView().then {
@@ -95,10 +100,23 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         }
     }
     
+    //사이드 필터
+    var filterVC = SearchDetailFilterVC()
+    
+    var reactorOfFilter = DetailFilterReactor()
+    //filterVC.reactor = DetailFilterReactor()
+    var menu : SideMenuNavigationController? = nil
+    var appliedFilter = false //상세필터 적용 여부
+    
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .white
+        
+        filterVC.reactor = reactorOfFilter
+        filterVC.preVC = self
+        menu = SideMenuNavigationController(rootViewController: filterVC)
+        menu?.presentationStyle = .menuSlideIn
     }
     
     required init?(coder: NSCoder) {
@@ -119,6 +137,12 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         self.resultTableView.rx.setDelegate(self)
           .disposed(by: disposeBag)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        layout()
+        attribute()
     }
     //레이아웃
     func layout(){
@@ -161,11 +185,13 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         recentKeywordStackView.snp.makeConstraints{
             $0.top.equalTo(recentKeywordTitle.snp.bottom).offset(28)
             $0.width.equalToSuperview()
-            $0.height.equalTo(111)
+            $0.height.equalTo(120)
         }
         recentKeywordStackView.axis = .vertical
         recentKeywordStackView.spacing = 24
         recentKeywordStackView.alignment = .top
+        recentKeywordStackView.distribution = .equalSpacing
+        //스택뷰 크기 불변
         
         recentKeywordStackView.addArrangedSubview(recentKeyGroup1)
         recentKeywordStackView.addArrangedSubview(recentKeyGroup2)
@@ -224,7 +250,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         
         //검색 결과
         self.scrollView.addSubview(containerSearchResult)
-        containerSearchResult.isHidden = true
+        
         self.containerSearchResult.addSubview(filterTitle)
         self.containerSearchResult.addSubview(leftFilterBtn)
         self.containerSearchResult.addSubview(resultTableView)
@@ -259,23 +285,35 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             $0.top.equalTo(sortLabel)
             $0.width.height.equalTo(20)
         }
-        
-        
-        self.containerSearchResult.addSubview(sortList)
-        sortList.snp.makeConstraints{
-            $0.top.equalTo(subToolBarContainer.snp.bottom)
-            $0.width.equalTo(120)
-            $0.height.equalTo(100)
-            $0.leading.equalToSuperview().offset(44)
+        //정렬리스트 컨테이너
+        self.scrollView.addSubview(sortContainer)
+        sortContainer.snp.makeConstraints{
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().offset(-120)
+            $0.height.equalTo(UIScreen.main.bounds.height)
         }
-        sortList.isHidden = true
+        self.sortContainer.addSubview(sortList)
+        sortList.snp.makeConstraints{
+            $0.top.equalToSuperview().offset(180)
+            $0.width.equalTo(120)
+            $0.height.equalTo(108)
+            $0.leading.equalToSuperview().offset(53)
+        }
+        //필터 버튼
+        subToolBarContainer.addSubview(filterButton)
+        filterButton.snp.makeConstraints{
+            $0.trailing.equalToSuperview().inset(18)
+            $0.top.equalToSuperview().offset(21)
+            $0.width.height.equalTo(20)
+        }
+        //sortList.isHidden = true
         //말풍선 필터에 버튼 추가.
         [popularityBtn, endingSoonBtn, latestBtn].forEach{
             sortList.addSubview($0)
         }
         
         popularityBtn.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(10)
+            $0.top.equalToSuperview().offset(14)
             $0.width.equalTo(34)
             $0.height.equalTo(18)
             $0.leading.equalToSuperview().offset(12)
@@ -302,7 +340,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         sortButton.tintColor = .black
         filterButton.setImage(UIImage(named: "filterImg"), for: .normal)
         
-        sortList.isHidden = false // 정렬필터 누르기 전 가리기.
+        //sortList.isHidden = true // 정렬필터 누르기 전 가리기.
         
 //        self.tabBarController?.tabBar.isHidden = true
         sortList.isUserInteractionEnabled = true
@@ -341,7 +379,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         }
         emptyImage.snp.makeConstraints{ //빈 리스트 이미지
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(53)
+            $0.top.equalToSuperview().offset(60)
             $0.width.equalTo(120)
             $0.height.equalTo(110)
         }
@@ -373,6 +411,14 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
     }
     
     func attribute(){
+        
+        //정렬 리스트 배경 불투명화
+        sortContainer.backgroundColor = .gray
+        //sortList.backgroundColor = .white
+        sortContainer.alpha = 0.9
+        sortContainer.isHidden = true
+        
+        
         self.recentKeywordTitle.text = "최근 검색어"
         self.recentKeywordTitle.font = .systemFont(ofSize: 16, weight: .bold)
         
@@ -408,6 +454,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         recentDeleteBtn3.tintColor = .gray
         
         //검색 결과
+        containerSearchResult.isHidden = true
         filterTitle.text = "최신순"
         self.filterTitle.font = .systemFont(ofSize: 16, weight: .bold)
         leftFilterBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
@@ -453,6 +500,11 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
               .map{Reactor.Action.viewDidLoad}
               .bind(to: reactor.action)
               .disposed(by: self.disposeBag)
+   
+        self.filterButton.rx.tap //상세필터 열기
+            .subscribe(onNext : {
+                self.navigationController?.present(self.menu!, animated: true, completion: nil)
+            }).disposed(by: self.disposeBag)
         
             //넘겨줄 입력값
         var inputKeyword = "dddd"
@@ -473,8 +525,9 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
 
         self.sortButton.rx.tap // 정렬 필터 클릭 액션
             .subscribe(onNext : {
-                self.sortList.isHidden = !self.sortList.isHidden
-                if self.sortList.isHidden == true {
+//                self.sortList.isHidden = !self.sortList.isHidden
+                self.sortContainer.isHidden = !self.sortContainer.isHidden
+                if self.sortContainer.isHidden == true {
                     self.sortButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
                 }else{
                     
@@ -489,8 +542,8 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         
         self.popularityBtn.rx.tap
             .subscribe(onNext : {
-                self.sortList.isHidden = !self.sortList.isHidden
-                if self.sortList.isHidden == true {
+                self.sortContainer.isHidden = !self.sortContainer.isHidden
+                if self.sortContainer.isHidden == true {
                     self.sortButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
                 }else{
                     
@@ -504,8 +557,8 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             .disposed(by: self.disposeBag)
         self.endingSoonBtn.rx.tap
             .subscribe(onNext : {
-                self.sortList.isHidden = !self.sortList.isHidden
-                if self.sortList.isHidden == true {
+                self.sortContainer.isHidden = !self.sortContainer.isHidden
+                if self.sortContainer.isHidden == true {
                     self.sortButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
                 }else{
                     
@@ -520,14 +573,55 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         
         self.latestBtn.rx.tap
             .subscribe(onNext : {
-                self.sortList.isHidden = !self.sortList.isHidden
-                if self.sortList.isHidden == true {
+                self.sortContainer.isHidden = !self.sortContainer.isHidden
+                if self.sortContainer.isHidden == true {
                     self.sortButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
                 }else{
                     
                     self.sortButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
                 }
             }).disposed(by: disposeBag)
+        
+        //필터 적용 시점.(필터 활성화 appliedFilter)
+        //필터 닫힐때
+        self.menu!.rx.viewDidDisappear
+            .filter{_ in self.appliedFilter}
+            .map{_ in
+               
+                var deliveryType = 0
+                if self.filterVC.availDirect == true && self.filterVC.availPost == true {
+                    deliveryType = 2
+                }else if self.filterVC.availPost == false && self.filterVC.availDirect == true{
+                    deliveryType = 0
+                }else if self.filterVC.availPost == true && self.filterVC.availDirect == false{
+                    deliveryType = 1
+                }else if self.filterVC.availPost == false && self.filterVC.availDirect == false{
+                    deliveryType = 4 //없음.
+                }
+                print("필터 적용 \(deliveryType)")
+                let minPeriod = Int(self.filterVC.minPeriodText.text!) ?? 0
+                let maxPeriod = Int(self.filterVC.maxPeriodText.text!) ?? 0
+                let minStartPrice = Int(self.filterVC.minStartPrice.text!) ?? 0
+                let maxStartPrice = Int(self.filterVC.maxStartPrice.text!) ?? 0
+                let minInstantPrice = Int(self.filterVC.minInstantPrice.text!) ?? 0
+                let maxInstantPrice = Int(self.filterVC.maxInstantPrice.text!) ?? 0
+                let keyStr = self.searchBar.text ?? "" //키워드
+                
+                self.appliedFilter = false //필터 활성화 다시 꺼두기
+                
+                return Reactor.Action.disappearFilter(deliveryType: deliveryType,
+                                                      minPeriod: minPeriod,
+                                                      maxPeriod: maxPeriod,
+                                                      minStartPrice: minStartPrice,
+                                                      maxStartPrice: maxStartPrice,
+                                                      minInstantPrice: minInstantPrice,
+                                                      maxInstantPrice: maxInstantPrice,
+                                                      keyword: keyStr
+                )
+                
+            }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
         
         
@@ -578,7 +672,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
                 let isDeleted = CoreDataManager.shared.deleteAll(request: RecentSearchTerm.fetchRequest())
                 self.recentKeywordStackView.isHidden = true
                 print("삭제 여부 \(isDeleted)")
-            })
+            }).disposed(by: disposeBag)
         //최근 검색 키워드 클릭 이벤트
         self.recentKeyBtn1.rx.tap
             .map{Reactor.Action.tapSearchBtn(keyword: self.recentKeyBtn1.titleLabel!.text ?? "")}
@@ -604,12 +698,24 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             self.searchBar.text = self.recentKeyBtn3.titleLabel!.text
         }).disposed(by: disposeBag)
         
+        var keywordCount = 0
+        
+        
+        
         //최근 검색 키워드 삭제
         self.recentDeleteBtn1.rx.tap
             .subscribe(onNext : {
                 let keyword = self.recentKeyBtn1.titleLabel?.text ?? ""
                 let isDeleted = CoreDataManager.shared.delete(keyword : keyword, request: RecentSearchTerm.fetchRequest())
+                
                 self.recentKeyGroup1.isHidden = true
+                keywordCount-=1
+                self.recentKeywordStackView.snp.makeConstraints{
+                    $0.top.equalTo(self.recentKeywordTitle.snp.bottom).offset(28)
+                    $0.width.equalToSuperview()
+                    $0.height.equalTo(keywordCount * 40)
+                }
+                
                 print("삭제 여부 \(isDeleted)")
 //                self.recentKeywordStackView.snp.makeConstraints{
 //                    $0.height.equalTo(self.recentKeywordStackView.snp.height).inset(21)
@@ -620,7 +726,15 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             .subscribe(onNext : {
                 let keyword = self.recentKeyBtn2.titleLabel?.text ?? ""
                 let isDeleted = CoreDataManager.shared.delete(keyword : keyword, request: RecentSearchTerm.fetchRequest())
+                
                 self.recentKeyGroup2.isHidden = true
+                keywordCount-=1
+                self.recentKeywordStackView.snp.makeConstraints{
+                    $0.top.equalTo(self.recentKeywordTitle.snp.bottom).offset(28)
+                    $0.width.equalToSuperview()
+                    $0.height.equalTo(keywordCount * 40)
+                }
+                
                 print("삭제 여부 \(isDeleted)")
 //                self.recentKeywordStackView.snp.makeConstraints{
 //                    $0.height.equalTo(self.recentKeywordStackView.snp.height).inset(21)
@@ -631,7 +745,15 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             .subscribe(onNext : {
                 let keyword = self.recentKeyBtn3.titleLabel?.text ?? ""
                 let isDeleted = CoreDataManager.shared.delete(keyword : keyword, request: RecentSearchTerm.fetchRequest())
+             
                 self.recentKeyGroup3.isHidden = true
+                keywordCount-=1
+                self.recentKeywordStackView.snp.makeConstraints{
+                    $0.top.equalTo(self.recentKeywordTitle.snp.bottom).offset(28)
+                    $0.width.equalToSuperview()
+                    $0.height.equalTo(keywordCount * 40)
+                }
+                
 //                self.recentKeywordStackView.snp.makeConstraints{
 //                    $0.height.equalTo(self.recentKeywordStackView.snp.height).inset(21)
 //                }
@@ -653,14 +775,27 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             .map { $0.resultItemSection}
             .bind(to: self.resultTableView.rx.items(dataSource: resultDataSource))
             .disposed(by: self.disposeBag)
+//        //아무것도 없을 때
+//        reactor.state
+//            .filter{ $0.resultItemSection.count == 0}
+//            .map{ $0.resultItemSection }
+//            .subscribe(onNext : { result in
+//                self.containerSearchResult.isHidden = true
+//                self.emptyImage.isHidden = false // 빈 화면 이미지 보여주기
+//
+//            }).disposed(by: disposeBag)
         
         reactor.state
-            .filter{ $0.resultItemSection.count > 0}
+            .filter{ $0.resultItemSection.count > 0 }
             .map{ $0.resultItemSection }
             .subscribe(onNext : { result in
                 
+                print("itemList : \(reactor.itemList.count)개")
+                
                 self.containerSearchResult.isHidden = false // 검색결과 보이기
-                if result[0].items.count > 0{
+                if reactor.itemList.count > 0{
+
+                    self.emptyImage.isHidden = true
                     self.containerRecentKeyword.isHidden = true
                     
                     self.containerRecentKeyword.snp.makeConstraints{
@@ -681,6 +816,9 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
 
                     self.resultTableView.snp.makeConstraints{
                         $0.height.equalTo(result[0].items.count * 140)
+                        $0.top.equalTo(self.subToolBarContainer.snp.bottom).offset(8)
+                        $0.width.equalToSuperview()
+                        $0.bottom.equalToSuperview()
                     }
                     
                     print("result.count : \(result.count)")
@@ -688,19 +826,24 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
                 }else {
                     //아이템이 없을 때
                     self.emptyImage.isHidden = false
-                    self.containerSearchResult.isHidden = true // 검색결과 보이기
+                
+                    self.containerRecentKeyword.isHidden = true
+                    self.containerRecentKeyword.snp.makeConstraints{
+                        $0.height.equalTo(0)
+                    }
+                    self.containerSearchResult.isHidden = false // 검색결과 보이기
                     self.containerSearchResult.snp.makeConstraints{
                         
                         $0.leading.equalToSuperview()
                         $0.width.equalToSuperview()
                         $0.top.equalTo(self.containerRecentKeyword.snp.bottom)
-                        $0.height.equalTo(260)
+                        //$0.height.equalTo(260)
                         $0.bottom.equalToSuperview()
                     }
 
-                    self.resultTableView.snp.makeConstraints{
-                        $0.height.equalTo(0)
-                    }
+//                    self.resultTableView.snp.makeConstraints{
+//                        $0.height.equalTo(0)
+//                    }
                     
                 }
                 
@@ -711,6 +854,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             .map { $0.recentKeyword }
             .subscribe(onNext : {result in
                 if result.count != 0 {
+                    keywordCount = result.count
                     let keyTextArray = [self.recentKeyBtn1,self.recentKeyBtn2, self.recentKeyBtn3 ]
                     let deleteBtnArray = [self.recentDeleteBtn1,self.recentDeleteBtn2,self.recentDeleteBtn3]
                     for i in 0...result.count {
@@ -719,6 +863,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
                         }else if i == result.count {
                             break
                         }
+                        
                         keyTextArray[i].setTitle(result[result.count - i - 1]  , for: .normal)
                         keyTextArray[i].isHidden = false
                         deleteBtnArray[i].isHidden = false
@@ -729,6 +874,8 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
                 
             })
             .disposed(by: self.disposeBag)
+        
+        
         
         
         

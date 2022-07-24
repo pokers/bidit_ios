@@ -35,6 +35,7 @@ class TabbarController : UITabBarController{
         searchVC.reactor = SearchReactor()
         
         let tradeTabbarVC = TradeTabbarVC()
+        let tradeNavigationVC = UINavigationController(rootViewController: tradeTabbarVC)
         let myPageVC = MyPageViewController()
         let myPageNavigationVC = UINavigationController(rootViewController: myPageVC)
         myPageVC.reactor = MyPageReactor()
@@ -52,11 +53,17 @@ class TabbarController : UITabBarController{
         
         myPageVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"mypage_img" ), selectedImage: UIImage(named:"mypage_fill_img" ))
         
-        viewControllers = [chatVC,searchViewController, homeViewController,  tradeTabbarVC, myPageNavigationVC]
+        viewControllers = [chatVC,searchViewController, homeViewController,  tradeNavigationVC, myPageNavigationVC]
         self.tabBar.tintColor = .black
         self.selectedIndex = 2 //첫화면 설정 (홈화면)
         self.view.backgroundColor = .white
         self.tabBar.barTintColor = .white
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
     }
 }
 

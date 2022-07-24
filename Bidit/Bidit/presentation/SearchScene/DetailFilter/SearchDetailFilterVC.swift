@@ -1,21 +1,23 @@
 //
-//  DetailFilterViewController.swift
+//  SearchDetailFilterVC.swift
 //  Bidit
 //
+//  Created by JeongMin Ko on 2022/07/24.
 //
+
 
 import Foundation
 import UIKit
 import ReactorKit
 import SideMenu
 
-class DetailFilterViewController : UIViewController, View, UIScrollViewDelegate{
+class SearchDetailFilterVC : UIViewController, View, UIScrollViewDelegate{
     
     
     //필터 설정 정보
     var availPost = false
     var availDirect = false
-    var preVC : ItemListViewController? = nil
+    var preVC : SearchViewController? = nil
     
     var disposeBag: DisposeBag  = DisposeBag()
     
@@ -856,7 +858,7 @@ class DetailFilterViewController : UIViewController, View, UIScrollViewDelegate{
     
     
 }
-extension DetailFilterViewController{
+extension SearchDetailFilterVC{
     func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
            print("SideMenu Appearing! (animated: \(animated))")
        }

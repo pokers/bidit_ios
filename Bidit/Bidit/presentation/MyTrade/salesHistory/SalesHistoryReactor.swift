@@ -10,6 +10,7 @@ import ReactorKit
 //퍈매내역 뷰
 class SalesHistoryReactor : Reactor {
     var itemList : [Item] = []
+    
     enum Action {
         case viewDidLoad
         case cellSelected(IndexPath)

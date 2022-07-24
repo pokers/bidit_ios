@@ -106,8 +106,8 @@ class ModifyProductVC : UIViewController, View, UIScrollViewDelegate{
     var deliveryType = 0 //0 : 직접, 1 : 택배거래 , 2: 둘다.
     var periodResult = 0
     
-    let categoryList = ["아이폰", "갤럭시", "기타폰","스마트워치","노트북/PC",
-    "태블릿","티비/모니터","게임","음향기기","카메라","드론","기타"]
+    let categoryList = [ "디지털","아이폰", "갤럭시", "안드로이드","스마트워치","노트북",
+                         "태블릿","TV/모니터","게임","음향기기","카메라","드론","기타"]
     
     let bucketName = PrivateKey().BUCKET_NAME
     let accessKey = PrivateKey().ACCESS_KEY
