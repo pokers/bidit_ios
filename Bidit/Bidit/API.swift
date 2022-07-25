@@ -732,6 +732,46 @@ public struct ItemImageUpdateInput: GraphQLMapConvertible {
   }
 }
 
+public enum MembershipStatus: RawRepresentable, Equatable, Hashable, CaseIterable, Apollo.JSONDecodable, Apollo.JSONEncodable {
+  public typealias RawValue = String
+  case valid
+  case invalid
+  /// Auto generated constant for unknown enum values
+  case __unknown(RawValue)
+
+  public init?(rawValue: RawValue) {
+    switch rawValue {
+      case "VALID": self = .valid
+      case "INVALID": self = .invalid
+      default: self = .__unknown(rawValue)
+    }
+  }
+
+  public var rawValue: RawValue {
+    switch self {
+      case .valid: return "VALID"
+      case .invalid: return "INVALID"
+      case .__unknown(let value): return value
+    }
+  }
+
+  public static func == (lhs: MembershipStatus, rhs: MembershipStatus) -> Bool {
+    switch (lhs, rhs) {
+      case (.valid, .valid): return true
+      case (.invalid, .invalid): return true
+      case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue
+      default: return false
+    }
+  }
+
+  public static var allCases: [MembershipStatus] {
+    return [
+      .valid,
+      .invalid,
+    ]
+  }
+}
+
 public struct userUpdateInput: GraphQLMapConvertible {
   public var graphQLMap: GraphQLMap
 
@@ -5330,6 +5370,110 @@ public final class UpdateItemImageMutation: GraphQLMutation {
         }
         set {
           resultMap.updateValue(newValue, forKey: "name")
+        }
+      }
+    }
+  }
+}
+
+public final class UpdateMembershipMutation: GraphQLMutation {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    mutation UpdateMembership($status: MembershipStatus) {
+      updateMembership(status: $status) {
+        __typename
+        id
+        status
+      }
+    }
+    """
+
+  public let operationName: String = "UpdateMembership"
+
+  public var status: MembershipStatus?
+
+  public init(status: MembershipStatus? = nil) {
+    self.status = status
+  }
+
+  public var variables: GraphQLMap? {
+    return ["status": status]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Mutation"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("updateMembership", arguments: ["status": GraphQLVariable("status")], type: .object(UpdateMembership.selections)),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(updateMembership: UpdateMembership? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Mutation", "updateMembership": updateMembership.flatMap { (value: UpdateMembership) -> ResultMap in value.resultMap }])
+    }
+
+    public var updateMembership: UpdateMembership? {
+      get {
+        return (resultMap["updateMembership"] as? ResultMap).flatMap { UpdateMembership(unsafeResultMap: $0) }
+      }
+      set {
+        resultMap.updateValue(newValue?.resultMap, forKey: "updateMembership")
+      }
+    }
+
+    public struct UpdateMembership: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["User"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("status", type: .nonNull(.scalar(Int.self))),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(id: Int, status: Int) {
+        self.init(unsafeResultMap: ["__typename": "User", "id": id, "status": status])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: Int {
+        get {
+          return resultMap["id"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var status: Int {
+        get {
+          return resultMap["status"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "status")
         }
       }
     }

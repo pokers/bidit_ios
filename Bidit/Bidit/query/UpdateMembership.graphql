@@ -1,0 +1,9 @@
+
+mutation UpdateMembership($status: MembershipStatus){
+    updateMembership (status: $status){
+    
+        id
+        status
+
+    }
+}

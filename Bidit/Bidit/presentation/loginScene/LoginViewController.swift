@@ -21,6 +21,13 @@ class LoginViewController : UIViewController, View{
     var naverLoginBtn = UIButton()
     var appleLoginBtn = UIButton()
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        self.view.backgroundColor = .black
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

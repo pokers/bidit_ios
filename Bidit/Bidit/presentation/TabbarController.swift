@@ -25,7 +25,8 @@ class TabbarController : UITabBarController{
         listQuery?.includeEmptyChannel = false
         listQuery?.includeFrozenChannel = true
         let channelListVC = ChannelListViewController(channelListQuery: listQuery)
-        let chatVC = UINavigationController(rootViewController: channelListVC)
+        let chatVC = NotOpenViewController()//UINavigationController(rootViewController: channelListVC)
+        
         //() //TabbarController() //LoginViewController()
         
         //임시
@@ -52,6 +53,7 @@ class TabbarController : UITabBarController{
         tradeTabbarVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"my_deal_img" ), selectedImage: UIImage(named:"my_deal_fill_img" ))
         
         myPageVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"mypage_img" ), selectedImage: UIImage(named:"mypage_fill_img" ))
+        
         
         viewControllers = [chatVC,searchViewController, homeViewController,  tradeNavigationVC, myPageNavigationVC]
         self.tabBar.tintColor = .black

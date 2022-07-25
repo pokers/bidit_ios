@@ -80,6 +80,7 @@ class MyPageViewController : UIViewController ,View{
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
+        self.view.backgroundColor = .white
        
         
     }
@@ -313,7 +314,7 @@ class MyPageViewController : UIViewController ,View{
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(18)
         }
-        versionText.text = "v1.0.0"
+        versionText.text = "v0.1.3"
         
         //줄4
         scrollView.addSubview(separator4)
@@ -345,7 +346,7 @@ class MyPageViewController : UIViewController ,View{
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(18)
         }
-        developerText.text = "gmail@gmail.com"
+        developerText.text = "bidit.alex@gmail.com"
         
         //줄5
         scrollView.addSubview(separator5)
@@ -456,6 +457,7 @@ class MyPageViewController : UIViewController ,View{
             }).disposed(by: disposeBag)
         
         
+        
         self.buyRecordBtn.rx.tap
             .subscribe(onNext : {
                 self.tabBarController?.selectedIndex = 3 // 홈화면으로 이동.
@@ -475,6 +477,24 @@ class MyPageViewController : UIViewController ,View{
             .subscribe(onNext : {
                 self.tabBarController?.selectedIndex = 3
             }).disposed(by: disposeBag)
+        //서비스 이용약관
+        self.policyBtn.rx.tap
+            .subscribe(onNext : {
+                let vc = PolicyVC()
+                vc.modalPresentationStyle = .fullScreen
+               
+                // 보여주기
+                self.navigationController?.pushViewController(vc, animated: true)
+            }).disposed(by: disposeBag)
+        //개인정보 이용방침
+        self.privateBtn.rx.tap
+            .subscribe(onNext : {
+                let vc = PrivatePolicyVC()
+                vc.modalPresentationStyle = .fullScreen
+               
+                // 보여주기
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
         
         reactor.state
             .map { $0.user }
@@ -508,7 +528,6 @@ class MyPageViewController : UIViewController ,View{
                     //imageView.isHidden = false
                 resultImage = imageResult.image
                 case .failure(let error):
-                    
                 break
                 }
             })

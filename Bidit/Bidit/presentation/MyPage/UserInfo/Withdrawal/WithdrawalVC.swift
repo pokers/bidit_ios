@@ -157,7 +157,7 @@ class WithdrawalVC : UIViewController {
     
         let vc = ReasonOptionVC()
         vc.modalPresentationStyle = .overFullScreen
-       
+        vc.preVC = self
         // 보여주기
         present(vc, animated: false, completion: nil)
         
@@ -187,7 +187,49 @@ class WithdrawalVC : UIViewController {
         
         self.withdrawalBtn.rx.tap
             .subscribe(onNext: {
+                //임시
                 
+                self.requestWithdrawal()
+               
             })
+    }
+}
+
+extension WithdrawalVC {
+    func requestWithdrawal(){
+        LoadingIndicator.showLoading()
+        
+            
+        Network.shared.apollo.perform(mutation: UpdateMembershipMutation(status: MembershipStatus.init(rawValue: "INVALID")))
+            { result in
+                switch result {
+                case .success(let data) :
+                    print("success \(data)")
+                    do {
+                        print("탈퇴 result :  \(data)")
+
+                        LoadingIndicator.hideLoading()
+                        print("탈퇴 fail : \(data.errors)")
+                       
+    
+                        let vc = CompleteWithdrawalVC()
+                        
+                        self.navigationController?.pushViewController(vc, animated: false)
+                       
+                    }catch (let error) {
+                        print("탈퇴 fail")
+                        print(error.localizedDescription)
+                    }
+                    break
+                case .failure(let error) :
+                    print("error : \(error)")
+                    //self.passed = false
+                }
+                
+            }
+           
+        
+    
+
     }
 }
