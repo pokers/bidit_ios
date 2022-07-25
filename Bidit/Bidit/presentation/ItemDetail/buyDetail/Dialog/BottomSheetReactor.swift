@@ -16,12 +16,14 @@ class BottomSheetReactor : Reactor {
     enum Mutation {
         case updateData
         case requestBidding(price : Int)
+        case biddingFail
     }
     
     struct State {
         var item : Item
         var biddingPrice : Int
         var biddingSuccess = 0
+        var biddingError = false
     }
     
     let initialState: State
@@ -57,7 +59,12 @@ extension BottomSheetReactor {
           
       case .requestBidding(let price):
           //비딩 성공 시 넘어가기
+          state.biddingError = false
           state.biddingSuccess  = price
+          break
+          
+      case .biddingFail:
+          state.biddingError = true
           break
           
       }
@@ -74,6 +81,7 @@ extension BottomSheetReactor {
 
 extension BottomSheetReactor {
     func requestBidAPI(itemId : Int, price : Int) -> Observable<Mutation>{
+        LoadingIndicator.showLoading() //로딩 화면 보이기
         return Observable<Mutation>.create(){ emitter in
             
             Network.shared.apollo.perform(mutation: RequestBidMutation(bidInfo: .init(itemId: itemId, price: price))){ result in
@@ -86,10 +94,19 @@ extension BottomSheetReactor {
 //                        decode.getEndingSoonItems.forEach{
 //                            self.itemList.append($0)
 //                        }
+                        print( "비딩 실패 이유 :  \(data.errors?[0].description) ")
+                        if data.errors?[0].description ?? "" == "Could not bid over your price."{
+                            //실패시
+                            print("비딩 실패")
+                            emitter.onNext(.biddingFail)
+                        }else { //성공시
+                            emitter.onNext(.requestBidding(price: price))
+                        }
 //
 //                        self.updateList(decode.getEndingSoonItems)
                         //return 대신
-                        emitter.onNext(.requestBidding(price: price))
+                        LoadingIndicator.hideLoading()
+                        
                         emitter.onCompleted()
                        
                     }catch (let error) {

@@ -108,10 +108,10 @@ class DeleteCheckDialogVC : UIViewController {
     
 }
 extension DeleteCheckDialogVC {
-    //아이템 status -> End(3)
+    //아이템 status -> Cancel(4)
     func requestDeleteItem(itemId : Int) -> Void{
         Network.shared.apollo.perform(mutation: UpdateItemMutation(itemId: itemId,
-                                                                   itemUpdate: .init(status: 3,
+                                                                   itemUpdate: .init(status: 4,
                                                                                                      categoryId: nil,
                                                                                                      sPrice: nil,
                                                                                                      buyNow: nil,

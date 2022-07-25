@@ -46,7 +46,7 @@ class NotOpenDialogVC : UIViewController{
         
         self.containerView.addSubview(descriptioLabel)
         descriptioLabel.snp.makeConstraints{
-            $0.width.equalTo(310)
+
             $0.height.equalTo(42)
             $0.centerX.equalToSuperview()
             $0.top.equalTo(popupTitleText.snp.bottom).offset(16)

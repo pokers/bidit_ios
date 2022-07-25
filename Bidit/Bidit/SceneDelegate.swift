@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = LoginViewController() //UploadProductViewController()//
         let naviVC = UINavigationController(rootViewController: vc)//LoginViewController()
        //() //TabbarController() //LoginViewController()
-        vc.reactor = LoginReactor()//UploadProductReactor()
+        vc.reactor = LoginReactor()
         
         //self.present(naviVC, animated: true)
         

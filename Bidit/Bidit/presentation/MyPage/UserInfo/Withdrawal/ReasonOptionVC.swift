@@ -279,7 +279,7 @@ class ReasonOptionVC : UIViewController {
             self.deleteBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
             
             self.preVC?.btnLabel.text = "기록 삭제 목적"
-            
+            self.preVC?.withdrawalBtn.setImage(UIImage(named: "enabled_withdraw_btn_img"), for: .normal)
             print(" 이유 선택 : 기록 삭제 목적")
             self.dismiss(animated: false)
             
@@ -289,7 +289,7 @@ class ReasonOptionVC : UIViewController {
             self.secondBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
             
             self.preVC?.btnLabel.text = "이용이 불편하고 오류가 많아서"
-            
+            self.preVC?.withdrawalBtn.setImage(UIImage(named: "enabled_withdraw_btn_img"), for: .normal)
             print(" 이유 선택 : 이용이 불편하고 오류가 많아서")
             self.dismiss(animated: false)
             
@@ -297,7 +297,7 @@ class ReasonOptionVC : UIViewController {
         
         self.thirdBtn.rx.tap.subscribe(onNext : {
             self.thirdBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
-            
+            self.preVC?.withdrawalBtn.setImage(UIImage(named: "enabled_withdraw_btn_img"), for: .normal)
             self.preVC?.btnLabel.text = "신뢰도가 떨어져서"
             
             print(" 이유 선택 : 신뢰도가 떨어져서")
@@ -307,7 +307,7 @@ class ReasonOptionVC : UIViewController {
         
         self.fourthBtn.rx.tap.subscribe(onNext : {
             self.fourthBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
-            
+            self.preVC?.withdrawalBtn.setImage(UIImage(named: "enabled_withdraw_btn_img"), for: .normal)
             self.preVC?.btnLabel.text = "찾는 상품이 없어서"
             
             print(" 이유 선택 : 찾는 상품이 없어서")
@@ -317,7 +317,7 @@ class ReasonOptionVC : UIViewController {
         
         self.fifthBtn.rx.tap.subscribe(onNext : {
             self.fifthBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
-            
+            self.preVC?.withdrawalBtn.setImage(UIImage(named: "enabled_withdraw_btn_img"), for: .normal)
             self.preVC?.btnLabel.text = "사용자들이 불친절해서"
             
             print(" 이유 선택 : 사용자들이 불친절해서")
@@ -327,7 +327,7 @@ class ReasonOptionVC : UIViewController {
         
         self.sixBtn.rx.tap.subscribe(onNext : {
             self.sixBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
-            
+            self.preVC?.withdrawalBtn.setImage(UIImage(named: "enabled_withdraw_btn_img"), for: .normal)
             self.preVC?.btnLabel.text = "타 플랫폼을 더 사용해서"
             
             print(" 이유 선택 : 타 플랫폼을 더 사용해서")
@@ -337,7 +337,7 @@ class ReasonOptionVC : UIViewController {
         
         self.seventhBtn.rx.tap.subscribe(onNext : {
             self.seventhBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
-            
+            self.preVC?.withdrawalBtn.setImage(UIImage(named: "enabled_withdraw_btn_img"), for: .normal)
             self.preVC?.btnLabel.text = "콘텐츠 불만"
             
             print(" 이유 선택 : 콘텐츠 불만")
@@ -347,7 +347,7 @@ class ReasonOptionVC : UIViewController {
         
         self.eighthBtn.rx.tap.subscribe(onNext : {
             self.eighthBtn.setImage(UIImage(named: "radio_checked_img"), for: .normal)
-            
+            self.preVC?.withdrawalBtn.setImage(UIImage(named: "enabled_withdraw_btn_img"), for: .normal)
             self.preVC?.btnLabel.text = "사용빈도가 낮아서"
             
             print(" 이유 선택 : 사용빈도가 낮아서")

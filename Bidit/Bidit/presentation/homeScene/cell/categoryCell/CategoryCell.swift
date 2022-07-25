@@ -54,7 +54,7 @@ class CategoryCell : UICollectionViewCell,Reusable,View{
     func bind(reactor: CategoryReactor) {
       
         reactor.state
-            .map { $0.categoryName}
+            .map { $0.categoryEntity.categoryName}
             .subscribe(onNext : {name in
                 self.iconImage.image = UIImage(named: "\(name)")
             })

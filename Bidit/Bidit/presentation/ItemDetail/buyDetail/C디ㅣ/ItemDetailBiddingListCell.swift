@@ -9,7 +9,7 @@ import Foundation
 import ReactorKit
 import Reusable
 import RxDataSources
-
+//입찰 내역 뷰
 class ItemDetailBiddingListCell : UITableViewCell, View, Reusable, UIScrollViewDelegate{
     typealias Reactor = ItemDetailBiddingListCellReactor
     
@@ -67,12 +67,13 @@ class ItemDetailBiddingListCell : UITableViewCell, View, Reusable, UIScrollViewD
             $0.top.equalTo(cellTitle.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalToSuperview()
-            $0.height.equalTo(60)
+            $0.height.equalTo(370)
         }
     }
     
     private func attribute(){
         cellTitle.text = "입찰내역"
+        cellTitle.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
         cellTitle.font = .systemFont(ofSize: 12, weight: .medium)
         
     }
@@ -91,6 +92,21 @@ class ItemDetailBiddingListCell : UITableViewCell, View, Reusable, UIScrollViewD
             .map { $0.itemSection }
           .bind(to: self.tableView.rx.items(dataSource: dataSource))
           .disposed(by: self.disposeBag)
+        
+//        reactor.state
+//            .filter{$0.itemSection.count > 0}
+//            .map{$0.itemSection}
+//            .subscribe(onNext : { section in
+//                self.contentView.snp.makeConstraints{
+//                    $0.height.equalTo(70 * section[0].items.count + 40)
+//                }
+//                self.tableView.snp.makeConstraints{
+//                    $0.top.equalTo(self.cellTitle.snp.bottom).offset(16)
+//                    $0.leading.trailing.equalToSuperview()
+//                    $0.bottom.equalToSuperview()
+//                    $0.height.equalTo(70 * section[0].items.count)
+//                }
+//            }).disposed(by: disposeBag)
         
     }
 }

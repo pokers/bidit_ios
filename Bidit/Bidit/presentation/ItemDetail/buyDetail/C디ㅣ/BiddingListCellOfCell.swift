@@ -44,6 +44,8 @@ class BiddingListCellOfCell : UITableViewCell, View, Reusable{
     
     
     private func layout(){
+        
+        
         //프로필 이미지
         self.contentView.addSubview(profileImg)
         profileImg.snp.makeConstraints{
@@ -87,6 +89,7 @@ class BiddingListCellOfCell : UITableViewCell, View, Reusable{
         buyerName.font = .systemFont(ofSize: 12, weight: .semibold)
         timeLabel.text = "3분전"
         timeLabel.font = .systemFont(ofSize: 10, weight: .light)
+        timeLabel.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
         resultPrice.text = "3,000,000,000원"
         resultPrice.font = .systemFont(ofSize: 12, weight: .semibold)
         addPrice.text = "+1,000원"
@@ -99,8 +102,18 @@ class BiddingListCellOfCell : UITableViewCell, View, Reusable{
     
     func bind(reactor: BiddingListCellOfCellReactor) {
         //Action
+        reactor.state.map{ $0.bidding}
+            .subscribe(onNext :{
+                self.buyerName.text = $0.user.nickname ?? $0.user.email
+                self.timeLabel.text = "\(calcPassTime(start: $0.createdAt))"
+                
+                self.resultPrice.text = "\(self.decimalWon(value: $0.price))원"
+                if $0.gap == 0{
+                    self.addPrice.text = ""
+                }
+                self.addPrice.text = "+\(self.decimalWon(value: $0.gap))원 "
+            })
         
-      
 //      tableView.rx.itemSelected //아이템 클릭 액션
 //          .map{Reactor.Action.cellSelected($0)}
 //          .bind(to: reactor.action)
@@ -110,4 +123,13 @@ class BiddingListCellOfCell : UITableViewCell, View, Reusable{
         
             //State
     }
+    
+    //가격 형식 쉼표찍기
+    func decimalWon(value: Int) -> String{
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            let result = numberFormatter.string(from: NSNumber(value: value))!
+            
+            return result
+        }
 }

@@ -296,7 +296,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         //State
         //현재 가격
         reactor.state
-            .map { "\(String(describing: $0.item.cPrice?.description ?? $0.item.sPrice!.description) )원"}
+            .map { "\( self.decimalWon(value: $0.item.cPrice ?? $0.item.sPrice!)) 원 " }
             .bind(to: self.nowPrice.rx.text)
             .disposed(by: self.disposeBag)
         
@@ -320,7 +320,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
             .bind(to: self.sellerNameText.rx.text)
             .disposed(by: disposeBag)
         //즉시 구매가
-        reactor.state.map{"\($0.item.cPrice?.description ?? "0")원"}
+        reactor.state.map{"\(self.decimalWon(value: $0.item.buyNow ?? 0))원"}
             .bind(to: self.instantPrice.rx.text)
             .disposed(by: disposeBag)
         
@@ -351,13 +351,13 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
                 self.sellStatusBtn.isHidden = false
                 self.statusDes.isHidden = false
                 self.statusDescription.isHidden = false
-                if reactor.initialState.item.status == 0{
+                if reactor.initialState.item.status == 0 || reactor.initialState.item.status == 1{
                     self.statusDescription.text = "판매중"
                     //self.sellStatusBtn.setTitle("판매중", for: .normal)
-                }else if reactor.initialState.item.status == 1{
+                }else if reactor.initialState.item.status == 2{
                     self.statusDescription.text = "예약중"
                     //self.sellStatusBtn.setTitle("예약중", for: .normal)
-                }else if reactor.initialState.item.status == 2{
+                }else if reactor.initialState.item.status == 3{
                     self.statusDescription.text = "판매완료"
                    // self.sellStatusBtn.setTitle("판매완료", for: .normal)
                 }
@@ -438,6 +438,14 @@ extension ItemDetailTitleCell {
             
             
     }
+    //가격 형식 쉼표찍기
+    func decimalWon(value: Int) -> String{
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            let result = numberFormatter.string(from: NSNumber(value: value))!
+            
+            return result
+        }
     
 
 }

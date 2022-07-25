@@ -25,6 +25,7 @@ class MyPageViewController : UIViewController ,View{
     let nameText = UILabel()
     let sellCount = UILabel()
     let bidCount = UILabel()
+    let countDivider = UIView()
     let sellCountTitle = UILabel()
     let bidCountTitle = UILabel()
     let changeBtn = UIButton()
@@ -79,6 +80,7 @@ class MyPageViewController : UIViewController ,View{
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
+        self.view.backgroundColor = .white
        
         
     }
@@ -114,6 +116,7 @@ class MyPageViewController : UIViewController ,View{
         }
         [imageView,nameText,
          sellCount,
+         countDivider,
          bidCount,
           sellCountTitle,
           bidCountTitle,
@@ -140,39 +143,58 @@ class MyPageViewController : UIViewController ,View{
         nameText.text = "닉네임닉네임닉네임"
         nameText.font = .systemFont(ofSize: 12, weight: .bold)
         
-        sellCount.snp.makeConstraints{
-            $0.top.equalTo(imageView.snp.top)
-            $0.centerX.equalToSuperview()
-        }
-        
-        sellCount.text = "300,000"
-        sellCountTitle.snp.makeConstraints{
-            $0.top.equalTo(sellCount.snp.bottom).offset(4)
-            $0.centerX.equalTo(sellCount.snp.centerX)
-        }
-        
-        sellCountTitle.text = "판매수"
-        
-        bidCount.snp.makeConstraints{
-            $0.top.equalTo(sellCount.snp.top)
-            $0.leading.equalTo(sellCount.snp.trailing).offset(53)
-        }
-        bidCount.text = "300,000"
-        
-        bidCountTitle.snp.makeConstraints{
-            $0.top.equalTo(bidCount.snp.bottom).offset(4)
-            $0.centerX.equalTo(bidCount.snp.centerX)
-        }
-        bidCountTitle.text = "낙찰수"
         
         changeBtn.snp.makeConstraints{
             $0.leading.equalTo(nameText.snp.trailing).offset(19)
-            $0.top.equalTo(sellCountTitle.snp.bottom).offset(8)
+            $0.bottom.equalTo(nameText.snp.bottom)
             $0.width.equalTo(224)
             $0.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(32)
         }
         changeBtn.setImage(UIImage(named: "profile_change_btn_img"), for: .normal)
+        
+        countDivider.snp.makeConstraints{
+            $0.centerX.equalTo(changeBtn.snp.centerX)
+            $0.bottom.equalTo(changeBtn.snp.top).offset(-12)
+            $0.width.equalTo(1)
+            $0.height.equalTo(33)
+        }
+        countDivider.backgroundColor = UIColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1)
+        
+        sellCountTitle.snp.makeConstraints{
+            $0.bottom.equalTo(changeBtn.snp.top).offset(-8)
+            $0.trailing.equalTo(countDivider.snp.leading).offset(-45)
+        }
+        sellCountTitle.font = .systemFont(ofSize: 10, weight: .medium)
+        sellCountTitle.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
+        
+        sellCountTitle.text = "판매수"
+        sellCount.snp.makeConstraints{
+            $0.top.equalTo(imageView.snp.top)
+            $0.centerX.equalTo(sellCountTitle)
+        }
+        sellCount.font = .systemFont(ofSize: 16, weight: .bold)
+        
+        sellCount.text = "300,000"
+        
+        bidCountTitle.snp.makeConstraints{
+            $0.bottom.equalTo(changeBtn.snp.top).offset(-8)
+            $0.leading.equalTo(countDivider.snp.trailing).offset(45)
+        }
+        bidCountTitle.text = "낙찰수"
+        bidCountTitle.font = .systemFont(ofSize: 10, weight: .medium)
+        bidCountTitle.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
+        
+        bidCount.snp.makeConstraints{
+            $0.top.equalTo(sellCount.snp.top)
+            $0.centerX.equalTo(bidCountTitle)
+        }
+        bidCount.font = .systemFont(ofSize: 16, weight: .bold)
+        bidCount.text = "300,000"
+        
+        
+        
+        
         //판매내역
         sellRecordBtn.snp.makeConstraints{
             $0.leading.equalToSuperview().offset(54)
@@ -292,7 +314,7 @@ class MyPageViewController : UIViewController ,View{
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(18)
         }
-        versionText.text = "v1.0.0"
+        versionText.text = "v0.1.3"
         
         //줄4
         scrollView.addSubview(separator4)
@@ -324,7 +346,7 @@ class MyPageViewController : UIViewController ,View{
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(18)
         }
-        developerText.text = "gmail@gmail.com"
+        developerText.text = "bidit.alex@gmail.com"
         
         //줄5
         scrollView.addSubview(separator5)
@@ -435,9 +457,50 @@ class MyPageViewController : UIViewController ,View{
             }).disposed(by: disposeBag)
         
         
+        
+        self.buyRecordBtn.rx.tap
+            .subscribe(onNext : {
+                self.tabBarController?.selectedIndex = 3 // 홈화면으로 이동.
+                
+            }).disposed(by: disposeBag)
+        //찜 버튼
+        self.zzimRecordBtn.rx.tap
+            .subscribe(onNext : {
+                let vc = NotOpenDialogVC()
+                vc.modalPresentationStyle = .fullScreen
+               
+                // 보여주기
+                self.present(vc, animated: false, completion: nil)
+            })
+        
+        self.sellRecordBtn.rx.tap
+            .subscribe(onNext : {
+                self.tabBarController?.selectedIndex = 3
+            }).disposed(by: disposeBag)
+        //서비스 이용약관
+        self.policyBtn.rx.tap
+            .subscribe(onNext : {
+                let vc = PolicyVC()
+                vc.modalPresentationStyle = .fullScreen
+               
+                // 보여주기
+                self.navigationController?.pushViewController(vc, animated: true)
+            }).disposed(by: disposeBag)
+        //개인정보 이용방침
+        self.privateBtn.rx.tap
+            .subscribe(onNext : {
+                let vc = PrivatePolicyVC()
+                vc.modalPresentationStyle = .fullScreen
+               
+                // 보여주기
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+        
         reactor.state
             .map { $0.user }
             .subscribe(onNext : { user in
+                self.sellCount.text = user?.counting?.sell?.description ?? "0"
+                self.bidCount.text = user?.counting?.buy?.description ?? "0"
                 
                 if user?.nickname != nil{
                     self.nameText.text = user?.nickname
@@ -465,7 +528,6 @@ class MyPageViewController : UIViewController ,View{
                     //imageView.isHidden = false
                 resultImage = imageResult.image
                 case .failure(let error):
-                    
                 break
                 }
             })

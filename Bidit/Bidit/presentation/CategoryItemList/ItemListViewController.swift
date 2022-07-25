@@ -13,8 +13,8 @@ import SideMenu
 //각 카테고리별 아이템 리스트 화면
 class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     
-    let categoryList = [ "디지털","아이폰", "갤럭시", "안드로이드","스마트워치","노트북",
-    "태블릿","TV/모니터","게임","음향기기","카메라","드론","기타"]
+    let categoryList =  ["아이폰", "갤럭시", "기타폰","스마트워치","노트북/PC",
+                         "태블릿","티비/모니터","게임","음향기기","카메라","드론","기타"]
     
     var disposeBag = DisposeBag()
     typealias Reactor = ItemListReactor
@@ -307,7 +307,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
               .disposed(by: self.disposeBag)
         
         reactor.state
-            .map{ self.categoryList[$0.categoryId] }
+            .map{ self.categoryList[$0.categoryId - 2] }
             .subscribe(onNext : {
                 self.title = $0
             })

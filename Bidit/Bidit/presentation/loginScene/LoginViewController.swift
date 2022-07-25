@@ -21,6 +21,13 @@ class LoginViewController : UIViewController, View{
     var naverLoginBtn = UIButton()
     var appleLoginBtn = UIButton()
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        self.view.backgroundColor = .black
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -184,6 +191,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             
             //애플에서 토큰을 받은 후 me 호출
             Network.shared.apollo.fetch(query: MeQuery()){result in
+                
                 switch result {
                 case .success(let data) :
                     
@@ -191,6 +199,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     //self.updatePushToken()
                     //me 요청이 성공하면 홈화면으로 이동.
                     UserDefaults.standard.set(data.data?.me?.id, forKey: "userId")
+                    
                     self.movingHomeView()
                     break
                 case .failure(let error) :
@@ -208,6 +217,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             //푸시 토큰 갱신
                             //self.updatePushToken()
                             //홈화면 이동
+                            
                             let vc = TabbarController()
                             vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
                             self.view.backgroundColor = .systemBackground
@@ -219,6 +229,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             break
                         case .failure(let error) :
                             print("error : \(error)")
+                            
                             //self.passed = false
                         }
                     }

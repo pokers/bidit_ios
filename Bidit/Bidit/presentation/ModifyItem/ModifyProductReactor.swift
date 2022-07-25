@@ -216,6 +216,7 @@ extension ModifyProductReactor {
     }
     
     func modifyItem(itemId : Int?, itemUpdate : ItemUpdateInput?, description : String?) -> Observable<Mutation>{
+        LoadingIndicator.showLoading()
         return Observable<Mutation>.create(){emitter in
             Network.shared.apollo.perform(mutation: UpdateItemMutation(itemId: itemId,
                                                                        itemUpdate: itemUpdate,
@@ -231,6 +232,7 @@ extension ModifyProductReactor {
    //
    //                        self.updateList(decode.getEndingSoonItems)
                            //return 대신
+                           LoadingIndicator.hideLoading()
                            emitter.onNext(.uploadRequest)
                            //emitter.onCompleted()
                           

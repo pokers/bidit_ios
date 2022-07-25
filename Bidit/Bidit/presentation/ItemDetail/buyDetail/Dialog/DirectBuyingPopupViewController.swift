@@ -81,6 +81,13 @@ class DirectBuyingPopupViewController : UIViewController{
         self.cancelBtn.rx.tap.subscribe(onNext : {
             self.dismiss(animated: true)
         })
+        self.sendChatBtn.rx.tap.subscribe(onNext : {
+            let vc = NotOpenDialogVC()
+            vc.modalPresentationStyle = .fullScreen
+           
+            // 보여주기
+            self.present(vc, animated: false, completion: nil)
+        })
     }
     
 }

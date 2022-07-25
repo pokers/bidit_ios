@@ -17,8 +17,8 @@ import AWSS3
 
 //판매글 올리기 뷰컨트롤러
 class UploadProductViewController : UIViewController, View, UIScrollViewDelegate{
-    let categoryList =  [ "디지털","아이폰", "갤럭시", "안드로이드","스마트워치","노트북/PC",
-                          "태블릿","TV/모니터","게임","음향기기","카메라","드론","기타"]
+    let categoryList = ["디지털","아이폰", "갤럭시", "기타폰","스마트워치","노트북/PC",
+                         "태블릿","티비/모니터","게임","음향기기","카메라","드론","기타"]
     let bucketName = PrivateKey().BUCKET_NAME
     let accessKey = PrivateKey().ACCESS_KEY
     let secretKey = PrivateKey().SECRET_KEY
@@ -267,6 +267,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         sPriceField.keyboardType = .numberPad
         
         
+        
         scrollView.addSubview(separator4) //줄 4
         separator4.backgroundColor = .separator
         separator4.snp.makeConstraints{
@@ -466,24 +467,26 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         
         descriptionField.rx.didBeginEditing
             .subscribe(onNext: { [self] in
-            if(descriptionField.text == """
-                        경매에 올릴 게시글 내용을 10자 이상 작성해주세요.
-                        (가품 및 판매금지품목은 게시가 제한될 수 있습니다.)
-                        """ ){
-                descriptionField.text = nil
+           
+                print("설명글 작성 시작")
+                if(descriptionField.text == "경매에 올릴 게시글 내용을 10자 이상 작성해주세요. (가품 및 판매금지 품목은 게시가 제한될 수 있습니다.)"){
+                    descriptionField.text = ""
+                }
+                
                 descriptionField.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)        //글자 색도 진한 색으로 바꿔줘야한다!
                 
-            }
+            
                 
             }).disposed(by: disposeBag)
         
     descriptionField.rx.didEndEditing
             .subscribe(onNext: { [self] in
             if(descriptionField.text == nil || descriptionField.text == ""){
-                descriptionField.text = """
-                                                경매에 올릴 게시글 내용을 10자 이상 작성해주세요.
-                                                (가품 및 판매금지품목은 게시가 제한될 수 있습니다.)
-                        """
+                descriptionField.text = "경매에 올릴 게시글 내용을 10자 이상 작성해주세요. (가품 및 판매금지 품목은 게시가 제한될 수 있습니다.)"
+//                        """
+//                        경매에 올릴 게시글 내용을 10자 이상 작성해주세요.
+//                        (가품 및 판매금지품목은 게시가 제한될 수 있습니다.)
+//                        """
                 descriptionField.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)      //다시 placeholder 글자색으로(연한색)
                 
             }else{
@@ -628,6 +631,30 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
         
         df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         df.locale = Locale(identifier: "ko_KR")
+        //입력된 가격 형식으로 변환
+        self.sPriceField.rx.text.changed.subscribe(onNext :{ inputPrice in
+            let number = inputPrice?.components(separatedBy: [","]).joined()
+            let largeNumber = Int(number!) ?? 0
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            let formattedNumber = numberFormatter.string(from: NSNumber(value:largeNumber))
+            self.sPriceField.text = formattedNumber
+        
+            self.sPriceBtn.titleLabel?.textColor = .black
+        }).disposed(by: disposeBag)
+        
+        
+        //입력된 가격 형식으로 변환
+        self.buyNowPriceField.rx.text.changed.subscribe(onNext :{ inputPrice in
+            let number = inputPrice?.components(separatedBy: [","]).joined()
+            let largeNumber = Int(number!) ?? 0
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            let formattedNumber = numberFormatter.string(from: NSNumber(value:largeNumber))
+            self.buyNowPriceField.text = formattedNumber
+            self.buyNowPriceBtn.titleLabel?.textColor = .black
+        }).disposed(by: disposeBag)
+        
     
         
         
@@ -660,24 +687,25 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 || self.dueDateBtn.titleLabel?.text == "경매 마감 날짜"
                 || self.dueTimeBtn.titleLabel?.text == "경매 마감 시간")
         }.map{
+            // yyyy년 --월 --일
             //년
             var year_str = self.dueDateBtn.titleLabel?.text ?? "2022_22222222"
             var startIndex = year_str.index(year_str.startIndex, offsetBy: 0)// 사용자지정 시작인덱스
-            var endIndex = year_str.index(year_str.startIndex, offsetBy: 3)// 사용자지정 끝인덱스
+            var endIndex = year_str.index(year_str.startIndex, offsetBy: 4)// 사용자지정 끝인덱스
             var sliced_year = year_str[startIndex ..< endIndex]
             print(sliced_year)
             
             //월
             var month_str = self.dueDateBtn.titleLabel?.text ?? "2022_22222222"
             startIndex = month_str.index(month_str.startIndex, offsetBy: 6)// 사용자지정 시작인덱스
-            endIndex = month_str.index(month_str.startIndex, offsetBy: 7)// 사용자지정 끝인덱스
+            endIndex = month_str.index(month_str.startIndex, offsetBy: 8)// 사용자지정 끝인덱스
             var sliced_month = month_str[startIndex ..< endIndex]
             print(sliced_month)
             
             //일
             var day_str = self.dueDateBtn.titleLabel?.text ?? "2022_22222222"
-            startIndex = day_str.index(day_str.startIndex, offsetBy: 6)// 사용자지정 시작인덱스
-            endIndex = day_str.index(day_str.startIndex, offsetBy: 7)// 사용자지정 끝인덱스
+            startIndex = day_str.index(day_str.startIndex, offsetBy: 10)// 사용자지정 시작인덱스
+            endIndex = day_str.index(day_str.startIndex, offsetBy: 12)// 사용자지정 끝인덱스
             var sliced_day = day_str[startIndex ..< endIndex]
             print(sliced_day)
             
@@ -685,40 +713,42 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
             //오전오후
             var day_ampm = self.dueTimeBtn.titleLabel?.text ?? "2022_22222222"
             startIndex = day_ampm.index(day_ampm.startIndex, offsetBy: 0)// 사용자지정 시작인덱스
-            endIndex = day_ampm.index(day_ampm.startIndex, offsetBy: 1)// 사용자지정 끝인덱스
+            endIndex = day_ampm.index(day_ampm.startIndex, offsetBy: 2)// 사용자지정 끝인덱스
             var sliced_ampm = day_ampm[startIndex ..< endIndex]
             print(sliced_ampm)
-            
+            //오전 00시 00분
             //시간
             var day_hour = self.dueTimeBtn.titleLabel?.text ?? "2022_22222222"
             startIndex = day_hour.index(day_hour.startIndex, offsetBy: 3)// 사용자지정 시작인덱스
-            endIndex = day_hour.index(day_hour.startIndex, offsetBy: 4)// 사용자지정 끝인덱스
+            endIndex = day_hour.index(day_hour.startIndex, offsetBy: 5)// 사용자지정 끝인덱스
             var sliced_hour = day_hour[startIndex ..< endIndex]
             var result_hour = sliced_hour.description
-            if day_ampm == "오후"{
+            if sliced_ampm == "오후"{
                 result_hour = (Int(sliced_hour.description)! + 12 ).description
             }
             print(result_hour)
             
             //분
             var day_minute = self.dueTimeBtn.titleLabel?.text ?? "2022_22222222"
-            startIndex = day_minute.index(day_minute.startIndex, offsetBy: 7)// 사용자지정 시작인덱스
+            startIndex = day_minute.index(day_minute.startIndex, offsetBy: 6)// 사용자지정 시작인덱스
             endIndex = day_minute.index(day_minute.startIndex, offsetBy: 8)// 사용자지정 끝인덱스
             var sliced_minute = day_minute[startIndex ..< endIndex]
             print(sliced_minute)
             
-            
+            let buyNowPrice  = self.buyNowPriceField.text?.components(separatedBy: [","]).joined()
+            let sPrice  = self.sPriceField.text?.components(separatedBy: [","]).joined()
+            print("업로드 마감 날짜 \(sliced_year)-\(sliced_month)-\(sliced_day)T\(result_hour):\(sliced_minute):00.000Z")
             
             return Reactor.Action.tapUpload(
             imgs: self.userSelectedUrls,
             status: 0,
-            buyNow : Int(self.buyNowPriceField.text!)! ,
+            buyNow : Int(buyNowPrice!)! ,
             title: self.titleField.text,
             categoryId: self.categoryList.firstIndex(of: self.categoryBtn.titleLabel?.text ?? "아이폰")! + 1,
-            sPrice: Int(self.sPriceField.text!)!,
+            sPrice: Int(sPrice!)!,
             name: self.categoryBtn.titleLabel!.text!,
-            dueDate: "2022-07-29T23:58:00.000Z",
-                //"\(sliced_year)-\(sliced_month)-\(sliced_day)T\(result_hour):\(day_minute):00.000Z", //"2022-07-26T23:58:00.000Z"
+            dueDate: "\(sliced_year)-\(sliced_month)-\(sliced_day)T\(result_hour):\(sliced_minute):00.000Z", // "2022-07-29T23:58:00.000Z",
+                //"\(sliced_year)-\(sliced_month)-\(sliced_day)T\(result_hour):\(sliced_minute):00.000Z", //"2022-07-26T23:58:00.000Z"
             deliveryType: self.deliveryType,
             sCondition: 1,
             aCondition: 1,
@@ -771,6 +801,14 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 return $0.imageSection }
             .bind(to: imgCollectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
+        
+        
+    //이미지 개수 갱신
+    reactor.state
+        .map{$0.imageSection}
+        .subscribe(onNext : {
+            self.imageCountLabel.text = "\(self.userSelectedImages.count - 1)/10"
+        }).disposed(by: disposeBag)
         //업로드 결과
         self.reactor?.state
             .map{$0.uploadState}
@@ -814,7 +852,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                 
                 self.convertAssetToImages()
                 self.updateList(self.userSelectedImages)
-                self.imageCountLabel.text = "\(self.userSelectedImages.count - 1)/10"
+//                self.imageCountLabel.text = "\(self.userSelectedImages.count - 1)/10"
                 self.selectedAssets = []
 //                self.userSelectedImages = []
                  //self.delegate?.didPickImagesToUpload(images: self.userSelectedImages)

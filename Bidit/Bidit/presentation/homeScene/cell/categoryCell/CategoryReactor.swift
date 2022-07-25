@@ -11,10 +11,18 @@ class CategoryReactor: Reactor {
 
     
     typealias Action = NoAction
-    let initialState: CategoryEntity
     
-    init(category : CategoryEntity){
-        self.initialState = category
-        
-    }
+    
+    struct State {
+        var categoryEntity : CategoryEntity
+        var categoryId : Int
+      }
+      
+      let initialState: State
+      
+      init(
+        initialState: State
+      ) {
+        self.initialState = initialState
+      }
 }

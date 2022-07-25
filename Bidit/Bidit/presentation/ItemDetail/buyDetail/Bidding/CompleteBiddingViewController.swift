@@ -66,6 +66,11 @@ class CompleteBiddingViewController : UIViewController, View{
                 }
             }).disposed(by: disposeBag)
         
+        self.cancelButton.rx.tap
+            .subscribe(onNext : {
+                self.setBidCancelPopup()
+            })
+        
         self.reactor?.state.map{$0.biddingPrice}
             .subscribe(onNext : {
                 var result = self.decimalWon(value: $0)
@@ -73,6 +78,8 @@ class CompleteBiddingViewController : UIViewController, View{
                 
                 
             }).disposed(by: disposeBag)
+        
+        
     }
     
 
@@ -98,18 +105,18 @@ class CompleteBiddingViewController : UIViewController, View{
         }
         descriptionText.snp.makeConstraints{
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(completeImg.snp.bottom).offset(8)
+            $0.top.equalTo(completeText.snp.bottom).offset(16)
         }
         
         checkButton.snp.makeConstraints{
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(32)
             $0.trailing.equalToSuperview().inset(16)
             $0.width.equalTo(224)
             $0.height.equalTo(42)
         }
         
         cancelButton.snp.makeConstraints{
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(32)
             $0.leading.equalToSuperview().offset(16)
             $0.width.equalTo(108)
             $0.height.equalTo(42)
@@ -120,12 +127,31 @@ class CompleteBiddingViewController : UIViewController, View{
         completeImg.image = UIImage(named: "complete_bidding_logo_astronaut_img")
         var result = self.decimalWon(value: reactor?.initialState.biddingPrice ?? 0) 
         self.priceText.text = "\(result)원을"
+        self.priceText.font = .systemFont(ofSize: 24, weight: .bold)
         completeText.text = "입찰 완료했습니다."
+        completeText.font = .systemFont(ofSize: 24, weight: .medium)
         descriptionText.text = "최종 낙찰되면 알림이 가니, 알림을 확인해주세요!"
+        descriptionText.font = .systemFont(ofSize: 12, weight: .medium)
+        descriptionText.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
         
         cancelButton.setImage(UIImage(named: "cancel_bidding_long_btn_img"), for: .normal)
         checkButton.setImage(UIImage(named: "check_blue_btn_long_img"), for: .normal)
         
     }
+    
+    /*
+     입찰 취소하기 팝업창(취소, 입찰 취소하기)
+     */
+    private func setBidCancelPopup(){
+    
+        let vc = CancelBidDialogVC()
+        vc.modalPresentationStyle = .fullScreen
+       
+        // 보여주기
+        present(vc, animated: false, completion: nil)
+        
+        
+    }
+    
     
 }

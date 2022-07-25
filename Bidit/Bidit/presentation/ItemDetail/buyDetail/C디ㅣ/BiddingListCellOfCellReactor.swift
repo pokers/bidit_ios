@@ -10,9 +10,14 @@ import ReactorKit
 class BiddingListCellOfCellReactor : Reactor{
     typealias Action = NoAction
     
-    let initialState : Item
+    let initialState : State
     
-    init(item : Item){
-        self.initialState = item
+    struct State {
+        var bidding :  Bidding //getBiddingListMock()//
+       
+      }
+    
+    init(bidding : Bidding){
+        self.initialState = .init(bidding: bidding)
     }
 }
