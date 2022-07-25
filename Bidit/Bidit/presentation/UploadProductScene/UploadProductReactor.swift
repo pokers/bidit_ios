@@ -173,6 +173,7 @@ class UploadProductReactor : Reactor , DeleteDelegate{
 extension UploadProductReactor {
     
     func requestAddItem(itemAddInput : ItemAddInput, description : String, images : [String]) -> Observable<Mutation>{
+        LoadingIndicator.showLoading()
         return Observable<Mutation>.create(){ emitter in
             
             Network.shared.apollo.perform(mutation: AddItemMutation(
@@ -199,6 +200,8 @@ extension UploadProductReactor {
 //
 //                        self.updateList(decode.getEndingSoonItems)
                         //return 대신
+                        LoadingIndicator.hideLoading()
+                        print("upload fail : \(data.errors)")
                         emitter.onNext(.uploadRequest)
                         emitter.onCompleted()
                        

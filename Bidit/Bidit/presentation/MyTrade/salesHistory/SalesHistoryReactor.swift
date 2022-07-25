@@ -70,6 +70,7 @@ extension SalesHistoryReactor {
     
     //내 판매 리스트 요청
     func requestItemList(userId : Int) -> Observable<Mutation>{
+        LoadingIndicator.showLoading()
         return Observable<Mutation>.create(){ emitter in
 
             let itemQuery = ItemQueryInput.init(id: nil, status: nil, userId: userId, categoryId: nil, name: nil, dueDate: nil, deliveryType: nil, sCondition: nil, aCondition: nil, createdAt: nil)
@@ -143,6 +144,7 @@ extension SalesHistoryReactor {
                         }
                         var items = tempList
                         self.itemList = items
+                        LoadingIndicator.hideLoading()
                         let convertedData = self.convertItemToSection(items: items)
                         emitter.onNext(.loadListResult(convertedData))
                         //emitter.onCompleted()

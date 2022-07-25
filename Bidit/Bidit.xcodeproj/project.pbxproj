@@ -87,6 +87,12 @@
 		EEB35D562885C53D001796E2 /* DeleteCheckDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB35D552885C53D001796E2 /* DeleteCheckDialogVC.swift */; };
 		EEB35D582885C55F001796E2 /* FailDeleteDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB35D572885C55F001796E2 /* FailDeleteDialogVC.swift */; };
 		EEB3BE59288CFB170084A022 /* SearchDetailFilterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3BE58288CFB170084A022 /* SearchDetailFilterVC.swift */; };
+		EEB3BE5B288D16740084A022 /* Counting.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3BE5A288D16740084A022 /* Counting.swift */; };
+		EEB3BE5D288D1FE60084A022 /* CancelBidDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3BE5C288D1FE60084A022 /* CancelBidDialogVC.swift */; };
+		EEB3BE5F288D35B60084A022 /* AlreadyTopBidDialogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3BE5E288D35B60084A022 /* AlreadyTopBidDialogVC.swift */; };
+		EEB3BE61288D4FE10084A022 /* GetItem.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEB3BE60288D4FE10084A022 /* GetItem.graphql */; };
+		EEB3BE63288D58250084A022 /* GetBidding.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EEB3BE62288D58250084A022 /* GetBidding.graphql */; };
+		EEB3BE65288D5B3C0084A022 /* Bidding.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3BE64288D5B3C0084A022 /* Bidding.swift */; };
 		EEB3CD71285AB2D400DF7596 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3CD70285AB2D400DF7596 /* Item.swift */; };
 		EEB3CD73285AB36500DF7596 /* EndingSoonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3CD72285AB36500DF7596 /* EndingSoonCell.swift */; };
 		EEB3CD75285AB37300DF7596 /* EndingSoonCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB3CD74285AB37300DF7596 /* EndingSoonCellReactor.swift */; };
@@ -247,6 +253,12 @@
 		EEB35D552885C53D001796E2 /* DeleteCheckDialogVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteCheckDialogVC.swift; sourceTree = "<group>"; };
 		EEB35D572885C55F001796E2 /* FailDeleteDialogVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailDeleteDialogVC.swift; sourceTree = "<group>"; };
 		EEB3BE58288CFB170084A022 /* SearchDetailFilterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDetailFilterVC.swift; sourceTree = "<group>"; };
+		EEB3BE5A288D16740084A022 /* Counting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counting.swift; sourceTree = "<group>"; };
+		EEB3BE5C288D1FE60084A022 /* CancelBidDialogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBidDialogVC.swift; sourceTree = "<group>"; };
+		EEB3BE5E288D35B60084A022 /* AlreadyTopBidDialogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlreadyTopBidDialogVC.swift; sourceTree = "<group>"; };
+		EEB3BE60288D4FE10084A022 /* GetItem.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetItem.graphql; sourceTree = "<group>"; };
+		EEB3BE62288D58250084A022 /* GetBidding.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetBidding.graphql; sourceTree = "<group>"; };
+		EEB3BE64288D5B3C0084A022 /* Bidding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bidding.swift; sourceTree = "<group>"; };
 		EEB3CD70285AB2D400DF7596 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		EEB3CD72285AB36500DF7596 /* EndingSoonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonCell.swift; sourceTree = "<group>"; };
 		EEB3CD74285AB37300DF7596 /* EndingSoonCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingSoonCellReactor.swift; sourceTree = "<group>"; };
@@ -386,6 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				EE51D5E328562A2100AF1BC5 /* ModelType.swift */,
+				EEB3BE64288D5B3C0084A022 /* Bidding.swift */,
 				EE51D5E528562A3000AF1BC5 /* Banner.swift */,
 				EE51D5E728562A3F00AF1BC5 /* Default.swift */,
 				EEA07B032856D675002D4F57 /* CategoryEntity.swift */,
@@ -404,6 +417,7 @@
 				EEB25F6A287ED93700310AC6 /* ProfileEntity.swift */,
 				EEC447B8287FE90E0026E7E6 /* MeEntity.swift */,
 				EEC7EDF3288094480085C936 /* ItemImage.swift */,
+				EEB3BE5A288D16740084A022 /* Counting.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -553,7 +567,6 @@
 				EE7C1A0F2852516D00730E95 /* LaunchScreen.storyboard */,
 				EE7C1A122852516D00730E95 /* Info.plist */,
 				EEF04A0D286D52EE00A9D8A7 /* GoogleService-Info.plist */,
-				EEAE99F2287E91E600805D99 /* MyPageMe.graphql */,
 				EEAE99DC287E53F500805D99 /* API.swift */,
 				EE069C7E286213320033FA4E /* schema.json */,
 				EE069C8228621F090033FA4E /* Network.swift */,
@@ -682,6 +695,8 @@
 				EEB065532874379F007766B3 /* DirectBuyingPopupViewController.swift */,
 				EEB0655A2874527C007766B3 /* BottomSheetReactor.swift */,
 				EEC240252886559000187869 /* ProductStatusDialogVC.swift */,
+				EEB3BE5C288D1FE60084A022 /* CancelBidDialogVC.swift */,
+				EEB3BE5E288D35B60084A022 /* AlreadyTopBidDialogVC.swift */,
 			);
 			path = Dialog;
 			sourceTree = "<group>";
@@ -769,6 +784,9 @@
 				EEB24C022880439A003A2398 /* UpdateNickName.graphql */,
 				EEC240292886748D00187869 /* UpdateItemImage.graphql */,
 				EEC2125F2887CABA00C5B77C /* UpdatePushToken.graphql */,
+				EEAE99F2287E91E600805D99 /* MyPageMe.graphql */,
+				EEB3BE60288D4FE10084A022 /* GetItem.graphql */,
+				EEB3BE62288D58250084A022 /* GetBidding.graphql */,
 			);
 			path = query;
 			sourceTree = "<group>";
@@ -1035,8 +1053,10 @@
 				EEA63D782877F0720095A7E3 /* GetItemList.graphql in Resources */,
 				EE3D822B287486D900C72830 /* requestBid.graphql in Resources */,
 				EEE64C9C286B8821007951B4 /* testImg.png in Resources */,
+				EEB3BE61288D4FE10084A022 /* GetItem.graphql in Resources */,
 				EEFD586B28856DA400D68E67 /* UpdateItem.graphql in Resources */,
 				EEC212602887CABA00C5B77C /* UpdatePushToken.graphql in Resources */,
+				EEB3BE63288D58250084A022 /* GetBidding.graphql in Resources */,
 				EEF04A0E286D52EE00A9D8A7 /* GoogleService-Info.plist in Resources */,
 				EE069C7F286213320033FA4E /* schema.json in Resources */,
 				EEC0060828707554001B86F7 /* GetEndingSoonItems.graphql in Resources */,
@@ -1100,7 +1120,6 @@
 				"$(SRCROOT)/{TargetName}/*.graphql",
 				"$(SRCROOT)/requestBid.graphql",
 				"$(SRCROOT)/AddItem.graphql",
-				"$(SRCROOT)/MyPageMe.graphql",
 				"$(SRCROOT)/UpdateNickName.graphql",
 				"$(SRCROOT)/UpdateItem.graphql",
 				"$(SRCROOT)/UpdateItemImage.graphql",
@@ -1108,6 +1127,9 @@
 				"$(SRCROOT)/GetItemList.graphql",
 				"$(SRCROOT)/requestBid.graphql",
 				"$(SRCROOT)/GetEndingSoonItems.graphql",
+				"$(SRCROOT)/MyPageMe.graphql",
+				"$(SRCROOT)/GetItem.graphql",
+				"$(SRCROOT)/GetBidding.graphql",
 			);
 			name = "Generate Apollo GraphQL API";
 			outputFileListPaths = (
@@ -1152,11 +1174,14 @@
 				EEB6DDFE2878A02800771427 /* UploadProductReactor.swift in Sources */,
 				EEBD01CC28577A2100368533 /* HomeProductListCell.swift in Sources */,
 				EEC65F532873320F00C7A852 /* DateUtil.swift in Sources */,
+				EEB3BE5F288D35B60084A022 /* AlreadyTopBidDialogVC.swift in Sources */,
 				EEADAFBD285B6662004277F9 /* ItemListViewController.swift in Sources */,
 				EEE97ADA288C352C00188C9D /* LoadingIndicator.swift in Sources */,
+				EEB3BE5B288D16740084A022 /* Counting.swift in Sources */,
 				EEC523EF287AE882005D4673 /* AlarmSettingVC.swift in Sources */,
 				EE91EDF2287C834C00F068A8 /* ReasonOptionVC.swift in Sources */,
 				EE7C1A1D285255D100730E95 /* LoginViewController.swift in Sources */,
+				EEB3BE65288D5B3C0084A022 /* Bidding.swift in Sources */,
 				EEC2402828865F4400187869 /* UIApplication+.swift in Sources */,
 				EED56375288AA3540071E02C /* SalesHistoryVC.swift in Sources */,
 				EE51D5DF2856288700AF1BC5 /* BannerCellReactor.swift in Sources */,
@@ -1169,6 +1194,7 @@
 				EE5ECA5D28661C5E008B5398 /* ItemDetailImageCell.swift in Sources */,
 				EEAE99E3287E752E00805D99 /* Penalty.swift in Sources */,
 				EED180152855CF5100E17B06 /* MainReactor.swift in Sources */,
+				EEB3BE5D288D1FE60084A022 /* CancelBidDialogVC.swift in Sources */,
 				EED56379288AA6410071E02C /* PurchaseHistoryReactor.swift in Sources */,
 				EEBA584E28839A83004EEE50 /* RecentProduct+CoreDataClass.swift in Sources */,
 				EE996A72285258A50045F40A /* LoginReactor.swift in Sources */,

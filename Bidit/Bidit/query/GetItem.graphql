@@ -1,0 +1,57 @@
+
+
+
+query GetItem($id: Int!) {
+    getItem(id: $id) {
+       id
+       status
+       userId
+       categoryId
+       sPrice
+       cPrice
+       buyNow
+       viewCount
+       name
+       title
+       dueDate
+       deliveryType
+       sCondition
+       aCondition
+       createdAt
+       updatedAt
+       deletedAt
+
+       description {
+            id
+            status
+            itemId
+            description
+            createdAt
+            updatedAt
+            deletedAt
+        }
+        
+        image {
+            id
+            status
+            itemId
+            type
+            url
+            createdAt
+        }
+        
+        user{
+            id
+            status
+            nickname
+            email
+            createdAt
+            updatedAt
+            deletedAt
+            description
+            
+        }
+        
+       
+    }
+}

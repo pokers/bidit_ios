@@ -1,0 +1,25 @@
+
+query GetBidding($biddingQuery: BiddingQueryInput!) {
+    getBidding(biddingQuery: $biddingQuery) {
+       id
+        status
+        userId
+        itemId
+        price
+        createdAt
+        
+        user{
+            id
+            status
+            nickname
+            email
+            createdAt
+            updatedAt
+            deletedAt
+            description
+            
+        }
+        
+       
+    }
+}

@@ -87,6 +87,7 @@ class ItemListReactor : Reactor{
             
             return Observable.concat([
                 Observable<Mutation>.just(Mutation.sortPopularity),
+                Observable<Mutation>.just(Mutation.sortListOpen(isOpened: true)),
                 getListOfType(categoryType: self.initialState.categoryId, sortType: .popularity)
             ])
         
@@ -94,12 +95,14 @@ class ItemListReactor : Reactor{
             print("reactor : 마감직전 버튼 클릭")
             return Observable.concat([
                 Observable<Mutation>.just(Mutation.sortEndingSoon),
+                Observable<Mutation>.just(Mutation.sortListOpen(isOpened: true)),
                 getListOfType(categoryType: self.initialState.categoryId, sortType: .endingSoon)
             ])
         case .tapLatestBtn:
             print("reactor : 최신순 버튼 클릭")
             return Observable.concat([
                 Observable<Mutation>.just(Mutation.sortLatest),
+                Observable<Mutation>.just(Mutation.sortListOpen(isOpened: true)),
                 getListOfType(categoryType: self.initialState.categoryId, sortType: .latest)
             ])
             //
@@ -141,6 +144,7 @@ class ItemListReactor : Reactor{
             break
         case .setSelectedIndexPath(let indexPath):
             state.selectedIndexPath = indexPath
+            
             break
         case .sortListOpen(let isOpened):
             state.isSortListOpened = isOpened
@@ -148,13 +152,16 @@ class ItemListReactor : Reactor{
             break
         case .sortPopularity:
             print("reactor 인기순")
+            
             state.sortState = .popularity
             break
         case .sortEndingSoon:
+            
             state.sortState = .endingSoon
             break
             
         case .sortLatest:
+            
             state.sortState = .latest
             break
         case .openFilter:
@@ -213,6 +220,7 @@ extension ItemListReactor{
                                                 status: node!.status,
                                                 nickname: node?.user?.nickname,
                                                 email: node?.user?.email,
+                                                counting: nil,
                                                 kakaoAccount: nil,
                                                 appleAccount: nil
                             )
@@ -257,6 +265,7 @@ extension ItemListReactor{
                         self.itemList = items
                         let convertedData = self.convertItemToSection(items: items)
                         emitter.onNext(.loadListResult(convertedData))
+                        
                         //emitter.onCompleted()
                        
                     }catch (let error) {
@@ -336,6 +345,7 @@ extension ItemListReactor{
                                                 status: node!.status,
                                                 nickname: node?.user?.nickname,
                                                 email: node?.user?.email,
+                                                counting: nil,
                                                 kakaoAccount: nil,
                                                 appleAccount: nil
                             )
@@ -404,6 +414,7 @@ extension ItemListReactor{
 
                         let convertedData = self.convertItemToSection(items: sortedArray)
                         emitter.onNext(.loadListResult(convertedData))
+                        
 //                        //emitter.onCompleted()
                        
                     }catch (let error) {
@@ -543,6 +554,7 @@ extension ItemListReactor{
 
                         let convertedData = self.convertItemToSection(items: sortedArray)
                         emitter.onNext(.loadListResult(convertedData))
+                        
 //                        //emitter.onCompleted()
                        
                     }catch (let error) {

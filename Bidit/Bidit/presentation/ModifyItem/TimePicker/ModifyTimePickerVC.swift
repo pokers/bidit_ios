@@ -25,7 +25,7 @@ class ModifyTimePickerVC : UIViewController {
     
     // 피커 뷰에 들어갈 내용 리스트
     var ampmList = ["오전", "오후"]
-    var hourList = ["1", "2","3","4","5","6","7","8","9","10","11","12"]
+    var hourList = ["01", "02","03","04","05","06","07","08","09","10","11","12"]
     var minuteList = ["00", "10", "20", "30","40", "50"]
        
     //확인 버튼
@@ -107,7 +107,8 @@ class ModifyTimePickerVC : UIViewController {
             .subscribe(onNext : {
                 print(" 확인")
                 // 값을 전달한다.
-                var result = self.ampmList[self.selectedAMPM] + " " + self.hourList[self.selectedHour] + " 시" + self.minuteList[self.selectedMinute] + "분"
+               
+                var result = self.ampmList[self.selectedAMPM] + " " + self.hourList[self.selectedHour] + "시" + self.minuteList[self.selectedMinute] + "분"
                 self.preVC?.dueTimeBtn.setTitle(result, for: .normal)
                 self.preVC?.dueTimeBtn.setTitleColor(UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1), for: .normal)
                 print(" 시간 선택 : \(result)")

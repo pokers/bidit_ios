@@ -211,6 +211,41 @@
       },
       {
         "kind": "OBJECT",
+        "name": "Counting",
+        "description": null,
+        "fields": [
+          {
+            "name": "buy",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "sell",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "User",
         "description": null,
         "fields": [
@@ -449,6 +484,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "UserAlarm",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "counting",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Counting",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2271,6 +2318,12 @@
           },
           {
             "name": "END",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CANCEL",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

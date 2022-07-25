@@ -194,4 +194,17 @@ extension CalendarVC {
         print(dateFormatter.string(from: date) + " 날짜가 선택되었습니다.")
         selected = dateFormatter.string(from: date)
     }
+    
+    //지난 날짜 비활성화
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+        if date .compare(Date()) == .orderedAscending {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    func minimumDate(for calendar: FSCalendar) -> Date {
+       return Date()
+    }
 }

@@ -45,7 +45,7 @@ class ProductStatusDialogVC : UIViewController{
         view.addSubview(containerView)
         containerView.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.top.equalToSuperview().offset(84)
+            $0.centerY.equalToSuperview()
             $0.height.equalTo(162)
         }
         containerView.backgroundColor = UIColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1)

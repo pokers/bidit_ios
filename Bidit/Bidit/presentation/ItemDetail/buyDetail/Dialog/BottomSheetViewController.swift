@@ -30,9 +30,13 @@ class BottomSheetViewController : UIViewController, View{
     let warningNotice = UILabel() //가격을 다시 확인해주세요 .
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        cancelBtn.setImage(UIImage(named: "bid_cancel_btn"), for: .normal)
+        biddingBtn.setImage(UIImage(named: "bidding_btn"), for: .normal)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         layout()
         attribute()
         extendBind()
@@ -56,14 +60,14 @@ class BottomSheetViewController : UIViewController, View{
         //취소 버튼
         cancelBtn.snp.makeConstraints{
             $0.leading.equalToSuperview().offset(18)
-            $0.bottom.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(32)
             $0.width.equalTo(108)
             $0.height.equalTo(42)
         }
         //입찰하기 버튼
         biddingBtn.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(18)
-            $0.bottom.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(32)
             $0.width.equalTo(224)
             $0.height.equalTo(42)
         }
@@ -112,7 +116,7 @@ class BottomSheetViewController : UIViewController, View{
         priceLabel.text = "300,000"
         priceLabel.font = .systemFont(ofSize: 24, weight: .bold)
         priceLabel.keyboardType = .numberPad
-        priceLabel.textContentType
+        
         
         priceUnit.text = "원"
         priceUnit.font = .systemFont(ofSize: 24, weight: .medium)
@@ -258,6 +262,18 @@ class BottomSheetViewController : UIViewController, View{
         }.subscribe(onNext : {result in
             self.inputNotice.text = "현재가인 \((self.decimalWon(value: Int(result)!))) 원 이상 비딩해야합니다."
         }).disposed(by: disposeBag)
+        //이미 최고가 입찰했음. 알림
+        reactor.state.map{$0.biddingError}
+            .subscribe(onNext : {
+                if $0 == true {
+                    let vc = AlreadyTopBidDialogVC()
+                    vc.preVC = self
+                    vc.modalPresentationStyle = .fullScreen
+                   
+                    // 보여주기
+                    self.present(vc, animated: false, completion: nil)
+                }
+            }).disposed(by: disposeBag)
         
         
         //비딩 성공시 화면 전환

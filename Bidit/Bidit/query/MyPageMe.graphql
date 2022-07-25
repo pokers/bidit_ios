@@ -4,7 +4,11 @@ query MyPageMe {
         id
         nickname
         status
-    kakaoAccount {
+        counting{
+            buy
+            sell
+        }
+        kakaoAccount {
             id
             status
             userId

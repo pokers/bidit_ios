@@ -28,6 +28,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     typealias Reactor = HomeReactor
      
 
+    var categoryIndex = [2,7,3,8,4,9,5,10,6,11,12,13]
     //전체 스크롤뷰
     var scrollView = UIScrollView()
     
@@ -170,9 +171,9 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         self.view.addSubview(floatingBtn)
         
         floatingBtn.snp.makeConstraints{
-            $0.width.height.equalTo(80)
-            $0.trailing.equalToSuperview().inset(17)
-            $0.top.equalToSuperview().offset(700)
+            $0.width.height.equalTo(100)
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(72)
         }
         //아이템 리스트 뷰컨 추가.(탭바)
         addChild(homeTabbar)
@@ -340,7 +341,9 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             .compactMap{$0}
             .subscribe(onNext : { [weak self] indexPath in
                 let vc = ItemListViewController()
-                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init(categoryId: indexPath.row)) //임시로 입력
+                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init(categoryId: self!.categoryIndex[indexPath.row] ))
+                print("카테고리 누른 번호 \(indexPath.row)")
+                //임시로 입력
                 vc.reactor = listReactor
                // vc.bind(reactor: listReactor)
                 self?.navigationController?.pushViewController(vc, animated: true)

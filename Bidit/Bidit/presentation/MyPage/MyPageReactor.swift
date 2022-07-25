@@ -53,7 +53,7 @@ extension MyPageReactor {
     
     //내정보 불러오기.
     func requestMyInfo() -> Observable<Mutation>{
-        
+        LoadingIndicator.showLoading()
         
         return Observable<Mutation>.create(){ emitter in
             
@@ -71,6 +71,8 @@ extension MyPageReactor {
                         var id : Int = datas.id
                         var status : Int = datas.status
                         var nickname : String? = datas.nickname
+                        var sellCount = datas.counting?.sell
+                        var buyCount = datas.counting?.buy
                         
                         var kakao = datas.kakaoAccount
                         var apple = datas.appleAccount
@@ -96,7 +98,7 @@ extension MyPageReactor {
                                                                         updatedAt: apple?.updatedAt,
                                                                         deletedAt: apple?.deletedAt)
                         
-                        var user = User(id: id, status: status, nickname: nickname, kakaoAccount: kakaoAccount, appleAccount: appleAccount)
+                        var user = User(id: id, status: status, nickname: nickname, counting: .init(buy: buyCount, sell: sellCount), kakaoAccount: kakaoAccount, appleAccount: appleAccount)
                         
                         
                         
@@ -108,7 +110,7 @@ extension MyPageReactor {
 //                        print("myProfile is \(decode)")
                       print(user)
                         
-                        
+                        LoadingIndicator.hideLoading()
 //                        
 //                        //return 대신
                         emitter.onNext(.loadMyInfo(user))

@@ -12,6 +12,7 @@ struct User : Codable{
     var nickname : String?
     var email : String?
     //let joinPath : String
+    var counting : Counting?
     
     var kakaoAccount : KakaoAccount?
     var appleAccount : AppleAccount?
@@ -33,6 +34,7 @@ struct User : Codable{
         case status = "status"
         case kakaoAccount = "kakaoAccount"
         case appleAccount = "appleAccount"
+        case counting = "counting"
             
         }
 //    enum JoinPath : Codable{

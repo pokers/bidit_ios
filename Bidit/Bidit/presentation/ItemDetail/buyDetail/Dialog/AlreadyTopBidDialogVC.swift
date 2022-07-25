@@ -1,21 +1,21 @@
 //
-//  NotOpenDialogVC.swift
+//  AlreadyTopBidDialogVC.swift
 //  Bidit
 //
-//  Created by JeongMin Ko on 2022/07/21.
+//  Created by JeongMin Ko on 2022/07/24.
 //
 
 import Foundation
 import UIKit
 import RxSwift
-//(아직 작성하지 않은 항목이 있어요.)팝업
-class NotOpenDialogVC : UIViewController{
+//이미 최고가를 입찰하셨습니다. 팝업
+class AlreadyTopBidDialogVC : UIViewController{
     
+    var preVC : BottomSheetViewController? = nil
     var disposeBag: DisposeBag  = DisposeBag()
     private var containerView = UIView() //팝업 컨테이너
-    private var popupTitleText = UILabel() //서비스 준비중입니다
-    
-    private var descriptioLabel = UILabel() //빠른 시일내에 서비스를 제공하겠습니다.\n불편을 드려 죄송합니다.
+    private var popupTitleText = UILabel() //이미 최고가를 입찰하셨습니다.
+    private var descriptioLabel = UILabel() //이 판매글은 현재 입찰이 진행되어 삭제가 불가능해요.
     private var cancelBtn = UIButton() // 취소 버튼
     var currItem : Item? = nil
     override func viewDidLoad() {
@@ -39,14 +39,14 @@ class NotOpenDialogVC : UIViewController{
        
         self.containerView.addSubview(popupTitleText)
         popupTitleText.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(16)
+            $0.top.equalToSuperview().offset(40)
             $0.centerX.equalToSuperview()
         }
         
         
         self.containerView.addSubview(descriptioLabel)
         descriptioLabel.snp.makeConstraints{
-
+            $0.width.equalTo(310)
             $0.height.equalTo(42)
             $0.centerX.equalToSuperview()
             $0.top.equalTo(popupTitleText.snp.bottom).offset(16)
@@ -57,17 +57,16 @@ class NotOpenDialogVC : UIViewController{
             $0.width.equalTo(310)
             $0.height.equalTo(42)
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(descriptioLabel.snp.bottom).offset(12)
+            $0.bottom.equalToSuperview().inset(32)
         }
     }
     
     func attribute(){
-        popupTitleText.text = "서비스 준비중입니다"
+        popupTitleText.text = "이미 최고가를 입찰하셨습니다."
         popupTitleText.font = .systemFont(ofSize: 20, weight: .medium)
         descriptioLabel.text =
                                 """
-        빠른 시일내에 서비스를 제공하겠습니다.
-            불편을 드려 죄송합니다.
+
 """
         
         descriptioLabel.font = .systemFont(ofSize: 14, weight: .medium)
@@ -81,7 +80,9 @@ class NotOpenDialogVC : UIViewController{
     func bind(){
         //취소 버튼 이벤트
         self.cancelBtn.rx.tap.subscribe(onNext : {
-            self.dismiss(animated: true)
+            self.dismiss(animated: false){
+                self.preVC?.dismiss(animated: false)
+            }
         }).disposed(by: disposeBag)
         
     }

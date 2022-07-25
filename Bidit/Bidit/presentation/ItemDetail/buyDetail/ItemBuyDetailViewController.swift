@@ -150,19 +150,21 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         buttonContainer.snp.makeConstraints{
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(self.view.snp.top).offset(screenHeight)
-            $0.height.equalTo(74)
+            $0.height.equalTo(80)
         }
         buttonContainer.addSubview(directBuyBtn)
         buttonContainer.addSubview(biddingBtn)
         
         directBuyBtn.snp.makeConstraints{
             $0.leading.equalToSuperview().offset(18)
+            $0.top.equalToSuperview().offset(16)
             $0.height.equalTo(42)
             $0.width.equalTo(166)
         }
         
         biddingBtn.snp.makeConstraints{
             $0.trailing.equalToSuperview().inset(18)
+            $0.top.equalToSuperview().offset(16)
             $0.height.equalTo(42)
             $0.width.equalTo(166)
         }
