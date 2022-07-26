@@ -12,8 +12,11 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
 import Kingfisher
+
 //My
 class MyPageViewController : UIViewController ,View{
+    
+    var mainTabVC : TabbarController? = nil
     
     
     // 스크롤뷰
@@ -457,10 +460,13 @@ class MyPageViewController : UIViewController ,View{
             }).disposed(by: disposeBag)
         
         
-        
+        //구매 내역 버튼
         self.buyRecordBtn.rx.tap
             .subscribe(onNext : {
+                self.mainTabVC?.tradeTabbarVC.startIndex = 1
                 self.tabBarController?.selectedIndex = 3 // 홈화면으로 이동.
+            
+                
                 
             }).disposed(by: disposeBag)
         //찜 버튼
@@ -471,11 +477,16 @@ class MyPageViewController : UIViewController ,View{
                
                 // 보여주기
                 self.present(vc, animated: false, completion: nil)
-            })
+            }).disposed(by: disposeBag)
         
+        //판매 내역 버튼
         self.sellRecordBtn.rx.tap
             .subscribe(onNext : {
+                self.mainTabVC?.tradeTabbarVC.startIndex = 0
                 self.tabBarController?.selectedIndex = 3
+                
+               
+                
             }).disposed(by: disposeBag)
         //서비스 이용약관
         self.policyBtn.rx.tap

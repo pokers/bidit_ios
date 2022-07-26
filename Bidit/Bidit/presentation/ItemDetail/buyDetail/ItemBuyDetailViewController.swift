@@ -11,10 +11,12 @@ import ReactorKit
 import RxDataSources
 import MaterialComponents.MaterialBottomSheet
 import ImageSlideshow
+import RxSwift
 
 //물건 상세 페이지(구매자)
 class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate{
     
+    var disposeBag: DisposeBag = DisposeBag()
     //네비게이션 바 버튼 (우측)
     let menuView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
     let zzimView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 18))
@@ -81,6 +83,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             //tableView.rowHeight = 306
             cell.reactor = reactor
             
+            
             return cell
             
         case.content(let reactor) :
@@ -112,11 +115,14 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    var disposeBag: DisposeBag  = DisposeBag()
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+       
     }
     
     

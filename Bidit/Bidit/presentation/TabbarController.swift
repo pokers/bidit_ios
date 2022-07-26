@@ -10,6 +10,8 @@ import SendBirdUIKit
 class TabbarController : UITabBarController{
     
     
+    let tradeTabbarVC = TradeTabbarVC()
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +37,9 @@ class TabbarController : UITabBarController{
         let searchViewController = UINavigationController(rootViewController: searchVC)
         searchVC.reactor = SearchReactor()
         
-        let tradeTabbarVC = TradeTabbarVC()
         let tradeNavigationVC = UINavigationController(rootViewController: tradeTabbarVC)
         let myPageVC = MyPageViewController()
+        myPageVC.mainTabVC = self
         let myPageNavigationVC = UINavigationController(rootViewController: myPageVC)
         myPageVC.reactor = MyPageReactor()
         //tabBar.barTintColor = .white
