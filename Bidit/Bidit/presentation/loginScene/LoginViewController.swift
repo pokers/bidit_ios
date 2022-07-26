@@ -172,6 +172,7 @@ class LoginViewController : UIViewController, View{
 extension LoginViewController: ASAuthorizationControllerDelegate {
     // 성공 후 동작
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        
         if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
 
             let idToken = credential.identityToken!
@@ -186,8 +187,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             UserDefaults.standard.set("apple", forKey: "LoginState")
             let keyChain = TokenManager.sharedKeyChain
             keyChain.set((accessToken),forKey: "apple")
+            keyChain.set((accessToken),forKey: "meKeychainKey")
             //서버 요청
-            
             
             //애플에서 토큰을 받은 후 me 호출
             Network.shared.apollo.fetch(query: MeQuery()){result in
@@ -199,7 +200,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     //self.updatePushToken()
                     //me 요청이 성공하면 홈화면으로 이동.
                     UserDefaults.standard.set(data.data?.me?.id, forKey: "userId")
-                    
+                    print(" 최초 로그인 정보 \(data.data)")
                     self.movingHomeView()
                     break
                 case .failure(let error) :
@@ -214,6 +215,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             //현재 로그인 상태 갱신 (애플, 카카오 등)
                             UserDefaults.standard.set("apple", forKey: "LoginState")
                             UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
+                            
+                            
                             //푸시 토큰 갱신
                             //self.updatePushToken()
                             //홈화면 이동

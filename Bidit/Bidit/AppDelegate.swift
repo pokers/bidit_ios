@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         
+        
         //카카오
         KakaoSDK.initSDK(appKey: PrivateKey().KAKAO_APP_KEY )
 //        if (AuthApi.isKakaoTalkLoginUrl(url)) {

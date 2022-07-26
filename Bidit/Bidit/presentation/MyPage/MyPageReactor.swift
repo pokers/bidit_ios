@@ -77,7 +77,9 @@ extension MyPageReactor {
                         var kakao = datas.kakaoAccount
                         var apple = datas.appleAccount
                        
-                        var kakaoAccount : KakaoAccount? = KakaoAccount(id: Double(kakao!.id),
+                        var kakaoAccount : KakaoAccount? = nil
+                        if kakao?.id != nil{
+                            kakaoAccount = KakaoAccount(id: Double(kakao!.id),
                                                         status: kakao!.status,
                                                         userId: kakao!.userId,
                                                         createdAt: kakao?.createdAt,
@@ -89,6 +91,8 @@ extension MyPageReactor {
                                                         thumbnail_image_url: kakao?.thumbnailImageUrl,
                                                         profile_image_url: kakao?.profileImageUrl,
                                                         is_default_image: kakao?.isDefaultImage)
+                        }
+                        
                        
                         var appleAccount : AppleAccount? = AppleAccount(id: apple?.id,
                                                                         status: apple?.status,

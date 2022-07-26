@@ -116,6 +116,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         filterVC.reactor = reactorOfFilter
         filterVC.preVC = self
         menu = SideMenuNavigationController(rootViewController: filterVC)
+        menu?.menuWidth = 300 //사이드 메뉴 너비 설정
         menu?.presentationStyle = .menuSlideIn
     }
     

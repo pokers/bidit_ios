@@ -6,6 +6,16 @@
 //
 
 import Foundation
+import RxSwift
+
+class TimerUtil {
+    static var timer = Observable<Int>.interval(
+        .seconds(1),
+        scheduler: MainScheduler.instance
+    )
+}
+
+
 
 // 지금시간으로부터 마감까지 남은 날짜 계산(**일 후 마감)
 func calcRestDay(end : String) -> String{

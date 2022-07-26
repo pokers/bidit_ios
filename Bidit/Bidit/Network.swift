@@ -92,6 +92,8 @@ class TokenAddingInterceptor: ApolloInterceptor {
             
         
             request.addHeader(name: "Authorization", value: "Bearer \((token))")
+        
+            print("Authorization : Bearer \(token)")
            
         // else do nothing
 

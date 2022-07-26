@@ -135,8 +135,10 @@ class LoginReactor : Reactor {
                           else {
                               print("loginWithKakaoTalk() success.")
                               print("token : \(oauthToken?.accessToken)")
+                              
                               //do something
                               let keyChain = TokenManager.sharedKeyChain
+                              
                               keyChain.set((oauthToken?.accessToken)!,forKey: "Kakao")
                               keyChain.set((oauthToken?.accessToken)!,forKey: "meKeychainKey")
                               

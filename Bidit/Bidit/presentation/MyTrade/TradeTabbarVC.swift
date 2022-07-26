@@ -21,7 +21,7 @@ class TradeTabbarVC : TabmanViewController {
     let purchaseHistoryVC = PurchaseHistoryVC()
     let purchaseReactor = PurchaseHistoryReactor()
     
-    
+    var startIndex = 1
    
    
     override func viewDidLoad() {
@@ -37,23 +37,21 @@ class TradeTabbarVC : TabmanViewController {
         
        viewControllers.append(salesHistoryVC)
        viewControllers.append(purchaseHistoryVC)
-
-       self.dataSource = self
+        // Create bar
+        let bar = TMBar.ButtonBar()
+        bar.layout.transitionStyle = .snap // Customize
+        settingTabBar(ctBar: bar) //함수 추후 구현
+        // Add to view
+        addBar(bar, dataSource: self, at: .top)
 
        
-       // Create bar
-       let bar = TMBar.ButtonBar()
-       bar.layout.transitionStyle = .snap // Customize
-       settingTabBar(ctBar: bar) //함수 추후 구현
-       // Add to view
-       addBar(bar, dataSource: self, at: .top)
    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         
-        
-        
+        self.dataSource = self
+
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.isHidden = true
     }
@@ -125,12 +123,12 @@ extension TradeTabbarVC: PageboyViewControllerDataSource, TMBarDataSource {
     }
     
     func viewController(for pageboyViewController: PageboyViewController,
-                        at index: PageboyViewController.PageIndex) -> UIViewController? {
+        at index: PageboyViewController.PageIndex) -> UIViewController? {
         return viewControllers[index]
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        return nil
+        return .at(index: startIndex)
     }
 }
 

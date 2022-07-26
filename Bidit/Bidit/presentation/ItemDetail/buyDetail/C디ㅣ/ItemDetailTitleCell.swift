@@ -48,7 +48,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
     var divider1 = UIView()
     var divider2 = UIView()
     
-    var timer : Observable<Int>?
+    var timer = TimerUtil.timer
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -60,6 +60,10 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit{
+        print("deinit")
     }
     
     
@@ -390,6 +394,10 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
             }
         }).disposed(by: disposeBag)
         
+//        self..rx..subscribe(onNext : {_ in
+//            timer?.subscribe().dispose()
+//        }).disposed(by: disposeBag)
+        
     }
     
     
@@ -401,41 +409,29 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
 extension ItemDetailTitleCell {
     
     //타이머
-    private func setupOnlyForegroundTimer(endTime : String)  {
-     
-       
+    func setupOnlyForegroundTimer(endTime : String)  {
         
-        timer = Observable<Int>.interval(
-            .seconds(1),
-            scheduler: MainScheduler.instance
-        )
-//        let now = Date()
-//        let endTime = stringConvertToDateTime(time: endTime)
-//        //출력 포맷 설정
-//        let format = DateFormatter()
-//        format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-//        let convertedEndTime = format.date(from: endTime) ?? now
-//
-//        var interval = convertedEndTime.timeIntervalSince(now)
+//        timer = Observable<Int>.interval(
+//            .seconds(1),
+//            scheduler: MainScheduler.instance
+//        )
         
         
         
-        timer!.withUnretained(self)
-        .do(onNext: { result in
-           
-         
-//            let restDay = Int(interval/(60*60*24))
-//            let hour = Int(Int(interval) - restDay*60*60*24) / (60*60)
-//            let minite = Int(Int(interval) - restDay*60*60*24 - hour * 60 * 60) / 60
-//            let second = Int(Int(interval) - restDay*60*60*24 - hour * 60 * 60 - minite * 60) % 60
-//            //시간
-//            print("restDay is  : \(restDay)일 \(hour):\(minite):\(second)")
-            let result =   calcRestDayAndTime(end: endTime)//"\(restDay)일 \(hour):\(minite):\(second)"
-            self.remainingTime.text = result
-        })
-        .subscribe()
-        .disposed(by: disposeBag)
-            
+        
+        timer.withUnretained(self)
+            .do(onNext: { result in
+                
+                let result =   calcRestDayAndTime(end: endTime)//"\(restDay)일 \(hour):\(minite):\(second)"
+                self.remainingTime.text = result
+            }).subscribe()
+            .disposed(by: disposeBag)
+                
+                
+                
+                
+                
+                
             
     }
     //가격 형식 쉼표찍기
