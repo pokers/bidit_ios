@@ -83,7 +83,9 @@ class ItemDetailBiddingListCellReactor : Reactor{
             LoadingIndicator.showLoading()
             Network.shared.apollo.fetch(query: GetBiddingQuery(biddingQuery: .init(status: 0,
                                                                                    itemId: self.initialState.item?.id,
-                                                                                   price: nil))){ result in
+                                                                                   price: nil)),
+                                        cachePolicy: .fetchIgnoringCacheData
+            ){ result in
                 switch result {
                 case .success(let data) :
                     print("success \(data)")

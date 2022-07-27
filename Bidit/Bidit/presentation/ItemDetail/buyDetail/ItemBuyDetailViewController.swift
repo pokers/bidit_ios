@@ -26,6 +26,9 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     let shareBtn = UIButton()
     let menuBtn = UIButton()
 
+    
+    var observable : Disposable? = nil
+    
     //테이블 뷰
     
     private let tableView = UITableView().then {
@@ -104,8 +107,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         }
         
     }
-    
-    
+        
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
@@ -292,8 +294,8 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         
         //Action
-        self.rx.viewDidLoad
-            .map{Reactor.Action.viewDidLoad}
+        self.rx.viewWillAppear
+            .map{_ in Reactor.Action.viewDidLoad}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -310,9 +312,24 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             .subscribe(onNext : {
                 self.setActionSheet()
             }).disposed(by: disposeBag)
+        //찜하기 버튼 이벤트
+        self.zzimBtn.rx.tap
+            .subscribe(onNext : {
+                let vc = NotOpenDialogVC()
+                vc.modalPresentationStyle = .fullScreen
+               
+                // 보여주기
+                self.present(vc, animated: false, completion: nil)
+            }).disposed(by: disposeBag)
         
-        
-        
+        self.shareBtn.rx.tap
+            .subscribe(onNext: {
+                let vc = NotOpenDialogVC()
+                vc.modalPresentationStyle = .fullScreen
+               
+                // 보여주기
+                self.present(vc, animated: false, completion: nil)
+            }).disposed(by: disposeBag)
        
         reactor.state
             .map { $0.sections }
@@ -329,7 +346,10 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             }
         }).disposed(by: disposeBag)
         
+       
+       
         
+       
         
     }
     

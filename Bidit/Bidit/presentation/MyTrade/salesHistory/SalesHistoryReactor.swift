@@ -82,7 +82,7 @@ extension SalesHistoryReactor {
                                        afterInfo: nil,
                                        beforeInfo: nil,
                                        cursorTypeInfo: nil
-                                      )){ result in
+                                      ), cachePolicy: .fetchIgnoringCacheData){ result in
                 
                 switch result {
                 case .success(let data) :

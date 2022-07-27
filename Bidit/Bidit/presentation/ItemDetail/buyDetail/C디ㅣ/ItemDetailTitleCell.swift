@@ -48,8 +48,11 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
     var divider1 = UIView()
     var divider2 = UIView()
     
-    var timer = TimerUtil.timer
-    
+//    var timer = Observable<Int>.interval(
+//        .seconds(1),
+//        scheduler: MainScheduler.instance
+//    )
+//    var timerSub : Disposable? = nil
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -63,7 +66,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
     }
     
     deinit{
-        print("deinit")
+        print("cell deinit")
     }
     
     
@@ -278,7 +281,15 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         writeTimeTitle.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
     }
     
-   
+    //셀이 사라졌을 때 타이머 종료
+    override func removeFromSuperview() {
+        super.removeFromSuperview()
+        print("removeFromSuperview")
+        TimerUtil.staticObs!.dispose()
+       
+    }
+ 
+        
     
     func bind(reactor: ItemDetailTitleCellReactor) {
         
@@ -295,6 +306,8 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
                 
                 
             }).disposed(by: disposeBag)
+        
+        
         
         
         //State
@@ -342,14 +355,47 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         
         reactor.state.map{
             $0.item.dueDate?.description ?? "0"
-        }.subscribe( onNext : { dueDate in
-            self.remainingTime.text = calcRestDayAndTime(end: dueDate)
-            self.setupOnlyForegroundTimer(endTime: dueDate)
+        }.subscribe( onNext : { [weak self] dueDate in
+           // self?.remainingTime.text = calcRestDayAndTime(end: dueDate)
+            
+            
+            TimerUtil.timer = Observable<Int>.interval(
+                .seconds(1),
+                scheduler: MainScheduler.instance
+            )
+            
+//            TimerUtil.staticObs = TimerUtil.timer?.subscribe(onDisposed : {
+//                print("disposed")
+//                self?.removeFromSuperview()
+//            })
+            TimerUtil.staticObs = TimerUtil.timer?.subscribe(onNext: { [weak self] result in
+                let result =   calcRestDayAndTime(end: dueDate)//"\(restDay)일 \(hour):\(minite):\(second)"
+                self?.remainingTime.text = result
+            }, onDisposed: { [weak self] in
+                print("disposed")
+                self?.removeFromSuperview()
+                
+                
+                
+            })
+            
+//            TimerUtil.staticObs = TimerUtil.timer!.subscribe(onNext: { result in
+//                let result =   calcRestDayAndTime(end: dueDate)//"\(restDay)일 \(hour):\(minite):\(second)"
+//                self.remainingTime.text = result
+//            }, onDisposed: {
+//                print("disposed")
+//                TimerUtil.timer = nil
+//                TimerUtil.staticObs!.disposed(by: self.disposeBag)
+//            })
+            
+            //self.setupOnlyForegroundTimer(endTime: dueDate)
         }).disposed(by: disposeBag)
         
         
         self.rx.layoutSubviews.subscribe(onNext : {_ in
             print("상태 표시 \(reactor.initialState.item.userId) ")
+            
+            
             if reactor.initialState.item.userId ?? 0 == UserDefaults.standard.integer(forKey: "userId") {
                 
                 self.sellStatusBtn.isHidden = false
@@ -419,16 +465,14 @@ extension ItemDetailTitleCell {
         
         
         
-        timer.withUnretained(self)
-            .do(onNext: { result in
-                
-                let result =   calcRestDayAndTime(end: endTime)//"\(restDay)일 \(hour):\(minite):\(second)"
-                self.remainingTime.text = result
-            }).subscribe()
-            .disposed(by: disposeBag)
-                
-                
-                
+//
+        
+//        timer!.subscribe(onNext: { result in
+//                    let result =   calcRestDayAndTime(end: endTime)//"\(restDay)일 \(hour):\(minite):\(second)"
+//                    self.remainingTime.text = result
+//                }).disposed(by: disposeBag)
+//
+//
                 
                 
                 

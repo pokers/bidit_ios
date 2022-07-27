@@ -99,7 +99,7 @@ extension EndingSoonReactor {
         LoadingIndicator.showLoading()
         return Observable<Mutation>.create(){ emitter in
             
-            Network.shared.apollo.fetch(query: GetItemListQuery()){ result in
+            Network.shared.apollo.fetch(query: GetItemListQuery(), cachePolicy: .fetchIgnoringCacheData){ result in
                 switch result {
                 case .success(let data) :
                     print("success \(data)")

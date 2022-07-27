@@ -19,6 +19,7 @@ class ItemBuyDetailReactor : Reactor {
         case switchBidding
         case switchDirectBuying
         case updateData(item : Item)
+        
     }
     
     struct State {
@@ -100,7 +101,7 @@ extension ItemBuyDetailReactor{
         
         return Observable<Mutation>.create(){ emitter in
             
-            Network.shared.apollo.fetch(query: GetItemQuery(id: itemId)){ result in
+            Network.shared.apollo.fetch(query: GetItemQuery(id: itemId), cachePolicy: .fetchIgnoringCacheData){ result in
                 switch result {
                     
                     

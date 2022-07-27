@@ -9,10 +9,9 @@ import Foundation
 import RxSwift
 
 class TimerUtil {
-    static var timer = Observable<Int>.interval(
-        .seconds(1),
-        scheduler: MainScheduler.instance
-    )
+   // static var timer : Observable<Int>? = nil
+    static var timer : Observable<Int>? = nil
+    static var staticObs: Disposable? = nil
 }
 
 
@@ -118,7 +117,7 @@ func stringConvertToDateTime(time : String) -> String {
        guard let tempDate = formatter.date(from: time) else {
            return ""
        }
-    print("not yet transform time is \(tempDate)")
+   // print("not yet transform time is \(tempDate)")
        formatter.dateFormat = "yyyy-MM-dd"
     
     //print("not yet transform time is \(tempDate)")

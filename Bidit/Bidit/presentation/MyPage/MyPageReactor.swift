@@ -57,7 +57,7 @@ extension MyPageReactor {
         
         return Observable<Mutation>.create(){ emitter in
             
-            Network.shared.apollo.fetch(query: MyPageMeQuery()){ result in
+            Network.shared.apollo.fetch(query: MyPageMeQuery(), cachePolicy: .fetchIgnoringCacheData){ result in
                 switch result {
                     
                     
@@ -112,7 +112,7 @@ extension MyPageReactor {
 //                        print(data)
 //                        let decode : User = try decoder.decode(User.self, from: data) //문제
 //                        print("myProfile is \(decode)")
-                      print(user)
+                        print("유저 정보  : \(user.nickname)")
                         
                         LoadingIndicator.hideLoading()
 //                        
@@ -122,7 +122,7 @@ extension MyPageReactor {
 //                        
                     }catch (let error) {
                         print(error)
-                        print("item load fail")
+                        print("user Info fail")
                         print(error.localizedDescription)
                     }
                     break

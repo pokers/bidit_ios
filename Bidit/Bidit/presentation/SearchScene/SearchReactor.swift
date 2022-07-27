@@ -233,7 +233,7 @@ extension SearchReactor {
                 
                     itemQuery: itemQuery,
                     keyword: inputKeyword,
-                    count: inputCount)){ result in
+                    count: inputCount) , cachePolicy: .fetchIgnoringCacheData){ result in
                 
                 switch result {
                 case .success(let data) :
@@ -359,7 +359,7 @@ extension SearchReactor {
                 
                     itemQuery: itemQuery,
                     keyword: inputKeyword,
-                    count: inputCount)){ result in
+                    count: inputCount) , cachePolicy: .fetchIgnoringCacheData){ result in
                 
                 switch result {
                 case .success(let data) :

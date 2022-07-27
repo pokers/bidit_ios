@@ -60,7 +60,7 @@ class LoginViewController : UIViewController, View{
         naverLoginBtn.snp.makeConstraints{
             $0.bottom.equalToSuperview().inset(124)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(48)
+            $0.height.equalTo(0)
         }
         
         self.view.addSubview(kakaoLoginBtn)
@@ -72,9 +72,12 @@ class LoginViewController : UIViewController, View{
         
         self.view.addSubview(appleLoginBtn)
         appleLoginBtn.snp.makeConstraints{
+            $0.bottom.equalToSuperview().inset(124)
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(48)
-            $0.bottom.equalToSuperview().inset(60)
+//            $0.leading.trailing.equalToSuperview().inset(18)
+//            $0.height.equalTo(48)
+//            $0.bottom.equalToSuperview().inset(60)
         }
     }
     private func attribute(){
@@ -200,6 +203,40 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     //self.updatePushToken()
                     //me 요청이 성공하면 홈화면으로 이동.
                     UserDefaults.standard.set(data.data?.me?.id, forKey: "userId")
+                    //가입 정보 없을 때 가입 addUser
+                    if data.data?.me == nil {
+                        //안된다면 가입 addUser호출
+                        Network.shared.apollo.perform(mutation: MyQueryMutation()){result in
+                            switch result {
+                            case .success(let data) :
+                                print("success \(data)")
+                                //현재 로그인 상태 갱신 (애플, 카카오 등)
+                                UserDefaults.standard.set("apple", forKey: "LoginState")
+                                UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
+                                
+                                
+                                //푸시 토큰 갱신
+                                //self.updatePushToken()
+                                //홈화면 이동
+                                
+                                let vc = TabbarController()
+                                vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+                                self.view.backgroundColor = .systemBackground
+                                self.dismiss(animated: true) {
+                                    self.present(vc, animated: true, completion: nil)
+                                }
+
+                                
+                                break
+                            case .failure(let error) :
+                                print("error : \(error)")
+                                
+                                //self.passed = false
+                            }
+                        }
+                        
+                    
+                    }
                     print(" 최초 로그인 정보 \(data.data)")
                     self.movingHomeView()
                     break

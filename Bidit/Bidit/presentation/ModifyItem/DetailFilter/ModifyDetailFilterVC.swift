@@ -178,6 +178,11 @@ class ModifyDetailFilterVC : UIViewController{
             
         }).disposed(by: disposeBag)
         
+        self.checkBtn.rx.tap
+            .subscribe(onNext : {
+                self.dismiss(animated: false)
+            }).disposed(by: disposeBag)
+        
     }
     
     

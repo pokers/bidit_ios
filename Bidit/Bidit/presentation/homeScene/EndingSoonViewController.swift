@@ -102,11 +102,14 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
 //            .map(Reactor.Action.viewDidLoad)
 //            .bind(to: reactor.action)
 //            .disposed(by: self.disposeBag)
-        self.rx.viewWillAppear
+        self.rx.viewDidAppear
             .mapVoid()
             .map(Reactor.Action.viewDidLoad)
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
+        self.rx.viewWillAppear.subscribe(onNext : {_ in
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
         
         
         tableView.rx.itemSelected //아이템 클릭

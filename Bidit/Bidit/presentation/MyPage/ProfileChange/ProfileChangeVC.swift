@@ -140,6 +140,23 @@ class ProfileChangeVC : UIViewController, View{
             .map{Reactor.Action.updateProfile(inputStr)}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        //업로드 결과
+        self.reactor?.state
+            .map{$0.successUpdate}
+            .subscribe(onNext : { successUpdate in
+                
+                if successUpdate {
+                    
+                    //상품이 정상적으로 등록되었습니다. 메시지
+                    self.navigationController?.presentingViewController?.showToast(message: "닉네임이 변경되었습니다.")
+                    self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.topViewController?.showToast(message: "닉네임이 변경되었습니다.")
+                    
+                }
+                
+            }).disposed(by: disposeBag)
+        
     }
     
     /*
@@ -168,6 +185,12 @@ class ProfileChangeVC : UIViewController, View{
         //사진삭제,
         let deleteAction = UIAlertAction(title: "사진삭제", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
+            
+            let vc = NotOpenDialogVC()
+            vc.modalPresentationStyle = .fullScreen
+           
+            // 보여주기
+            self.present(vc, animated: false, completion: nil)
             //수정하기 뷰컨트롤러 호출
             //                   let vc = ModifyProductVC()
             //                   vc.currItem = self.reactor?.initialState.item
@@ -179,15 +202,27 @@ class ProfileChangeVC : UIViewController, View{
 //        사진촬영
         let takeAction = UIAlertAction(title: "사진촬영", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
+            
+            let vc = NotOpenDialogVC()
+            vc.modalPresentationStyle = .fullScreen
+           
+            // 보여주기
+            self.present(vc, animated: false, completion: nil)
             // self.setDeletePopup()
         })
         // 앨범에서 사진 불러오기.
         let loadAction = UIAlertAction(title: "앨범에서 사진 불러오기.", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             // self.setDeletePopup()
+            let vc = NotOpenDialogVC()
+            vc.modalPresentationStyle = .fullScreen
+           
+            // 보여주기
+            self.present(vc, animated: false, completion: nil)
         })
         let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
+            
         })
         
         //action sheet에 옵션 추가.
