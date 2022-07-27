@@ -57,6 +57,7 @@ class ModifyProductReactor : Reactor , DeleteDelegate{
         var selectedIndexPath : IndexPath?
         var item : Item
         var itemImages : [ItemImage] = []
+        var uploadState : Bool = false
       }
 
       
@@ -169,6 +170,7 @@ class ModifyProductReactor : Reactor , DeleteDelegate{
                                   )
             ]
         case .uploadRequest:
+            state.uploadState = true
             break
         }
         return state
@@ -288,7 +290,7 @@ extension ModifyProductReactor {
     
     func requestAddItem(itemAddInput : ItemAddInput, description : String, images : [String]) -> Observable<Mutation>{
         
-        
+        LoadingIndicator.showLoading()
         
         return Observable<Mutation>.create(){ emitter in
             
@@ -319,6 +321,7 @@ extension ModifyProductReactor {
 //
 //                        self.updateList(decode.getEndingSoonItems)
                         //return 대신
+                        LoadingIndicator.hideLoading()
                         emitter.onNext(.uploadRequest)
                         emitter.onCompleted()
                        

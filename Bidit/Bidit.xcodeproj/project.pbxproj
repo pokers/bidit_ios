@@ -159,7 +159,6 @@
 		EEE0D9D7288BEEED00259FBE /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE0D9D6288BEEED00259FBE /* UIViewController+.swift */; };
 		EEE64406285D2062009D92AA /* DetailFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE64405285D2062009D92AA /* DetailFilterViewController.swift */; };
 		EEE64408285D208D009D92AA /* DetailFilterReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE64407285D208D009D92AA /* DetailFilterReactor.swift */; };
-		EEE64C9C286B8821007951B4 /* testImg.png in Resources */ = {isa = PBXBuildFile; fileRef = EEE64C9B286B8821007951B4 /* testImg.png */; };
 		EEE97ADA288C352C00188C9D /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE97AD9288C352C00188C9D /* LoadingIndicator.swift */; };
 		EEF04A0E286D52EE00A9D8A7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEF04A0D286D52EE00A9D8A7 /* GoogleService-Info.plist */; };
 		EEF7953028658380000E3373 /* IndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF7952F28658380000E3373 /* IndicatorView.swift */; };
@@ -329,7 +328,6 @@
 		EEE0D9D6288BEEED00259FBE /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		EEE64405285D2062009D92AA /* DetailFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFilterViewController.swift; sourceTree = "<group>"; };
 		EEE64407285D208D009D92AA /* DetailFilterReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFilterReactor.swift; sourceTree = "<group>"; };
-		EEE64C9B286B8821007951B4 /* testImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImg.png; sourceTree = "<group>"; };
 		EEE97AD9288C352C00188C9D /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		EEF04A0D286D52EE00A9D8A7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EEF7952F28658380000E3373 /* IndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorView.swift; sourceTree = "<group>"; };
@@ -672,7 +670,6 @@
 		EE9E70E6286B1B4200BBA69B /* Temp */ = {
 			isa = PBXGroup;
 			children = (
-				EEE64C9B286B8821007951B4 /* testImg.png */,
 				EE9E70E7286B1B6E00BBA69B /* UploadTestViewController.swift */,
 			);
 			path = Temp;
@@ -1064,7 +1061,6 @@
 				EEBD0AC528706CCA0074AE5D /* MyQuery.graphql in Resources */,
 				EEA63D782877F0720095A7E3 /* GetItemList.graphql in Resources */,
 				EE3D822B287486D900C72830 /* requestBid.graphql in Resources */,
-				EEE64C9C286B8821007951B4 /* testImg.png in Resources */,
 				EEB3BE61288D4FE10084A022 /* GetItem.graphql in Resources */,
 				EEFD586B28856DA400D68E67 /* UpdateItem.graphql in Resources */,
 				EEC212602887CABA00C5B77C /* UpdatePushToken.graphql in Resources */,
@@ -1445,7 +1441,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = "7 ";
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
@@ -1462,7 +1458,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.3;
+				MARKETING_VERSION = 0.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1481,7 +1477,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = "7 ";
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
@@ -1498,7 +1494,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.3;
+				MARKETING_VERSION = 0.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

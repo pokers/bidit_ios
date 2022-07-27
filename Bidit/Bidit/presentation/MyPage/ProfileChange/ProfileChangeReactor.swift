@@ -22,6 +22,7 @@ class ProfileChangeReactor : Reactor{
     
     struct State {
         var user : User? = nil
+        var successUpdate = false
     }
     
     let initialState: State
@@ -52,6 +53,7 @@ extension ProfileChangeReactor{
             
         case.modifyProfile(let nickName):
             state.user?.nickname = nickName
+            state.successUpdate = true
             break
 
         }
@@ -60,7 +62,7 @@ extension ProfileChangeReactor{
     
     func requestProfileUpdate(nickName : String) -> Observable<Mutation>{
         return Observable<Mutation>.create(){ emitter in
-            
+            LoadingIndicator.showLoading()
             Network.shared.apollo.perform(mutation: UpdateNickNameMutation(userUpdate: .init(status: nil,
                                                                                              nickname: nickName,
                                                                                              gender: nil,
@@ -73,6 +75,10 @@ extension ProfileChangeReactor{
                     do {
                         print("modify result is :  \(data)")
 //
+                        
+                        LoadingIndicator.hideLoading()
+                        //상품이 정상적으로 등록되었습니다. 메시지
+                        
                         emitter.onNext(.modifyProfile(nickName))
                         emitter.onCompleted()
                        

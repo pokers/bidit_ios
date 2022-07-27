@@ -634,6 +634,23 @@ class ModifyProductVC : UIViewController, View, UIScrollViewDelegate{
             self.buyNowPriceBtn.titleLabel?.textColor = .black
         }).disposed(by: disposeBag)
         
+        self.uploadBtn.rx.tap
+            .subscribe(onNext : {
+                if (self.imgCollectionView.numberOfItems(inSection: 0) < 2
+                    || self.titleField.text == "" || self.titleField.text == "글 제목"
+                    || self.categoryBtn.titleLabel?.text == "카테고리"
+                    || self.sPriceField.text == "비딩 시작가" || self.sPriceField.text == "0"
+                    || self.buyNowPriceField.text == "즉시 구매가" || self.buyNowPriceField.text == "0"
+                    || self.dueDateBtn.titleLabel?.text == "경매 마감 날짜"
+                    || self.dueTimeBtn.titleLabel?.text == "경매 마감 시간"){
+                    //아직 작성되지 않은 항목이 있어요.팝업창 띄우기
+                    let warningVC = WarningBlankVC()
+                    
+                    self.present(warningVC, animated: false)
+                }
+            }).disposed(by: disposeBag)
+        
+        
         //판매글 등록 버튼 이벤트
         self.uploadBtn.rx.tap.filter{
             !(self.imgCollectionView.numberOfItems(inSection: 0) < 2
@@ -744,11 +761,11 @@ class ModifyProductVC : UIViewController, View, UIScrollViewDelegate{
 //            .disposed(by: disposeBag)
 //        
         
-        self.rx.viewDidLoad
-              .mapVoid()
-              .map(Reactor.Action.viewDidLoad)
-              .bind(to: reactor.action)
-              .disposed(by: self.disposeBag)
+//        self.rx.viewDidLoad
+//              .mapVoid()
+//              .map(Reactor.Action.viewDidLoad)
+//              .bind(to: reactor.action)
+//              .disposed(by: self.disposeBag)
         
         //카테고리 선택 화면으로 이동.
         self.categoryBtn.rx.tap.subscribe(onNext : {result in
@@ -803,6 +820,23 @@ class ModifyProductVC : UIViewController, View, UIScrollViewDelegate{
                 self.itemImages = $0.element ?? []
             }
         }
+        
+        //업로드 결과
+        self.reactor?.state
+            .map{$0.uploadState}
+            .subscribe(onNext : { uploadResult in
+                
+                if uploadResult {
+                    
+                    //상품이 정상적으로 등록되었습니다. 메시지
+                    self.navigationController?.popViewController(animated: true)
+                    
+                    self.navigationController?.presentingViewController?.showToast(message: "상품이 정상적으로 등록되었습니다.")
+                   
+                    self.navigationController?.topViewController?.showToast(message: "상품이 정상적으로 등록되었습니다.")
+                }
+                
+            }).disposed(by: disposeBag)
         
        
         

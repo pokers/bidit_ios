@@ -423,7 +423,7 @@ class MyPageViewController : UIViewController ,View{
               .bind(to: reactor.action)
               .disposed(by: self.disposeBag)
         
-        var currentUser : User? = reactor.initialState.user
+        var currentUser : User? = reactor.currentState.user
         
         //계정 기본 정보 클릭 이벤트
         self.infoBtn.rx.tap

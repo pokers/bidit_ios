@@ -300,7 +300,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     func bind(reactor: HomeReactor) {
         
         //Action
-        self.rx.viewDidLoad
+        self.rx.viewWillAppear
               .mapVoid()
               .map(Reactor.Action.viewDidLoad)
               .bind(to: reactor.action)

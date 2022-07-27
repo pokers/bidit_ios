@@ -18,6 +18,7 @@
 				BF16D53685E86ABAC4F4D262937D9960 /* PBXTargetDependency */,
 			);
 			name = Firebase;
+			productName = Firebase;
 		};
 		B53D977A951AFC38B21751B706C1DF83 /* GoogleAppMeasurement */ = {
 			isa = PBXAggregateTarget;
@@ -30,6 +31,7 @@
 				18F35F5074BD13276CAF5F26D2BE26F3 /* PBXTargetDependency */,
 			);
 			name = GoogleAppMeasurement;
+			productName = GoogleAppMeasurement;
 		};
 		C49E7A4D59E5C8BE8DE9FB1EFB150185 /* FirebaseAnalytics */ = {
 			isa = PBXAggregateTarget;
@@ -45,6 +47,7 @@
 				1825E1DEC78650BA75546BF5B3FBE1AD /* PBXTargetDependency */,
 			);
 			name = FirebaseAnalytics;
+			productName = FirebaseAnalytics;
 		};
 /* End PBXAggregateTarget section */
 
@@ -2418,7 +2421,7 @@
 		2A628A105C0EF3DAAC602D01461785DB /* RxTabBarControllerDelegateProxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxTabBarControllerDelegateProxy.swift; path = RxCocoa/iOS/Proxies/RxTabBarControllerDelegateProxy.swift; sourceTree = "<group>"; };
 		2A8E547DE0C202346CBB21CDE6565657 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request.swift; sourceTree = "<group>"; };
 		2AB6385EEDFE662144D0A3EA984C680B /* AWSTimestampSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSTimestampSerialization.h; path = AWSCore/Serialization/AWSTimestampSerialization.h; sourceTree = "<group>"; };
-		2AB817771E58AEF6BEB856A681C7CFFC /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleAppMeasurement.xcframework; path = Frameworks/GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
+		2AB817771E58AEF6BEB856A681C7CFFC /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurement.xcframework; path = Frameworks/GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
 		2B30E463F9F663750FA8148B7B8CBBD7 /* AWSCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AWSCore.release.xcconfig; sourceTree = "<group>"; };
 		2B427AC7F4F771AE6BED991D5DC761DF /* Pageboy-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pageboy-dummy.m"; sourceTree = "<group>"; };
 		2B4722D0DB420E7A0FB8310170460E0B /* PublishRelay+Signal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PublishRelay+Signal.swift"; path = "RxCocoa/Traits/Signal/PublishRelay+Signal.swift"; sourceTree = "<group>"; };
@@ -2632,7 +2635,7 @@
 		4A6B99F082B7084AA58D83C790B83B86 /* GDTCORFlatFileStorage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GDTCORFlatFileStorage.h; path = GoogleDataTransport/GDTCORLibrary/Private/GDTCORFlatFileStorage.h; sourceTree = "<group>"; };
 		4AF2BF95BA228B331C5CAE6E03C83A08 /* GoogleUtilities.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleUtilities.debug.xcconfig; sourceTree = "<group>"; };
 		4B4A123F13BC1E9EB3B5D836C8F9F36B /* ConstraintOffsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintOffsetTarget.swift; path = Source/ConstraintOffsetTarget.swift; sourceTree = "<group>"; };
-		4B67B57E259EB901F947AB8E6E23F155 /* firebasecore.nanopb.c */ = {isa = PBXFileReference; includeInIndex = 1; name = firebasecore.nanopb.c; path = Firebase/CoreDiagnostics/FIRCDLibrary/Protogen/nanopb/firebasecore.nanopb.c; sourceTree = "<group>"; };
+		4B67B57E259EB901F947AB8E6E23F155 /* firebasecore.nanopb.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = firebasecore.nanopb.c; path = Firebase/CoreDiagnostics/FIRCDLibrary/Protogen/nanopb/firebasecore.nanopb.c; sourceTree = "<group>"; };
 		4BA04D9490AB5D3AFAD70DB1C3B37C06 /* GoogleUtilities.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleUtilities.release.xcconfig; sourceTree = "<group>"; };
 		4BA60D37CD6CBA3B9DDFDECF0ADCD126 /* NibLoadable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NibLoadable.swift; path = Sources/View/NibLoadable.swift; sourceTree = "<group>"; };
 		4BF9292AE4B347FEAFB421DAF967932E /* GULNetworkLoggerProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULNetworkLoggerProtocol.h; path = GoogleUtilities/Network/Public/GoogleUtilities/GULNetworkLoggerProtocol.h; sourceTree = "<group>"; };
@@ -2715,7 +2718,7 @@
 		5745911235BC7891869E462D96A7A24F /* FBLPromise+Validate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "FBLPromise+Validate.h"; path = "Sources/FBLPromises/include/FBLPromise+Validate.h"; sourceTree = "<group>"; };
 		5794A375823A17D20D63C159AE20A0F6 /* ConstraintMakerExtendable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerExtendable.swift; path = Source/ConstraintMakerExtendable.swift; sourceTree = "<group>"; };
 		579CF8B71D039A0E2C9ED1E1EA0949C6 /* BSImagePicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BSImagePicker-prefix.pch"; sourceTree = "<group>"; };
-		57A3732765AB9D4D6B9B9BFE1953042C /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = FirebaseAnalytics.xcframework; path = Frameworks/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
+		57A3732765AB9D4D6B9B9BFE1953042C /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = Frameworks/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
 		57C1BBABC9CDB142932CFDF727BD1024 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		57DB433EA4896571580E63EB0FACE34B /* GDTCORStorageEventSelector.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GDTCORStorageEventSelector.m; path = GoogleDataTransport/GDTCORLibrary/GDTCORStorageEventSelector.m; sourceTree = "<group>"; };
 		57DBF9F2F547225B872CA08D18FC3037 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Extensions.swift"; path = "Platform/DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
@@ -2769,7 +2772,7 @@
 		5E52EA521606B43AF9540E035EFCFA09 /* AlbumCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AlbumCell.swift; path = Sources/Scene/Albums/AlbumCell.swift; sourceTree = "<group>"; };
 		5E66EC5E0A406D3C4E6AE7DBCD989FA0 /* GDTCCTUploader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GDTCCTUploader.h; path = GoogleDataTransport/GDTCCTLibrary/Private/GDTCCTUploader.h; sourceTree = "<group>"; };
 		5E84A2D1B1A28A83B05C74082CB96671 /* IntegerType+IdentifiableType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "IntegerType+IdentifiableType.swift"; path = "Sources/RxDataSources/IntegerType+IdentifiableType.swift"; sourceTree = "<group>"; };
-		5EA3CE9F4242A2D74E0A3E0760265865 /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Frameworks/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
+		5EA3CE9F4242A2D74E0A3E0760265865 /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Frameworks/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
 		5EC6CE851C9FC9ABB5FF9921A6E1D82E /* FIRMessagingTokenInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessagingTokenInfo.h; path = FirebaseMessaging/Sources/Token/FIRMessagingTokenInfo.h; sourceTree = "<group>"; };
 		5EE7E90696D5969FFFE07D8C782802E3 /* AWSS3Model.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSS3Model.m; path = AWSS3/AWSS3Model.m; sourceTree = "<group>"; };
 		5EFD18E03FBF9DAB204994AB55D99FBD /* SectionedViewDataSourceType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SectionedViewDataSourceType.swift; path = RxCocoa/Common/SectionedViewDataSourceType.swift; sourceTree = "<group>"; };
@@ -2865,7 +2868,7 @@
 		6B35EFC34553F8EDB1442442452DC831 /* RxTableViewDataSourcePrefetchingProxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxTableViewDataSourcePrefetchingProxy.swift; path = RxCocoa/iOS/Proxies/RxTableViewDataSourcePrefetchingProxy.swift; sourceTree = "<group>"; };
 		6B48331E8CEFEFE19745C5222DCBAFD9 /* AWSS3Serializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSS3Serializer.h; path = AWSS3/AWSS3Serializer.h; sourceTree = "<group>"; };
 		6B71543378FDF7D7E0CA10E589696C2F /* ImageDownloaderDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageDownloaderDelegate.swift; path = Sources/Networking/ImageDownloaderDelegate.swift; sourceTree = "<group>"; };
-		6C04F37A24BC84DB6FECBBA0885B504D /* cct.nanopb.c */ = {isa = PBXFileReference; includeInIndex = 1; name = cct.nanopb.c; path = GoogleDataTransport/GDTCCTLibrary/Protogen/nanopb/cct.nanopb.c; sourceTree = "<group>"; };
+		6C04F37A24BC84DB6FECBBA0885B504D /* cct.nanopb.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = cct.nanopb.c; path = GoogleDataTransport/GDTCCTLibrary/Protogen/nanopb/cct.nanopb.c; sourceTree = "<group>"; };
 		6C25D6DAC3E5C9AC0DEB8D49E102E7E6 /* ApolloInterceptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ApolloInterceptor.swift; path = Sources/Apollo/ApolloInterceptor.swift; sourceTree = "<group>"; };
 		6C979AC12B15A6D5C8008F1EBDC30356 /* GraphQLSelectionSetMapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GraphQLSelectionSetMapper.swift; path = Sources/Apollo/GraphQLSelectionSetMapper.swift; sourceTree = "<group>"; };
 		6CBF05BF1F475369F76FD6D8C1150FCB /* NSError+AWSMTLModelException.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSError+AWSMTLModelException.m"; path = "AWSCore/Mantle/NSError+AWSMTLModelException.m"; sourceTree = "<group>"; };
@@ -2973,7 +2976,7 @@
 		7AD6A9BB3B72C34718A50CB5446CE4B5 /* Data+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Data+Utils.swift"; path = "sources/KakaoSDKCommon/common/extension/Data+Utils.swift"; sourceTree = "<group>"; };
 		7AF046EF54892F23CCC4240BCE902FD1 /* ObservableType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObservableType.swift; path = RxSwift/ObservableType.swift; sourceTree = "<group>"; };
 		7B10A74257E11816B2E38A1461CD58E5 /* GULHeartbeatDateStorageUserDefaults.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULHeartbeatDateStorageUserDefaults.h; path = GoogleUtilities/Environment/Public/GoogleUtilities/GULHeartbeatDateStorageUserDefaults.h; sourceTree = "<group>"; };
-		7B2EBD8CE7198F4C8722B983E1E20F8D /* me.nanopb.c */ = {isa = PBXFileReference; includeInIndex = 1; name = me.nanopb.c; path = FirebaseMessaging/Sources/Protogen/nanopb/me.nanopb.c; sourceTree = "<group>"; };
+		7B2EBD8CE7198F4C8722B983E1E20F8D /* me.nanopb.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = me.nanopb.c; path = FirebaseMessaging/Sources/Protogen/nanopb/me.nanopb.c; sourceTree = "<group>"; };
 		7B69656B5D471BBDBD954218C484F611 /* FSCalendarCollectionViewLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FSCalendarCollectionViewLayout.m; path = FSCalendar/FSCalendarCollectionViewLayout.m; sourceTree = "<group>"; };
 		7BA35F6203C093EE372E925DB80244E6 /* GDTCORAssert.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GDTCORAssert.m; path = GoogleDataTransport/GDTCORLibrary/GDTCORAssert.m; sourceTree = "<group>"; };
 		7C49AAB0C39C367833AA0D280F09C210 /* MaterialElevation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MaterialElevation.h; path = components/Elevation/src/MaterialElevation.h; sourceTree = "<group>"; };
@@ -2993,7 +2996,7 @@
 		7E5A0D1679FDB5B49DB75573B148015A /* KVORepresentable+CoreGraphics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "KVORepresentable+CoreGraphics.swift"; path = "RxCocoa/Foundation/KVORepresentable+CoreGraphics.swift"; sourceTree = "<group>"; };
 		7E605E7E869BBAA80F3F80E5D41FFD90 /* RequestBodyCreator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestBodyCreator.swift; path = Sources/Apollo/RequestBodyCreator.swift; sourceTree = "<group>"; };
 		7E6A38F25983A18A3B6E3EFBCA4A0EDC /* SideMenuNavigationController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SideMenuNavigationController.swift; path = Pod/Classes/SideMenuNavigationController.swift; sourceTree = "<group>"; };
-		7E6F90F226DD4A1DE52CB2716D6E68D5 /* pb_decode.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_decode.c; sourceTree = "<group>"; };
+		7E6F90F226DD4A1DE52CB2716D6E68D5 /* pb_decode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_decode.c; sourceTree = "<group>"; };
 		7EB808209B17E095E1E7A30F7F150ADB /* GDTCORRegistrar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GDTCORRegistrar.m; path = GoogleDataTransport/GDTCORLibrary/GDTCORRegistrar.m; sourceTree = "<group>"; };
 		7F07A99E099C0CBC4AD3F5C65A2ADD7F /* AWSCancellationTokenSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSCancellationTokenSource.h; path = AWSCore/Bolts/AWSCancellationTokenSource.h; sourceTree = "<group>"; };
 		7F40D73CEE797B9926640CC068AC6983 /* AWSS3TransferUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSS3TransferUtility.h; path = AWSS3/AWSS3TransferUtility.h; sourceTree = "<group>"; };
@@ -3220,7 +3223,7 @@
 		9D3794B2D67A39F2707186DC58BA08BB /* Differentiator-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Differentiator-Info.plist"; sourceTree = "<group>"; };
 		9D7D23D83B132AD5BDB9BED325A12B53 /* OperationQueueScheduler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OperationQueueScheduler.swift; path = RxSwift/Schedulers/OperationQueueScheduler.swift; sourceTree = "<group>"; };
 		9D90D9A775EF5C482BC96E5A35BB6F2C /* SessionDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionDelegate.swift; path = Sources/Networking/SessionDelegate.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DB9D2A450629EC587F7C171FC3FE16C /* TMLineBarIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TMLineBarIndicator.swift; path = Sources/Tabman/Bar/BarIndicator/Types/TMLineBarIndicator.swift; sourceTree = "<group>"; };
 		9DC33765AAFF95884E8F8F491362A462 /* SideMenuTransitionController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SideMenuTransitionController.swift; path = Pod/Classes/SideMenuTransitionController.swift; sourceTree = "<group>"; };
 		9DC96AF4322052058A2D545DDDE04B0B /* UIViewController+Tabman.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIViewController+Tabman.swift"; path = "Sources/Tabman/Extensions/UIViewController+Tabman.swift"; sourceTree = "<group>"; };
@@ -3492,7 +3495,7 @@
 		C82218321A62608C16F64119E3429A32 /* RxDataSources.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RxDataSources.release.xcconfig; sourceTree = "<group>"; };
 		C8BA63166F5B32BB9206F53549689DFE /* ConstraintRelatableTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelatableTarget.swift; path = Source/ConstraintRelatableTarget.swift; sourceTree = "<group>"; };
 		C8FE0DFDF1CFE24CBE0FCFEDC730D59A /* AWSLogging.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSLogging.m; path = AWSCore/Utility/AWSLogging.m; sourceTree = "<group>"; };
-		C90215032B5C1FF596D26E85AEC2F02F /* pb_common.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_common.c; sourceTree = "<group>"; };
+		C90215032B5C1FF596D26E85AEC2F02F /* pb_common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_common.c; sourceTree = "<group>"; };
 		C92F0C78E4809555942EB3C1152CD81D /* Reusable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reusable.swift; path = Sources/View/Reusable.swift; sourceTree = "<group>"; };
 		C941CF3532D371B71D41F837A0A28437 /* PageIndicatorPosition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PageIndicatorPosition.swift; path = ImageSlideshow/Classes/Core/PageIndicatorPosition.swift; sourceTree = "<group>"; };
 		C9651D833380D7B8DF1C584210E1476A /* KakaoSDKCommon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KakaoSDKCommon.release.xcconfig; sourceTree = "<group>"; };
@@ -3623,7 +3626,7 @@
 		DD9E9D8C948FFA8744D9ACFAC7F7997A /* AnimatableSectionModelType+ItemPath.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "AnimatableSectionModelType+ItemPath.swift"; path = "Sources/Differentiator/AnimatableSectionModelType+ItemPath.swift"; sourceTree = "<group>"; };
 		DDC2CF1D668C19F9C9D7E5158F034EC0 /* ObservableType+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ObservableType+Extensions.swift"; path = "RxSwift/ObservableType+Extensions.swift"; sourceTree = "<group>"; };
 		DDD0EDAA56AB93B795FA304061F82B3D /* AWSSTSModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSSTSModel.m; path = AWSCore/STS/AWSSTSModel.m; sourceTree = "<group>"; };
-		DE0F00C1B8AF92CDD72B23A306EDC513 /* pb_encode.c */ = {isa = PBXFileReference; includeInIndex = 1; path = pb_encode.c; sourceTree = "<group>"; };
+		DE0F00C1B8AF92CDD72B23A306EDC513 /* pb_encode.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; path = pb_encode.c; sourceTree = "<group>"; };
 		DE1CB0A7B1886D2B4A8BD4F963735B3C /* GULUserDefaults.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULUserDefaults.h; path = GoogleUtilities/UserDefaults/Public/GoogleUtilities/GULUserDefaults.h; sourceTree = "<group>"; };
 		DE456CF58B76B67E02F633F3047E3D30 /* DiskStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DiskStorage.swift; path = Sources/Cache/DiskStorage.swift; sourceTree = "<group>"; };
 		DE4E51CD3A9B59B8D51DE1F046ED4FCC /* BSImagePicker.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = BSImagePicker.modulemap; sourceTree = "<group>"; };
@@ -3836,7 +3839,7 @@
 		FE5F63C12C3C9998ADA82E1376DCE5DA /* ConstraintDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDescription.swift; path = Source/ConstraintDescription.swift; sourceTree = "<group>"; };
 		FE787F04BF92B239A1C035D382758BE5 /* RedirectHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RedirectHandler.swift; path = Sources/Networking/RedirectHandler.swift; sourceTree = "<group>"; };
 		FE8562A6357C0E193922446E44E24D79 /* AWSNSCodingUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSNSCodingUtilities.h; path = AWSCore/Utility/AWSNSCodingUtilities.h; sourceTree = "<group>"; };
-		FE92E7767620E6C25BB552C06593F692 /* WeakMapTable */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = WeakMapTable; path = WeakMapTable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE92E7767620E6C25BB552C06593F692 /* WeakMapTable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WeakMapTable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC7BE88BBF6DE94DF9EB7625B5FAD96 /* ic_cross_white@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "ic_cross_white@2x.png"; path = "ImageSlideshow/Assets/ic_cross_white@2x.png"; sourceTree = "<group>"; };
 		FEF55343873B30046BC2A16A3781B3D8 /* UIScrollView+Interaction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIScrollView+Interaction.swift"; path = "Sources/Pageboy/Utilities/Extensions/UIScrollView+Interaction.swift"; sourceTree = "<group>"; };
 		FF0751AE0B62CEFD59C2B0CEA33B0A2E /* Signal+Subscription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Signal+Subscription.swift"; path = "RxCocoa/Traits/Signal/Signal+Subscription.swift"; sourceTree = "<group>"; };
@@ -4333,7 +4336,6 @@
 				A64C3BB275E6F4C7A5990FD024A946A0 /* Zip+Collection.swift */,
 				76EE4058CC1F15BEC376EF8C08D27BC7 /* Support Files */,
 			);
-			name = RxSwift;
 			path = RxSwift;
 			sourceTree = "<group>";
 		};
@@ -4369,7 +4371,6 @@
 				3C5EC1C3F92604D8CF2E38A9305AC676 /* Utils.swift */,
 				2AD94BF3A58B88F0BC5FF38EBC682E46 /* Support Files */,
 			);
-			name = RxRelay;
 			path = RxRelay;
 			sourceTree = "<group>";
 		};
@@ -4386,7 +4387,6 @@
 				43FFF30F09E18767DC369A045A3626AB /* WeakMapTable.swift */,
 				81EE510B7D46D828FC4BFFCBC717A01A /* Support Files */,
 			);
-			name = WeakMapTable;
 			path = WeakMapTable;
 			sourceTree = "<group>";
 		};
@@ -4475,7 +4475,6 @@
 				028BA6D1F3E3DC63A0D5D74B573C8335 /* WKInterfaceImage+Kingfisher.swift */,
 				136E8ADD53189138DE3763B83F1F08F6 /* Support Files */,
 			);
-			name = Kingfisher;
 			path = Kingfisher;
 			sourceTree = "<group>";
 		};
@@ -4487,7 +4486,6 @@
 				23E764654C5CD7D498DFD216A66AD5F4 /* TegKeychainConstants.swift */,
 				809B3FDFC4A89BC025221BDE69F37259 /* Support Files */,
 			);
-			name = KeychainSwift;
 			path = KeychainSwift;
 			sourceTree = "<group>";
 		};
@@ -4592,7 +4590,6 @@
 				084BD0A6D9937BD0B2D5E549E21D93E9 /* GoogleDataTransport.h */,
 				A20349431F7157597055832FE269F23C /* Support Files */,
 			);
-			name = GoogleDataTransport;
 			path = GoogleDataTransport;
 			sourceTree = "<group>";
 		};
@@ -4649,7 +4646,6 @@
 				E247974CC0C6557094571E4F8D4BD3BD /* Shapes */,
 				CF90F602DCFCA89DB52249BC06ABC642 /* Support Files */,
 			);
-			name = MaterialComponents;
 			path = MaterialComponents;
 			sourceTree = "<group>";
 		};
@@ -4755,7 +4751,6 @@
 				777914233684B9915068469A803CF23E /* WeakContainer.swift */,
 				7B6672430BCC7EA1884916D8BF26FE6C /* Support Files */,
 			);
-			name = Tabman;
 			path = Tabman;
 			sourceTree = "<group>";
 		};
@@ -4833,7 +4828,6 @@
 				9E26A0D3F88CF0AF8DB82206D4B040DC /* View.swift */,
 				9D6B71D4147DCFA6E7A725AF468EBCA8 /* Support Files */,
 			);
-			name = ReactorKit;
 			path = ReactorKit;
 			sourceTree = "<group>";
 		};
@@ -4882,7 +4876,6 @@
 				906A0B0F48A92FD82998949DBC902967 /* FBLPromises.h */,
 				9FE157909EA627FCA6E1C499F40196F0 /* Support Files */,
 			);
-			name = PromisesObjC;
 			path = PromisesObjC;
 			sourceTree = "<group>";
 		};
@@ -4945,7 +4938,6 @@
 				7618BCF19E118B863F63DD54E91BC85A /* Validation.swift */,
 				89BA26D4C6407315F383334F5D744171 /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -4974,7 +4966,6 @@
 				8C6A053A7A63DB611498D3003BACEEAC /* TokenManager.swift */,
 				98986E4F14A39252A2A2E9DE7356DB52 /* Support Files */,
 			);
-			name = KakaoSDKAuth;
 			path = KakaoSDKAuth;
 			sourceTree = "<group>";
 		};
@@ -4996,7 +4987,6 @@
 				18919E44D579A71A48D00F28362AA8B9 /* Network */,
 				67875F5A2EADBCEC59B58A6138204FED /* Support Files */,
 			);
-			name = KakaoSDKCommon;
 			path = KakaoSDKCommon;
 			sourceTree = "<group>";
 		};
@@ -5034,7 +5024,6 @@
 				730EC30582BBB24B69F2AAD0BAE46F20 /* Utilities.swift */,
 				A31667FAB98B459D6DEB814FAB327131 /* Support Files */,
 			);
-			name = Differentiator;
 			path = Differentiator;
 			sourceTree = "<group>";
 		};
@@ -5044,7 +5033,6 @@
 				8EE84C4844812FD7E98493D88810964F /* CoreOnly */,
 				4B46F3258F6C8B087E610D8DCAFFDD3A /* Support Files */,
 			);
-			name = Firebase;
 			path = Firebase;
 			sourceTree = "<group>";
 		};
@@ -5188,7 +5176,6 @@
 				0AA1F4040036D5863EB0025CFAB6CA9B /* WKWebView+Rx.swift */,
 				A9E42DD6DE36FC2B317CD2D9706C5D39 /* Support Files */,
 			);
-			name = RxCocoa;
 			path = RxCocoa;
 			sourceTree = "<group>";
 		};
@@ -5204,7 +5191,6 @@
 				23AED8AAF0952FAE819842950EF6E966 /* UserShippingAddresses.swift */,
 				8EA30B013368C63D117A87E49D0D0433 /* Support Files */,
 			);
-			name = KakaoSDKUser;
 			path = KakaoSDKUser;
 			sourceTree = "<group>";
 		};
@@ -5242,7 +5228,6 @@
 				8BD86A17D740C34CD281608702D0A925 /* UITableViewVibrantCell.swift */,
 				A294DED206FB85F5FFC44615591B1019 /* Support Files */,
 			);
-			name = SideMenu;
 			path = SideMenu;
 			sourceTree = "<group>";
 		};
@@ -5252,7 +5237,6 @@
 				7A91134E7A530F7DCC9DF8435F1D1E98 /* AdIdSupport */,
 				54091DB04750E3E7C58762A1A1459B92 /* Support Files */,
 			);
-			name = FirebaseAnalytics;
 			path = FirebaseAnalytics;
 			sourceTree = "<group>";
 		};
@@ -5301,7 +5285,6 @@
 				E272F04315D51CFF6894954F8613CBA4 /* ZoomTransitionDelegate.swift */,
 				E2925FA05E19095FB57DEF06385C5726 /* Support Files */,
 			);
-			name = BSImagePicker;
 			path = BSImagePicker;
 			sourceTree = "<group>";
 		};
@@ -5440,7 +5423,6 @@
 				33ED88973D3B11E8B5512D8DFC8BD877 /* ApolloClient+Rx.swift */,
 				76F9FC660F30120E7171A61036785C39 /* Support Files */,
 			);
-			name = RxApolloClient;
 			path = RxApolloClient;
 			sourceTree = "<group>";
 		};
@@ -5472,7 +5454,6 @@
 				2B30A81FB80156080A38C72B6273F819 /* Support Files */,
 				2E626E3D7D4E496437419D542D28DE13 /* UserDefaults */,
 			);
-			name = GoogleUtilities;
 			path = GoogleUtilities;
 			sourceTree = "<group>";
 		};
@@ -5512,7 +5493,6 @@
 				6868FB1FA96ACC947CF47A61701A7565 /* ViewTransition.swift */,
 				5F16A78C6CC70E368F70C193B23E0589 /* Support Files */,
 			);
-			name = RxDataSources;
 			path = RxDataSources;
 			sourceTree = "<group>";
 		};
@@ -5768,7 +5748,6 @@
 				38F9669DF951AFBF791E58E182F3A5C5 /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m */,
 				9BBF278EB127FE8E41BFDFB25F336487 /* Support Files */,
 			);
-			name = AWSCore;
 			path = AWSCore;
 			sourceTree = "<group>";
 		};
@@ -5818,7 +5797,6 @@
 				B904821173DFCBDD1973DB0785914D2E /* Support Files */,
 				71E1B061662987DBF71215C3C958CC99 /* View */,
 			);
-			name = Reusable;
 			path = Reusable;
 			sourceTree = "<group>";
 		};
@@ -5861,7 +5839,7 @@
 				979486118B3E90C08386079D57962701 /* SnapKit */,
 				4D4799138F8AC5FFF2497DCB60AF4CBB /* Tabman */,
 				9317E4947CA2FE1B5D5999034C09CCA7 /* Then */,
-				FE92E7767620E6C25BB552C06593F692 /* WeakMapTable */,
+				FE92E7767620E6C25BB552C06593F692 /* WeakMapTable.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5931,7 +5909,6 @@
 				F5233C831C5B04BD98E52035D2706C1D /* FSCalendarWeekdayView.m */,
 				1C392BDFA83EF3DAC0E98E99871F092D /* Support Files */,
 			);
-			name = FSCalendar;
 			path = FSCalendar;
 			sourceTree = "<group>";
 		};
@@ -6113,7 +6090,6 @@
 				FF5BCD94DE3C5E86E3D26234C98F7CB5 /* Core */,
 				DF6E5B7E2203CB8FC17BAD7D630C41FC /* Support Files */,
 			);
-			name = Apollo;
 			path = Apollo;
 			sourceTree = "<group>";
 		};
@@ -6128,7 +6104,6 @@
 				A7FEFF6A3EB8AB4F7A9B0157B15D4BA7 /* firebasecore.nanopb.h */,
 				182712D0C410250C3E982FE7A7FF0C54 /* Support Files */,
 			);
-			name = FirebaseCoreDiagnostics;
 			path = FirebaseCoreDiagnostics;
 			sourceTree = "<group>";
 		};
@@ -6222,7 +6197,6 @@
 				8DE3CDDDF48C637C4F63E68A7D9B4943 /* FIRVersion.m */,
 				D4CD72F9EBF288EBA6965C4F57D5534D /* Support Files */,
 			);
-			name = FirebaseCore;
 			path = FirebaseCore;
 			sourceTree = "<group>";
 		};
@@ -6255,7 +6229,6 @@
 				AC659FA24571BAD3AB0DAE4765DB2BF5 /* Core */,
 				229F21EE116144CBB49DB7BD62E207C4 /* Support Files */,
 			);
-			name = ImageSlideshow;
 			path = ImageSlideshow;
 			sourceTree = "<group>";
 		};
@@ -6322,7 +6295,6 @@
 				76563E2FC18728C1BB78D13157F7E353 /* FIROptionsInternal.h */,
 				D832E7B33BF7F2482D69E6F6347226D0 /* Support Files */,
 			);
-			name = FirebaseInstallations;
 			path = FirebaseInstallations;
 			sourceTree = "<group>";
 		};
@@ -6407,7 +6379,6 @@
 				18AB5597C8AC4422B54A99E1612483FC /* UILayoutSupport+Extensions.swift */,
 				87C357DFC1CC66D6B6364849EB12113B /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -6461,7 +6432,6 @@
 				9B4A6964D0CCDB8959ABE4CDBAE312BA /* AWSS3TransferUtilityTasks+Completion.m */,
 				AF2D70FA8769AFFECC0FC5AE28D661EB /* Support Files */,
 			);
-			name = AWSS3;
 			path = AWSS3;
 			sourceTree = "<group>";
 		};
@@ -6485,7 +6455,6 @@
 				4C7F47A8E8F932FC768CDD111E166E81 /* Then.swift */,
 				B0351788198E7A3B24EE2F256AF8C336 /* Support Files */,
 			);
-			name = Then;
 			path = Then;
 			sourceTree = "<group>";
 		};
@@ -6589,7 +6558,6 @@
 				E43306E688037681CECEF6532FB10FEE /* NSError+FIRMessaging.m */,
 				CC7FEE295F00A0577737597E88C68F98 /* Support Files */,
 			);
-			name = FirebaseMessaging;
 			path = FirebaseMessaging;
 			sourceTree = "<group>";
 		};
@@ -6717,7 +6685,6 @@
 				80778AED1DFA75485679191791806805 /* WeakContainer.swift */,
 				DC3147F5132E4BCBD282E0C15F858D94 /* Support Files */,
 			);
-			name = FirebaseCoreInternal;
 			path = FirebaseCoreInternal;
 			sourceTree = "<group>";
 		};
@@ -6759,7 +6726,6 @@
 				CAFA8792DE70804DA529E501569C7970 /* encode */,
 				E0AA047A73F787E87405030EFB904DB8 /* Support Files */,
 			);
-			name = nanopb;
 			path = nanopb;
 			sourceTree = "<group>";
 		};
@@ -6770,7 +6736,6 @@
 				106779AFFC14C553E5B5A825686E79A7 /* Support Files */,
 				E6CF9C91C8043659230310DE8393A3EE /* WithoutAdIdSupport */,
 			);
-			name = GoogleAppMeasurement;
 			path = GoogleAppMeasurement;
 			sourceTree = "<group>";
 		};
@@ -6906,7 +6871,6 @@
 				F93DF746BEABC25D30CCB955CBA5E412 /* WeakContainer.swift */,
 				C71D0F4BE2A05F7225DFEAB6F6E19037 /* Support Files */,
 			);
-			name = Pageboy;
 			path = Pageboy;
 			sourceTree = "<group>";
 		};
@@ -8340,7 +8304,7 @@
 			);
 			name = WeakMapTable;
 			productName = WeakMapTable;
-			productReference = FE92E7767620E6C25BB552C06593F692 /* WeakMapTable */;
+			productReference = FE92E7767620E6C25BB552C06593F692 /* WeakMapTable.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -12743,7 +12707,7 @@
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -12757,6 +12721,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.4;
 				MODULEMAP_FILE = "Target Support Files/WeakMapTable/WeakMapTable.modulemap";
 				PRODUCT_MODULE_NAME = WeakMapTable;
 				PRODUCT_NAME = WeakMapTable;
@@ -12954,7 +12919,7 @@
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -12968,6 +12933,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.4;
 				MODULEMAP_FILE = "Target Support Files/WeakMapTable/WeakMapTable.modulemap";
 				PRODUCT_MODULE_NAME = WeakMapTable;
 				PRODUCT_NAME = WeakMapTable;
