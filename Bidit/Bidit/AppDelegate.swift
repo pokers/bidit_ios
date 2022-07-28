@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                    return AuthController.handleOpenUrl(url: url)
 //                }
 
-        
+        //샌드버드
         let APP_ID =  PrivateKey().SENDBIRD_APP_ID // Specify your Sendbird application ID.
         
             SBUMain.initialize(applicationId: APP_ID) {

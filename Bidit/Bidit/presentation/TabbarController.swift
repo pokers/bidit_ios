@@ -27,7 +27,7 @@ class TabbarController : UITabBarController{
         listQuery?.includeEmptyChannel = false
         listQuery?.includeFrozenChannel = true
         let channelListVC = ChannelListViewController(channelListQuery: listQuery)
-        let chatVC = NotOpenViewController()//UINavigationController(rootViewController: channelListVC)
+        let chatVC = UINavigationController(rootViewController: channelListVC) // NotOpenViewController()
         
         //() //TabbarController() //LoginViewController()
         
