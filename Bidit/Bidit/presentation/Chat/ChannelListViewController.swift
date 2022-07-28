@@ -44,9 +44,8 @@ class ChannelListViewController : SBUChannelListViewController {
         super.init(channelListQuery: nil)
         
         let customCell = CustomChatChannelListCell()
-        //self.register(customCell: customCell)
-        //tableView.register(cellType: CustomChatChannelListCell.self)
-        //self.register(channelCell: customCell)
+        //self.register(customCell: customCell) (x)
+        self.register(channelCell: customCell) 
         
         self.leftBarButton = createHighlightedBackButton()// 뒤로가기 버튼 없애기
         self.rightBarButton = UIBarButtonItem.init()//오른쪽 버튼 없애기
@@ -65,8 +64,9 @@ class ChannelListViewController : SBUChannelListViewController {
         }
         
         emptyView = emptyListImg
-        
-        
+        //타이틀 라벨
+        self.titleView = createCustomTitleLabel()
+    
         
         
         //채널 셀 설정
@@ -77,6 +77,12 @@ class ChannelListViewController : SBUChannelListViewController {
     func createHighlightedBackButton() -> UIBarButtonItem{
         return UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(clickBack))
     }
+    //타이틀 설정
+    func createCustomTitleLabel() -> UILabel {
+            let titleLabel = UILabel()
+            titleLabel.text = "채팅"
+            return titleLabel
+        }
     
     
     @objc func clickBack() {
