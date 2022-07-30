@@ -3,6 +3,8 @@ mutation MyQuery {
     addUser {
         id
         status
+        email
+        nickname
         kakaoAccount {
             id
         }

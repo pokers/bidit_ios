@@ -7,6 +7,7 @@
 
 import Foundation
 import ReactorKit
+import SendBirdUIKit
 
 class ProfileChangeReactor : Reactor{
     enum Action {
@@ -74,6 +75,15 @@ extension ProfileChangeReactor{
                     print("success \(data)")
                     do {
                         print("modify result is :  \(data)")
+                        
+                        
+                            //샌드버드 프로필 초기화
+                        SBDMain.updateCurrentUserInfo(withNickname: nickName, profileUrl: nil, completionHandler: { (error) in
+                            guard error == nil else {
+                                // Handle error.
+                                return
+                            }
+                        })
 //
                         
                         LoadingIndicator.hideLoading()

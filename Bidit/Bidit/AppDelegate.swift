@@ -61,16 +61,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                
             }
         
-        SBDMain.connect(withUserId: "USER_ID2",completionHandler: { (user, error) in
-            
-            
-        })
-        // Case 1: USER_ID only
-        SBUGlobals.CurrentUser = SBUUser(userId: "USER_ID10")
-
-        // Case 2: Specify all fields
         
-        SBUGlobals.CurrentUser = SBUUser(userId: "USER_ID2")
+//        // Case 1: USER_ID only
+//        SBUGlobals.CurrentUser = SBUUser(userId: "USER_ID10")
+//
+//        // Case 2: Specify all fields
+//
+//        SBUGlobals.CurrentUser = SBUUser(userId: "USER_ID2")
         
        // SBUGlobals.CurrentUser = SBUUser(userId: "USER_ID3", nickname:"USER_ID3", profileUrl: "USER_ID")
        

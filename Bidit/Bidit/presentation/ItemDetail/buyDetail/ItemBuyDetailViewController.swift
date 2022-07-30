@@ -216,9 +216,10 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     /*
      즉시 구매하기 팝업창(취소, 즉시구매하기 채팅 보내기 버튼)
      */
-    private func setDirectPopup(){
+    private func setDirectPopup(item : Item){
     
         let vc = DirectBuyingPopupViewController()
+        vc.currItem = item
         vc.modalPresentationStyle = .overFullScreen
        
         // 보여주기
@@ -230,9 +231,10 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     /*
      삭제하기 팝업창
      */
-    private func setDeletePopup(){
+    private func setDeletePopup(item : Item){
     
         let vc = DeleteCheckDialogVC()
+        vc.currItem = item
         vc.modalPresentationStyle = .overFullScreen
        
         // 보여주기
@@ -302,16 +304,18 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         self.biddingBtn.rx.tap.subscribe(onNext : {
             self.setBottomSheet(item: reactor.initialState.item) //입찰하기 버튼
         }).disposed(by: disposeBag)
+        
         //즉시 구매 버튼 이벤트
         self.directBuyBtn.rx.tap.subscribe(onNext :{
-            self.setDirectPopup()
+            self.setDirectPopup(item: reactor.currentState.item)
         }).disposed(by: disposeBag)
         
         //메뉴버튼 이벤트
         self.menuBtn.rx.tap
             .subscribe(onNext : {
-                self.setActionSheet()
+                self.setActionSheet(item: reactor.currentState.item)
             }).disposed(by: disposeBag)
+        
         //찜하기 버튼 이벤트
         self.zzimBtn.rx.tap
             .subscribe(onNext : {
@@ -336,6 +340,14 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
         //유저 제품 구분 (하단 구매하기 버튼)
+        
+        //현재 아이템 상태
+        reactor.state
+            .map{$0.item}
+            .subscribe(onNext : {
+                self.currItem = $0
+            }).disposed(by: disposeBag)
+        
         reactor.state.subscribe(onNext : {state in
             if state.item.userId == UserDefaults.standard.integer(forKey: "userId") {
                 self.buttonContainer.isHidden = true
@@ -354,7 +366,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     }
     
     
-    private func setActionSheet(){
+    private func setActionSheet(item : Item){
         //action sheet title 지정
 
                let optionMenu = UIAlertController(title: nil, message: "", preferredStyle: .actionSheet)
@@ -374,7 +386,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
                })
                let deleteAction = UIAlertAction(title: "삭제하기", style: .default, handler: {
                    (alert: UIAlertAction!) -> Void in
-                   self.setDeletePopup()
+                   self.setDeletePopup(item: item)
                })
                let cancelAction = UIAlertAction(title: "닫기", style: .cancel, handler: {
                    (alert: UIAlertAction!) -> Void in

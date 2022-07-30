@@ -4712,6 +4712,8 @@ public final class MyQueryMutation: GraphQLMutation {
         __typename
         id
         status
+        email
+        nickname
         kakaoAccount {
           __typename
           id
@@ -4761,6 +4763,8 @@ public final class MyQueryMutation: GraphQLMutation {
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
           GraphQLField("id", type: .nonNull(.scalar(Int.self))),
           GraphQLField("status", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("email", type: .scalar(String.self)),
+          GraphQLField("nickname", type: .scalar(String.self)),
           GraphQLField("kakaoAccount", type: .object(KakaoAccount.selections)),
         ]
       }
@@ -4771,8 +4775,8 @@ public final class MyQueryMutation: GraphQLMutation {
         self.resultMap = unsafeResultMap
       }
 
-      public init(id: Int, status: Int, kakaoAccount: KakaoAccount? = nil) {
-        self.init(unsafeResultMap: ["__typename": "User", "id": id, "status": status, "kakaoAccount": kakaoAccount.flatMap { (value: KakaoAccount) -> ResultMap in value.resultMap }])
+      public init(id: Int, status: Int, email: String? = nil, nickname: String? = nil, kakaoAccount: KakaoAccount? = nil) {
+        self.init(unsafeResultMap: ["__typename": "User", "id": id, "status": status, "email": email, "nickname": nickname, "kakaoAccount": kakaoAccount.flatMap { (value: KakaoAccount) -> ResultMap in value.resultMap }])
       }
 
       public var __typename: String {
@@ -4799,6 +4803,24 @@ public final class MyQueryMutation: GraphQLMutation {
         }
         set {
           resultMap.updateValue(newValue, forKey: "status")
+        }
+      }
+
+      public var email: String? {
+        get {
+          return resultMap["email"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "email")
+        }
+      }
+
+      public var nickname: String? {
+        get {
+          return resultMap["nickname"] as? String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "nickname")
         }
       }
 
