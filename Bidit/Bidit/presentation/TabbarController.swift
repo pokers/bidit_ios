@@ -7,6 +7,7 @@
 import Foundation
 import UIKit
 import SendBirdUIKit
+
 class TabbarController : UITabBarController{
     
     
@@ -62,6 +63,29 @@ class TabbarController : UITabBarController{
         self.selectedIndex = 2 //첫화면 설정 (홈화면)
         self.view.backgroundColor = .white
         self.tabBar.barTintColor = .white
+        //let myId = UserDefaults.standard.integer(forKey: "userId") //userId
+        let myName = UserDefaults.standard.string(forKey: "userName")
+        //샌드버드 연결
+        let myId = UserDefaults.standard.string(forKey: "userId")
+        SBDMain.connect(withUserId: "\(String(describing: myId!))",completionHandler: { (user, error) in
+            SBDMain.updateCurrentUserInfo(withNickname: myName, profileUrl: nil, completionHandler: { (error) in
+                guard error == nil else {
+                    // Handle error.
+                    return
+                }
+                //샌드버드 프로필 초기화
+
+                // The current user's profile is successfully updated.
+                // You could redraw the profile in a view in response to this operation.
+               
+            })
+            
+        })
+        SBUGlobals.CurrentUser = SBUUser(userId: myId!)
+        
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

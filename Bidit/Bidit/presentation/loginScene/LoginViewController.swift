@@ -203,6 +203,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     //self.updatePushToken()
                     //me 요청이 성공하면 홈화면으로 이동.
                     UserDefaults.standard.set(data.data?.me?.id, forKey: "userId")
+                    UserDefaults.standard.set(data.data?.me?.nickname ??  data.data?.me?.email, forKey: "userName")
                     //가입 정보 없을 때 가입 addUser
                     if data.data?.me == nil {
                         //안된다면 가입 addUser호출
@@ -213,7 +214,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                 //현재 로그인 상태 갱신 (애플, 카카오 등)
                                 UserDefaults.standard.set("apple", forKey: "LoginState")
                                 UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
-                                
+                                UserDefaults.standard.set(data.data?.addUser?.email ?? data.data?.addUser?.id, forKey: "userName")
                                 
                                 //푸시 토큰 갱신
                                 //self.updatePushToken()
@@ -252,6 +253,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             //현재 로그인 상태 갱신 (애플, 카카오 등)
                             UserDefaults.standard.set("apple", forKey: "LoginState")
                             UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
+                            UserDefaults.standard.set(data.data?.addUser?.email ?? data.data?.addUser?.id, forKey: "userName")
                             
                             
                             //푸시 토큰 갱신

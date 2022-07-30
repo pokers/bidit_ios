@@ -15,7 +15,8 @@ class ChannelListViewController : SBUChannelListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let channel = self.channelList[indexPath.row].channelUrl
         let channelVC = MessageList(channelUrl : channel)
-        
+        var array = self.channelList[indexPath.row].name.components(separatedBy: "_")
+        channelVC.channelName = self.channelList[indexPath.row].name
         
         let naviVC = UINavigationController(rootViewController: channelVC)
         naviVC.modalPresentationStyle = .fullScreen
@@ -70,6 +71,7 @@ class ChannelListViewController : SBUChannelListViewController {
         
         
         //채널 셀 설정
+        self.tableView.rowHeight = 72
 
 
     }

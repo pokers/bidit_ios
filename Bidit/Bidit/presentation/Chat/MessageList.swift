@@ -8,6 +8,7 @@
 import Foundation
 import SendBirdUIKit
 import UIKit
+import Kingfisher
 // 채팅방 (대화)
 class MessageList : SBUChannelViewController {
     
@@ -17,15 +18,27 @@ class MessageList : SBUChannelViewController {
     var itemName = UILabel()
     var statusLabel = UIImageView()
     var priceLabel = UILabel()
+    //채팅방 타이틀
+    let myView = UILabel()
+    //채팅방 정보
+    var currItem : Item? = nil
     
     init(channelUrl: String){
            super.init(channelUrl: channelUrl)
            //self.leftBarButton = createHighlightedBackButton()
         self.register(userMessageCell: MessageCell())
+        
+        
+        
         layout()
         attribute()
+        
+        getChannelName(channelUrl: channelUrl)
+//        self.myView.text = self.channelName!.count > 0 ? self.channelName : "Empty channel"
 
        }
+    
+    
     
     //하단 send
     override func messageInputView(_ messageInputView: SBUMessageInputView, didSelectSend text: String) {
@@ -81,12 +94,12 @@ class MessageList : SBUChannelViewController {
     }
     func attribute(){
         noticeContainer.backgroundColor = .white
-        //채팅방 타이틀
-        let myView = UILabel()
-        myView.text = "닉네임" // channel!.name.count > 0 ? channel!.name : "Empty channel"
-        self.titleView = myView
-         //메뉴버튼
         
+      
+        
+        self.titleView = myView
+        
+        //메뉴버튼
         var barButtonItem = UIBarButtonItem(title: "test", style: .done, target: self, action: #selector(menuTapped))
         barButtonItem.image = UIImage(named: "menu_btn")
         self.rightBarButton? = barButtonItem
@@ -102,6 +115,83 @@ class MessageList : SBUChannelViewController {
         self.itemName.font = .systemFont(ofSize: 12, weight: .bold)
         
     }
+    
+    func bind(){
+        
+        
+        
+    }
+    /*
+     채팅방 정보.
+     */
+    func getChannelName(channelUrl : String){
+        SBDGroupChannel.getWithUrl((channelUrl), completionHandler: { (groupChannel, error) in
+            guard error == nil else {
+                // Handle error.
+                return
+            }
+
+            // Through the "groupChannel" parameter of the callback method,
+            // the group channel object identified with the CHANNEL_URL is returned by Sendbird server,
+            // and you can get the group channel's data from the result object.
+            var array = groupChannel?.name.components(separatedBy: "_")
+            print("array 결과 :\(array)")
+            
+            self.itemName.text = array![4].description
+            self.priceLabel.text = self.decimalWon(value: Int((array?[5])!) ?? 0)
+            
+            //var nickNames = groupChannel?.members?.sbu_getUserNicknames()
+            self.myView.text = array![1]
+            if array![1] == UserDefaults.standard.string(forKey: "userName"){
+                self.myView.text = array![3]
+            }
+            
+            
+            
+            
+//
+            
+            do {
+                let jsonString = try groupChannel!.data ?? "" //groupChannel?.data//try?
+                
+                //string to jsonData
+               
+                let jsonData2:Data? = try jsonString.data(using: .utf8)!
+                print("jsonData2 :\(jsonData2)")
+                    print()
+                let str = String.init(data: jsonData2!, encoding: .utf8)
+                
+                print("str :\(str)")
+//                    //jsonData to dictionary
+//                    let jsonDic = try JSONSerialization.jsonObject(with: jsonData, options: []) as? Dictionary<String, Any> ?? [:]
+//                    print(jsonDic)
+//                    print()
+//                let jsonDic2 = try JSONSerialization.jsonObject(with: jsonData2!, options: []) as? [String : Any] ?? [:]
+//                    print(" jsonDic2 :\(jsonDic2)")
+//                    print()
+//                print("channel data : \(jsonString)")
+//                    //dictionary to jsonData
+//                    let jsonData3:Data = try JSONSerialization.data(withJSONObject: jsonDic2, options: .sortedKeys)
+//                    print(jsonData3)
+//                    print()
+
+                    //jsonData to struct
+                let structForm:ChatItem = try JSONDecoder().decode(ChatItem.self, from: jsonData2!)
+                    print("structForm : \(structForm)")
+            } catch let err{
+                print("err:\(err.localizedDescription)")
+            }
+
+        
+            
+            //let itemImage = item?["image"] as? ItemImage
+           
+            
+            self.itemImage.image = self.loadProfileImg(url: (groupChannel?.coverUrl ??  "") as String)
+            
+        })
+    }
+    
     //메뉴버튼 이벤트
     @objc func menuTapped () {
             print("tapped")
@@ -177,4 +267,30 @@ class MessageList : SBUChannelViewController {
            self.navigationController?.popViewController(animated: true)
            self.dismiss(animated: true, completion: nil)
        }
+    
+    func loadProfileImg(url : String) -> UIImage{
+        var resultImage : UIImage?
+        if let thumbnailUrl = URL(string: url) {
+            KingfisherManager.shared.retrieveImage(with: thumbnailUrl, completionHandler: { result in
+            switch(result) {
+                case .success(let imageResult):
+//                    let resized = imageResult.image.resizedImageWithContentMode(.scaleAspectFit, bounds: CGSize(width: 84, height: 84), interpolationQuality: .medium)
+                    //imageView.isHidden = false
+                resultImage = imageResult.image
+                case .failure(let error):
+                break
+                }
+            })
+        }
+        return resultImage ?? UIImage(named: "empty_product_img")!
+    }
+    
+    //가격 형식 쉼표찍기
+    func decimalWon(value: Int) -> String{
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            let result = numberFormatter.string(from: NSNumber(value: value))!
+            
+            return result
+        }
 }

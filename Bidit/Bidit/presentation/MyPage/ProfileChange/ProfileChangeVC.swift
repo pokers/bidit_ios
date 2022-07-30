@@ -123,11 +123,7 @@ class ProfileChangeVC : UIViewController, View{
             
         }).disposed(by: disposeBag)
         
-//        // 뒤로가기할 때 프로필 수정
-//      self.rx.viewWillDisappear.mapVoid()
-//          .map(Reactor.Action.updateProfile(inputStr))
-//          .bind(to: reactor.action)
-//          .disposed(by: disposeBag)
+//
         //프로필 버튼 이벤트
         self.imgButton.rx.tap
             .subscribe(onNext : {
@@ -147,6 +143,8 @@ class ProfileChangeVC : UIViewController, View{
             .subscribe(onNext : { successUpdate in
                 
                 if successUpdate {
+                    
+                    
                     
                     //상품이 정상적으로 등록되었습니다. 메시지
                     self.navigationController?.presentingViewController?.showToast(message: "닉네임이 변경되었습니다.")
@@ -262,3 +260,4 @@ class ProfileChangeVC : UIViewController, View{
     
     }
 }
+

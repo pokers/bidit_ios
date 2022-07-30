@@ -11,6 +11,7 @@ import SendBirdSDK
 import SendBirdUIKitTarget
 import UIKit
 import Reusable
+import Kingfisher
 //채팅리스트 셀
 class CustomChatChannelListCell : SBUBaseChannelCell, Reusable{
     
@@ -25,6 +26,7 @@ class CustomChatChannelListCell : SBUBaseChannelCell, Reusable{
     @SBUAutoLayout var itemImage = UIImageView() //제품 이미지
     
     @SBUAutoLayout var messageLabel = UILabel() //마지막 메시지
+    
     @SBUAutoLayout var titleStackView: UIStackView = {
         let titleStackView = UIStackView()
         titleStackView.alignment = .center
@@ -38,6 +40,8 @@ class CustomChatChannelListCell : SBUBaseChannelCell, Reusable{
       // MARK: -
       override func setupViews() {
           super.setupViews()
+          
+          
           
           self.coverImage.clipsToBounds = true // true로 설정하면 subview가 view의 경계를 넘어갈 시 잘림
           self.coverImage.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
@@ -60,6 +64,8 @@ class CustomChatChannelListCell : SBUBaseChannelCell, Reusable{
           self.titleLabel.textColor = SBUTheme.channelCellTheme.titleTextColor
           self.separatorLine.backgroundColor = SBUTheme.channelCellTheme.separatorLineColor
 //          self.messageLabel.textColor = .gray
+          
+          
           
       }
       
@@ -142,7 +148,7 @@ class CustomChatChannelListCell : SBUBaseChannelCell, Reusable{
       override func configure(channel: SBDBaseChannel) {
           super.configure(channel: channel)
           
-          self.titleLabel.text = channel.name.count > 0 ? channel.name : "Empty channel"
+          self.titleLabel.text = ""//channel.name.count > 0 ? channel.name : "Empty channel"
           
           let ch = channel as! SBDGroupChannel
           
@@ -157,17 +163,40 @@ class CustomChatChannelListCell : SBUBaseChannelCell, Reusable{
           self.timeLabel.textColor = UIColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1)
           self.timeLabel.font = .systemFont(ofSize: 10, weight: .regular)
           
-          self.itemImage.image = UIImage(named: "empty_product_img")
+          self.itemImage.image =  loadProfileImg(url: ch.coverUrl ?? "") // UIImage(named: "empty_product_img")
           self.itemImage.layer.cornerRadius = 4
+          
           //메시지 숫자
-          self.numMessage.text = "1"
+          if ch.unreadMessageCount == 0{
+              self.numMessage.isHidden = true
+          }
+          self.numMessage.text = ch.unreadMessageCount.description//"1"
+          
           self.numMessage.isUserInteractionEnabled = false
           self.numMessage.backgroundColor = UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1)
           self.numMessage.textColor = .white
           self.numMessage.font = .systemFont(ofSize: 10, weight: .medium)
           self.numMessage.textAlignment = .center
           self.numMessage.layer.cornerRadius = 0.5 * 25
-      
+
           self.numMessage.layer.borderColor = UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1).cgColor
       }
+    
+    
+    func loadProfileImg(url : String) -> UIImage{
+        var resultImage : UIImage?
+        if let thumbnailUrl = URL(string: url) {
+            KingfisherManager.shared.retrieveImage(with: thumbnailUrl, completionHandler: { result in
+            switch(result) {
+                case .success(let imageResult):
+//                    let resized = imageResult.image.resizedImageWithContentMode(.scaleAspectFit, bounds: CGSize(width: 84, height: 84), interpolationQuality: .medium)
+                    //imageView.isHidden = false
+                resultImage = imageResult.image
+                case .failure(let error):
+                break
+                }
+            })
+        }
+        return resultImage ?? UIImage(named: "empty_product_img")!
+    }
 }

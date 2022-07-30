@@ -110,6 +110,7 @@ class DeleteCheckDialogVC : UIViewController {
 extension DeleteCheckDialogVC {
     //아이템 status -> Cancel(4)
     func requestDeleteItem(itemId : Int) -> Void{
+        LoadingIndicator.showLoading()
         Network.shared.apollo.perform(mutation: UpdateItemMutation(itemId: itemId,
                                                                    itemUpdate: .init(status: 4,
                                                                                                      categoryId: nil,
@@ -133,6 +134,7 @@ extension DeleteCheckDialogVC {
                         //return 대신
                         //emitter.onNext(.requestBidding)
                         //emitter.onCompleted()
+                        
                         self.dismiss(animated: true)
                        
                     }catch (let error) {

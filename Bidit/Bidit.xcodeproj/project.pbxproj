@@ -158,6 +158,8 @@
 		EED56375288AA3540071E02C /* SalesHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED56374288AA3540071E02C /* SalesHistoryVC.swift */; };
 		EED56377288AA5E20071E02C /* SalesHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED56376288AA5E20071E02C /* SalesHistoryReactor.swift */; };
 		EED56379288AA6410071E02C /* PurchaseHistoryReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED56378288AA6410071E02C /* PurchaseHistoryReactor.swift */; };
+		EEDDEA692893CC5F00AC4C6C /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDDEA682893CC5F00AC4C6C /* Encodable+.swift */; };
+		EEDDEA6B2893F3F600AC4C6C /* ChatItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDDEA6A2893F3F600AC4C6C /* ChatItem.swift */; };
 		EEE04FB928709A24008FE0B5 /* Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE04FB828709A24008FE0B5 /* Items.swift */; };
 		EEE0D9D7288BEEED00259FBE /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE0D9D6288BEEED00259FBE /* UIViewController+.swift */; };
 		EEE64406285D2062009D92AA /* DetailFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE64405285D2062009D92AA /* DetailFilterViewController.swift */; };
@@ -330,6 +332,8 @@
 		EED56374288AA3540071E02C /* SalesHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesHistoryVC.swift; sourceTree = "<group>"; };
 		EED56376288AA5E20071E02C /* SalesHistoryReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesHistoryReactor.swift; sourceTree = "<group>"; };
 		EED56378288AA6410071E02C /* PurchaseHistoryReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseHistoryReactor.swift; sourceTree = "<group>"; };
+		EEDDEA682893CC5F00AC4C6C /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
+		EEDDEA6A2893F3F600AC4C6C /* ChatItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatItem.swift; sourceTree = "<group>"; };
 		EEE04FB828709A24008FE0B5 /* Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Items.swift; sourceTree = "<group>"; };
 		EEE0D9D6288BEEED00259FBE /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		EEE64405285D2062009D92AA /* DetailFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFilterViewController.swift; sourceTree = "<group>"; };
@@ -430,6 +434,7 @@
 				EEC447B8287FE90E0026E7E6 /* MeEntity.swift */,
 				EEC7EDF3288094480085C936 /* ItemImage.swift */,
 				EEB3BE5A288D16740084A022 /* Counting.swift */,
+				EEDDEA6A2893F3F600AC4C6C /* ChatItem.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -663,6 +668,7 @@
 				EEE0D9D6288BEEED00259FBE /* UIViewController+.swift */,
 				EEE97AD9288C352C00188C9D /* LoadingIndicator.swift */,
 				EE04CB22288EAD27004B4DDF /* Reachability.swift */,
+				EEDDEA682893CC5F00AC4C6C /* Encodable+.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1157,6 +1163,7 @@
 				"$(SRCROOT)/GetItem.graphql",
 				"$(SRCROOT)/GetBidding.graphql",
 				"$(SRCROOT)/UpdateMembership.graphql",
+				"$(SRCROOT)/MyQuery.graphql",
 			);
 			name = "Generate Apollo GraphQL API";
 			outputFileListPaths = (
@@ -1179,6 +1186,7 @@
 				EE91EDE9287C413E00F068A8 /* ProfileChangeVC.swift in Sources */,
 				EE51D5E1285628D100AF1BC5 /* SomeViewSection.swift in Sources */,
 				EE5ECA5728660DDF008B5398 /* ItemBuyDetailReactor.swift in Sources */,
+				EEDDEA6B2893F3F600AC4C6C /* ChatItem.swift in Sources */,
 				EEB6DE032878ADF400771427 /* PickedImageReactor.swift in Sources */,
 				EEB065542874379F007766B3 /* DirectBuyingPopupViewController.swift in Sources */,
 				EE9D99CD2856EA21005480C6 /* RxViewController.swift in Sources */,
@@ -1244,6 +1252,7 @@
 				EEB6DE012878ADD400771427 /* PickedImageCell.swift in Sources */,
 				EED180172855CFEB00E17B06 /* TabbarController.swift in Sources */,
 				EE9D99D12856F991005480C6 /* CategorySection.swift in Sources */,
+				EEDDEA692893CC5F00AC4C6C /* Encodable+.swift in Sources */,
 				EEC523E5287ACD1F005D4673 /* MyPageViewController.swift in Sources */,
 				EEB3BE59288CFB170084A022 /* SearchDetailFilterVC.swift in Sources */,
 				EE76CCA2285A2BDA0078C906 /* EndingSoonViewController.swift in Sources */,
@@ -1461,7 +1470,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "7 ";
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
@@ -1478,7 +1487,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.6;
+				MARKETING_VERSION = 0.1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1497,7 +1506,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = "7 ";
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
@@ -1514,7 +1523,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.6;
+				MARKETING_VERSION = 0.1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

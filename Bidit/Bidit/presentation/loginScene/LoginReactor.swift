@@ -72,6 +72,7 @@ class LoginReactor : Reactor {
                       print("token : \(String(describing: oauthToken?.accessToken))")
                       //do something
                       UserDefaults.standard.set("kakao", forKey: "LoginState")
+                      
                       let keyChain = TokenManager.sharedKeyChain
                       keyChain.set((oauthToken?.accessToken)!,forKey: "kakao")
                    //me호출 먼저 실행하여 로그인 시도
@@ -80,6 +81,7 @@ class LoginReactor : Reactor {
                           case .success(let data) :
                               print("success \(data)")
                               UserDefaults.standard.set(data.data?.me?.id, forKey: "userId")
+                              UserDefaults.standard.set(data.data?.me?.nickname ?? data.data?.me?.email, forKey: "userName")
                               self.switchLoginPassed(true)
                               break
                           case .failure(let error) :
@@ -93,6 +95,7 @@ class LoginReactor : Reactor {
                                       print("success \(data)")
                                       UserDefaults.standard.set("kakao", forKey: "LoginState")
                                       UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
+                                      UserDefaults.standard.set(data.data?.addUser?.email ?? data.data?.addUser?.id, forKey: "userName")
 
                                       self.switchLoginPassed(true)
                                       break
@@ -106,6 +109,7 @@ class LoginReactor : Reactor {
                   }
               }
           }
+            
           return Observable<Mutation>.just(.loginKakao)
         case .successKakaoLoginRequest:
           print("success kakao Login")
@@ -146,7 +150,8 @@ class LoginReactor : Reactor {
                                   switch result {
                                   case .success(let data) :
                                       print("success \(data)")
-                                      
+                                      UserDefaults.standard.set(data.data?.me?.nickname ?? data.data?.me?.email, forKey: "userName")
+                                      UserDefaults.standard.set(data.data?.me?.id , forKey: "userId")
                                       self.switchLoginPassed(true)
                                       break
                                   case .failure(let error) :
