@@ -137,46 +137,64 @@ class MessageList : SBUChannelViewController {
             var array = groupChannel?.name.components(separatedBy: "_")
             print("array 결과 :\(array)")
             
-            self.itemName.text = array![4].description
-            self.priceLabel.text = self.decimalWon(value: Int((array?[5])!) ?? 0)
+//            self.itemName.text = array![4].description
+//            self.priceLabel.text = self.decimalWon(value: Int((array?[5])!) ?? 0)
             
-            //var nickNames = groupChannel?.members?.sbu_getUserNicknames()
+            
+            
             self.myView.text = array![1]
             if array![1] == UserDefaults.standard.string(forKey: "userName"){
                 self.myView.text = array![3]
             }
             
-            
-            
-            
-//
-            
+
             do {
                 let jsonString = try groupChannel!.data ?? "" //groupChannel?.data//try?
                 
                 //string to jsonData
                
-                let jsonData2:Data? = try jsonString.data(using: .utf8)!
+                let jsonData2 : Data = try jsonString.data(using: .utf8)!
                 print("jsonData2 :\(jsonData2)")
                     print()
-                let str = String.init(data: jsonData2!, encoding: .utf8)
+                let str = String.init(data: jsonData2, encoding: .utf8)!
                 
-                print("str :\(str)")
-//                    //jsonData to dictionary
-//                    let jsonDic = try JSONSerialization.jsonObject(with: jsonData, options: []) as? Dictionary<String, Any> ?? [:]
-//                    print(jsonDic)
-//                    print()
-//                let jsonDic2 = try JSONSerialization.jsonObject(with: jsonData2!, options: []) as? [String : Any] ?? [:]
-//                    print(" jsonDic2 :\(jsonDic2)")
-//                    print()
+                print("str :\(String(str))")
+                //jsonData to dictionary
+                let result = self.convertToDictionary(text: str) //try JSONDecoder().decode(ChatItem.self, from: jsonData2)
+                print("json result :\(result)")
+
+                self.itemName.text = result!["title"] as! String
+                if result!["status"] as! Int == 0{
+                    self.statusLabel.image = UIImage(named: "buynow_status_img")
+                }else {
+                    self.statusLabel.image = UIImage(named: "final_bid_status_img")
+                }
+                
+                var oppoNames = result!["userName"] as! String
+                if UserDefaults.standard.integer(forKey: "userId") == result!["userId"] as! Int { //내가 판매자라면
+                    oppoNames = result!["buyerName"] as! String
+                }
+                self.myView.text = oppoNames
+                print(oppoNames)
+                print("nickNames :\(oppoNames)")
+                
+                print( "result print :\(result!["title"] as! String)")
+//                let jsonDic = try JSONSerialization.jsonObject(with: jsonData2, options: []) as? ChatItem// as? Dictionary<String, Any> ?? [:]
+//                print(jsonDic)
+//                print()
+//                let jsonDic2 = try JSONSerialization.jsonObject(with: jsonData2, options: []) as? [String : Any] ?? [:]
+//                print(" jsonDic2 :\(jsonDic2)")
+//                print()
 //                print("channel data : \(jsonString)")
-//                    //dictionary to jsonData
-//                    let jsonData3:Data = try JSONSerialization.data(withJSONObject: jsonDic2, options: .sortedKeys)
-//                    print(jsonData3)
-//                    print()
+//                //dictionary to jsonData
+//                let jsonData3:Data = try JSONSerialization.data(withJSONObject: jsonDic2, options: .sortedKeys)
+//                print(jsonData3)
+//                print()
 
                     //jsonData to struct
-                let structForm:ChatItem = try JSONDecoder().decode(ChatItem.self, from: jsonData2!)
+                
+                //self.itemName.text = ""
+                let structForm:ChatItem = try JSONDecoder().decode(ChatItem.self, from: jsonData2)
                     print("structForm : \(structForm)")
             } catch let err{
                 print("err:\(err.localizedDescription)")
@@ -191,7 +209,20 @@ class MessageList : SBUChannelViewController {
             
         })
     }
-    
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+
+//    let str = "{\"name\":\"James\"}"
+//
+//    let dict = convertToDictionary(text: str)
     //메뉴버튼 이벤트
     @objc func menuTapped () {
             print("tapped")

@@ -9,6 +9,8 @@ import Foundation
 import ReactorKit
 import Reusable
 import RxDataSources
+
+
 //입찰 내역 뷰
 class ItemDetailBiddingListCell : UITableViewCell, View, Reusable, UIScrollViewDelegate{
     typealias Reactor = ItemDetailBiddingListCellReactor
@@ -21,7 +23,6 @@ class ItemDetailBiddingListCell : UITableViewCell, View, Reusable, UIScrollViewD
     private let tableView = UITableView().then {
         $0.register(cellType: BiddingListCellOfCell.self)
         $0.backgroundColor = .systemBackground
-        
         $0.rowHeight = 64
         
     }

@@ -12,6 +12,7 @@ import RxDataSources
 import MaterialComponents.MaterialBottomSheet
 import ImageSlideshow
 import RxSwift
+import SendBirdUIKit
 
 //물건 상세 페이지(구매자)
 class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate{
@@ -53,6 +54,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     let buttonContainer = UIView()
     let directBuyBtn = UIButton()
     let biddingBtn = UIButton()
+    let chattingBtn = UIButton()
     
     
     var currItem : Item!
@@ -162,6 +164,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         }
         buttonContainer.addSubview(directBuyBtn)
         buttonContainer.addSubview(biddingBtn)
+        buttonContainer.addSubview(chattingBtn)
         
         directBuyBtn.snp.makeConstraints{
             $0.leading.equalToSuperview().offset(18)
@@ -176,6 +179,14 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             $0.height.equalTo(42)
             $0.width.equalTo(166)
         }
+        chattingBtn.snp.makeConstraints{
+            $0.trailing.equalToSuperview().inset(18)
+            $0.top.equalToSuperview().offset(16)
+            $0.height.equalTo(42)
+            $0.width.equalTo(166)
+        }
+        chattingBtn.isHidden = true
+        
         
     }
     
@@ -188,7 +199,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         buttonContainer.backgroundColor = .white
         directBuyBtn.setImage(UIImage(named: "direct_buy_btn_img"), for: .normal)
         biddingBtn.setImage(UIImage(named: "bidding_btn_short"), for: .normal)
-        
+        chattingBtn.setImage(UIImage(named: "chat_btn_img"), for: .normal)
         
     }
     
@@ -309,6 +320,79 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         self.directBuyBtn.rx.tap.subscribe(onNext :{
             self.setDirectPopup(item: reactor.currentState.item)
         }).disposed(by: disposeBag)
+        //채팅하기 버튼 이벤트
+        self.chattingBtn.rx.tap.subscribe(onNext : {
+            var opId = self.currItem?.userId
+            var users: [String] = []
+            var chatItem : ChatItem? = ChatItem(id: self.currItem?.id,
+                                                status: 1,
+                                                userId: self.currItem?.userId,
+                                                userName: self.currItem?.user?.nickname ?? "닉네임 없음.",
+                                                sPrice: self.currItem?.sPrice,
+                                                cPrice: self.currItem?.cPrice,
+                                                buyNow: self.currItem?.buyNow,
+                                                name: self.currItem?.name,
+                                                title: self.currItem?.title,
+                                                buyerId: UserDefaults.standard.integer(forKey: "userId"),
+                                                buyerName: UserDefaults.standard.string(forKey: "userName") ?? "닉네임 없음"
+            
+            )
+            var jsonString = ""
+            do {
+                let jsonData = try JSONEncoder().encode(chatItem)
+                jsonString = String(data: jsonData, encoding: .utf8)!
+                print(jsonString) // [{"sentence":"Hello world","lang":"en"},{"sentence":"Hallo Welt","lang":"de"}]
+                
+                // and decode it back
+//                let decodedSentences = try JSONDecoder().decode([chatItem].self, from: jsonData)
+//                print(decodedSentences)
+            } catch { print(error) }
+            // 즉구할때 나(구매자), 상대(아이템 판매자)
+            let myId = UserDefaults.standard.integer(forKey: "userId") ?? 1 //userId
+            let myName = UserDefaults.standard.string(forKey: "userName") ?? "ok"
+            
+            users.append("\(opId!)")
+            //채팅방 이름 : status_구메자닉네임_구매자ID, 판매자 닉네임_ 즉구 가격
+            print("채널 이름. : 1_\(myName)_\(myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.buyNow ?? 0)_\(chatItem?.title )")
+            SBDGroupChannel.createChannel(withName: "0_\(myName)_\(myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.title ?? " ")_\(chatItem?.buyNow ?? 0)", //즉구 : 0, 낙찰 : 1
+                                          isDistinct: false,
+                                          userIds: users,
+                                          coverUrl: self.currItem?.image?[0].url,
+                                          data: jsonString, //chatItem.debugDescription , //data?.description , //현재 거래 아이템 정보.
+                                          customType: nil,
+                                          completionHandler:
+                                            { (groupChannel, error) in
+                guard error == nil else {
+                    // Handle error.
+                    print("채널 생성 실패")
+                    return
+                }
+
+                // A group channel with additional information is successfully created.
+                var channelUrl = groupChannel!.channelUrl
+                print("채널 생성 성공.")
+                guard let pvc = self.presentingViewController
+                else {
+                    print("no navigation")
+                    return}
+
+                var nextVC =  MessageList(channelUrl: channelUrl)
+                var naviVC = UINavigationController(rootViewController: nextVC)
+                naviVC.modalPresentationStyle = .fullScreen
+                pvc.present(naviVC, animated: false)
+                    
+                
+            })
+            
+           
+            
+            
+//
+            
+        }).disposed(by: disposeBag)
+                
+                
+        
         
         //메뉴버튼 이벤트
         self.menuBtn.rx.tap
@@ -349,16 +433,24 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             }).disposed(by: disposeBag)
         
         reactor.state.subscribe(onNext : {state in
+            //내 제품인 경우(판매자 인터페이스)
             if state.item.userId == UserDefaults.standard.integer(forKey: "userId") {
                 self.buttonContainer.isHidden = true
                 self.menuView.isHidden = false
             }else{
+                //내 제품이 아닌 경우(구매자 인터페이스)
                 self.buttonContainer.isHidden = false
                 self.menuView.isHidden = true
+                //내가 최종 낙찰자인 경우. 입찰하기 버튼 -> 채팅하기 버튼으로 전환
+                if UserDefaults.standard.integer(forKey: "userId") == UserDefaults.standard.integer(forKey: "finalBidId") {
+                    self.chattingBtn.isHidden = false
+                    self.biddingBtn.isHidden = true
+                    //
+                }
             }
         }).disposed(by: disposeBag)
         
-       
+        
        
         
        
