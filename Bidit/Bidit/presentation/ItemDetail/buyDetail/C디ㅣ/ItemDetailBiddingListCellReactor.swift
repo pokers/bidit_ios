@@ -27,7 +27,7 @@ class ItemDetailBiddingListCellReactor : Reactor{
       
       
     struct State {
-        var itemSection = [BiddingListSection]() //getBiddingListMock()// //
+        var itemSection : [BiddingListSection] //= [BiddingListSection]() //getBiddingListMock()// //
         var item : Item?
         //var selectedIndexPath : IndexPath?
        
@@ -45,7 +45,7 @@ class ItemDetailBiddingListCellReactor : Reactor{
         switch action {
             
         case .viewDidLoad:
-          return getBiddingFromApi()
+            return getBiddingFromApi() // Observable.just(Mutation.updateDataSource(initialState.itemSection))
             
 //        case .cellSelected(let indexPath):
 //            return Observable.concat([
@@ -99,13 +99,7 @@ class ItemDetailBiddingListCellReactor : Reactor{
                         
                         
                         bidInfo?.reversed().forEach{ bidding in
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                         
                             var dataUser = bidding?.user
                             var delta = bidding!.price - previousPrice
                             
@@ -143,7 +137,6 @@ class ItemDetailBiddingListCellReactor : Reactor{
                        
                         let result = self.transBidList(biddings: tempList)
                         
-                        LoadingIndicator.hideLoading()
                         LoadingIndicator.hideLoading()
                         emitter.onNext(.updateDataSource(result))
                         emitter.onCompleted()

@@ -111,30 +111,35 @@ class DirectBuyingPopupViewController : UIViewController{
             var opId = self.currItem?.userId
             var users: [String] = []
             var chatItem : ChatItem? = ChatItem(id: self.currItem?.id,
-                                    status: self.currItem?.status,
-                                    userId: self.currItem?.userId,
-                                    sPrice: self.currItem?.sPrice,
-                                    cPrice: self.currItem?.cPrice,
-                                    buyNow: self.currItem?.buyNow,
-                                    name: self.currItem?.name,
-                                    title: self.currItem?.title)
+                                                status: 0, //즉시 구매시 0
+                                                userId: self.currItem?.userId,
+                                                userName: self.currItem?.user?.nickname ?? "닉네임 없음.",
+                                                sPrice: self.currItem?.sPrice,
+                                                cPrice: self.currItem?.cPrice,
+                                                buyNow: self.currItem?.buyNow,
+                                                name: self.currItem?.name,
+                                                title: self.currItem?.title,
+                                                buyerId: UserDefaults.standard.integer(forKey: "userId"),
+                                                buyerName: UserDefaults.standard.string(forKey: "userName") ?? "닉네임 없음"
+            
+            )
         
             
-//            var jsonString : String = ""
-//            var jsonData : Data? = nil
-//            do {
-//                //struct to jsonData
-//                jsonData = try JSONEncoder().encode(chatItem) // data
-//                print(jsonData)
-//                print()
-//
-//                //jsonData to string
-//                jsonString  = String.init(data: jsonData!, encoding: .utf8) ?? "err"
-//                print( "jsonString : \(jsonString)")
-//                print()
-//            } catch let err{
-//                print("err:\(err.localizedDescription)")
-//            }
+            var jsonString : String = ""
+            var jsonData : Data? = nil
+            do {
+                //struct to jsonData
+                jsonData = try JSONEncoder().encode(chatItem) // data
+                print(jsonData)
+                print()
+
+                //jsonData to string
+                jsonString  = String.init(data: jsonData!, encoding: .utf8) ?? "err"
+                print( "jsonString : \(jsonString)")
+                print()
+            } catch let err{
+                print("err:\(err.localizedDescription)")
+            }
 
             
             
@@ -147,7 +152,7 @@ class DirectBuyingPopupViewController : UIViewController{
                                           isDistinct: true,
                                           userIds: users,
                                           coverUrl: self.currItem?.image?[0].url,
-                                          data: chatItem.debugDescription , //data?.description , //현재 거래 아이템 정보.
+                                          data: jsonString , //data?.description , //현재 거래 아이템 정보.
                                           customType: nil,
                                           completionHandler:
                                             { (groupChannel, error) in

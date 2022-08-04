@@ -33,7 +33,10 @@ func calcRestDay(end : String) -> String{
     
 //    guard let startTime = format.date(from: now) else {return "?"}
 //    guard let endTime =  format.date(from: self.end) else {return "?"}
-    let interval = "\(Int(convertedEndTime.timeIntervalSince(now)/(60*60*24)))일 후 마감"
+    var interval = "\(Int(convertedEndTime.timeIntervalSince(now)/(60*60*24)))일 후 마감"
+    if Int(convertedEndTime.timeIntervalSince(now)/(60*60*24)) < 0 {
+        interval = "\(-Int(convertedEndTime.timeIntervalSince(now)/(60*60*24)))일 전 마감"
+    }
     print("interval is  : \(interval)")
     return interval.description
     
