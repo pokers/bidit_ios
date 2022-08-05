@@ -41,7 +41,7 @@ class HomeTabbar : TabmanViewController {
         
         
        viewControllers.append(endingSoonVC)
-       viewControllers.append(vc3)
+       viewControllers.append(endingSoonVC)
 //
        self.dataSource = self
 

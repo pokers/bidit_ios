@@ -38,7 +38,7 @@ class CompleteBiddingViewController : UIViewController, View{
         
         layout()
         attribute()
-        
+        cancelButton.isHidden = true //기능 미구현
         self.view.backgroundColor = .white
     }
     

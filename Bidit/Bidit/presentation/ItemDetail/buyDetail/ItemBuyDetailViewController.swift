@@ -13,6 +13,7 @@ import MaterialComponents.MaterialBottomSheet
 import ImageSlideshow
 import RxSwift
 import SendBirdUIKit
+import Kingfisher
 
 //물건 상세 페이지(구매자)
 class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate{
@@ -299,7 +300,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         menuButtonItem.width = 20
         zzimButtonItem.width = 40
         shareButtonItem.width = 40
-        self.navigationItem.rightBarButtonItems = [menuButtonItem,shareButtonItem,zzimButtonItem]
+        self.navigationItem.rightBarButtonItems = [menuButtonItem,shareButtonItem]
         
     }
     
@@ -412,11 +413,19 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         self.shareBtn.rx.tap
             .subscribe(onNext: {
-                let vc = NotOpenDialogVC()
-                vc.modalPresentationStyle = .fullScreen
-               
-                // 보여주기
-                self.present(vc, animated: false, completion: nil)
+                //서비스 준비중 팝업
+//                let vc = NotOpenDialogVC()
+//                vc.modalPresentationStyle = .fullScreen
+//
+//                // 보여주기
+//                self.present(vc, animated: false, completion: nil)
+                let image = self.loadProfileImg(url: reactor.currentState.item.image![0].url)
+                
+                let activityItems : [UIImage] = [image]
+                let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+                self.present(activityViewController, animated: true)
+                
+                
             }).disposed(by: disposeBag)
        
         reactor.state
@@ -498,6 +507,23 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
 
 
     }
+    
+    func loadProfileImg(url : String) -> UIImage{
+        var resultImage : UIImage?
+        if let thumbnailUrl = URL(string: url) {
+            KingfisherManager.shared.retrieveImage(with: thumbnailUrl, completionHandler: { result in
+            switch(result) {
+                case .success(let imageResult):
+//                    let resized = imageResult.image.resizedImageWithContentMode(.scaleAspectFit, bounds: CGSize(width: 84, height: 84), interpolationQuality: .medium)
+                    //imageView.isHidden = false
+                resultImage = imageResult.image
+                case .failure(let error):
+                break
+                }
+            })
+        }
+        return resultImage ?? UIImage(named: "basic_profile_img")!
+    }
 
     
 }
@@ -564,5 +590,7 @@ extension DetailCellSection: SectionModelType {
         }
     }
     
+    
+    
 }
-
+//Cell -> IMAGE

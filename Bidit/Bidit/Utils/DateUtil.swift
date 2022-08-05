@@ -66,10 +66,20 @@ func calcRestDayAndTime(end : String) -> String{
     let minite = Int(Int(convertedEndTime.timeIntervalSince(now)) - restDay*60*60*24 - hour * 60 * 60) / 60
     let second = Int(Int(convertedEndTime.timeIntervalSince(now)) - restDay*60*60*24 - hour * 60 * 60 - minite * 60) % 60
     //시간
-    print("restDay is  : \(restDay)일 \(hour):\(minite):\(second)")
-    let result = "\(restDay)일 \(hour):\(minite):\(second)"
+    print("restDay is  : \(checkNumDigit(num: restDay))일 \(checkNumDigit(num: hour)):\(checkNumDigit(num: minite)):\(checkNumDigit(num: second))")
+    let result = "\(checkNumDigit(num: restDay))일 \(checkNumDigit(num: hour)):\(checkNumDigit(num: minite)):\(checkNumDigit(num: second))"
     return result.description
     
+}
+func checkNumDigit(num : Int) -> String {
+    if num == 0 {
+        return "00"
+    }else{
+       if num.description.count == 1 {
+            return "0\(num)"
+        }
+    }
+    return "\(num)"
 }
 
 // 몇분 전인지 상대시간(~분전)

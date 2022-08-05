@@ -371,6 +371,9 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
             TimerUtil.staticObs = TimerUtil.timer?.subscribe(onNext: { [weak self] result in
                 let result =   calcRestDayAndTime(end: dueDate)//"\(restDay)일 \(hour):\(minite):\(second)"
                 self?.remainingTime.text = result
+                if reactor.currentState.item.status > 1 {
+                    self?.remainingTime.text = "00일 00:00:00"
+                }
             }, onDisposed: { [weak self] in
                 print("disposed")
                 self?.removeFromSuperview()
@@ -394,8 +397,6 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         
         self.rx.layoutSubviews.subscribe(onNext : {_ in
             print("상태 표시 \(reactor.initialState.item.userId) ")
-            
-            
             if reactor.initialState.item.userId ?? 0 == UserDefaults.standard.integer(forKey: "userId") {
                 
                 self.sellStatusBtn.isHidden = false

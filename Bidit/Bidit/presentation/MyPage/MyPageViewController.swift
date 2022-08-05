@@ -84,11 +84,13 @@ class MyPageViewController : UIViewController ,View{
         super.viewDidLoad()
         layout()
         self.view.backgroundColor = .white
+        zzimRecordBtn.isHidden = true
        
         
     }
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
+        
     }
     
     
