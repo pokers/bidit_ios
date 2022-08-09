@@ -41,7 +41,31 @@ func calcRestDay(end : String) -> String{
     return interval.description
     
 }
-
+/*
+ 입찰 가능한 시점인지? true/false
+ */
+func isEnableBid(end : String) -> Bool{
+    let now = Date()
+    let endTime = stringConvertToDateTime(time: end)
+    //출력 포맷 설정
+    let format = DateFormatter()
+//    format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+    format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    let convertedEndTime = format.date(from: end)
+    
+    //let nowDay = Calendar.current.dateComponents([.day], from: now)
+    //let endDay = Calendar.current.dateComponents([.day], from: convertedEndTime)
+    
+//    guard let startTime = format.date(from: now) else {return "?"}
+//    guard let endTime =  format.date(from: self.end) else {return "?"}
+    var interval = "\(Int(convertedEndTime!.timeIntervalSince(now)/(60*60*24)))일 후 마감"
+    if Int(convertedEndTime!.timeIntervalSince(now)/(60*60*24)) < 0 { //이미 마감 하였다면
+        return false
+//        interval = "\(-Int(convertedEndTime.timeIntervalSince(now)/(60*60*24)))일 전 마감"
+    }
+    print("interval is  : \(interval)")
+    return true
+}
 
 // 지금시간으로부터 마감까지 남은 날짜 계산(**일 **:**:**)
 func calcRestDayAndTime(end : String) -> String{
@@ -68,6 +92,9 @@ func calcRestDayAndTime(end : String) -> String{
     //시간
     print("restDay is  : \(checkNumDigit(num: restDay))일 \(checkNumDigit(num: hour)):\(checkNumDigit(num: minite)):\(checkNumDigit(num: second))")
     let result = "\(checkNumDigit(num: restDay))일 \(checkNumDigit(num: hour)):\(checkNumDigit(num: minite)):\(checkNumDigit(num: second))"
+    if restDay < 0 && hour < 0 && minite < 0 && second < 0 {
+        return "마감"
+    }
     return result.description
     
 }

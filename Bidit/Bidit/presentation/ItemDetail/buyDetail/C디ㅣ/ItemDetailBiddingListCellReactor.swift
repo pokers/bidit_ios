@@ -45,7 +45,7 @@ class ItemDetailBiddingListCellReactor : Reactor{
         switch action {
             
         case .viewDidLoad:
-            return getBiddingFromApi() // Observable.just(Mutation.updateDataSource(initialState.itemSection))
+            return getBiddingFromApi() // Observable.just(Mutation.updateDataSource(initialState.itemSection)) //
             
 //        case .cellSelected(let indexPath):
 //            return Observable.concat([
@@ -63,6 +63,7 @@ class ItemDetailBiddingListCellReactor : Reactor{
         case .updateDataSource(let biddings):
             state.itemSection = []
             state.itemSection = biddings //getBiddingListMock()
+            break
         
 //        case .setSelectedIndexPath(let indexPath):
 //            state.selectedIndexPath = indexPath
@@ -133,8 +134,14 @@ class ItemDetailBiddingListCellReactor : Reactor{
                             
                             tempList.append(listBid[listBid.count - i]  )
                         }
-                       
-                       
+                        //현재 마지막 입찰자.
+                        if tempList.count > 0 {
+                            UserDefaults.standard.set(tempList[0].userId, forKey: "finalBidId")
+                            print("지금 입찰자 변동은 : \(UserDefaults.standard.integer(forKey: "finalBidId"))")
+                        }else {
+                            UserDefaults.standard.set(0, forKey: "finalBidId")
+                        }
+                        
                         let result = self.transBidList(biddings: tempList)
                         
                         LoadingIndicator.hideLoading()

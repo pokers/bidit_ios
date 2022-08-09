@@ -820,9 +820,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                     self.navigationController?.presentingViewController?.showToast(message: "상품이 정상적으로 등록되었습니다.")
                     self.navigationController?.popViewController(animated: true)
                     self.navigationController?.topViewController?.showToast(message: "상품이 정상적으로 등록되었습니다.")
-                    
                 }
-                
             }).disposed(by: disposeBag)
     }
    

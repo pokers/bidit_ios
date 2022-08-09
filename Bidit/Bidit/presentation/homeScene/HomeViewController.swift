@@ -103,6 +103,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         super.viewWillAppear(true)
         startTimer()
         self.navigationController?.navigationBar.isHidden = true
+        self.view.backgroundColor = .white
     }
     
     override func viewDidDisappear(_ animated: Bool) {

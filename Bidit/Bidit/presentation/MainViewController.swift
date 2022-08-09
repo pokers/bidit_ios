@@ -15,6 +15,7 @@ class MainViewController : UIViewController, View{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     var disposeBag: DisposeBag  = DisposeBag()
     
     override func viewDidLoad() {

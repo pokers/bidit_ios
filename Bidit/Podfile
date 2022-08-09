@@ -29,6 +29,7 @@ target 'Bidit' do
     pod "BSImagePicker", "~> 3.1"
     pod 'FSCalendar'
     pod 'Kingfisher', '~> 7.0'
+    pod 'Firebase/Crashlytics'
   
 
   # Pods for Bidit

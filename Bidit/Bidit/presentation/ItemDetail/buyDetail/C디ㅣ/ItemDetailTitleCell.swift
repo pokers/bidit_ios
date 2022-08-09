@@ -333,7 +333,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
             .bind(to: self.itemTitle.rx.text)
             .disposed(by: disposeBag)
         //유저 이름
-        reactor.state.map{$0.item.user?.nickname?.description ?? $0.item.user?.email?.description }
+        reactor.state.map{$0.item.user?.nickname?.description ?? "닉네임 없음\($0.item.user?.id)" }
             .bind(to: self.sellerNameText.rx.text)
             .disposed(by: disposeBag)
         //즉시 구매가

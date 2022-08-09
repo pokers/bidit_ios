@@ -255,6 +255,10 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        UserDefaults.standard.set(0, forKey: "finalBidId")
+    }
+    
     //네비게이션바 세팅
     private func setNavigationBarButton(){
         //네비게이션 바 투명하게
@@ -350,7 +354,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             } catch { print(error) }
             // 즉구할때 나(구매자), 상대(아이템 판매자)
             let myId = UserDefaults.standard.integer(forKey: "userId") ?? 1 //userId
-            let myName = UserDefaults.standard.string(forKey: "userName") ?? "ok"
+            let myName = UserDefaults.standard.string(forKey: "userName") ?? "닉네임 없음"
             
             users.append("\(opId!)")
             //채팅방 이름 : status_구메자닉네임_구매자ID, 판매자 닉네임_ 즉구 가격
@@ -443,19 +447,31 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         reactor.state.subscribe(onNext : {state in
             //내 제품인 경우(판매자 인터페이스)
+            
+            print("지금 낙찰자는 ? : \(UserDefaults.standard.integer(forKey: "finalBidId"))")
+            print("지금 나는 ? : \(UserDefaults.standard.integer(forKey: "userId") )")
             if state.item.userId == UserDefaults.standard.integer(forKey: "userId") {
                 self.buttonContainer.isHidden = true
                 self.menuView.isHidden = false
             }else{
                 //내 제품이 아닌 경우(구매자 인터페이스)
-                self.buttonContainer.isHidden = false
-                self.menuView.isHidden = true
-                //내가 최종 낙찰자인 경우. 입찰하기 버튼 -> 채팅하기 버튼으로 전환
-                if UserDefaults.standard.integer(forKey: "userId") == UserDefaults.standard.integer(forKey: "finalBidId") {
-                    self.chattingBtn.isHidden = false
-                    self.biddingBtn.isHidden = true
-                    //
+                if state.item.status <= 1 && isEnableBid(end: state.item.dueDate!){ //아직 입찰 가능한 상태
+                    self.buttonContainer.isHidden = false
+                    self.menuView.isHidden = true
+                    //내가 최종 낙찰자인 경우. 입찰하기 버튼 -> 채팅하기 버튼으로 전환
+                }else if state.item.status  <= 2 && !isEnableBid(end: state.item.dueDate!){
+                    
+                    if UserDefaults.standard.integer(forKey: "userId") == UserDefaults.standard.integer(forKey: "finalBidId") {
+                        self.chattingBtn.isHidden = false
+                        self.buttonContainer.isHidden = false
+                        self.biddingBtn.isHidden = true
+                        //
+                    }else{ //입찰 불가능한 상태
+                        self.buttonContainer.isHidden = true
+                    }
                 }
+                
+                
             }
         }).disposed(by: disposeBag)
         

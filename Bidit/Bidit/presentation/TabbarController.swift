@@ -68,7 +68,7 @@ class TabbarController : UITabBarController{
         //샌드버드 연결
         let myId = UserDefaults.standard.string(forKey: "userId")
         SBDMain.connect(withUserId: "\(String(describing: myId!))",completionHandler: { (user, error) in
-            SBDMain.updateCurrentUserInfo(withNickname: myName, profileUrl: nil, completionHandler: { (error) in
+            SBDMain.updateCurrentUserInfo(withNickname: myName!, profileUrl: nil, completionHandler: { (error) in
                 guard error == nil else {
                     // Handle error.
                     return
