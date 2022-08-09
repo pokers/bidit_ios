@@ -145,9 +145,12 @@ class DirectBuyingPopupViewController : UIViewController{
             
 //            print("data : \(data?.description)")
             //users.append("\(self.myId)")
+            
             users.append("\(opId!)")
+            
             //채팅방 이름 : status_구메자닉네임_구매자ID, 판매자 닉네임_ 즉구 가격
             print("채널 이름. : 0_\(self.myName!)_\(self.myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.buyNow ?? 0)_\(chatItem?.title ?? " ")")
+            
             SBDGroupChannel.createChannel(withName: "0_\(self.myName!)_\(self.myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.title ?? " ")_\(chatItem?.buyNow ?? 0)", //즉구 : 0, 낙찰 : 1
                                           isDistinct: true,
                                           userIds: users,
@@ -170,16 +173,15 @@ class DirectBuyingPopupViewController : UIViewController{
 //                    guard error == nil else {
 //                        // Handle error.
 //                        return
-//
 //                    }
 //                    print("초대 승낙")
-//
-//
 //                })
                 guard let pvc = self.presentingViewController
                 else {
                     print("no navigation")
-                    return}
+                    return
+                    
+                }
 
                 self.dismiss(animated: true) {
                     var nextVC =  MessageList(channelUrl: channelUrl)

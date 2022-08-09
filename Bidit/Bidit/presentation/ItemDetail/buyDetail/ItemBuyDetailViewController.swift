@@ -323,14 +323,21 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         //즉시 구매 버튼 이벤트
         self.directBuyBtn.rx.tap.subscribe(onNext :{
-            self.setDirectPopup(item: reactor.currentState.item)
+            
+            if reactor.currentState.item.status < 2{
+                self.setDirectPopup(item: reactor.currentState.item)
+            }else {
+                self.showToast(message: "즉시구매 가능한 상태가 아닙니다.")
+            }
+           
         }).disposed(by: disposeBag)
+        
         //채팅하기 버튼 이벤트
         self.chattingBtn.rx.tap.subscribe(onNext : {
             var opId = self.currItem?.userId
             var users: [String] = []
             var chatItem : ChatItem? = ChatItem(id: self.currItem?.id,
-                                                status: 1,
+                                                status: 1, //최종낙찰시 1
                                                 userId: self.currItem?.userId,
                                                 userName: self.currItem?.user?.nickname ?? "닉네임 없음.",
                                                 sPrice: self.currItem?.sPrice,
@@ -343,24 +350,30 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             
             )
             var jsonString = ""
+            var jsonData : Data? = nil
+            
             do {
-                let jsonData = try JSONEncoder().encode(chatItem)
-                jsonString = String(data: jsonData, encoding: .utf8)!
-                print(jsonString) // [{"sentence":"Hello world","lang":"en"},{"sentence":"Hallo Welt","lang":"de"}]
-                
+                jsonData = try JSONEncoder().encode(chatItem)
+                jsonString = String(data: jsonData!, encoding: .utf8) ?? "err"
+                print(jsonString)// [{"sentence":"Hello world","lang":"en"},{"sentence":"Hallo Welt","lang":"de"}]
                 // and decode it back
 //                let decodedSentences = try JSONDecoder().decode([chatItem].self, from: jsonData)
 //                print(decodedSentences)
-            } catch { print(error) }
+                
+            } catch let err{
+                print("err:\(err.localizedDescription)")
+            }
             // 즉구할때 나(구매자), 상대(아이템 판매자)
-            let myId = UserDefaults.standard.integer(forKey: "userId") ?? 1 //userId
+            let myId = UserDefaults.standard.integer(forKey: "userId") ?? 0 //userId
             let myName = UserDefaults.standard.string(forKey: "userName") ?? "닉네임 없음"
             
             users.append("\(opId!)")
+            
             //채팅방 이름 : status_구메자닉네임_구매자ID, 판매자 닉네임_ 즉구 가격
             print("채널 이름. : 1_\(myName)_\(myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.buyNow ?? 0)_\(chatItem?.title )")
+            
             SBDGroupChannel.createChannel(withName: "0_\(myName)_\(myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.title ?? " ")_\(chatItem?.buyNow ?? 0)", //즉구 : 0, 낙찰 : 1
-                                          isDistinct: false,
+                                          isDistinct: true,
                                           userIds: users,
                                           coverUrl: self.currItem?.image?[0].url,
                                           data: jsonString, //chatItem.debugDescription , //data?.description , //현재 거래 아이템 정보.
@@ -384,7 +397,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
                 var nextVC =  MessageList(channelUrl: channelUrl)
                 var naviVC = UINavigationController(rootViewController: nextVC)
                 naviVC.modalPresentationStyle = .fullScreen
-                pvc.present(naviVC, animated: false)
+                self.present(naviVC, animated: false)
                     
                 
             })
