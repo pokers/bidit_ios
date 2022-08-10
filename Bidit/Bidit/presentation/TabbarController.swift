@@ -62,7 +62,7 @@ class TabbarController : UITabBarController{
         self.tabBar.tintColor = .black
         self.selectedIndex = 2 //첫화면 설정 (홈화면)
         self.view.backgroundColor = .white
-        self.tabBar.barTintColor = .white
+        //self.tabBar.barTintColor = .white
         //let myId = UserDefaults.standard.integer(forKey: "userId") //userId
         let myName = UserDefaults.standard.string(forKey: "userName")
         //샌드버드 연결

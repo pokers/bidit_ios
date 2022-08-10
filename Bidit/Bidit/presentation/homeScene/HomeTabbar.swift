@@ -77,6 +77,7 @@ extension HomeTabbar {
         // 인디케이터 (아래 바 부분)
         ctBar.indicator.weight = .custom(value: 2)
         ctBar.indicator.tintColor = .black
+       
   
     }
 }

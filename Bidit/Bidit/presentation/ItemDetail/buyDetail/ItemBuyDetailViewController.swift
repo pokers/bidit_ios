@@ -468,9 +468,11 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
                 self.menuView.isHidden = false
             }else{
                 //내 제품이 아닌 경우(구매자 인터페이스)
+                self.menuView.isHidden = true
+                self.buttonContainer.isHidden = true
                 if state.item.status <= 1 && isEnableBid(end: state.item.dueDate!){ //아직 입찰 가능한 상태
                     self.buttonContainer.isHidden = false
-                    self.menuView.isHidden = true
+                    
                     //내가 최종 낙찰자인 경우. 입찰하기 버튼 -> 채팅하기 버튼으로 전환
                 }else if state.item.status  <= 2 && !isEnableBid(end: state.item.dueDate!){
                     
