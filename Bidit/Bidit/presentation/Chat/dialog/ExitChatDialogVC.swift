@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import RxSwift
+import SendBirdUIKit
 //채팅방을 나가면 대화가 삭제되고
 //복구할 수 없어요. 팝업뷰
 class ExitChatDialogVC : UIViewController {
@@ -17,7 +18,7 @@ class ExitChatDialogVC : UIViewController {
     private var popupDescription = UILabel() //채팅방에서 나가시겠어요?
     private var exitChatBtn = UIButton() //채팅방 나가기
     private var cancelBtn = UIButton() // 취소
-   
+    var nowChannel :  SBDGroupChannel? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
@@ -102,14 +103,20 @@ class ExitChatDialogVC : UIViewController {
         self.cancelBtn.rx.tap.subscribe(onNext : {
             self.dismiss(animated: true)
         }).disposed(by: disposeBag)
-        //입찰 취소 버튼 이벤트
+        //채팅방 나가기 이벤트
         self.exitChatBtn.rx.tap
             .subscribe(onNext : {
-                let vc = NotOpenDialogVC()
-                vc.modalPresentationStyle = .fullScreen
-               
-                // 보여주기
-                self.present(vc, animated: false, completion: nil)
+//                let vc = NotOpenDialogVC()
+//                vc.modalPresentationStyle = .fullScreen
+//
+//                // 보여주기
+//                self.present(vc, animated: false, completion: nil)
+                
+                self.nowChannel!.leave()
+                print("채팅방 떠나기")
+                self.dismiss(animated: true){
+                    self.presentingViewController?.dismiss(animated: false)
+                }
                 
             }).disposed(by: disposeBag)
     }

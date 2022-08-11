@@ -3033,6 +3033,707 @@ public final class GetItemListQuery: GraphQLQuery {
   }
 }
 
+public final class GetMyBiddingQuery: GraphQLQuery {
+  /// The raw GraphQL definition of this operation.
+  public let operationDefinition: String =
+    """
+    query GetMyBidding($biddingQuery: BiddingQueryInput!) {
+      getMyBidding(biddingQuery: $biddingQuery) {
+        __typename
+        id
+        status
+        userId
+        itemId
+        price
+        createdAt
+        user {
+          __typename
+          id
+          status
+          nickname
+          email
+          createdAt
+          updatedAt
+          deletedAt
+          description
+        }
+        item {
+          __typename
+          id
+          name
+          status
+          title
+          dueDate
+          sPrice
+          cPrice
+          buyNow
+          updatedAt
+          createdAt
+          viewCount
+          deliveryType
+          categoryId
+          userId
+          image {
+            __typename
+            id
+            status
+            itemId
+            type
+            url
+            createdAt
+            updatedAt
+            deletedAt
+          }
+          user {
+            __typename
+            id
+            nickname
+            email
+            status
+            createdAt
+          }
+        }
+      }
+    }
+    """
+
+  public let operationName: String = "GetMyBidding"
+
+  public var biddingQuery: BiddingQueryInput
+
+  public init(biddingQuery: BiddingQueryInput) {
+    self.biddingQuery = biddingQuery
+  }
+
+  public var variables: GraphQLMap? {
+    return ["biddingQuery": biddingQuery]
+  }
+
+  public struct Data: GraphQLSelectionSet {
+    public static let possibleTypes: [String] = ["Query"]
+
+    public static var selections: [GraphQLSelection] {
+      return [
+        GraphQLField("getMyBidding", arguments: ["biddingQuery": GraphQLVariable("biddingQuery")], type: .list(.object(GetMyBidding.selections))),
+      ]
+    }
+
+    public private(set) var resultMap: ResultMap
+
+    public init(unsafeResultMap: ResultMap) {
+      self.resultMap = unsafeResultMap
+    }
+
+    public init(getMyBidding: [GetMyBidding?]? = nil) {
+      self.init(unsafeResultMap: ["__typename": "Query", "getMyBidding": getMyBidding.flatMap { (value: [GetMyBidding?]) -> [ResultMap?] in value.map { (value: GetMyBidding?) -> ResultMap? in value.flatMap { (value: GetMyBidding) -> ResultMap in value.resultMap } } }])
+    }
+
+    public var getMyBidding: [GetMyBidding?]? {
+      get {
+        return (resultMap["getMyBidding"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [GetMyBidding?] in value.map { (value: ResultMap?) -> GetMyBidding? in value.flatMap { (value: ResultMap) -> GetMyBidding in GetMyBidding(unsafeResultMap: value) } } }
+      }
+      set {
+        resultMap.updateValue(newValue.flatMap { (value: [GetMyBidding?]) -> [ResultMap?] in value.map { (value: GetMyBidding?) -> ResultMap? in value.flatMap { (value: GetMyBidding) -> ResultMap in value.resultMap } } }, forKey: "getMyBidding")
+      }
+    }
+
+    public struct GetMyBidding: GraphQLSelectionSet {
+      public static let possibleTypes: [String] = ["Bidding"]
+
+      public static var selections: [GraphQLSelection] {
+        return [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("id", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("status", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("userId", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("itemId", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("price", type: .nonNull(.scalar(Int.self))),
+          GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+          GraphQLField("user", type: .object(User.selections)),
+          GraphQLField("item", type: .object(Item.selections)),
+        ]
+      }
+
+      public private(set) var resultMap: ResultMap
+
+      public init(unsafeResultMap: ResultMap) {
+        self.resultMap = unsafeResultMap
+      }
+
+      public init(id: Int, status: Int, userId: Int, itemId: Int, price: Int, createdAt: String, user: User? = nil, item: Item? = nil) {
+        self.init(unsafeResultMap: ["__typename": "Bidding", "id": id, "status": status, "userId": userId, "itemId": itemId, "price": price, "createdAt": createdAt, "user": user.flatMap { (value: User) -> ResultMap in value.resultMap }, "item": item.flatMap { (value: Item) -> ResultMap in value.resultMap }])
+      }
+
+      public var __typename: String {
+        get {
+          return resultMap["__typename"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "__typename")
+        }
+      }
+
+      public var id: Int {
+        get {
+          return resultMap["id"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "id")
+        }
+      }
+
+      public var status: Int {
+        get {
+          return resultMap["status"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "status")
+        }
+      }
+
+      public var userId: Int {
+        get {
+          return resultMap["userId"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "userId")
+        }
+      }
+
+      public var itemId: Int {
+        get {
+          return resultMap["itemId"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "itemId")
+        }
+      }
+
+      public var price: Int {
+        get {
+          return resultMap["price"]! as! Int
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "price")
+        }
+      }
+
+      public var createdAt: String {
+        get {
+          return resultMap["createdAt"]! as! String
+        }
+        set {
+          resultMap.updateValue(newValue, forKey: "createdAt")
+        }
+      }
+
+      public var user: User? {
+        get {
+          return (resultMap["user"] as? ResultMap).flatMap { User(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "user")
+        }
+      }
+
+      public var item: Item? {
+        get {
+          return (resultMap["item"] as? ResultMap).flatMap { Item(unsafeResultMap: $0) }
+        }
+        set {
+          resultMap.updateValue(newValue?.resultMap, forKey: "item")
+        }
+      }
+
+      public struct User: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["User"]
+
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(Int.self))),
+            GraphQLField("status", type: .nonNull(.scalar(Int.self))),
+            GraphQLField("nickname", type: .scalar(String.self)),
+            GraphQLField("email", type: .scalar(String.self)),
+            GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+            GraphQLField("updatedAt", type: .scalar(String.self)),
+            GraphQLField("deletedAt", type: .scalar(String.self)),
+            GraphQLField("description", type: .scalar(String.self)),
+          ]
+        }
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(id: Int, status: Int, nickname: String? = nil, email: String? = nil, createdAt: String, updatedAt: String? = nil, deletedAt: String? = nil, description: String? = nil) {
+          self.init(unsafeResultMap: ["__typename": "User", "id": id, "status": status, "nickname": nickname, "email": email, "createdAt": createdAt, "updatedAt": updatedAt, "deletedAt": deletedAt, "description": description])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: Int {
+          get {
+            return resultMap["id"]! as! Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var status: Int {
+          get {
+            return resultMap["status"]! as! Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "status")
+          }
+        }
+
+        public var nickname: String? {
+          get {
+            return resultMap["nickname"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "nickname")
+          }
+        }
+
+        public var email: String? {
+          get {
+            return resultMap["email"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "email")
+          }
+        }
+
+        public var createdAt: String {
+          get {
+            return resultMap["createdAt"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public var updatedAt: String? {
+          get {
+            return resultMap["updatedAt"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "updatedAt")
+          }
+        }
+
+        public var deletedAt: String? {
+          get {
+            return resultMap["deletedAt"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "deletedAt")
+          }
+        }
+
+        public var description: String? {
+          get {
+            return resultMap["description"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "description")
+          }
+        }
+      }
+
+      public struct Item: GraphQLSelectionSet {
+        public static let possibleTypes: [String] = ["Item"]
+
+        public static var selections: [GraphQLSelection] {
+          return [
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(Int.self))),
+            GraphQLField("name", type: .scalar(String.self)),
+            GraphQLField("status", type: .nonNull(.scalar(Int.self))),
+            GraphQLField("title", type: .scalar(String.self)),
+            GraphQLField("dueDate", type: .scalar(String.self)),
+            GraphQLField("sPrice", type: .scalar(Int.self)),
+            GraphQLField("cPrice", type: .scalar(Int.self)),
+            GraphQLField("buyNow", type: .scalar(Int.self)),
+            GraphQLField("updatedAt", type: .scalar(String.self)),
+            GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+            GraphQLField("viewCount", type: .scalar(Int.self)),
+            GraphQLField("deliveryType", type: .scalar(Int.self)),
+            GraphQLField("categoryId", type: .scalar(Int.self)),
+            GraphQLField("userId", type: .nonNull(.scalar(Int.self))),
+            GraphQLField("image", type: .list(.object(Image.selections))),
+            GraphQLField("user", type: .object(User.selections)),
+          ]
+        }
+
+        public private(set) var resultMap: ResultMap
+
+        public init(unsafeResultMap: ResultMap) {
+          self.resultMap = unsafeResultMap
+        }
+
+        public init(id: Int, name: String? = nil, status: Int, title: String? = nil, dueDate: String? = nil, sPrice: Int? = nil, cPrice: Int? = nil, buyNow: Int? = nil, updatedAt: String? = nil, createdAt: String, viewCount: Int? = nil, deliveryType: Int? = nil, categoryId: Int? = nil, userId: Int, image: [Image?]? = nil, user: User? = nil) {
+          self.init(unsafeResultMap: ["__typename": "Item", "id": id, "name": name, "status": status, "title": title, "dueDate": dueDate, "sPrice": sPrice, "cPrice": cPrice, "buyNow": buyNow, "updatedAt": updatedAt, "createdAt": createdAt, "viewCount": viewCount, "deliveryType": deliveryType, "categoryId": categoryId, "userId": userId, "image": image.flatMap { (value: [Image?]) -> [ResultMap?] in value.map { (value: Image?) -> ResultMap? in value.flatMap { (value: Image) -> ResultMap in value.resultMap } } }, "user": user.flatMap { (value: User) -> ResultMap in value.resultMap }])
+        }
+
+        public var __typename: String {
+          get {
+            return resultMap["__typename"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "__typename")
+          }
+        }
+
+        public var id: Int {
+          get {
+            return resultMap["id"]! as! Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "id")
+          }
+        }
+
+        public var name: String? {
+          get {
+            return resultMap["name"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "name")
+          }
+        }
+
+        public var status: Int {
+          get {
+            return resultMap["status"]! as! Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "status")
+          }
+        }
+
+        public var title: String? {
+          get {
+            return resultMap["title"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "title")
+          }
+        }
+
+        public var dueDate: String? {
+          get {
+            return resultMap["dueDate"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "dueDate")
+          }
+        }
+
+        public var sPrice: Int? {
+          get {
+            return resultMap["sPrice"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "sPrice")
+          }
+        }
+
+        public var cPrice: Int? {
+          get {
+            return resultMap["cPrice"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "cPrice")
+          }
+        }
+
+        public var buyNow: Int? {
+          get {
+            return resultMap["buyNow"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "buyNow")
+          }
+        }
+
+        public var updatedAt: String? {
+          get {
+            return resultMap["updatedAt"] as? String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "updatedAt")
+          }
+        }
+
+        public var createdAt: String {
+          get {
+            return resultMap["createdAt"]! as! String
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "createdAt")
+          }
+        }
+
+        public var viewCount: Int? {
+          get {
+            return resultMap["viewCount"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "viewCount")
+          }
+        }
+
+        public var deliveryType: Int? {
+          get {
+            return resultMap["deliveryType"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "deliveryType")
+          }
+        }
+
+        public var categoryId: Int? {
+          get {
+            return resultMap["categoryId"] as? Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "categoryId")
+          }
+        }
+
+        public var userId: Int {
+          get {
+            return resultMap["userId"]! as! Int
+          }
+          set {
+            resultMap.updateValue(newValue, forKey: "userId")
+          }
+        }
+
+        public var image: [Image?]? {
+          get {
+            return (resultMap["image"] as? [ResultMap?]).flatMap { (value: [ResultMap?]) -> [Image?] in value.map { (value: ResultMap?) -> Image? in value.flatMap { (value: ResultMap) -> Image in Image(unsafeResultMap: value) } } }
+          }
+          set {
+            resultMap.updateValue(newValue.flatMap { (value: [Image?]) -> [ResultMap?] in value.map { (value: Image?) -> ResultMap? in value.flatMap { (value: Image) -> ResultMap in value.resultMap } } }, forKey: "image")
+          }
+        }
+
+        public var user: User? {
+          get {
+            return (resultMap["user"] as? ResultMap).flatMap { User(unsafeResultMap: $0) }
+          }
+          set {
+            resultMap.updateValue(newValue?.resultMap, forKey: "user")
+          }
+        }
+
+        public struct Image: GraphQLSelectionSet {
+          public static let possibleTypes: [String] = ["ItemImage"]
+
+          public static var selections: [GraphQLSelection] {
+            return [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("id", type: .nonNull(.scalar(Int.self))),
+              GraphQLField("status", type: .nonNull(.scalar(Int.self))),
+              GraphQLField("itemId", type: .nonNull(.scalar(Int.self))),
+              GraphQLField("type", type: .scalar(Int.self)),
+              GraphQLField("url", type: .scalar(String.self)),
+              GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+              GraphQLField("updatedAt", type: .scalar(String.self)),
+              GraphQLField("deletedAt", type: .scalar(String.self)),
+            ]
+          }
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(id: Int, status: Int, itemId: Int, type: Int? = nil, url: String? = nil, createdAt: String, updatedAt: String? = nil, deletedAt: String? = nil) {
+            self.init(unsafeResultMap: ["__typename": "ItemImage", "id": id, "status": status, "itemId": itemId, "type": type, "url": url, "createdAt": createdAt, "updatedAt": updatedAt, "deletedAt": deletedAt])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: Int {
+            get {
+              return resultMap["id"]! as! Int
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          public var status: Int {
+            get {
+              return resultMap["status"]! as! Int
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "status")
+            }
+          }
+
+          public var itemId: Int {
+            get {
+              return resultMap["itemId"]! as! Int
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "itemId")
+            }
+          }
+
+          public var type: Int? {
+            get {
+              return resultMap["type"] as? Int
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "type")
+            }
+          }
+
+          public var url: String? {
+            get {
+              return resultMap["url"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "url")
+            }
+          }
+
+          public var createdAt: String {
+            get {
+              return resultMap["createdAt"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "createdAt")
+            }
+          }
+
+          public var updatedAt: String? {
+            get {
+              return resultMap["updatedAt"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "updatedAt")
+            }
+          }
+
+          public var deletedAt: String? {
+            get {
+              return resultMap["deletedAt"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "deletedAt")
+            }
+          }
+        }
+
+        public struct User: GraphQLSelectionSet {
+          public static let possibleTypes: [String] = ["User"]
+
+          public static var selections: [GraphQLSelection] {
+            return [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("id", type: .nonNull(.scalar(Int.self))),
+              GraphQLField("nickname", type: .scalar(String.self)),
+              GraphQLField("email", type: .scalar(String.self)),
+              GraphQLField("status", type: .nonNull(.scalar(Int.self))),
+              GraphQLField("createdAt", type: .nonNull(.scalar(String.self))),
+            ]
+          }
+
+          public private(set) var resultMap: ResultMap
+
+          public init(unsafeResultMap: ResultMap) {
+            self.resultMap = unsafeResultMap
+          }
+
+          public init(id: Int, nickname: String? = nil, email: String? = nil, status: Int, createdAt: String) {
+            self.init(unsafeResultMap: ["__typename": "User", "id": id, "nickname": nickname, "email": email, "status": status, "createdAt": createdAt])
+          }
+
+          public var __typename: String {
+            get {
+              return resultMap["__typename"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var id: Int {
+            get {
+              return resultMap["id"]! as! Int
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "id")
+            }
+          }
+
+          public var nickname: String? {
+            get {
+              return resultMap["nickname"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "nickname")
+            }
+          }
+
+          public var email: String? {
+            get {
+              return resultMap["email"] as? String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "email")
+            }
+          }
+
+          public var status: Int {
+            get {
+              return resultMap["status"]! as! Int
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "status")
+            }
+          }
+
+          public var createdAt: String {
+            get {
+              return resultMap["createdAt"]! as! String
+            }
+            set {
+              resultMap.updateValue(newValue, forKey: "createdAt")
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 public final class MeQuery: GraphQLQuery {
   /// The raw GraphQL definition of this operation.
   public let operationDefinition: String =

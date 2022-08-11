@@ -22,6 +22,8 @@ class MessageList : SBUChannelViewController {
     let myView = UILabel()
     //채팅방 정보
     var currItem : Item? = nil
+    var oppoId = 0
+    var nowChannel :  SBDGroupChannel? = nil
     
     init(channelUrl: String){
            super.init(channelUrl: channelUrl)
@@ -43,7 +45,6 @@ class MessageList : SBUChannelViewController {
     //하단 send
     override func messageInputView(_ messageInputView: SBUMessageInputView, didSelectSend text: String) {
             guard text.count > 0 else { return }
-            
             guard let messageParams = SBDUserMessageParams(message: text) else {
                 return
             }
@@ -130,22 +131,28 @@ class MessageList : SBUChannelViewController {
                 // Handle error.
                 return
             }
+            self.nowChannel = groupChannel
+            
+            
 
+                // The blocked user can be retrieved through
+                // the blockedUser parameter of the callback method.
+            
             // Through the "groupChannel" parameter of the callback method,
             // the group channel object identified with the CHANNEL_URL is returned by Sendbird server,
             // and you can get the group channel's data from the result object.
-            var array = groupChannel?.name.components(separatedBy: "_")
-            print("array 결과 :\(array)")
+//            var array = groupChannel?.name.components(separatedBy: "_")
+//            print("array 결과 :\(array)")
             
 //            self.itemName.text = array![4].description
 //            self.priceLabel.text = self.decimalWon(value: Int((array?[5])!) ?? 0)
             
             
             
-            self.myView.text = array![1]
-            if array![1] == UserDefaults.standard.string(forKey: "userName"){
-                self.myView.text = array![3]
-            }
+           // self.myView.text = array![1]
+//            if array![1] == UserDefaults.standard.string(forKey: "userName"){
+//                self.myView.text = array![3]
+//            }
             
 
             do {
@@ -171,10 +178,13 @@ class MessageList : SBUChannelViewController {
                 }
                 
                 var oppoNames = result!["userName"] as! String
+                self.oppoId = result!["userId"] as! Int
                 if UserDefaults.standard.integer(forKey: "userId") == result!["userId"] as! Int { //내가 판매자라면
                     oppoNames = result!["buyerName"] as! String
+                    self.oppoId = result!["buyerId"] as! Int
                 }
                 self.myView.text = oppoNames
+                
                 print(oppoNames)
                 print("nickNames :\(oppoNames)")
                 
@@ -245,7 +255,8 @@ class MessageList : SBUChannelViewController {
         let blockAction = UIAlertAction(title: "차단하기", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            let vc = NotOpenDialogVC()
+            let vc = BlockChatDialogVC()
+            vc.oppoId = self.oppoId
             vc.modalPresentationStyle = .fullScreen
            
             // 보여주기
@@ -256,7 +267,8 @@ class MessageList : SBUChannelViewController {
         let exitAction = UIAlertAction(title: "채팅방 나가기", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            let vc = NotOpenDialogVC()
+            let vc = ExitChatDialogVC()
+            vc.nowChannel = self.nowChannel
             vc.modalPresentationStyle = .fullScreen
            
             // 보여주기

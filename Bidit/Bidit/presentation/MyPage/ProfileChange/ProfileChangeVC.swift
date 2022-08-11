@@ -36,8 +36,10 @@ class ProfileChangeVC : UIViewController, View{
         self.view.backgroundColor = .systemBackground
         
         setNavigationBar()
+        imgButton.isHidden = true
         
         layout()
+        
     }
     
     private func layout(){
@@ -99,6 +101,7 @@ class ProfileChangeVC : UIViewController, View{
         self.nameField.rx.text.subscribe(onNext : {result in
             inputStr = result!
         })
+        
         //닉네임 조건 요청
         self.nameField.rx.text.subscribe(onNext : {text in
             
@@ -108,7 +111,7 @@ class ProfileChangeVC : UIViewController, View{
                 self.checkBtn.isEnabled = false
                 self.nameField.layer.borderColor = UIColor(red: 0.957, green: 0.263, blue: 0.212, alpha: 1).cgColor
                 
-            }else if text?.description.count ?? 0 < 8{
+            }else if text?.description.count ?? 0 > 8{
                 self.noticeText.text = "닉네임은 8자 이하로 적어주세요."
                 self.noticeText.isHidden = false
                 self.checkBtn.isEnabled = false

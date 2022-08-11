@@ -15,6 +15,8 @@ class DirectBuyingPopupViewController : UIViewController{
     
     var disposeBag = DisposeBag()
     
+    var opendUrl = ""
+    var isDubCnannel = false //채널 존재 여부
     private var containerView = UIView() //팝업 컨테이너
     private var priceLabel = UILabel() // **원에
     private var directText = UILabel() //구매할게요
@@ -84,6 +86,8 @@ class DirectBuyingPopupViewController : UIViewController{
         self.view.backgroundColor = .black.withAlphaComponent(0.2)
     }
     
+    
+    
     func bind(){
         
         
@@ -97,7 +101,9 @@ class DirectBuyingPopupViewController : UIViewController{
         self.cancelBtn.rx.tap.subscribe(onNext : {
             self.dismiss(animated: true)
         }).disposed(by: disposeBag)
+        var opId = self.currItem?.userId
         
+        self.isDubChannel(myId: self.myId.description, oppId: opId!.description)
         //즉시 구매 채팅 보내기
         self.sendChatBtn.rx.tap.subscribe(onNext : {
             
@@ -110,6 +116,7 @@ class DirectBuyingPopupViewController : UIViewController{
             print("currentItemUser : \(self.currItem?.userId)")
             var opId = self.currItem?.userId
             var users: [String] = []
+            
             var chatItem : ChatItem? = ChatItem(id: self.currItem?.id,
                                                 status: 0, //즉시 구매시 0
                                                 userId: self.currItem?.userId,
@@ -145,49 +152,71 @@ class DirectBuyingPopupViewController : UIViewController{
             
 //            print("data : \(data?.description)")
             //users.append("\(self.myId)")
+            
             users.append("\(opId!)")
+           
             //채팅방 이름 : status_구메자닉네임_구매자ID, 판매자 닉네임_ 즉구 가격
-            print("채널 이름. : 0_\(self.myName!)_\(self.myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.buyNow ?? 0)_\(chatItem?.title ?? " ")")
-            SBDGroupChannel.createChannel(withName: "0_\(self.myName!)_\(self.myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.title ?? " ")_\(chatItem?.buyNow ?? 0)", //즉구 : 0, 낙찰 : 1
-                                          isDistinct: true,
-                                          userIds: users,
-                                          coverUrl: self.currItem?.image?[0].url,
-                                          data: jsonString , //data?.description , //현재 거래 아이템 정보.
-                                          customType: nil,
-                                          completionHandler:
-                                            { (groupChannel, error) in
-                guard error == nil else {
-                    // Handle error.
-                    print("채널 생성 실패")
-                    return
-                }
-
-                // A group channel with additional information is successfully created.
-                channelUrl = groupChannel!.channelUrl
-                print("채널 생성 성공.")
-//                var autoAccept = true  // The value of true (default) means that a user will automatically join a group channel with no choice of accepting and declining an invitation.
-//                SBDMain.setChannelInvitationPreferenceAutoAccept(autoAccept, completionHandler: { (error) in
-//                    guard error == nil else {
-//                        // Handle error.
-//                        return
-//
-//                    }
-//                    print("초대 승낙")
-//
-//
-//                })
+            print("채널 이름 (아이템 ID) : \(self.currItem?.id)")
+            if self.isDubCnannel {
+                //중복된 채널이라면 기존 채널 열기
+                print("기존에 있던 채널입니다.")
                 guard let pvc = self.presentingViewController
                 else {
                     print("no navigation")
-                    return}
+                    return
+                    
+                }
 
                 self.dismiss(animated: true) {
-                    var nextVC =  MessageList(channelUrl: channelUrl)
+                    var nextVC =  MessageList(channelUrl: self.opendUrl)
                     var naviVC = UINavigationController(rootViewController: nextVC)
                     naviVC.modalPresentationStyle = .fullScreen
                     pvc.present(naviVC, animated: false)
                 }
-            })
+            }else{
+                //없는 채널이라면 새로운 채널 개설.
+                print("새로운 채널을 개설합니다.")
+                SBDGroupChannel.createChannel(withName: "\(String(describing: self.currItem!.id!))", //즉구 : 0, 낙찰 : 1
+                                              isDistinct: false,
+                                              userIds: users,
+                                              coverUrl: self.currItem?.image?[0].url,
+                                              data: jsonString , //data?.description , //현재 거래 아이템 정보.
+                                              customType: nil,
+                                              completionHandler:
+                                                { (groupChannel, error) in
+                    guard error == nil else {
+                        // Handle error.
+                        print("채널 생성 실패")
+                        return
+                    }
+
+                    // A group channel with additional information is successfully created.
+                    channelUrl = groupChannel!.channelUrl
+                    print("채널 생성 성공.")
+    //                var autoAccept = true  // The value of true (default) means that a user will automatically join a group channel with no choice of accepting and declining an invitation.
+    //                SBDMain.setChannelInvitationPreferenceAutoAccept(autoAccept, completionHandler: { (error) in
+    //                    guard error == nil else {
+    //                        // Handle error.
+    //                        return
+    //                    }
+    //                    print("초대 승낙")
+    //                })
+                    guard let pvc = self.presentingViewController
+                    else {
+                        print("no navigation")
+                        return
+                        
+                    }
+
+                    self.dismiss(animated: true) {
+                        var nextVC =  MessageList(channelUrl: channelUrl)
+                        var naviVC = UINavigationController(rootViewController: nextVC)
+                        naviVC.modalPresentationStyle = .fullScreen
+                        pvc.present(naviVC, animated: false)
+                    }
+                })
+            }
+            
             
            
             
@@ -205,4 +234,40 @@ class DirectBuyingPopupViewController : UIViewController{
             return result
         }
     
+}
+
+extension DirectBuyingPopupViewController {
+    
+    
+       /*
+        기존에 있는 채널인지. true/false
+        */
+    func isDubChannel(myId : String, oppId : String) {
+        LoadingIndicator.showLoading()
+        let listQuery = SBDGroupChannel.createMyGroupChannelListQuery()
+        //해당 아이디로 참가한 채팅채널들 조회
+        listQuery?.setUserIdsIncludeFilter([myId, oppId], queryType: SBDGroupChannelListQueryType.and)
+        listQuery?.loadNextPage(completionHandler: { (groupChannels, error) in
+            
+            guard error == nil else {
+                // Handle error.
+                return
+            }
+            
+            //채널 중 같은 아이템의 채팅이 있다면 true 없다면 false
+            groupChannels?.forEach{ channel in
+                print("기존의 채널 : \(channel.name), 현재 아이템 아이디  \(self.currItem!.id)")
+                if channel.name == "\(self.currItem!.id!)"{
+                    self.opendUrl = channel.channelUrl
+                    self.isDubCnannel = true //
+                }
+            }
+            LoadingIndicator.hideLoading()
+        })
+        
+        
+        
+    }
+       
+
 }

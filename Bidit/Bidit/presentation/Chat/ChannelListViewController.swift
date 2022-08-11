@@ -23,7 +23,6 @@ class ChannelListViewController : SBUChannelListViewController {
         self.present(naviVC, animated: true)
     }
     
-  
     
     
     
@@ -53,8 +52,8 @@ class ChannelListViewController : SBUChannelListViewController {
 
         
         let emptyListImg = UIView()
-        let inputImg = UIImageView(image: UIImage(named: "Black hole sucking paper out of the folder and spaceship flying past"))
-        emptyListImg.frame = CGRect(x: 0, y: 0, width: 120, height: 110)
+        let inputImg = UIImageView(image: UIImage(named: "empty_chat_img"))
+        emptyListImg.frame = CGRect(x: 0, y: 0, width: 120, height: 145)
         emptyListImg.addSubview(inputImg)
         
         

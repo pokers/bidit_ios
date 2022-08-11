@@ -134,6 +134,9 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
+        self.navigationController?.navigationBar.isHidden = false
+
+        self.navigationController?.isNavigationBarHidden = false
         setNavigationBar()
         layout()
         
@@ -820,9 +823,7 @@ class UploadProductViewController : UIViewController, View, UIScrollViewDelegate
                     self.navigationController?.presentingViewController?.showToast(message: "상품이 정상적으로 등록되었습니다.")
                     self.navigationController?.popViewController(animated: true)
                     self.navigationController?.topViewController?.showToast(message: "상품이 정상적으로 등록되었습니다.")
-                    
                 }
-                
             }).disposed(by: disposeBag)
     }
    

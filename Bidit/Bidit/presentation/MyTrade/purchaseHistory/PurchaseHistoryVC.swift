@@ -53,7 +53,62 @@ class PurchaseHistoryVC : UIViewController, View{
     
     
     func bind(reactor: PurchaseHistoryReactor) {
+        self.rx.viewWillAppear // 뷰 로드
+            .mapVoid()
+            .map(Reactor.Action.viewDidLoad)
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        //테이블뷰 datasource 바인딩
+        reactor.state
+              .map { $0.itemSection }
+              .bind(to: self.tableView.rx.items(dataSource: dataSource))
+              .disposed(by: self.disposeBag)
         
+        self.tableView.rx.itemSelected //아이템 클릭 액션
+            .map{Reactor.Action.cellSelected($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map{$0.itemSection }
+            .subscribe(onNext : {sections in
+                if sections.count > 0 {
+                    if sections[0].items.count == 0 {
+                        self.emptyImage.isHidden = false
+                    }else {
+                        self.emptyImage.isHidden = true
+                    }
+                }else {
+                    self.emptyImage.isHidden = false
+                }
+                
+                
+                
+            }).disposed(by: disposeBag)
+            
+        
+        
+        //State
+        
+        //테이블뷰 셀 클릭
+        reactor.state.map{ $0.selectedIndexPath}
+            .compactMap{$0}
+            .subscribe(onNext : { [weak self] indexPath in
+               
+                guard let self = self else { return }
+                print("cell clicked")
+                //구매자 아이템 디테일 화면
+                var itemDetailVC = ItemBuyDetailViewController()
+                itemDetailVC.reactor = ItemBuyDetailReactor(item: reactor.itemList[indexPath.row]) //수정 필요
+                
+                print("\(reactor.itemList[indexPath.row]) indexpath is ")
+                itemDetailVC.currItem = reactor.itemList[indexPath.row]
+                self.tabBarController?.tabBar.isHidden = true
+                self.navigationController?.navigationBar.isHidden = false
+                
+                self.navigationController?.pushViewController(itemDetailVC, animated: true)
+                self.tableView.deselectRow(at: indexPath, animated: true)
+            }).disposed(by: disposeBag)
     }
     
 

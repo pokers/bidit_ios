@@ -95,8 +95,11 @@ class DeleteCheckDialogVC : UIViewController {
                 //현재 입찰 진행중이라면 상태를 바꿀 수 없음.
                 if self.currItem?.status == 1 {
                     //판매글 삭제가 불가능합니다. 팝업창
-                    self.setFailPopup()
-                    self.dismiss(animated: false)
+                    
+                    self.dismiss(animated: false){
+                        self.setFailPopup()
+                        print("you can't delete it")
+                    }
                 }else {
                     self.requestDeleteItem(itemId: self.currItem!.id)
                 }
@@ -135,7 +138,18 @@ extension DeleteCheckDialogVC {
                         //emitter.onNext(.requestBidding)
                         //emitter.onCompleted()
                         
-                        self.dismiss(animated: true)
+                        LoadingIndicator.hideLoading()
+                        guard let pvc = self.presentingViewController
+                        else {
+                            print("no navigation")
+                            return
+                            
+                        }
+
+                        self.dismiss(animated: true) {
+                            pvc.navigationController?.popViewController(animated: true)
+                        }
+                        //self.dismiss(animated: true)
                        
                     }catch (let error) {
                         print("item load fail")

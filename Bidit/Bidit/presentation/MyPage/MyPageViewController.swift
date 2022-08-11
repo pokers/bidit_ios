@@ -18,7 +18,6 @@ class MyPageViewController : UIViewController ,View{
     
     var mainTabVC : TabbarController? = nil
     
-    
     // 스크롤뷰
     let scrollView = UIScrollView()
 
@@ -84,17 +83,21 @@ class MyPageViewController : UIViewController ,View{
         super.viewDidLoad()
         layout()
         self.view.backgroundColor = .white
+        zzimRecordBtn.isHidden = true
        
         
     }
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
+        tabBarController?.tabBar.backgroundColor = .white
+    
+        
     }
     
     
     private func layout(){
         
-        self.view.backgroundColor = .systemBackground
+        self.view.backgroundColor = .white
         //스크롤뷰
         self.view.addSubview(scrollView)
         scrollView.snp.makeConstraints{
@@ -144,6 +147,7 @@ class MyPageViewController : UIViewController ,View{
             
         }
         nameText.text = "닉네임닉네임닉네임"
+        nameText.textAlignment = .center
         nameText.font = .systemFont(ofSize: 12, weight: .bold)
         
         
@@ -154,6 +158,7 @@ class MyPageViewController : UIViewController ,View{
             $0.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(32)
         }
+        
         changeBtn.setImage(UIImage(named: "profile_change_btn_img"), for: .normal)
         
         countDivider.snp.makeConstraints{

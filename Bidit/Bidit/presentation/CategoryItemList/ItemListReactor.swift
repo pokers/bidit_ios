@@ -193,14 +193,15 @@ extension ItemListReactor{
 
             let itemQuery = ItemQueryInput.init(id: nil, status: nil, userId: nil, categoryId: category, name: nil, dueDate: nil, deliveryType: nil, sCondition: nil, aCondition: nil, createdAt: nil)
             Network.shared.apollo.fetch(
-                query:GetItemListQuery(itemQueryInfo: itemQuery,
+                query: GetItemListQuery(itemQueryInfo: itemQuery,
                                        keywordInfo: nil,
                                        firstInfo: nil,
                                        lastInfo: nil,
                                        afterInfo: nil,
                                        beforeInfo: nil,
                                        cursorTypeInfo: nil
-                                      )){ result in
+                                      ),
+                cachePolicy: .fetchIgnoringCacheData){ result in
                 
                 switch result {
                 case .success(let data) :
@@ -214,16 +215,17 @@ extension ItemListReactor{
 //                        }
                         var tempList = Array<Item>()
                         data.data!.getItemList!.edges!.forEach{item in
-                            var node = item?.node
+                            let node = item?.node
                             var images = Array<ItemImage>()
-                            var userInfo = User(id: node!.id,
-                                                status: node!.status,
+                            let userInfo = User(id: node!.user!.id,
+                                                status: 0,
                                                 nickname: node?.user?.nickname,
                                                 email: node?.user?.email,
                                                 counting: nil,
                                                 kakaoAccount: nil,
                                                 appleAccount: nil
                             )
+                            print("아이템 리스트의 userInfo \(userInfo)")
                             node?.image!.forEach{ result in
                                 
                                 
@@ -238,7 +240,7 @@ extension ItemListReactor{
                                 
                             }
                             
-                            var tempItem = Item( id: node!.id,
+                            let tempItem = Item( id: node!.id,
                                                        status:  node?.status,
                                                        categoryId: node?.categoryId,
                                                       userId: node?.userId,
@@ -341,7 +343,7 @@ extension ItemListReactor{
                         data.data?.getEndingSoonItems!.forEach{item in
                             var node = item
                             var images = Array<ItemImage>()
-                            var userInfo = User(id: node!.id,
+                            var userInfo = User(id: node!.userId,
                                                 status: node!.status,
                                                 nickname: node?.user?.nickname,
                                                 email: node?.user?.email,
@@ -349,7 +351,7 @@ extension ItemListReactor{
                                                 kakaoAccount: nil,
                                                 appleAccount: nil
                             )
-                            
+                            print("getListOfType : \(userInfo)")
                             node?.image!.forEach{ result in
                                 
                                 
@@ -475,7 +477,7 @@ extension ItemListReactor{
                         data.data?.getEndingSoonItems!.forEach{item in
                             var node = item
                             var images = Array<ItemImage>()
-                            var userInfo = User(id: node!.id,
+                            var userInfo = User(id: node!.userId,
                                                 status: node!.status,
                                                 nickname: node?.user?.nickname,
                                                 email: node?.user?.email,

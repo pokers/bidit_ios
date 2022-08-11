@@ -13,10 +13,13 @@ import MaterialComponents.MaterialBottomSheet
 import ImageSlideshow
 import RxSwift
 import SendBirdUIKit
+import Kingfisher
 
 //물건 상세 페이지(구매자)
 class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate{
     
+    var opendUrl = ""
+    var isDubCnannel = false //채널 존재 여부
     var disposeBag: DisposeBag = DisposeBag()
     //네비게이션 바 버튼 (우측)
     let menuView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
@@ -26,7 +29,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     let zzimBtn = UIButton()
     let shareBtn = UIButton()
     let menuBtn = UIButton()
-
+    let myId = UserDefaults.standard.integer(forKey: "userId") ?? 0 //userId
     
     var observable : Disposable? = nil
     
@@ -67,11 +70,11 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         case.photo(let reactor) :
             let cell = tableView.dequeueReusableCell(for: indexPath) as ItemDetailImageCell
             var tempList = Array<String>()
-            if reactor.initialState.item.image?.count == 0 {
+            if reactor.currentState.item.image?.count == 0 {
                 cell.images.append(ImageSource(image: UIImage(named: "empty_product_img")!)  )
             }
             
-            reactor.initialState.item.image?.forEach{result in
+            reactor.currentState.item.image?.forEach{result in
                 cell.images.append(cell.loadImg(url: result.url))
 
             }
@@ -123,6 +126,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
+        self.navigationController?.isNavigationBarHidden = false
         
     }
     override func viewDidDisappear(_ animated: Bool) {
@@ -139,7 +143,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
           .disposed(by: disposeBag)
         self.view.backgroundColor = .gray
         
-       
+        self.navigationController?.isNavigationBarHidden = false
         
     }
     
@@ -254,6 +258,12 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        UserDefaults.standard.set(0, forKey: "finalBidId")
+
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
     //네비게이션바 세팅
     private func setNavigationBarButton(){
         //네비게이션 바 투명하게
@@ -299,16 +309,18 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         menuButtonItem.width = 20
         zzimButtonItem.width = 40
         shareButtonItem.width = 40
-        self.navigationItem.rightBarButtonItems = [menuButtonItem,shareButtonItem,zzimButtonItem]
+        self.navigationItem.rightBarButtonItems = [menuButtonItem,shareButtonItem]
         
     }
     
     func bind(reactor: ItemBuyDetailReactor) {
         
         
+        
         //Action
         self.rx.viewWillAppear
-            .map{_ in Reactor.Action.viewDidLoad}
+            .mapVoid()
+            .map(Reactor.Action.viewDidLoad)
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -318,14 +330,24 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         //즉시 구매 버튼 이벤트
         self.directBuyBtn.rx.tap.subscribe(onNext :{
-            self.setDirectPopup(item: reactor.currentState.item)
+            
+            if reactor.currentState.item.status < 2{
+                self.setDirectPopup(item: reactor.currentState.item)
+            }else {
+                self.showToast(message: "즉시구매 가능한 상태가 아닙니다.")
+            }
+           
         }).disposed(by: disposeBag)
+        
+        
+        
+        
         //채팅하기 버튼 이벤트
         self.chattingBtn.rx.tap.subscribe(onNext : {
             var opId = self.currItem?.userId
             var users: [String] = []
             var chatItem : ChatItem? = ChatItem(id: self.currItem?.id,
-                                                status: 1,
+                                                status: 1, //최종낙찰시 1
                                                 userId: self.currItem?.userId,
                                                 userName: self.currItem?.user?.nickname ?? "닉네임 없음.",
                                                 sPrice: self.currItem?.sPrice,
@@ -338,56 +360,80 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             
             )
             var jsonString = ""
+            var jsonData : Data? = nil
+            
             do {
-                let jsonData = try JSONEncoder().encode(chatItem)
-                jsonString = String(data: jsonData, encoding: .utf8)!
-                print(jsonString) // [{"sentence":"Hello world","lang":"en"},{"sentence":"Hallo Welt","lang":"de"}]
-                
+                jsonData = try JSONEncoder().encode(chatItem)
+                jsonString = String(data: jsonData!, encoding: .utf8) ?? "err"
+                print(jsonString)// [{"sentence":"Hello world","lang":"en"},{"sentence":"Hallo Welt","lang":"de"}]
                 // and decode it back
 //                let decodedSentences = try JSONDecoder().decode([chatItem].self, from: jsonData)
 //                print(decodedSentences)
-            } catch { print(error) }
+                
+            } catch let err{
+                print("err:\(err.localizedDescription)")
+            }
             // 즉구할때 나(구매자), 상대(아이템 판매자)
-            let myId = UserDefaults.standard.integer(forKey: "userId") ?? 1 //userId
-            let myName = UserDefaults.standard.string(forKey: "userName") ?? "ok"
+            let myId = UserDefaults.standard.integer(forKey: "userId") ?? 0 //userId
+            let myName = UserDefaults.standard.string(forKey: "userName") ?? "닉네임 없음"
             
             users.append("\(opId!)")
-            //채팅방 이름 : status_구메자닉네임_구매자ID, 판매자 닉네임_ 즉구 가격
-            print("채널 이름. : 1_\(myName)_\(myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.buyNow ?? 0)_\(chatItem?.title )")
-            SBDGroupChannel.createChannel(withName: "0_\(myName)_\(myId)_\(self.currItem?.user?.nickname ?? " ")_\(chatItem?.title ?? " ")_\(chatItem?.buyNow ?? 0)", //즉구 : 0, 낙찰 : 1
-                                          isDistinct: false,
-                                          userIds: users,
-                                          coverUrl: self.currItem?.image?[0].url,
-                                          data: jsonString, //chatItem.debugDescription , //data?.description , //현재 거래 아이템 정보.
-                                          customType: nil,
-                                          completionHandler:
-                                            { (groupChannel, error) in
-                guard error == nil else {
-                    // Handle error.
-                    print("채널 생성 실패")
-                    return
-                }
-
-                // A group channel with additional information is successfully created.
-                var channelUrl = groupChannel!.channelUrl
-                print("채널 생성 성공.")
+            
+            if self.isDubCnannel{
+                //중복된 채널이라면 기존 채널 열기
+                print("기존에 있던 채널입니다.")
                 guard let pvc = self.presentingViewController
                 else {
                     print("no navigation")
-                    return}
-
-                var nextVC =  MessageList(channelUrl: channelUrl)
-                var naviVC = UINavigationController(rootViewController: nextVC)
-                naviVC.modalPresentationStyle = .fullScreen
-                pvc.present(naviVC, animated: false)
+                    return
                     
+                }
+
+                self.dismiss(animated: true) {
+                    var nextVC =  MessageList(channelUrl: self.opendUrl)
+                    var naviVC = UINavigationController(rootViewController: nextVC)
+                    naviVC.modalPresentationStyle = .fullScreen
+                    pvc.present(naviVC, animated: false)
+                }
                 
-            })
-            
-           
-            
-            
-//
+            }else{
+                //없는 채널이라면 새로운 채널 개설.
+                //채팅방 이름 : status_구메자닉네임_구매자ID, 판매자 닉네임_ 즉구 가격
+                print("새로운 채널을 개설합니다.")
+                print("채널 이름 (아이템 ID) : \(self.currItem?.id)")
+                
+                SBDGroupChannel.createChannel(withName: "\(String(describing: self.currItem!.id!))", //즉구 : 0, 낙찰 : 1
+                                              isDistinct: true,
+                                              userIds: users,
+                                              coverUrl: self.currItem?.image?[0].url,
+                                              data: jsonString, //chatItem.debugDescription , //data?.description , //현재 거래 아이템 정보.
+                                              customType: nil,
+                                              completionHandler:
+                                                { (groupChannel, error) in
+                    guard error == nil else {
+                        // Handle error.
+                        print("채널 생성 실패")
+                        return
+                    }
+
+                    // A group channel with additional information is successfully created.
+                    var channelUrl = groupChannel!.channelUrl
+                    print("채널 생성 성공.")
+                    guard let pvc = self.presentingViewController
+                    else {
+                        print("no navigation")
+                        return}
+
+                    var nextVC =  MessageList(channelUrl: channelUrl)
+                    var naviVC = UINavigationController(rootViewController: nextVC)
+                    naviVC.modalPresentationStyle = .fullScreen
+                    self.present(naviVC, animated: false)
+                        
+                    
+                })
+                
+            }
+    
             
         }).disposed(by: disposeBag)
                 
@@ -412,11 +458,19 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         self.shareBtn.rx.tap
             .subscribe(onNext: {
-                let vc = NotOpenDialogVC()
-                vc.modalPresentationStyle = .fullScreen
-               
-                // 보여주기
-                self.present(vc, animated: false, completion: nil)
+                //서비스 준비중 팝업
+//                let vc = NotOpenDialogVC()
+//                vc.modalPresentationStyle = .fullScreen
+//
+//                // 보여주기
+//                self.present(vc, animated: false, completion: nil)
+                let image = self.loadProfileImg(url: reactor.currentState.item.image![0].url)
+                
+                let activityItems : [UIImage] = [image]
+                let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+                self.present(activityViewController, animated: true)
+                
+                
             }).disposed(by: disposeBag)
        
         reactor.state
@@ -434,20 +488,37 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         reactor.state.subscribe(onNext : {state in
             //내 제품인 경우(판매자 인터페이스)
+            
+            self.isDubChannel(myId: self.myId.description , oppId: self.currItem!.userId.description)
+            print("지금 낙찰자는 ? : \(UserDefaults.standard.integer(forKey: "finalBidId"))")
+            print("지금 나는 ? : \(UserDefaults.standard.integer(forKey: "userId") )")
             if state.item.userId == UserDefaults.standard.integer(forKey: "userId") {
                 self.buttonContainer.isHidden = true
                 self.menuView.isHidden = false
             }else{
                 //내 제품이 아닌 경우(구매자 인터페이스)
-                self.buttonContainer.isHidden = false
                 self.menuView.isHidden = true
-                //내가 최종 낙찰자인 경우. 입찰하기 버튼 -> 채팅하기 버튼으로 전환
-                if UserDefaults.standard.integer(forKey: "userId") == UserDefaults.standard.integer(forKey: "finalBidId") {
-                    self.chattingBtn.isHidden = false
-                    self.biddingBtn.isHidden = true
-                    //
+                self.buttonContainer.isHidden = true
+                if state.item.status <= 1 && isEnableBid(end: state.item.dueDate!){ //아직 입찰 가능한 상태
+                    self.buttonContainer.isHidden = false
+                    
+                    //내가 최종 낙찰자인 경우. 입찰하기 버튼 -> 채팅하기 버튼으로 전환
+                }else if state.item.status  <= 2 && !isEnableBid(end: state.item.dueDate!){
+                    
+                    if UserDefaults.standard.integer(forKey: "userId") == UserDefaults.standard.integer(forKey: "finalBidId") {
+                        self.chattingBtn.isHidden = false
+                        self.buttonContainer.isHidden = false
+                        self.biddingBtn.isHidden = true
+                        //
+                    }else{ //입찰 불가능한 상태
+                        self.buttonContainer.isHidden = true
+                    }
                 }
+                
+                
             }
+            
+            self.tableView.reloadData()
         }).disposed(by: disposeBag)
         
         
@@ -498,9 +569,62 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
 
 
     }
+    
+    func loadProfileImg(url : String) -> UIImage{
+        var resultImage : UIImage?
+        if let thumbnailUrl = URL(string: url) {
+            KingfisherManager.shared.retrieveImage(with: thumbnailUrl, completionHandler: { result in
+            switch(result) {
+                case .success(let imageResult):
+//                    let resized = imageResult.image.resizedImageWithContentMode(.scaleAspectFit, bounds: CGSize(width: 84, height: 84), interpolationQuality: .medium)
+                    //imageView.isHidden = false
+                resultImage = imageResult.image
+                case .failure(let error):
+                break
+                }
+            })
+        }
+        return resultImage ?? UIImage(named: "basic_profile_img")!
+    }
 
     
 }
+
+
+extension ItemBuyDetailViewController {
+    
+    /*
+     기존에 있는 채널인지. true/false
+     */
+ func isDubChannel(myId : String, oppId : String) -> Void{
+     LoadingIndicator.showLoading()
+     let listQuery = SBDGroupChannel.createMyGroupChannelListQuery()
+     //해당 아이디로 참가한 채팅채널들 조회
+     listQuery?.setUserIdsIncludeFilter([myId, oppId], queryType: SBDGroupChannelListQueryType.and)
+     listQuery?.loadNextPage(completionHandler: { (groupChannels, error) in
+         
+         guard error == nil else {
+             // Handle error.
+             return
+         }
+         
+         //채널 중 같은 아이템의 채팅이 있다면 true 없다면 false
+         groupChannels?.forEach{ channel in
+             print("기존의 채널 : \(channel.name), 현재 아이템 아이디  \(self.currItem!.id)")
+             if channel.name == "\(self.currItem!.id!)"{
+                 self.opendUrl = channel.channelUrl
+                 self.isDubCnannel = true //
+             }
+         }
+         LoadingIndicator.hideLoading()
+     })
+     
+     
+     
+ }
+    
+}
+
 
 struct ItemDetailSection{
     typealias DetailSectionModel = SectionModel<DetailSection,DetailItem>
@@ -564,5 +688,9 @@ extension DetailCellSection: SectionModelType {
         }
     }
     
+    
+    
+    
+    
 }
-
+//Cell -> IMAGE

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import RxSwift
+import SendBirdUIKit
 //차단하면 서로의 게시글을 볼 수 없고, 서로 채팅도 보낼 수 없어요.
 //팝업뷰
 class BlockChatDialogVC : UIViewController {
@@ -17,7 +18,8 @@ class BlockChatDialogVC : UIViewController {
     private var popupDescription = UILabel() //차단하시겠어요?
     private var blockChatBtn = UIButton() //차단하기
     private var cancelBtn = UIButton() // 취소
-   
+    var nowChannel :  SBDGroupChannel? = nil
+    var oppoId = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
@@ -105,11 +107,17 @@ class BlockChatDialogVC : UIViewController {
         //입찰 취소 버튼 이벤트
         self.blockChatBtn.rx.tap
             .subscribe(onNext : {
-                let vc = NotOpenDialogVC()
-                vc.modalPresentationStyle = .fullScreen
-               
-                // 보여주기
-                self.present(vc, animated: false, completion: nil)
+//                let vc = NotOpenDialogVC()
+//                vc.modalPresentationStyle = .fullScreen
+//
+//                // 보여주기
+//                self.present(vc, animated: false, completion: nil)
+                
+                self.nowChannel!.banUser(withUserId: "\(self.oppoId)", seconds: 1999999999, description: "차단되었습니다.")
+                print("채팅방 떠나기")
+                self.dismiss(animated: true){
+                    self.presentingViewController?.dismiss(animated: false)
+                }
                 
             }).disposed(by: disposeBag)
     }

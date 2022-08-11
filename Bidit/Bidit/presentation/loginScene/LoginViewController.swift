@@ -25,6 +25,7 @@ class LoginViewController : UIViewController, View{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         self.view.backgroundColor = .black
+        self.navigationController?.navigationBar.isHidden = true
         
     }
     
@@ -34,6 +35,7 @@ class LoginViewController : UIViewController, View{
         layout()
         attribute()
         extendBind()
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     private func layout(){
@@ -82,7 +84,6 @@ class LoginViewController : UIViewController, View{
     }
     private func attribute(){
         self.view.backgroundColor = .black
-        
         logoImg.image = UIImage(named: "logoImg")
         openningText.image = UIImage(named: "openLogo")
         kakaoLoginBtn.setImage(UIImage(named: "kakaoLoginBtn"), for: .normal)
@@ -203,7 +204,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                     //self.updatePushToken()
                     //me 요청이 성공하면 홈화면으로 이동.
                     UserDefaults.standard.set(data.data?.me?.id, forKey: "userId")
-                    UserDefaults.standard.set(data.data?.me?.nickname ??  data.data?.me?.email, forKey: "userName")
+                    let userName = data.data?.me?.nickname ??  data.data?.me?.email
+                    
+                    UserDefaults.standard.set(userName ?? "닉네임 없음" , forKey: "userName")
                     //가입 정보 없을 때 가입 addUser
                     if data.data?.me == nil {
                         //안된다면 가입 addUser호출
@@ -213,8 +216,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                                 print("success \(data)")
                                 //현재 로그인 상태 갱신 (애플, 카카오 등)
                                 UserDefaults.standard.set("apple", forKey: "LoginState")
-                                UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
-                                UserDefaults.standard.set(data.data?.addUser?.email ?? data.data?.addUser?.id, forKey: "userName")
+                                let userID = data.data?.addUser?.id
+                                UserDefaults.standard.set(userID!, forKey: "userId")
+                                UserDefaults.standard.set("기본닉네임\(userID!)", forKey: "userName")
                                 
                                 //푸시 토큰 갱신
                                 //self.updatePushToken()
@@ -237,9 +241,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                         }
                         
                     
+                    }else{
+                        print(" 최초 로그인 정보 \(data.data)")
+                        self.movingHomeView()
                     }
-                    print(" 최초 로그인 정보 \(data.data)")
-                    self.movingHomeView()
+                    
                     break
                 case .failure(let error) :
                     print("로그인 실패 error : \(error)")
@@ -252,8 +258,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                             print("success \(data)")
                             //현재 로그인 상태 갱신 (애플, 카카오 등)
                             UserDefaults.standard.set("apple", forKey: "LoginState")
-                            UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
-                            UserDefaults.standard.set(data.data?.addUser?.email ?? data.data?.addUser?.id, forKey: "userName")
+                            let userID = data.data?.addUser?.id
+                            UserDefaults.standard.set(userID!, forKey: "userId")
+                            UserDefaults.standard.set("기본닉네임\(userID!)", forKey: "userName")
                             
                             
                             //푸시 토큰 갱신

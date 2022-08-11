@@ -89,6 +89,15 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
         
         
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
+        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.tintColor = .gray
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.isNavigationBarHidden = false
+        
+    }
     
     
     private func layout(){
@@ -225,7 +234,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
         
         
         //  Action
-          self.rx.viewDidLoad // 뷰 로드
+          self.rx.viewWillAppear // 뷰 로드
               .mapVoid()
               .map(Reactor.Action.viewDidLoad)
               .bind(to: reactor.action)

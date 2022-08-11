@@ -58,7 +58,7 @@ class SalesHistoryVC : UIViewController, View{
     
     
     func bind(reactor: SalesHistoryReactor) {
-        self.rx.viewDidLoad // 뷰 로드
+        self.rx.viewWillAppear // 뷰 로드
             .mapVoid()
             .map(Reactor.Action.viewDidLoad)
             .bind(to: reactor.action)
