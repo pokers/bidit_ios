@@ -141,18 +141,18 @@ class MessageList : SBUChannelViewController {
             // Through the "groupChannel" parameter of the callback method,
             // the group channel object identified with the CHANNEL_URL is returned by Sendbird server,
             // and you can get the group channel's data from the result object.
-            var array = groupChannel?.name.components(separatedBy: "_")
-            print("array 결과 :\(array)")
+//            var array = groupChannel?.name.components(separatedBy: "_")
+//            print("array 결과 :\(array)")
             
 //            self.itemName.text = array![4].description
 //            self.priceLabel.text = self.decimalWon(value: Int((array?[5])!) ?? 0)
             
             
             
-            self.myView.text = array![1]
-            if array![1] == UserDefaults.standard.string(forKey: "userName"){
-                self.myView.text = array![3]
-            }
+           // self.myView.text = array![1]
+//            if array![1] == UserDefaults.standard.string(forKey: "userName"){
+//                self.myView.text = array![3]
+//            }
             
 
             do {

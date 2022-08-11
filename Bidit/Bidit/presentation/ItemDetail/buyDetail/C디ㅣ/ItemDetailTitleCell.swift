@@ -333,7 +333,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
             .bind(to: self.itemTitle.rx.text)
             .disposed(by: disposeBag)
         //유저 이름
-        reactor.state.map{$0.item.user?.nickname?.description ?? "닉네임 없음\($0.item.user?.id)" }
+        reactor.state.map{$0.item.user?.nickname?.description ?? "닉네임 없음\($0.item.user!.id)" }
             .bind(to: self.sellerNameText.rx.text)
             .disposed(by: disposeBag)
         //즉시 구매가
@@ -395,7 +395,7 @@ class ItemDetailTitleCell : UITableViewCell, View, Reusable{
         }).disposed(by: disposeBag)
         
         
-        self.rx.layoutSubviews.subscribe(onNext : {_ in
+        reactor.state.subscribe(onNext : {_ in
             print("상태 표시 \(reactor.initialState.item.userId) ")
             if reactor.initialState.item.userId ?? 0 == UserDefaults.standard.integer(forKey: "userId") {
                 

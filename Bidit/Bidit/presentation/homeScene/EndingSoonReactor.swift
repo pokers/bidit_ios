@@ -49,6 +49,7 @@ class EndingSoonReactor : Reactor {
       func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            print("viewDidLoad 호출")
             return getDataFromApi()
             
         case .cellSelected(let indexPath):
@@ -83,7 +84,7 @@ class EndingSoonReactor : Reactor {
               print("reactor endingSoon : ")
               break
         
-          case .updateDataSource(_):
+          case .updateDataSource(let itemList):
               state.itemSection = getItemListMock(items: itemList)
               print("\(state.itemSection.count) 결과2 state 개수")
               break
@@ -111,8 +112,8 @@ extension EndingSoonReactor {
                         data.data!.getItemList!.edges!.forEach{item in
                             var node = item?.node
                             var images = Array<ItemImage>()
-                            var userInfo = User(id: node!.id,
-                                                status: node!.status,
+                            var userInfo = User(id: node!.userId,
+                                                status: 0,
                                                 nickname: node?.user?.nickname,
                                                 email: node?.user?.email,
                                                 kakaoAccount: nil,

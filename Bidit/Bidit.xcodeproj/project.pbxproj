@@ -17,6 +17,7 @@
 		EE0D430228535131008464EA /* TempRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0D430128535131008464EA /* TempRepository.swift */; };
 		EE0D4304285351F9008464EA /* DefaultTempRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0D4303285351F9008464EA /* DefaultTempRepository.swift */; };
 		EE0E283C2884262A004DAF7B /* PrivateKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE0E283B2884262A004DAF7B /* PrivateKey.swift */; };
+		EE28249328A39C8500DDC387 /* GetMyBidding.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EE28249228A39C8500DDC387 /* GetMyBidding.graphql */; };
 		EE3D822B287486D900C72830 /* requestBid.graphql in Resources */ = {isa = PBXBuildFile; fileRef = EE3D822A287486D900C72830 /* requestBid.graphql */; };
 		EE4CA219286A211200EAEA87 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4CA218286A211200EAEA87 /* SearchViewController.swift */; };
 		EE4CA21B286A212000EAEA87 /* SearchReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4CA21A286A212000EAEA87 /* SearchReactor.swift */; };
@@ -189,6 +190,7 @@
 		EE0D430128535131008464EA /* TempRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempRepository.swift; sourceTree = "<group>"; };
 		EE0D4303285351F9008464EA /* DefaultTempRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTempRepository.swift; sourceTree = "<group>"; };
 		EE0E283B2884262A004DAF7B /* PrivateKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKey.swift; sourceTree = "<group>"; };
+		EE28249228A39C8500DDC387 /* GetMyBidding.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GetMyBidding.graphql; sourceTree = "<group>"; };
 		EE3D822A287486D900C72830 /* requestBid.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = requestBid.graphql; sourceTree = "<group>"; };
 		EE4CA218286A211200EAEA87 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		EE4CA21A286A212000EAEA87 /* SearchReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReactor.swift; sourceTree = "<group>"; };
@@ -819,6 +821,7 @@
 				EEB3BE60288D4FE10084A022 /* GetItem.graphql */,
 				EEB3BE62288D58250084A022 /* GetBidding.graphql */,
 				EE04CB1E288E99C5004B4DDF /* UpdateMembership.graphql */,
+				EE28249228A39C8500DDC387 /* GetMyBidding.graphql */,
 			);
 			path = query;
 			sourceTree = "<group>";
@@ -1086,6 +1089,7 @@
 				EE3D822B287486D900C72830 /* requestBid.graphql in Resources */,
 				EEB3BE61288D4FE10084A022 /* GetItem.graphql in Resources */,
 				EEFD586B28856DA400D68E67 /* UpdateItem.graphql in Resources */,
+				EE28249328A39C8500DDC387 /* GetMyBidding.graphql in Resources */,
 				EEC212602887CABA00C5B77C /* UpdatePushToken.graphql in Resources */,
 				EEB3BE63288D58250084A022 /* GetBidding.graphql in Resources */,
 				EEF04A0E286D52EE00A9D8A7 /* GoogleService-Info.plist in Resources */,
@@ -1164,6 +1168,7 @@
 				"$(SRCROOT)/GetBidding.graphql",
 				"$(SRCROOT)/UpdateMembership.graphql",
 				"$(SRCROOT)/MyQuery.graphql",
+				"$(SRCROOT)/GetMyBidding.graphql",
 			);
 			name = "Generate Apollo GraphQL API";
 			outputFileListPaths = (
@@ -1470,7 +1475,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
@@ -1487,7 +1492,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.3;
+				MARKETING_VERSION = 0.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1506,7 +1511,7 @@
 				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
@@ -1523,7 +1528,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.3;
+				MARKETING_VERSION = 0.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

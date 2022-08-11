@@ -103,7 +103,11 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         super.viewWillAppear(true)
         startTimer()
         self.navigationController?.navigationBar.isHidden = true
-        self.view.backgroundColor = .white
+
+        self.navigationController?.isNavigationBarHidden = true
+        
+        //self.navigationController?.navigationBar.backgroundColor = .clear
+       // self.navigationController?.hidesBarsOnSwipe = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -138,7 +142,8 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         
         self.view.addSubview(scrollView)
         scrollView.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(-48)
+//            $0.top.equalTo(view.safeAreaLayoutGuide).offset(-49)
+            $0.top.equalToSuperview()
             $0.width.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -225,14 +230,14 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
        
         
 //
-        
-//        컬렉션 뷰 스크롤시 동작
-        collectionView.rx.didScroll.subscribe(onNext : {
-            let scroll = self.collectionView.contentOffset.x + self.collectionView.contentInset.left
-            let width = self.collectionView.contentSize.width + self.collectionView.contentInset.left + self.collectionView.contentInset.right
-            let scrollRatio = scroll / width
-            self.indicatorView.leftOffsetRatio = scrollRatio
-        }).disposed(by: disposeBag)
+//        
+////        컬렉션 뷰 스크롤시 동작
+//        collectionView.rx.didScroll.subscribe(onNext : {
+//            let scroll = self.collectionView.contentOffset.x + self.collectionView.contentInset.left
+//            let width = self.collectionView.contentSize.width + self.collectionView.contentInset.left + self.collectionView.contentInset.right
+//            let scrollRatio = scroll / width
+//            self.indicatorView.leftOffsetRatio = scrollRatio
+//        }).disposed(by: disposeBag)
         
         
     }

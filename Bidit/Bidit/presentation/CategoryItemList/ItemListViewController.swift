@@ -93,8 +93,10 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
         self.navigationController?.navigationBar.topItem?.title = ""
-        self.navigationController?.navigationBar.tintColor = . gray
+        self.navigationController?.navigationBar.tintColor = .gray
         self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.isNavigationBarHidden = false
+        
     }
     
     

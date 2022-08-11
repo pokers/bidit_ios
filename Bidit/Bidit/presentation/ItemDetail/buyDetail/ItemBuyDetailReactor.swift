@@ -18,8 +18,8 @@ class ItemBuyDetailReactor : Reactor {
     enum Mutation {
         case switchBidding
         case switchDirectBuying
-        case updateData(item : Item)
-        case updateBidList(bidList : [BiddingListSection])
+        case updateItemData([DetailCellSection])
+        case updateBidList([BiddingListSection])
         
     }
     
@@ -33,7 +33,7 @@ class ItemBuyDetailReactor : Reactor {
 
     }
     
-    let initialState: State
+    var initialState: State
     
     init(item : Item) {
     
@@ -45,12 +45,14 @@ class ItemBuyDetailReactor : Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
       switch action {
       case .viewDidLoad:
-          
-          
+          //
+          print("viewDidLoad -> requestItemInfo")
           return Observable.concat([
             requestItemInfo(itemId: self.initialState.item.id),
             getBiddingFromApi()
           ])
+          
+          
       
       case .tapBiddingBtn:
         print("mutate 호출")
@@ -60,52 +62,51 @@ class ItemBuyDetailReactor : Reactor {
           print("mutate 호출")
           return Observable<Mutation>.just(.switchDirectBuying)
       }
-    
-    
-    
-    
-    
-    func reduce(state: State, mutation: Mutation) -> State {
-      var state = state
-      switch mutation {
-      case .switchBidding :
-          let statusBid =  state.isOpenBidding
-          print("\(statusBid) bidding status")
-          state.isOpenBidding = statusBid
-     
-          break
-     
-      case .switchDirectBuying:
-          let statusDirect =  state.isOpenDirectBuying
-          print(statusDirect)
-          state.isOpenDirectBuying = (statusDirect)
-          break
-          
-      case .updateData(let item):
-          state.item = item
-          break
-          
-    
-      case .updateBidList(let bidList):
-          state.sections = configSections(item: self.currentState.item, bidList: bidList)
-          
-          break
-      
-      }
-      return state
-    
-    
-    }
-        
-        
- 
-
-        
-       
 
     }
-
+    
+    
+        
+        func reduce(state: State, mutation: Mutation) -> State {
+            var state = state
+            switch mutation {
+            case .switchBidding :
+                let statusBid =  state.isOpenBidding
+                print("\(statusBid) bidding status")
+                state.isOpenBidding = statusBid
+                
+                break
+                
+            case .switchDirectBuying:
+                let statusDirect =  state.isOpenDirectBuying
+                print(statusDirect)
+                state.isOpenDirectBuying = (statusDirect)
+                break
+                
+            case .updateItemData(let detailCellSection):
+                print("유저아이템 updateData : \(String(describing: detailCellSection))")
+                
+                //initialState = state
+                state.sections = detailCellSection
+                
+                break
+                
+                
+            case .updateBidList(let bidList):
+                state.sections = configSections(item: self.currentState.item, bidList: bidList)
+                print("reduce -> updateBidList")
+                break
+                
+            }
+            return state
+        }
+        
+    
+    
 }
+
+
+
 
 extension ItemBuyDetailReactor{
     //아이템 정보 요청
@@ -125,11 +126,11 @@ extension ItemBuyDetailReactor{
                     do {
                         
                         
-                        var item = data.data!.getItem!
-                        var node = item
+                        let item = data.data!.getItem!
+                        let node = item
                         var images = Array<ItemImage>()
-                        var userInfo = User(id: node.userId,
-                                            status: node.status,
+                        let userInfo = User(id: node.userId,
+                                            status: 0,
                                             nickname: node.user?.nickname,
                                             email: node.user?.email,
                                             kakaoAccount: nil,
@@ -165,12 +166,15 @@ extension ItemBuyDetailReactor{
                                              image: images,
                                              user:  userInfo
                         )
-                        
+                        print("유저 이름. : \(userInfo)")
+                        print("유저 아이템. : \(tempItem)")
                         LoadingIndicator.hideLoading()
-                        
                         //                        //return 대신
-                        emitter.onNext(.updateData(item: tempItem))
+                        let inputSection = configSections(item: tempItem, bidList: nil)
+                        print("유저 아이템 변환. : \(inputSection)")
+                        emitter.onNext(.updateItemData(inputSection))
                         emitter.onCompleted()
+                        
                         //
                     }catch (let error) {
                         print(error)
@@ -258,7 +262,7 @@ extension ItemBuyDetailReactor{
                         let result = self.transBidList(biddings: tempList)
                         
                         LoadingIndicator.hideLoading()
-                        emitter.onNext(.updateBidList(bidList: result))
+                        emitter.onNext(.updateBidList(result))
                         emitter.onCompleted()
                        
                     }catch (let error) {

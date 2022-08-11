@@ -16,6 +16,7 @@ class TabbarController : UITabBarController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         updatePushToken()
         let vc = HomeViewController()
         let reactor = HomeReactor(initialState: HomeReactor.State())

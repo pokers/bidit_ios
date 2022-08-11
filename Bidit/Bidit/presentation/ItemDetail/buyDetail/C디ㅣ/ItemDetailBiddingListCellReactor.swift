@@ -45,8 +45,8 @@ class ItemDetailBiddingListCellReactor : Reactor{
         switch action {
             
         case .viewDidLoad:
-            return getBiddingFromApi() // Observable.just(Mutation.updateDataSource(initialState.itemSection)) //
-            
+            return  getBiddingFromApi()//Observable.just(Mutation.updateDataSource(currentState.itemSection))
+           //
 //        case .cellSelected(let indexPath):
 //            return Observable.concat([
 //                Observable.just(Mutation.setSelectedIndexPath(indexPath)),
