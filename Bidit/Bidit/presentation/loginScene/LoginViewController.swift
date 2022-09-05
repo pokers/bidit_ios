@@ -132,9 +132,11 @@ class LoginViewController : UIViewController, View{
                     print("인증 성공 화면 넘어가기")
 //                    let vc = TabbarController()
 //                    self.present(vc, animated: true)
+                    self.movingHomeView()
                     
                     
                      //카카오 로그인 실행
+                    break
                     
                 case false:
                     print("not yet")

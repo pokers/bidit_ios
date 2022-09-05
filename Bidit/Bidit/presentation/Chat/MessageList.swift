@@ -179,15 +179,16 @@ class MessageList : SBUChannelViewController {
                 
                 var oppoNames = result!["userName"] as! String
                 self.oppoId = result!["userId"] as! Int
+                
                 if UserDefaults.standard.integer(forKey: "userId") == result!["userId"] as! Int { //내가 판매자라면
                     oppoNames = result!["buyerName"] as! String
                     self.oppoId = result!["buyerId"] as! Int
                 }
+                
                 self.myView.text = oppoNames
                 
                 print(oppoNames)
                 print("nickNames :\(oppoNames)")
-                
                 print( "result print :\(result!["title"] as! String)")
 //                let jsonDic = try JSONSerialization.jsonObject(with: jsonData2, options: []) as? ChatItem// as? Dictionary<String, Any> ?? [:]
 //                print(jsonDic)
@@ -246,9 +247,7 @@ class MessageList : SBUChannelViewController {
      */
     private func setActionSheet(){
         //action sheet title 지정
-        
         let optionMenu = UIAlertController(title: nil, message: "", preferredStyle: .actionSheet)
-        
         //옵션 초기화
         
         //차단하기,
@@ -264,7 +263,7 @@ class MessageList : SBUChannelViewController {
             
         })
 //        채팅방 나가기"
-        let exitAction = UIAlertAction(title: "채팅방 나가기", style: .default, handler: {
+        let exitAction = UIAlertAction(title: "채팅방 나가기", style: .destructive, handler: {
             (alert: UIAlertAction!) -> Void in
             
             let vc = ExitChatDialogVC()

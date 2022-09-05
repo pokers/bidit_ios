@@ -154,7 +154,9 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
                 }
                 
                 
-                return $0.itemSection }
+                return $0.itemSection
+                
+            }
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
         

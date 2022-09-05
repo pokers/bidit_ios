@@ -59,6 +59,8 @@ class DetailFilterVC : UIViewController{
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = . gray
         self.navigationController?.navigationBar.isHidden = false
+
+        self.navigationController?.isNavigationBarHidden = false
         self.title = "상세필터"
         self.tabBarController?.tabBar.isHidden = true
     }

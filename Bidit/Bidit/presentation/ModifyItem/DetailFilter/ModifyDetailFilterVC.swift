@@ -48,6 +48,9 @@ class ModifyDetailFilterVC : UIViewController{
             $0.height.equalTo(40)
         }
         checkBtn.setImage(UIImage(named: "complete_btn_img"), for: .normal)
+        self.navigationController?.navigationBar.isHidden = false
+
+        self.navigationController?.isNavigationBarHidden = false
         bind()
     }
     /*

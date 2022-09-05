@@ -130,6 +130,9 @@ class ModifyProductVC : UIViewController, View, UIScrollViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
+        self.navigationController?.navigationBar.isHidden = false
+
+        self.navigationController?.isNavigationBarHidden = false
         setNavigationBar()
         layout()
         
