@@ -105,6 +105,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         self.navigationController?.navigationBar.isHidden = true
 
         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.backgroundColor = .white
         
         //self.navigationController?.navigationBar.backgroundColor = .clear
        // self.navigationController?.hidesBarsOnSwipe = true

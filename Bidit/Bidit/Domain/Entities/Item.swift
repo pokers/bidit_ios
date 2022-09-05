@@ -11,7 +11,6 @@ struct Item : ModelType, Codable{
     var status : Int!
     var categoryId : Int? = 0
     var userId : Int!
-
     var sPrice: Int? = 0
     var cPrice: Int? = 0 //# It's not used. Temporary.
     var buyNow: Int? = 0

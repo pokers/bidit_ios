@@ -52,7 +52,9 @@ class SellectCategoryVC : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.navigationBar.isHidden = false
+
+        self.navigationController?.isNavigationBarHidden = false
         setNavigationBar()
         layout()
         bind()

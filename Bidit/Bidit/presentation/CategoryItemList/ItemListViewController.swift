@@ -96,6 +96,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
         self.navigationController?.navigationBar.tintColor = .gray
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.backgroundColor = .white
         
     }
     
