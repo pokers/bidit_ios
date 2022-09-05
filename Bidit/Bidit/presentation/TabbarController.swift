@@ -45,7 +45,7 @@ class TabbarController : UITabBarController{
         let myPageNavigationVC = UINavigationController(rootViewController: myPageVC)
         myPageVC.reactor = MyPageReactor()
         //tabBar.barTintColor = .white
-        //tabBar.tintColor = .black
+//        tabBar.tintColor = .black
         
         
         homeViewController.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"home_img" ), selectedImage: UIImage(named:"home_fill_img" ))
@@ -55,6 +55,7 @@ class TabbarController : UITabBarController{
         searchVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"search_img" ), selectedImage: UIImage(named:"search_fill_img" ))
         
         tradeTabbarVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"my_deal_img" ), selectedImage: UIImage(named:"my_deal_fill_img" ))
+        
         
         myPageVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named:"mypage_img" ), selectedImage: UIImage(named:"mypage_fill_img" ))
         

@@ -53,14 +53,27 @@ class ChannelListViewController : SBUChannelListViewController {
         
         let emptyListImg = UIView()
         let inputImg = UIImageView(image: UIImage(named: "empty_chat_img"))
+        let inputText = UILabel()
         emptyListImg.frame = CGRect(x: 0, y: 0, width: 120, height: 145)
         emptyListImg.addSubview(inputImg)
+        emptyListImg.addSubview(inputText)
         
         
         inputImg.snp.makeConstraints{
-            $0.width.height.equalTo(120)
+            $0.width.equalTo(120)
+            $0.height.equalTo(110)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(400)
+            //$0.bottom.equalToSuperview().inset(400)
+            //$0.top.equalToSuperview()
+            $0.centerY.equalToSuperview()
+        }
+        
+        inputText.text = "대화목록이 없습니다."
+        inputText.textColor = UIColor(rgb: 0x9E9E9E)
+        
+        inputText.snp.makeConstraints{
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(inputImg.snp.bottom).offset(20)
         }
         
         emptyView = emptyListImg
