@@ -15,12 +15,23 @@ target 'Bidit' do
     pod 'Reusable'
     pod 'Tabman', '~> 2.9'
     pod 'ImageSlideshow', '~> 1.9.0'
-    pod 'SideMenu'
+    pod 'SideMenu', '~> 6.0'
     pod 'KakaoSDKCommon'  # 필수 요소를 담은 공통 모듈
     pod 'KakaoSDKAuth'  # 사용자 인증
     pod 'KakaoSDKUser'  # 카카오 로그인, 사용자 관리
     pod 'KeychainSwift', '~> 20.0'
     pod 'RxApolloClient', '1.6.0'
+    pod 'AWSS3'
+    pod 'MaterialComponents/BottomSheet'
+    pod 'Firebase/Analytics'
+    pod 'Firebase/Core'
+    pod 'Firebase/Messaging'
+    pod "BSImagePicker", "~> 3.1"
+    pod 'FSCalendar'
+    pod 'Kingfisher', '~> 7.0'
+    pod 'Firebase/Crashlytics'
+  
+
   # Pods for Bidit
 
 end

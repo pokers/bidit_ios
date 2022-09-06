@@ -1,0 +1,8 @@
+mutation UpdateItem($itemId:Int, $itemUpdate: ItemUpdateInput, $description:String){
+    updateItem (itemId : $itemId, itemUpdate: $itemUpdate, description : $description){
+        id
+        status
+        userId
+        createdAt
+    }
+}

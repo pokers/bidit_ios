@@ -1,12 +1,12 @@
 //
 //  SceneDelegate.swift
 //  Bidit
-//
 
-//
 
 import UIKit
 import KakaoSDKAuth
+import SendBirdUIKit
+import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -17,12 +17,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let vc = LoginViewController() //TabbarController() //LoginViewController()
+        
+        
+       
+        let vc = LoginViewController() //UploadProductViewController()//
+        let naviVC =  UINavigationController(rootViewController: vc)//LoginViewController()
+       //() //TabbarController() //LoginViewController()
         vc.reactor = LoginReactor()
-        vc.view.backgroundColor = .black
-        window?.rootViewController = vc
+        
+        //self.present(naviVC, animated: true)
+        
+        //vc.view.backgroundColor = .black
+        
+        window?.rootViewController = naviVC
         //vc.reactor = HomeReactor() as! HomeViewController.Reactor //LoginReactor() as! LoginViewController.Reactor
         window?.makeKeyAndVisible()
+        
+        if #available(iOS 13.0, *) {
+            self.window?.overrideUserInterfaceStyle = .light // 라이트모드만 지원하기
+        //    self.window?.overrideUserInterfaceStyle = .dark // 다크모드만 지원하기
+        }
+        
+
+        
+        Messaging.messaging().token { token, error in
+          if let error = error {
+            print("Error fetching FCM registration token: \(error)")
+          } else if let token = token {
+            print("FCM registration token: \(token)")
+            //self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
+          }
+        }
+        
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

@@ -1,0 +1,107 @@
+
+query Me {
+    me {
+        id
+        status
+        nickname
+        passwd
+        joinPath
+        
+        birth
+        email
+        phone
+        createdAt
+        updatedAt
+        deletedAt
+        description
+        items {
+            totalCount
+            pageInfo{
+                startCursor
+                endCursor
+                hasNextPage
+                hasPrevPage
+            }
+            edges{
+                node{
+                    id
+                    status
+                    
+                    name
+                    
+                    createdAt
+                    updatedAt
+                    deletedAt
+                    
+                }
+                cursor
+            }
+            
+
+        }
+        kakaoAccount {
+            id
+            status
+            userId
+            profile_needs_agreement
+            profile_nickname_needs_agreement
+            profile_image_needs_agreement
+            name_needs_agreement
+            name
+            email_needs_agreement
+            is_email_valid
+            is_email_verified
+            email
+            age_range_needs_agreement
+            age_range
+            birthyear_needs_agreement
+            birthyear
+            birthday_needs_agreement
+            birthday
+            birthday_type
+            gender_needs_agreement
+            gender
+            phone_number_needs_agreement
+            phone_number
+            ci_needs_agreement
+            ci
+            ci_authenticated_at
+            nickname
+            thumbnail_image_url
+            profile_image_url
+            is_default_image
+            createdAt
+            updatedAt
+            deletedAt
+            description
+            
+
+        }
+        appleAccount {
+           id
+            status
+            userId
+            sub
+            email
+            email_verified
+            is_private_email
+            real_user_status
+            createdAt
+            updatedAt
+            deletedAt
+            description
+
+        }
+        pushToken {
+            id
+            status
+            userId
+            token
+            createdAt
+            updatedAt
+
+        }
+
+        
+    }
+}

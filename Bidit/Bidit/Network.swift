@@ -16,7 +16,7 @@ class Network{
     static let shared = Network()
     
     
-//    private(set) lazy var apollo = ApolloClient(url: URL(string: "https://wypcpelqdbhlxgrexisgez7vba.appsync-api.ap-northeast-2.amazonaws.com/graphql")!)
+//    private(set) lazy var apollo =  ApolloClient(url: URL(string:
 //    var token = ""
 
         private(set) lazy var apollo: ApolloClient = {
@@ -24,7 +24,7 @@ class Network{
             let cache = InMemoryNormalizedCache()
             let store = ApolloStore(cache: cache)
             let provider = NetworkInterceptorProvider(client: client, store: store)
-            let url = URL(string: "https://wypcpelqdbhlxgrexisgez7vba.appsync-api.ap-northeast-2.amazonaws.com/graphql")!
+            let url = URL(string: PrivateKey().GRAPHQL_URL)!
             let transport = RequestChainNetworkTransport(interceptorProvider: provider,
                                                          endpointURL: url)
             return ApolloClient(networkTransport: transport, store: store)
@@ -42,17 +42,17 @@ class Network{
 //          .asObservable()
 //      }
     
-//    func fetch<Query: GraphQLQuery>(
-//        query: Query,
-//        cachePolicy: CachePolicy = .default,
-//        queue: DispatchQueue = DispatchQueue.main
-//      ) -> Observable<Query.Data> {
-//        return self.apollo.rx
-//          .fetch(query: query,
-//                 cachePolicy: cachePolicy,
-//                 queue: queue)
-//          .asObservable()
-//      }
+    func rxFetch<Query: GraphQLQuery>(
+        query: Query,
+        cachePolicy: CachePolicy = .default,
+        queue: DispatchQueue = DispatchQueue.main
+      ) -> Observable<Query.Data> {
+        return self.apollo.rx
+          .fetch(query: query,
+                 cachePolicy: cachePolicy,
+                 queue: queue)
+          .asObservable()
+      }
 //    
 //
 //    func perform<Query : GraphQLMutation>(
@@ -76,12 +76,24 @@ class TokenAddingInterceptor: ApolloInterceptor {
         response: HTTPResponse<Operation>?,
         completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) -> Void) {
 
+            //현재 로그인 SNS확인
+            let nowLoginState = UserDefaults.standard.string(forKey: "LoginState")
+            var forKey = ""
+            if nowLoginState!.elementsEqual("kakao") {
+                forKey = "kakao"
+            }else if nowLoginState!.elementsEqual("apple"){
+                forKey = "apple"
+            }
         // TODO
         let keychain = TokenManager.sharedKeyChain
-        let token = keychain.get("loginKeychainKey")
-            print("token : \(token)")
+            let token = "\(String(describing: keychain.get(forKey)!)) \(forKey)"
+            print("login token : \(token)")
+            
+            
         
-            request.addHeader(name: "Authorization", value: "Bearer \((token)!)")
+            request.addHeader(name: "Authorization", value: "Bearer \((token))")
+        
+            print("Authorization : Bearer \(token)")
            
         // else do nothing
 

@@ -28,8 +28,11 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     typealias Reactor = HomeReactor
      
 
+    var categoryIndex = [2,7,3,8,4,9,5,10,6,11,12,13]
     //전체 스크롤뷰
     var scrollView = UIScrollView()
+    
+    
     var containerView = UIView() //스크롤뷰 안의 컨테이너 뷰
     //배너 이미지 -> ImageSlideShow
     var slideShow = ImageSlideshow()
@@ -45,6 +48,10 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         cv.register(CategoryCell.self, forCellWithReuseIdentifier: "CategoryCell")
             return cv
     }()
+    
+    //커스텀 스크롤 인디케이터 (왔다갔다 보여줌.)
+    private let indicatorView = IndicatorView()
+    
     //탭바
     var homeTabbar = HomeTabbar()
     var tabbarContainer = UIView()
@@ -64,59 +71,17 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     
     let dataSource = RxCollectionViewSectionedReloadDataSource<CategorySection>{dataSource, collectionView, indexPath, item in
         switch item {
-        case .category:
-              let cell = collectionView.dequeueReusableCell(for: indexPath) as CategoryCell
+        case .category(let reactor):
+            let cell = collectionView.dequeueReusableCell(for: indexPath) as CategoryCell
+            cell.reactor = reactor
             print("category create")
               return cell
         }
     }
-    
-    // 탭바 리사이클러뷰
-    
-    
-    //테이블뷰
-//    private lazy var tableView : UITableView = {
-//        let tableView = UITableView(frame: .zero)
-//        tableView.backgroundColor = .systemBackground
-//        tableView.separatorStyle = .none // 컬렉션 뷰 처럼 사용
-//        tableView.register(BannerCell.self, forCellReuseIdentifier: "BannerCell")
-//        return tableView
-//    }()
-    
-//    private let tableView = UITableView().then {
-//        $0.register(cellType: BannerCell.self)
-//        $0.register(cellType: DefaultCell.self)
-//        $0.rowHeight = UITableView.automaticDimension
-//        $0.estimatedRowHeight = 130;
-//      }
+    //플로팅 버튼 (판매글 올리기 이동.)
+    let floatingBtn = UIButton()
     
     
-//    let dataSource = RxTableViewSectionedReloadDataSource<SomeViewSection>{dataSource, tableView, indexPath, item in
-//
-//
-//
-//        switch item {
-//
-//        case .banner(let reactor):
-//              let cell = tableView.dequeueReusableCell(for: indexPath) as BannerCell
-//              cell.reactor = reactor
-//              return cell
-//
-//        case .def(let reactor):
-//              let cell = tableView.dequeueReusableCell(for: indexPath) as DefaultCell
-//              cell.reactor = reactor
-//              return cell
-//        case .category:
-//            let cell = tableView.dequeueReusableCell(for: indexPath) as DefaultCell
-//            return cell
-//
-//
-//        case .productSoon :
-//            let cell = tableView.dequeueReusableCell(for: indexPath) as DefaultCell
-//            return cell
-//        }
-//    }
-//
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -125,28 +90,27 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         scrollView.delegate = self
-        
         layout()
         slideBannerSetting()
         setupView()
         setUpCollectionView()
         attribute()
-        
-    
         //startTimer()
-        
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         startTimer()
         self.navigationController?.navigationBar.isHidden = true
+
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.backgroundColor = .white
+        
+        //self.navigationController?.navigationBar.backgroundColor = .clear
+       // self.navigationController?.hidesBarsOnSwipe = true
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         stopTimer()
@@ -175,15 +139,18 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     }
 
     private func layout(){
-        scrollView.setContentOffset(CGPoint(x: 0, y: -50), animated: false)
+        //scrollView.setContentOffset(CGPoint(x: 0, y: -50), animated: false)
+        
         self.view.addSubview(scrollView)
         scrollView.snp.makeConstraints{
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+//            $0.top.equalTo(view.safeAreaLayoutGuide).offset(-49)
+            $0.top.equalToSuperview()
             $0.width.equalToSuperview()
             $0.trailing.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
+        scrollView.isScrollEnabled = true
         
         scrollView.addSubview(containerView)
         containerView.snp.makeConstraints{
@@ -195,19 +162,29 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         slideShow.snp.makeConstraints{
             $0.leading.top.trailing.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(220)
+            $0.height.equalTo(320)
         }
-        
+        let screenHeight = UIScreen.main.bounds.size.height //화면 세로 크기
+        //탭바 컨테이너
         containerView.addSubview(tabbarContainer)
         tabbarContainer.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(400)
+            $0.top.equalToSuperview().offset(535)
             $0.leading.trailing.equalToSuperview()
             $0.width.equalToSuperview()
-            $0.height.equalTo(660)
+//            $0.height.equalTo(screenHeight - 120)
             $0.bottom.equalToSuperview()
         }
+        //플로팅 버튼 추가 (판매글 올리기)
+        self.view.addSubview(floatingBtn)
         
+        floatingBtn.snp.makeConstraints{
+            $0.width.height.equalTo(100)
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(72)
+        }
+        //아이템 리스트 뷰컨 추가.(탭바)
         addChild(homeTabbar)
+        homeTabbar.homeVC = self
         homeTabbar.view.frame = tabbarContainer.frame
         tabbarContainer.addSubview(homeTabbar.view)
         homeTabbar.didMove(toParent: self)
@@ -216,18 +193,26 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         //let bar = TMBar.ButtonBar()
         //homeTabbar.addBar(bar, dataSource: homeTabbar.self, at: .custom(view: tabbarContainer, layout: nil))
   
+        
+        //extendBind()
     }
     
     private func attribute(){
         
 
         self.navigationController?.navigationBar.isHidden = true
-        scrollView.showsHorizontalScrollIndicator = true
-        scrollView.indicatorStyle = .black
+        self.view.backgroundColor = .white
+        scrollView.showsHorizontalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .white
+        scrollView.backgroundColor = .white
+        containerView.backgroundColor = .white
+        tabbarContainer.backgroundColor = .white
         
-        
+        //플로팅 버튼 이미지 설정.
+        floatingBtn.setImage(UIImage(named: "floating_btn_img"), for: .normal)
     }
-    
+    //카테고리 컬렉션 뷰
     func setUpCollectionView(){
         containerView.addSubview(collectionView)
         collectionView.snp.makeConstraints{
@@ -236,8 +221,37 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             $0.height.equalTo(186)
         }
         
+        containerView.addSubview(indicatorView)
+                self.indicatorView.snp.makeConstraints {
+                  $0.top.equalTo(self.collectionView.snp.bottom)//.offset(4)
+                  $0.left.right.equalTo(self.collectionView).inset(156)
+                  $0.height.equalTo(4)
+            }
+        
+       
+        
+//
+//        
+////        컬렉션 뷰 스크롤시 동작
+//        collectionView.rx.didScroll.subscribe(onNext : {
+//            let scroll = self.collectionView.contentOffset.x + self.collectionView.contentInset.left
+//            let width = self.collectionView.contentSize.width + self.collectionView.contentInset.left + self.collectionView.contentInset.right
+//            let scrollRatio = scroll / width
+//            self.indicatorView.leftOffsetRatio = scrollRatio
+//        }).disposed(by: disposeBag)
+        
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //탭바
+        let allWidth = self.collectionView.contentSize.width + self.collectionView.contentInset.left + self.collectionView.contentInset.right
+        let showingWidth = self.collectionView.bounds.width
+        self.indicatorView.widthRatio = showingWidth / allWidth
+        self.indicatorView.layoutIfNeeded()
+    }
+    
     private func setupView() {
         self.collectionView.rx.setDelegate(self)
           .disposed(by: disposeBag)
@@ -266,19 +280,19 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
             isTop = !isTop
             
             print("뒤로 스크롤")
-            collectionView.flashScrollIndicators()
+            //collectionView.flashScrollIndicators() 스크롤바 보이기
             return
         }else if (isTop == false){
             index = IndexPath.init(item: 0, section: 0) // 이동할 곳
             collectionView.scrollToItem(at: index, at: .left, animated: true)
             isTop = !isTop
             print("앞으로 스크롤")
-            collectionView.flashScrollIndicators()
+            //collectionView.flashScrollIndicators() 스크롤바 보이기
             return
         }
         
     }
-        // [실시간 반복 작업 정지 호출]
+    // [실시간 반복 작업 정지 호출]
         
     func stopTimer(){
         // [실시간 반복 작업 중지]
@@ -293,46 +307,88 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     func bind(reactor: HomeReactor) {
         
         //Action
-        self.rx.viewDidLoad
+        self.rx.viewWillAppear
               .mapVoid()
               .map(Reactor.Action.viewDidLoad)
               .bind(to: reactor.action)
               .disposed(by: self.disposeBag)
         
-//        reactor.state
-//            .bind(to: collectionView.rx.scrollsToTop)
+        collectionView.rx.itemSelected //아이템 클릭
+            .map{
+                 Reactor.Action.cellSelected($0)}
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+         //플로팅 버튼 클릭시 이벤트
+        self.floatingBtn.rx.tap
+            .subscribe(onNext : {
+                let uploadVc = UploadProductViewController()
+                let uploadReactor = UploadProductReactor()
+                uploadVc.reactor = uploadReactor
+               // vc.bind(reactor: listReactor)
+                self.navigationController?.pushViewController(uploadVc, animated: true)
+            }).disposed(by: disposeBag)
+        
+//        //하단으로 스크롤뷰 내려왔을 때 테이블뷰 활성화 & 스크롤뷰 고정
+//        scrollView.rx.reachedBottom()
+//            .subscribe(onNext : { result in
+//                self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = true
+//                self.scrollView.isScrollEnabled = false
+//            }).disposed(by: disposeBag)
+
               
             //State
         reactor.state
-            .map { $0.messageSection }
+            .map { //카테고리 버튼 리스트 바인딩
+                return $0.messageSection }
             .bind(to: collectionView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
         
+        //카테고리 버튼 선택
+        reactor.state.map{ $0.selectedIndexPath}
+            .compactMap{$0}
+            .subscribe(onNext : { [weak self] indexPath in
+                let vc = ItemListViewController()
+                let listReactor = ItemListReactor(initialState: ItemListReactor.State.init(categoryId: self!.categoryIndex[indexPath.row] ))
+                print("카테고리 누른 번호 \(indexPath.row)")
+                //임시로 입력
+                vc.reactor = listReactor
+               // vc.bind(reactor: listReactor)
+                self?.navigationController?.pushViewController(vc, animated: true)
+                guard let self = self else { return }
+                //self.collectionView.deselectRow(at: indexPath, animated: true)
+            }).disposed(by: disposeBag)
         
         
-        
-//        //Action
-//        self.rx.viewDidLoad
-//              .mapVoid()
-//              .map(Reactor.Action.viewDidLoad)
-//              .bind(to: reactor.action)
-//              .disposed(by: self.disposeBag)
-//
-//            //State
-//            reactor.state
-//              .map { $0.messageSection }
-//              .bind(to: self.tableView.rx.items(dataSource: dataSource))
-//              .disposed(by: self.disposeBag)
-          
+
     }
     
 }
-//extension MainViewController: UITableViewDelegate {
-////  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-////      return UITableView.automaticDimension
-////
-////  }
-//}
+extension HomeViewController {
+
+//    func extendBind(){
+//        //테이블뷰 맨 위에 도착했을 때 스크롤뷰 활성화
+//        self.homeTabbar.endingSoonVC.isEnableScroll.asDriver(onErrorJustReturn: true)
+//            .drive(onNext :{[weak self] status in
+//                guard let self = self else  { return }
+//                if status == true{
+//                    self.scrollView.isScrollEnabled = true
+//                    self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = false
+//                }
+//
+//            }).disposed(by: disposeBag)
+//    }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            //reach bottom
+//            print("bottom!")
+//
+//              self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = true
+//        }
+//
+//      }
+}
 
 
 

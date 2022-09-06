@@ -76,15 +76,10 @@ class HomeProductListCell : UITableViewCell , View, Reusable{
     }
     
     private func makeConstraints() {
-      
-        
         tabbarContainer.snp.makeConstraints{
             $0.edges.equalToSuperview()
         }
         tabbarContainer.addSubview(TMBar.ButtonBar())
-        
-        
-        
       }
     
        func bind(reactor: BannerCellReactor) {

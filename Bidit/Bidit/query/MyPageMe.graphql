@@ -1,0 +1,36 @@
+
+query MyPageMe {
+    me {
+        id
+        nickname
+        status
+        counting{
+            buy
+            sell
+        }
+        kakaoAccount {
+            id
+            status
+            userId
+            name
+            email
+            phone_number
+            nickname
+            thumbnail_image_url
+            profile_image_url
+            is_default_image
+            createdAt
+            updatedAt
+        }
+        appleAccount {
+            id
+            status
+            userId
+            email
+            createdAt
+            updatedAt
+            deletedAt
+
+        }
+        }
+}
