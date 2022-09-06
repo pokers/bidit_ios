@@ -50,7 +50,7 @@ class ItemListReactor : Reactor{
     struct State {
         var itemSection =  [ProductListSection]()// getIListMock() //[ProductListSection]()
         var selectedIndexPath : IndexPath?
-        var isSortListOpened : Bool = false
+        var isSortListOpened : Bool = true
         var sortState : SortState = .latest
         var isFilterOpened : Bool = false
         var resultItemSection : [ProductListSection] = []
@@ -69,7 +69,11 @@ class ItemListReactor : Reactor{
         switch action {
             
         case .viewDidLoad:
-            return getListOfType(categoryType: self.initialState.categoryId, sortType: .latest)// 임시로 입력
+            return Observable.concat([
+            getListOfType(categoryType: self.initialState.categoryId, sortType: .latest),
+               Observable<Mutation>.just(Mutation.sortListOpen(isOpened: true))
+            ])
+            
             
         case .cellSelected(let indexPath):
             return Observable.concat([
