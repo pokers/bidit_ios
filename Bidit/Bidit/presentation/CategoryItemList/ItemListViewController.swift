@@ -25,8 +25,9 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
     var appliedFilter = false
     
     var sortList = UIImageView(image: UIImage(named: "balloonFilterImg"))
+    var sortBackgroundBtn = UIButton() //정렬 버튼 배경 버튼
     
-   // let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(back))
+    //let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(back))
     
     var popularityBtn = UIButton()
     var endingSoonBtn = UIButton()
@@ -140,6 +141,14 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
             $0.bottom.equalToSuperview()
         }
         
+        self.view.addSubview(sortBackgroundBtn)
+        sortBackgroundBtn.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
+        sortBackgroundBtn.isHidden = false
+        sortBackgroundBtn.backgroundColor = .gray
+        sortBackgroundBtn.alpha = 0.2
+        
         self.view.addSubview(sortList)
         sortList.snp.makeConstraints{
             $0.top.equalTo(subToolBarContainer.snp.bottom)
@@ -147,7 +156,7 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
             $0.height.equalTo(100)
             $0.leading.equalToSuperview().offset(44)
         }
-        sortList.isHidden = true
+        sortList.isHidden = false
         //말풍선 필터에 버튼 추가.
         [popularityBtn, endingSoonBtn, latestBtn].forEach{
             sortList.addSubview($0)
@@ -247,7 +256,12 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
             .disposed(by: disposeBag)
         
         self.sortButton.rx.tap // 정렬 필터 클릭 액션
-            .map(Reactor.Action.tapSortButton(isOpened: !self.sortList.isHidden)) //처음에 가려진 상태 -> 열리지 않음(false)전달
+            .map(Reactor.Action.tapSortButton(isOpened: !self.sortBackgroundBtn.isHidden)) //처음에 가려진 상태 -> 열리지 않음(false)전달
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        self.sortBackgroundBtn.rx.tap
+            .map(Reactor.Action.tapSortButton(isOpened: !self.sortBackgroundBtn.isHidden))
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
           
@@ -343,13 +357,20 @@ class ItemListViewController : UIViewController, View, UIScrollViewDelegate{
         reactor.state
             .map{ $0.isSortListOpened}
             .subscribe(onNext : { isOpened in
-
-                self.sortList.isHidden = !self.sortList.isHidden
-                if self.sortList.isHidden == true {
+                self.sortBackgroundBtn.isHidden = !self.sortBackgroundBtn.isHidden
+//                self.sortList.isHidden = !self.sortList.isHidden
+                if self.sortBackgroundBtn.isHidden == true {
                     self.sortButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+                    self.sortList.isHidden = true
+                    self.sortBackgroundBtn.isHidden = true
+                    self.navigationController?.navigationBar.backgroundColor = .white
+                    self.navigationController?.navigationBar.alpha = 1.0
                 }else{
                     
                     self.sortButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+                    self.sortList.isHidden = false
+                    self.sortBackgroundBtn.isHidden = false
+                    self.navigationController?.navigationBar.alpha = 0.1
                 }
                 
                 

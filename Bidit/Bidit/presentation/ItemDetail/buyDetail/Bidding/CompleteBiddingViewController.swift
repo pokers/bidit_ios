@@ -111,7 +111,8 @@ class CompleteBiddingViewController : UIViewController, View{
         checkButton.snp.makeConstraints{
             $0.bottom.equalToSuperview().inset(32)
             $0.trailing.equalToSuperview().inset(16)
-            $0.width.equalTo(224)
+            $0.leading.equalToSuperview().offset(16)
+            //$0.width.equalTo(224)
             $0.height.equalTo(42)
         }
         

@@ -71,6 +71,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
     var filterButton = UIButton()// 필터 버튼
     
     //정렬
+    //var sortBackgroundBtn = UIButton() //정렬 버튼 배경 버튼
     var sortContainer = UIView()
     var sortList = UIImageView(image: UIImage(named: "balloonFilterImg"))
     var popularityBtn = UIButton() //인기순
@@ -273,6 +274,8 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             $0.height.equalTo(36)
         }
         
+        
+        
         //정렬 텍스트
         subToolBarContainer.addSubview(sortLabel)
         sortLabel.snp.makeConstraints{
@@ -411,13 +414,23 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
         
     }
     
+    @objc func sortBackgroundTapped(sender: UITapGestureRecognizer) {
+        sortContainer.isHidden = true
+        self.sortButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+     
+    }
+    
     func attribute(){
         
         //정렬 리스트 배경 불투명화
         sortContainer.backgroundColor = .gray
         //sortList.backgroundColor = .white
-        sortContainer.alpha = 0.9
+        sortContainer.alpha = 0.2
         sortContainer.isHidden = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(sortBackgroundTapped))
+        sortContainer.addGestureRecognizer(tapGestureRecognizer)
+        
         
         
         self.recentKeywordTitle.text = "최근 검색어"
