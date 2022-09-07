@@ -1479,13 +1479,13 @@
 				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근 권한이 필요합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to the photo library.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "제품 사진 촬영을 위한 카메라 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "제품 사진 첨부를 위한 앨범 사용 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "제품 사진 첨부를 위한 앨범 사용 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1496,7 +1496,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 0.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1515,13 +1515,13 @@
 				CODE_SIGN_ENTITLEMENTS = Bidit/Bidit.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = FXFMS96RM6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Bidit/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근 권한이 필요합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to the photo library.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "제품 사진 촬영을 위한 카메라 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "제품 사진 첨부를 위한 앨범 사용 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "제품 사진 첨부를 위한 앨범 사용 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -1532,7 +1532,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 0.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.biditkr.Bidit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
