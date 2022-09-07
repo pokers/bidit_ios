@@ -60,10 +60,10 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     
     //임시 배너
     let images = [
-        ImageSource(image: UIImage(named: "tempBanner")!),
-        ImageSource(image: UIImage(named: "tempBanner")!),
-        ImageSource(image: UIImage(named: "tempBanner")!),
-        ImageSource(image: UIImage(named: "tempBanner")!)
+        ImageSource(image: UIImage(named: "default_banner_img")!),
+        ImageSource(image: UIImage(named: "default_banner_img")!),
+        ImageSource(image: UIImage(named: "default_banner_img")!),
+        ImageSource(image: UIImage(named: "default_banner_img")!)
         ]
     
     
