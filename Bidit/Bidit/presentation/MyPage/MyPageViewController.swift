@@ -496,11 +496,16 @@ class MyPageViewController : UIViewController ,View{
         //서비스 이용약관
         self.policyBtn.rx.tap
             .subscribe(onNext : {
-                let vc = PolicyVC()
+                let vc = PrivatePolicyVC()
                 vc.modalPresentationStyle = .fullScreen
                
                 // 보여주기
                 self.navigationController?.pushViewController(vc, animated: true)
+//                let vc = PolicyVC()
+//                vc.modalPresentationStyle = .fullScreen
+//
+//                // 보여주기
+//                self.navigationController?.pushViewController(vc, animated: true)
             }).disposed(by: disposeBag)
         //개인정보 이용방침
         self.privateBtn.rx.tap
