@@ -1,6 +1,0 @@
-framework module Pods_Bidit {
-  umbrella header "Pods-Bidit-umbrella.h"
-
-  export *
-  module * { export * }
-}
