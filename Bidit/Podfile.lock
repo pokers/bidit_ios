@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.6.1)
+  - Alamofire (5.6.2)
   - Apollo (0.50.0):
     - Apollo/Core (= 0.50.0)
   - Apollo/Core (0.50.0)
@@ -119,17 +119,17 @@ PODS:
   - ImageSlideshow (1.9.2):
     - ImageSlideshow/Core (= 1.9.2)
   - ImageSlideshow/Core (1.9.2)
-  - KakaoSDKAuth (2.11.0):
-    - KakaoSDKCommon (= 2.11.0)
-  - KakaoSDKCommon (2.11.0):
-    - KakaoSDKCommon/Common (= 2.11.0)
-    - KakaoSDKCommon/Network (= 2.11.0)
-  - KakaoSDKCommon/Common (2.11.0)
-  - KakaoSDKCommon/Network (2.11.0):
+  - KakaoSDKAuth (2.11.1):
+    - KakaoSDKCommon (= 2.11.1)
+  - KakaoSDKCommon (2.11.1):
+    - KakaoSDKCommon/Common (= 2.11.1)
+    - KakaoSDKCommon/Network (= 2.11.1)
+  - KakaoSDKCommon/Common (2.11.1)
+  - KakaoSDKCommon/Network (2.11.1):
     - Alamofire (~> 5.1)
-    - KakaoSDKCommon/Common (= 2.11.0)
-  - KakaoSDKUser (2.11.0):
-    - KakaoSDKAuth (= 2.11.0)
+    - KakaoSDKCommon/Common (= 2.11.1)
+  - KakaoSDKUser (2.11.1):
+    - KakaoSDKAuth (= 2.11.1)
   - KeychainSwift (20.0.0)
   - Kingfisher (7.3.0)
   - MaterialComponents/Availability (124.2.0)
@@ -206,9 +206,9 @@ DEPENDENCIES:
   - Firebase/Messaging
   - FSCalendar
   - ImageSlideshow (~> 1.9.0)
-  - KakaoSDKAuth
-  - KakaoSDKCommon
-  - KakaoSDKUser
+  - KakaoSDKAuth (= 2.11.1)
+  - KakaoSDKCommon (= 2.11.1)
+  - KakaoSDKUser (= 2.11.1)
   - KeychainSwift (~> 20.0)
   - Kingfisher (~> 7.0)
   - MaterialComponents/BottomSheet
@@ -267,7 +267,7 @@ SPEC REPOS:
     - WeakMapTable
 
 SPEC CHECKSUMS:
-  Alamofire: 87bd8c952f9a4454320fce00d9cc3de57bcadaf5
+  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   Apollo: 5e4476a3236bd576686085b7cd99655c788e4d74
   AWSCore: dbad318b7ff0fd86fb8387d3ad1f30049c05bc58
   AWSS3: 0cf2cedb263368f624ca721e5c56a8cb59fc44bc
@@ -286,9 +286,9 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   ImageSlideshow: be305b54eaf2b2cfc7a7141c7c734605d44dc07d
-  KakaoSDKAuth: b9470887e42b869725b391f4af34c4aaec42ea46
-  KakaoSDKCommon: 0f59f2c1aead6012d92758e8ca46b63ea11c408b
-  KakaoSDKUser: 5dbefe494c50dfdc87e4072710e503d39b41a609
+  KakaoSDKAuth: bb2dfa7be30daa8403c9cfc8001aa6fde7a5b779
+  KakaoSDKCommon: 555e1bb46595b842ded01cf7888cc17bbae4e113
+  KakaoSDKUser: 08c0a4f40bebdebdf948a9e3d0e44ed5c2754f99
   KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
   Kingfisher: cdb1189a9223b1bc028816bd47c8b8101a58831c
   MaterialComponents: 1a9b2d9d45b1601ae544de85089adc4c464306d4
@@ -308,6 +308,6 @@ SPEC CHECKSUMS:
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 600c028f0d43f046562c21c411662f98c4d49959
+PODFILE CHECKSUM: d777a2df63324f703ecf0b10e60405b6b6c4fb29
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2

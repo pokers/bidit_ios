@@ -32,9 +32,13 @@ class LoginViewController : UIViewController, View{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        layout()
-        attribute()
-        extendBind()
+        print("viewDidLoad 1")
+        self.layout()
+        print("viewDidLoad 2")
+        self.attribute()
+        print("viewDidLoad 3")
+        self.extendBind()
+        print("viewDidLoad 4")
         self.navigationController?.navigationBar.isHidden = true
     }
     
