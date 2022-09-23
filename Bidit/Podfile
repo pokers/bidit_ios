@@ -3,35 +3,68 @@
 
 target 'Bidit' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+    use_frameworks!
 
-    pod 'RxSwift', '6.5.0'
-    pod 'RxCocoa', '6.5.0'
-    pod 'ReactorKit'
+    # Framework/Architecture
+    pod 'ReactorKit', '~> 3.2.0'
+    
+    # Rx
+    pod 'RxSwift', '~> 6.5.0'
+    pod 'RxCocoa', '~> 6.5.0'
+    pod 'RxDataSources', '~> 5.0.0'
+    pod 'RxOptional', '~> 5.0.0'
+    pod 'RxViewController', '~> 2.0.0'
+    
+    # Network
+    
+    # graphql
     pod 'Apollo', '~> 0.50.0'
+    pod 'RxApolloClient', '~> 1.6.0'
+    
+    # UI
     pod 'SnapKit', '~> 5.0.0'
-    pod 'RxDataSources', '~> 5.0'
-    pod 'Then'
-    pod 'Reusable'
-    pod 'Tabman', '~> 2.9'
-    pod 'ImageSlideshow', '~> 1.9.0'
     pod 'SideMenu', '~> 6.0'
+    pod 'ImageSlideshow', '~> 1.9.0'
+    pod 'Tabman', '~> 2.9'
+    pod 'MaterialComponents/BottomSheet', '~> 124.2.0'
+    pod "BSImagePicker", '~> 3.1'
+    pod 'FSCalendar', '~> 2.8.0'
+    
+    
+    # Misc.
+    pod 'Then', '~> 3.0.0'
+    pod 'Reusable', '~> 4.1.2'
+    pod 'Kingfisher', '~> 7.0'
+    pod 'SwiftyColor', '~> 1.2.0'
+    pod 'SwiftyImage', '~> 1.6.0'
+    
+    # Sendbird
+    pod 'SendBirdSDK', '~> 3.0.0'
+    pod 'SendBirdUIKit', '~> 2.0.0'
+    
+    # Kakao
     pod 'KakaoSDKCommon', '2.11.1'  # 필수 요소를 담은 공통 모듈
     pod 'KakaoSDKAuth', '2.11.1'  # 사용자 인증
     pod 'KakaoSDKUser', '2.11.1'  # 카카오 로그인, 사용자 관리
+    
+    # internal storage
     pod 'KeychainSwift', '~> 20.0'
-    pod 'RxApolloClient', '1.6.0'
-    pod 'AWSS3'
-    pod 'MaterialComponents/BottomSheet'
-    pod 'Firebase/Analytics'
-    pod 'Firebase/Core'
-    pod 'Firebase/Messaging'
-    pod "BSImagePicker", "~> 3.1"
-    pod 'FSCalendar'
-    pod 'Kingfisher', '~> 7.0'
-    pod 'Firebase/Crashlytics'
-  
+    
+    # AWS
+    pod 'AWSCore', '~> 2.27.10'
+    pod 'AWSS3', '~> 2.27.10'
+    
+    # Firebase
+    pod 'Firebase/Analytics', '~> 9.2.0'
+    pod 'Firebase/Core', '~> 9.2.0'
+    pod 'Firebase/Messaging', '~> 9.2.0'
+    pod 'Firebase/Crashlytics', '~> 9.2.0'
 
-  # Pods for Bidit
-
+    # Log & anlytics
+    pod 'CocoaLumberjack/Swift', '~> 3.7.0'
+    
+    target 'BiditTests' do
+        pod 'RxTest', '~> 6.5.0'
+        pod 'RxExpect'
+    end
 end
