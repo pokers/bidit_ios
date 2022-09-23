@@ -8,6 +8,8 @@
 import Foundation
 import RxSwift
 
+// TODO: It should be moved into TimerService
+
 class TimerUtil {
    // static var timer : Observable<Int>? = nil
     static var timer : Observable<Int>? = nil

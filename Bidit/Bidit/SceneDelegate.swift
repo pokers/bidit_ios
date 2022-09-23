@@ -5,59 +5,39 @@
 
 import UIKit
 import KakaoSDKAuth
-import SendBirdUIKit
 import Firebase
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
-
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        
-        
-       
-        let vc = LoginViewController() //UploadProductViewController()//
-        let naviVC =  UINavigationController(rootViewController: vc)//LoginViewController()
-       //() //TabbarController() //LoginViewController()
-        vc.reactor = LoginReactor()
-        
-        //self.present(naviVC, animated: true)
-        
-        //vc.view.backgroundColor = .black
-        
-        window?.rootViewController = naviVC
-        //vc.reactor = HomeReactor() as! HomeViewController.Reactor //LoginReactor() as! LoginViewController.Reactor
+
+        let loginViewController:LoginViewController = ViewControllerProvider.getLoginViewController()
+        let naviViewController =  UINavigationController(rootViewController: loginViewController)
+        window?.rootViewController = naviViewController
         window?.makeKeyAndVisible()
         
         if #available(iOS 13.0, *) {
             self.window?.overrideUserInterfaceStyle = .light // 라이트모드만 지원하기
-        //    self.window?.overrideUserInterfaceStyle = .dark // 다크모드만 지원하기
         }
-        
-
         
         Messaging.messaging().token { token, error in
-          if let error = error {
-            print("Error fetching FCM registration token: \(error)")
-          } else if let token = token {
-            print("FCM registration token: \(token)")
-            //self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
-          }
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let token = token {
+                print("FCM registration token: \(token)")
+            }
         }
-        
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-            if let url = URLContexts.first?.url {
-                if (AuthApi.isKakaoTalkLoginUrl(url)) {
-                    _ = AuthController.handleOpenUrl(url: url)
-                }
-            }
+        if let url = URLContexts.first?.url {
+            ServiceProvider.getKakaoAuthService().handleRedirectURL(redirectURL: url)
         }
+    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
