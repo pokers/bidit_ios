@@ -36,7 +36,7 @@ class HomeProductListCell : UITableViewCell , View, Reusable{
       let bannerImage = UIImageView().then {
        
         
-          $0.image = UIImage(named: "tempBanner")
+          $0.image = UIImage(named: "default_banner_img")
           $0.backgroundColor = Image.color
           
       }

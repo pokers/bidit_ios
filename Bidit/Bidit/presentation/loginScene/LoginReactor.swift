@@ -114,7 +114,57 @@ class LoginReactor : Reactor {
               }
           }else{
               // 설치 안 되어 있는 경우.
-              print("카카오톡 설치 안 됨")
+              print("카카오톡 설치 안 됨") // 계정으로 로그인
+              UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+                      if let error = error {
+                          print(error)
+                      }
+                  else {
+                      print("loginWithKakaoTalk() success.")
+                      print("token : \(String(describing: oauthToken?.accessToken))")
+                      //do something
+                      UserDefaults.standard.set("kakao", forKey: "LoginState")
+                      
+                      let keyChain = TokenManager.sharedKeyChain
+                      keyChain.set((oauthToken?.accessToken)!,forKey: "kakao")
+                      
+                      //me호출 먼저 실행하여 로그인 시도
+                      Network.shared.apollo.fetch(query: MeQuery()){result in
+                          switch result {
+                          case .success(let data) :
+                              print("success \(data)")
+                              UserDefaults.standard.set(data.data?.me?.id, forKey: "userId")
+                              UserDefaults.standard.set(data.data?.me?.nickname ?? data.data?.me?.email, forKey: "userName")
+                              print("카카오톡 로그인 성공")
+                              self.switchLoginPassed(true)
+                              break
+                          case .failure(let error) :
+                              print("error : \(error)")
+                              //self.passed = false
+                              //실패하면 가입 시도
+                              
+                              Network.shared.apollo.perform(mutation: MyQueryMutation()){result in
+                                  switch result {
+                                  case .success(let data) :
+                                      print("success \(data)")
+                                      UserDefaults.standard.set("kakao", forKey: "LoginState")
+                                      UserDefaults.standard.set(data.data?.addUser?.id, forKey: "userId")
+                                      UserDefaults.standard.set(data.data?.addUser?.email ?? data.data?.addUser?.id, forKey: "userName")
+                                      
+                                      self.switchLoginPassed(true)
+                                      break
+                                  case .failure(let error) :
+                                      print("error : \(error)")
+                                      //self.passed = false
+                                      break
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+              
+              
           }
           return Observable<Mutation>.just(.loginKakao)
             
