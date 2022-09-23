@@ -1,0 +1,16 @@
+
+mutation AddUser {
+    addUser {
+        id
+        status
+        email
+        nickname
+        kakaoAccount {
+            id
+        }
+    }
+}
+
+
+
+

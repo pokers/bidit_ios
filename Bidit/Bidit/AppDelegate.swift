@@ -9,11 +9,7 @@ import RxSwift
 import KakaoSDKCommon 
 import KakaoSDKAuth
 import KakaoSDKUser
-
-import SendBirdUIKitTarget
-import SendBirdUIKit
-import SendBirdSDK
-
+import CoreData
 import UserNotifications
 import Firebase
 
@@ -23,16 +19,16 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Core Data
-        lazy var persistentContainer: NSPersistentContainer = {
-            // name: Core Data 만든 파일명 지정
-            let container = NSPersistentContainer(name: "RecentSearchModel")
-            container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-                if let error = error {
-                    fatalError("Unresolved error, \((error as NSError).userInfo)")
-                }
-            })
-            return container
-        }()
+    lazy var persistentContainer: NSPersistentContainer = {
+        // name: Core Data 만든 파일명 지정
+        let container = NSPersistentContainer(name: "RecentSearchModel")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error {
+                fatalError("Unresolved error, \((error as NSError).userInfo)")
+            }
+        })
+        return container
+    }()
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         // 세로방향 고정
@@ -40,38 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
-        
-        
-        //카카오
-        KakaoSDK.initSDK(appKey: PrivateKey().KAKAO_APP_KEY )
-//        if (AuthApi.isKakaoTalkLoginUrl(url)) {
-//                    return AuthController.handleOpenUrl(url: url)
-//                }
+        // initialize kakaoSDK
+        ServiceProvider.getKakaoAuthService().initialize()
 
-        //샌드버드
-        let APP_ID =  PrivateKey().SENDBIRD_APP_ID // Specify your Sendbird application ID.
-        
-            SBUMain.initialize(applicationId: APP_ID) {
-                // DB migration has started.
-            } completionHandler: { error in
-                // If DB migration is successful, proceed to the next step.
-                // If DB migration fails, an error exists.
-               
-            }
-        
-        
-//        // Case 1: USER_ID only
-//        SBUGlobals.CurrentUser = SBUUser(userId: "USER_ID10")
-//
-//        // Case 2: Specify all fields
-//
-//        SBUGlobals.CurrentUser = SBUUser(userId: "USER_ID2")
-        
-       // SBUGlobals.CurrentUser = SBUUser(userId: "USER_ID3", nickname:"USER_ID3", profileUrl: "USER_ID")
-       
+        // initialize sendbird service
+        ServiceProvider.getSendbirdService().initialize()
+
         //파이어베이스 푸시알림
+        FirebaseConfiguration.shared.setLoggerLevel(FirebaseLoggerLevel.min)
         FirebaseApp.configure()
         
         UNUserNotificationCenter.current().delegate = self
@@ -94,12 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-            if (AuthApi.isKakaoTalkLoginUrl(url)) {
-                return AuthController.handleOpenUrl(url: url)
-            }
-
-            return false
-        }
+        return false
+    }
     
     
 
