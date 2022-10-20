@@ -55,15 +55,10 @@ func isEnableBid(end : String) -> Bool{
     format.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     let convertedEndTime = format.date(from: end)
     
-    //let nowDay = Calendar.current.dateComponents([.day], from: now)
-    //let endDay = Calendar.current.dateComponents([.day], from: convertedEndTime)
-    
-//    guard let startTime = format.date(from: now) else {return "?"}
-//    guard let endTime =  format.date(from: self.end) else {return "?"}
-    var interval = "\(Int(convertedEndTime!.timeIntervalSince(now)/(60*60*24)))일 후 마감"
-    if Int(convertedEndTime!.timeIntervalSince(now)/(60*60*24)) < 0 { //이미 마감 하였다면
+    var timeNum = Int((convertedEndTime?.timeIntervalSince(now) ?? 0)/(60*60*24))
+    var interval = "\(timeNum)일 후 마감"
+    if timeNum < 0 { //이미 마감 하였다면
         return false
-//        interval = "\(-Int(convertedEndTime.timeIntervalSince(now)/(60*60*24)))일 전 마감"
     }
     print("interval is  : \(interval)")
     return true

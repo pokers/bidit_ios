@@ -51,28 +51,29 @@ class HomeReactor : Reactor{
                 Observable.just(Mutation.setSelectedIndexPath(nil))
             ])
         }
-        
       }
       
       func reduce(state: State, mutation: Mutation) -> State {
         var state = state
         switch mutation {
         case .updateDataSource:
-          state.messageSection = getMockCategory()
+          state.messageSection = getCategoryCellModel()
             
         case .setSelectedIndexPath(let indexPath):
             state.selectedIndexPath = indexPath
             print("reactor endingSoon : ")
         }
         return state
-      
       }
     
 }
 
+/*
+ 카테고리 셀 RxDataSources SectionModel 반환
+ */
 
-
-func getMockCategory() -> [CategorySection] {
+ 
+func getCategoryCellModel() -> [CategorySection] {
     let mainItem1 = CategorySectionItem
         .category(CategoryReactor(initialState: .init(categoryEntity: CategoryEntity(categoryName: "iphone_img"),
                                                       categoryId: 2)  ))

@@ -903,7 +903,7 @@ class SearchViewController : UIViewController, View, UIScrollViewDelegate{
             .subscribe(onNext : { [weak self] indexPath in
                 let vc = ItemBuyDetailViewController()//ItemListViewController()
                 //let listReactor = ItemListReactor(initialState: ItemListReactor.State.init())
-                let detailReactor = ItemBuyDetailReactor(item: reactor.itemList[indexPath.row])
+                let detailReactor = ItemBuyDetailReactor(itemId: reactor.itemList[indexPath.row].id)
                 print("\(reactor.itemList[indexPath.row]) indexpath is ")
                 vc.currItem = reactor.itemList[indexPath.row]
                 vc.reactor = detailReactor

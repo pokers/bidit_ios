@@ -32,17 +32,11 @@ class HomeTabbar : TabmanViewController {
        let vc3 = UIViewController()
         
         
-        //중첩 스크롤 delegate 중간 전달.
-//        if let scrollDelegate = scrollDelegate {
-//            vc2.scrollDelegate = scrollDelegate
-//        } else {
-//           print("scrollDelegate 중간 전달 실패 : nil")
-//        }
+
         
         
        viewControllers.append(endingSoonVC)
        viewControllers.append(endingSoonVC)
-//
        self.dataSource = self
 
        // Create bar
