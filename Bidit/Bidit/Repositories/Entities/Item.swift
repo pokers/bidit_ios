@@ -30,31 +30,6 @@ struct Item : ModelType, Codable{
     //let  image: [ItemImage]
    // let category: Category
     
-
-//    init() {
-//        
-//        id = 1
-//        status = 0
-//        userId = 1
-//        createdAt = "22222"
-//        categoryId = 1
-//        sPrice = 1
-//        cPrice = 1
-//        buyNow = 1
-//        viewCount = 1
-//        name = " 아이템 이름"
-//        title = ""
-//        dueDate =  " "
-//        deliveryType = 1 //# 0=DIRECT, 1=PARCEL, 2=BOT
-//        sCondition = 1
-//        aCondition = 1
-//        createdAt = ""
-//        updatedAt = ""
-//        deletedAt = ""
-//        
-//    }
-//    
-    
 }
 
 extension Item : Equatable{

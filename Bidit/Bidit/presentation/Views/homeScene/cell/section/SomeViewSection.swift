@@ -6,7 +6,7 @@
 //
 
 import Foundation
-//RxDataSources에서 사용될 모델이고 섹션 별 아이템 별로 데이터 구조화.
+//RxDataSources에서 사용될 모델, 섹션 별 아이템 별로 데이터 구조화.
 
 import RxDataSources
 
@@ -25,9 +25,7 @@ enum SomeViewSection {
 
 enum SomeViewSectionItem {
     case banner(BannerCellReactor)
-    case def(DefaultCellReactor)
     case category
-    case productSoon(HomeProductListReactor)
 }
 //rxDataSource의 모델로 사용하기 위해 프로토콜 준수
 extension SomeViewSection: SectionModelType {
@@ -49,18 +47,3 @@ extension SomeViewSection: SectionModelType {
     }
   }
 }
-
-
-//
-//struct MultiSection {
-//  typealias HomeSectionModel = SectionModel<HomeSection, HomeItem>
-//
-//  enum HomeSection: Equatable {
-//    case banner
-//    case def
-//  }
-//
-//  enum HomeItem: Equatable {
-//    case firstItem(Banner)
-//  }
-//}

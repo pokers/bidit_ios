@@ -13,6 +13,7 @@ final class ServiceProvider {
     static var kakaoService:AuthService? = nil
     static var appleService:AuthService? = nil
     static var userService:UserService? = nil
+    static var itemService:ItemService? = nil
     
     static func getSendbirdService() -> SendbirdService {
         if self.sendbirdService == nil {
@@ -40,5 +41,12 @@ final class ServiceProvider {
             self.userService = UserServiceImpl(userRepo: RepositoryProvider.getUserRepository())
         }
         return self.userService!
+    }
+    
+    static func getItemService() -> ItemService {
+        if self.itemService == nil {
+            self.itemService = ItemServiceImpl(itemRepo: RepositoryProvider.getItemRepository())
+        }
+        return self.itemService!
     }
 }

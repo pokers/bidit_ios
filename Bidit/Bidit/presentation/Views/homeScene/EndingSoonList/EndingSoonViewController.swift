@@ -20,7 +20,7 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
     typealias Reactor = EndingSoonReactor
     var homeVC : HomeViewController? = nil
     
-    var isEnableScroll = PublishRelay<Bool>() //view -> ViewModel //로그인 통과 여부 .
+//    var isEnableScroll = PublishRelay<Bool>() //view -> ViewModel //로그인 통과 여부 .
 
    
     
@@ -37,17 +37,15 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
     
     var dataSource = RxTableViewSectionedReloadDataSource<ProductListSection> { dataSource, tableView, indexPath, sectionItem in
         switch sectionItem {
-    
         case .item(let reactor):
             let cell = tableView.dequeueReusableCell(for: indexPath) as EndingSoonCell
             cell.reactor = reactor
             return cell
         }
-        
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.isHidden = false
     }
@@ -59,7 +57,7 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
         self.tableView.rx.setDelegate(self)
           .disposed(by: disposeBag)
         
-        extendBind()
+        //extendBind()
         tableView.isScrollEnabled = false
         
     }
@@ -75,21 +73,7 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
     private func attribute(){
         
     }
-    func extendBind(){
-        reactor?.soonListUpdated.asDriver(onErrorJustReturn: [])
-            .drive(onNext :{[weak self] datas in
-                guard let self = self else  { return }
-                //self.reactor?.itemList = datas
-                let data = getUpdateListMock(items: datas)
-                //reactor?.state.itemSection = data
-                print("아이템 업데이트 성공 : \(data)")
-                self.reactor!.itemList = datas
-                self.reactor!.mutate(action: .updateSoon)
-                
-                self.tableView.reloadData()
-            }).disposed(by: disposeBag)
-    }
-    
+
     
     
     
@@ -97,17 +81,11 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
     func bind(reactor: EndingSoonReactor) {
       //  Action
         
-        
-//        self.rx.viewDidLoad
-//            .mapVoid()
-//            .map(Reactor.Action.viewDidLoad)
-//            .bind(to: reactor.action)
-//            .disposed(by: self.disposeBag)
-        
         self.rx.viewDidAppear
             .map{_ in Reactor.Action.viewDidLoad}
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
+        
         self.rx.viewWillAppear.subscribe(onNext : {_ in
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
@@ -117,19 +95,7 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
             .map{Reactor.Action.cellSelected($0)}
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-//        테이블뷰 위로 올라왔을 때
-//        tableView.rx.reachedTop()
-//            .subscribe(onNext : {
-//                self.tableView.isScrollEnabled = false
-//
-//
-//            }).disposed(by: disposeBag)
 
-//        tableView.rx.reachedBottom()
-//            .subscribe(onNext : {
-//
-//            })
-//
         //State
         reactor.state
             .map {
@@ -149,14 +115,9 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
                         $0.top.equalToSuperview().offset(40)
                         $0.trailing.leading.bottom.equalToSuperview()
                         $0.height.equalTo(140 * count)
-                        
                     }
-                    
                 }
-                
-                
                 return $0.itemSection
-                
             }
             .bind(to: self.tableView.rx.items(dataSource: dataSource))
             .disposed(by: self.disposeBag)
@@ -165,12 +126,12 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
             .compactMap{$0}
             .subscribe(onNext : { [weak self] indexPath in
                 let vc = ItemBuyDetailViewController()//ItemListViewController()
-                //let listReactor = ItemListReactor(initialState: ItemListReactor.State.init())
+                
                 let detailReactor = ItemBuyDetailReactor(item: reactor.itemList[indexPath.row])
                 print("\(reactor.itemList[indexPath.row]) indexpath is ")
                 vc.currItem = reactor.itemList[indexPath.row]
                 vc.reactor = detailReactor
-               // vc.bind(reactor: listReactor)
+               
                 self?.tabBarController?.tabBar.isHidden = true
                 self?.navigationController?.navigationBar.isHidden = false
                 self?.navigationController?.pushViewController(vc, animated: true)
@@ -182,24 +143,6 @@ class EndingSoonViewController : UIViewController, View, UIScrollViewDelegate{
     }
 }
 
-extension EndingSoonViewController {
-    
-//    func switchScrollEnable(_ status : Bool){
-//        if(status){
-//            isEnableScroll.accept(true)
-//        }else{
-//            isEnableScroll.accept(false)
-//        }
-//    }
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.y <= 0 {
-//          print("top!")
-//            self.tableView.isScrollEnabled = false
-//        }
-//      }
-//    
-//    self.tableView.rx.contentOffset
-}
 
 
 enum ProductListSection{
