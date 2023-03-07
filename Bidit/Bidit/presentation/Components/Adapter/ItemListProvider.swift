@@ -59,7 +59,7 @@ struct EndingSoonListProvider {
                                  user:  userInfo
             )
             
-            if tempItem.status != 3 && tempItem.status != 4{
+            if tempItem.status != ItemStatus.CANCEL.rawValue && tempItem.status != ItemStatus.SOLD.rawValue{
                 tempList.append(tempItem)
             }
         }

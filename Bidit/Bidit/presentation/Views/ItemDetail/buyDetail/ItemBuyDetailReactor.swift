@@ -60,7 +60,6 @@ class ItemBuyDetailReactor : Reactor {
               .flatMap{ data in
                   let data = try JSONSerialization.data(withJSONObject: data.jsonObject, options: .sortedKeys)
                   let decode = try JSONDecoder().decode(Item.self, from: data)
-                  print(decode)
                   let inputSection = configSections(item: decode, bidList: nil)
                   return Single<Mutation>.just(Mutation.updateItemData(inputSection))
               }

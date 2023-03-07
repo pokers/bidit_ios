@@ -93,7 +93,6 @@ final class ItemRepositoryImpl : ItemRepository {
                     case.failure(let error):
                         log.error("Error : \(error)" )
                         observer(.failure(error))
-                    
                     }
                     
                 }
