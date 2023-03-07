@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="RecentProduct" representedClassName="RecentProduct" syncable="YES">
         <attribute name="cPrice" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dueDate" optional="YES" attributeType="String"/>
@@ -10,8 +10,4 @@
     <entity name="RecentSearchTerm" representedClassName="RecentSearchTerm" syncable="YES">
         <attribute name="keyword" optional="YES" attributeType="String"/>
     </entity>
-    <elements>
-        <element name="RecentProduct" positionX="-45" positionY="0" width="128" height="104"/>
-        <element name="RecentSearchTerm" positionX="-18" positionY="63" width="128" height="44"/>
-    </elements>
 </model>

@@ -18,17 +18,6 @@ class CoreDataManager {
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     
-    
-//    lazy var persistentContainer: NSPersistentContainer? = {
-//        let container = NSPersistentContainer(name: "RecentSearchModel")
-//        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-//
-//            if let error = error as NSError? {
-//                fatalError("Unresolved error \(error), \(error.userInfo)")
-//            }
-//        })
-//        return container
-//    }()
     private lazy var context = appDelegate?.persistentContainer.viewContext
     
     
@@ -124,7 +113,6 @@ class CoreDataManager {
     }
     
     @discardableResult
-    
     func deleteAll<T: NSManagedObject>(request: NSFetchRequest<T>) -> Bool {
         let request: NSFetchRequest<NSFetchRequestResult> = T.fetchRequest()
         let delete = NSBatchDeleteRequest(fetchRequest: request)

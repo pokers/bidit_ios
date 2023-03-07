@@ -112,6 +112,7 @@ iOSInjectionProject/
 
 # others
 .DS_Store
+PrivateKey.swift
 
 # End of https://www.gitignore.io/api/xcode,swift,cocoapods
 

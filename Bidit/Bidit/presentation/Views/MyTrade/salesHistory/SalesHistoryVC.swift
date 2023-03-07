@@ -104,7 +104,7 @@ class SalesHistoryVC : UIViewController, View{
                 print("cell clicked")
                 //구매자 아이템 디테일 화면
                 var itemDetailVC = ItemBuyDetailViewController()
-                itemDetailVC.reactor = ItemBuyDetailReactor(item: reactor.itemList[indexPath.row]) //수정 필요
+                itemDetailVC.reactor = ItemBuyDetailReactor(itemId: reactor.itemList[indexPath.row].id) //수정 필요
                 
                 print("\(reactor.itemList[indexPath.row]) indexpath is ")
                 itemDetailVC.currItem = reactor.itemList[indexPath.row]

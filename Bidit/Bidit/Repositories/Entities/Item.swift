@@ -6,6 +6,15 @@
 //
 
 import Foundation
+//상품 상태
+enum ItemStatus : Int{
+    case REGISTED = 0//등록
+    case ONGOING = 1//경매중
+    case SOLD = 2//판매 완료
+    case END = 3//거래 완료
+    case CANCEL = 4 //등록 취소
+}
+
 struct Item : ModelType, Codable{
     var id : Int!
     var status : Int!
@@ -29,31 +38,6 @@ struct Item : ModelType, Codable{
    // let description: ItemDescription
     //let  image: [ItemImage]
    // let category: Category
-    
-
-//    init() {
-//        
-//        id = 1
-//        status = 0
-//        userId = 1
-//        createdAt = "22222"
-//        categoryId = 1
-//        sPrice = 1
-//        cPrice = 1
-//        buyNow = 1
-//        viewCount = 1
-//        name = " 아이템 이름"
-//        title = ""
-//        dueDate =  " "
-//        deliveryType = 1 //# 0=DIRECT, 1=PARCEL, 2=BOT
-//        sCondition = 1
-//        aCondition = 1
-//        createdAt = ""
-//        updatedAt = ""
-//        deletedAt = ""
-//        
-//    }
-//    
     
 }
 

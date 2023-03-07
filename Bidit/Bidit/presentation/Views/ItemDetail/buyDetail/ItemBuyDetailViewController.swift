@@ -29,7 +29,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     let zzimBtn = UIButton()
     let shareBtn = UIButton()
     let menuBtn = UIButton()
-    let myId = UserDefaults.standard.integer(forKey: "userId") ?? 0 //userId
+    let myId = UserDefaults.standard.integer(forKey: "userId") //userId
     
     var observable : Disposable? = nil
     
@@ -60,7 +60,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
     let chattingBtn = UIButton()
     
     
-    var currItem : Item!
+    var currItem : Item = Item()
     
     let dataSource = RxTableViewSectionedReloadDataSource<DetailCellSection> { dataSource, tableView, indexPath, item in
         tableView.estimatedSectionHeaderHeight = 8
@@ -112,11 +112,11 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         }
         
     }
-        
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        
+       
     }
     
     required init?(coder: NSCoder) {
@@ -324,14 +324,14 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
             .disposed(by: disposeBag)
         
         self.biddingBtn.rx.tap.subscribe(onNext : {
-            self.setBottomSheet(item: reactor.initialState.item) //입찰하기 버튼
+            self.setBottomSheet(item: reactor.initialState.item ?? Item()) //입찰하기 버튼
         }).disposed(by: disposeBag)
         
         //즉시 구매 버튼 이벤트
         self.directBuyBtn.rx.tap.subscribe(onNext :{
             
-            if reactor.currentState.item.status < 2{
-                self.setDirectPopup(item: reactor.currentState.item)
+            if reactor.currentState.item?.status ?? 0 < 2{
+                self.setDirectPopup(item: reactor.currentState.item ?? Item())
             }else {
                 self.showToast(message: "즉시구매 가능한 상태가 아닙니다.")
             }
@@ -343,17 +343,17 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         //채팅하기 버튼 이벤트
         self.chattingBtn.rx.tap.subscribe(onNext : {
-            var opId = self.currItem?.userId
+            var opId = self.currItem.userId
             var users: [String] = []
-            var chatItem : ChatItem? = ChatItem(id: self.currItem?.id,
+            var chatItem : ChatItem? = ChatItem(id: self.currItem.id,
                                                 status: 1, //최종낙찰시 1
-                                                userId: self.currItem?.userId,
-                                                userName: self.currItem?.user?.nickname ?? "닉네임 없음.",
-                                                sPrice: self.currItem?.sPrice,
-                                                cPrice: self.currItem?.cPrice,
-                                                buyNow: self.currItem?.buyNow,
-                                                name: self.currItem?.name,
-                                                title: self.currItem?.title,
+                                                userId: self.currItem.userId,
+                                                userName: self.currItem.user?.nickname ?? "닉네임 없음.",
+                                                sPrice: self.currItem.sPrice,
+                                                cPrice: self.currItem.cPrice,
+                                                buyNow: self.currItem.buyNow,
+                                                name: self.currItem.name,
+                                                title: self.currItem.title,
                                                 buyerId: UserDefaults.standard.integer(forKey: "userId"),
                                                 buyerName: UserDefaults.standard.string(forKey: "userName") ?? "닉네임 없음"
             
@@ -399,12 +399,12 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
                 //없는 채널이라면 새로운 채널 개설.
                 //채팅방 이름 : status_구메자닉네임_구매자ID, 판매자 닉네임_ 즉구 가격
                 print("새로운 채널을 개설합니다.")
-                print("채널 이름 (아이템 ID) : \(self.currItem?.id)")
+                print("채널 이름 (아이템 ID) : \(self.currItem.id)")
                 
-                SBDGroupChannel.createChannel(withName: "\(String(describing: self.currItem!.id!))", //즉구 : 0, 낙찰 : 1
+                SBDGroupChannel.createChannel(withName: "\(String(describing: self.currItem.id))", //즉구 : 0, 낙찰 : 1
                                               isDistinct: true,
                                               userIds: users,
-                                              coverUrl: self.currItem?.image?[0].url,
+                                              coverUrl: self.currItem.image?[0].url,
                                               data: jsonString, //chatItem.debugDescription , //data?.description , //현재 거래 아이템 정보.
                                               customType: nil,
                                               completionHandler:
@@ -442,7 +442,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         //메뉴버튼 이벤트
         self.menuBtn.rx.tap
             .subscribe(onNext : {
-                self.setActionSheet(item: reactor.currentState.item)
+                self.setActionSheet(item: reactor.currentState.item ?? Item())
             }).disposed(by: disposeBag)
         
         //찜하기 버튼 이벤트
@@ -463,7 +463,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
 //
 //                // 보여주기
 //                self.present(vc, animated: false, completion: nil)
-                let image = self.loadProfileImg(url: reactor.currentState.item.image![0].url)
+                let image = self.loadProfileImg(url: reactor.currentState.item?.image![0].url ?? "")
                 
                 let activityItems : [UIImage] = [image]
                 let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
@@ -480,29 +480,32 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
         
         //현재 아이템 상태
         reactor.state
-            .map{$0.item}
+            .map{$0.item ?? Item()}
             .subscribe(onNext : {
                 self.currItem = $0
             }).disposed(by: disposeBag)
         
         reactor.state.subscribe(onNext : {state in
             //내 제품인 경우(판매자 인터페이스)
+            if let userId = self.currItem.userId{
+                self.isDubChannel(myId: self.myId.description , oppId: self.currItem.userId.description)
+            }
             
-            self.isDubChannel(myId: self.myId.description , oppId: self.currItem!.userId.description)
+            
             print("지금 낙찰자는 ? : \(UserDefaults.standard.integer(forKey: "finalBidId"))")
             print("지금 나는 ? : \(UserDefaults.standard.integer(forKey: "userId") )")
-            if state.item.userId == UserDefaults.standard.integer(forKey: "userId") {
+            if state.item?.userId == UserDefaults.standard.integer(forKey: "userId") {
                 self.buttonContainer.isHidden = true
                 self.menuView.isHidden = false
             }else{
                 //내 제품이 아닌 경우(구매자 인터페이스)
                 self.menuView.isHidden = true
                 self.buttonContainer.isHidden = true
-                if state.item.status <= 1 && isEnableBid(end: state.item.dueDate!){ //아직 입찰 가능한 상태
+                if state.item?.status ?? 0 <= 1 && isEnableBid(end: state.item?.dueDate ?? ""){ //아직 입찰 가능한 상태
                     self.buttonContainer.isHidden = false
                     
                     //내가 최종 낙찰자인 경우. 입찰하기 버튼 -> 채팅하기 버튼으로 전환
-                }else if state.item.status  <= 2 && !isEnableBid(end: state.item.dueDate!){
+                }else if state.item?.status ?? 0  <= 2 && !isEnableBid(end: state.item?.dueDate! ?? ""){
                     
                     if UserDefaults.standard.integer(forKey: "userId") == UserDefaults.standard.integer(forKey: "finalBidId") {
                         self.chattingBtn.isHidden = false
@@ -541,7 +544,7 @@ class ItemBuyDetailViewController : UIViewController, View, UIScrollViewDelegate
                    //수정하기 뷰컨트롤러 호출
                    let vc = ModifyProductVC()
                    vc.currItem = self.reactor?.initialState.item
-                   let modifyReactor = ModifyProductReactor(currItem: self.reactor!.initialState.item) //임시로 입력
+                   let modifyReactor = ModifyProductReactor(currItem: self.reactor!.initialState.item ?? Item()) //임시로 입력
                    vc.reactor = modifyReactor
                   // vc.bind(reactor: listReactor)
                    self.navigationController?.pushViewController(vc, animated: true)
@@ -609,8 +612,8 @@ extension ItemBuyDetailViewController {
          
          //채널 중 같은 아이템의 채팅이 있다면 true 없다면 false
          groupChannels?.forEach{ channel in
-             print("기존의 채널 : \(channel.name), 현재 아이템 아이디  \(self.currItem!.id)")
-             if channel.name == "\(self.currItem!.id!)"{
+             print("기존의 채널 : \(channel.name), 현재 아이템 아이디  \(self.currItem.id)")
+             if channel.name == "\(self.currItem.id)"{
                  self.opendUrl = channel.channelUrl
                  self.isDubCnannel = true //
              }

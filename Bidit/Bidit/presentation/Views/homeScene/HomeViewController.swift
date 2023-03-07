@@ -24,7 +24,6 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     
     //필요한 뷰 요소
     //배너, 페이저(카테고리), 배너(페이저)
-    
     var disposeBag = DisposeBag()
     
     typealias Reactor = HomeReactor
@@ -68,9 +67,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         ImageSource(image: UIImage(named: "default_banner_img")!)
         ]
     
-    
-    
-    
+
     let dataSource = RxCollectionViewSectionedReloadDataSource<CategorySection>{dataSource, collectionView, indexPath, item in
         switch item {
         case .category(let reactor):
@@ -109,8 +106,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.navigationBar.backgroundColor = .white
         
-        //self.navigationController?.navigationBar.backgroundColor = .clear
-       // self.navigationController?.hidesBarsOnSwipe = true
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -141,7 +137,6 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     }
 
     private func layout(){
-        //scrollView.setContentOffset(CGPoint(x: 0, y: -50), animated: false)
         
         self.view.addSubview(scrollView)
         scrollView.snp.makeConstraints{
@@ -190,18 +185,11 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         homeTabbar.view.frame = tabbarContainer.frame
         tabbarContainer.addSubview(homeTabbar.view)
         homeTabbar.didMove(toParent: self)
-//
-//
-        //let bar = TMBar.ButtonBar()
-        //homeTabbar.addBar(bar, dataSource: homeTabbar.self, at: .custom(view: tabbarContainer, layout: nil))
-  
-        
-        //extendBind()
+
     }
     
     private func attribute(){
         
-
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = .white
         scrollView.showsHorizontalScrollIndicator = false
@@ -232,16 +220,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
         
        
         
-//
-//        
-////        컬렉션 뷰 스크롤시 동작
-//        collectionView.rx.didScroll.subscribe(onNext : {
-//            let scroll = self.collectionView.contentOffset.x + self.collectionView.contentInset.left
-//            let width = self.collectionView.contentSize.width + self.collectionView.contentInset.left + self.collectionView.contentInset.right
-//            let scrollRatio = scroll / width
-//            self.indicatorView.leftOffsetRatio = scrollRatio
-//        }).disposed(by: disposeBag)
-        
+
         
     }
     
@@ -329,14 +308,7 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
                 self.navigationController?.pushViewController(uploadVc, animated: true)
             }).disposed(by: disposeBag)
         
-//        //하단으로 스크롤뷰 내려왔을 때 테이블뷰 활성화 & 스크롤뷰 고정
-//        scrollView.rx.reachedBottom()
-//            .subscribe(onNext : { result in
-//                self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = true
-//                self.scrollView.isScrollEnabled = false
-//            }).disposed(by: disposeBag)
 
-              
             //State
         reactor.state
             .map { //카테고리 버튼 리스트 바인딩
@@ -364,32 +336,5 @@ class HomeViewController : UIViewController, View, UIScrollViewDelegate{
     }
     
 }
-extension HomeViewController {
-
-//    func extendBind(){
-//        //테이블뷰 맨 위에 도착했을 때 스크롤뷰 활성화
-//        self.homeTabbar.endingSoonVC.isEnableScroll.asDriver(onErrorJustReturn: true)
-//            .drive(onNext :{[weak self] status in
-//                guard let self = self else  { return }
-//                if status == true{
-//                    self.scrollView.isScrollEnabled = true
-//                    self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = false
-//                }
-//
-//            }).disposed(by: disposeBag)
-//    }
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//
-//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-//            //reach bottom
-//            print("bottom!")
-//
-//              self.homeTabbar.endingSoonVC.tableView.isScrollEnabled = true
-//        }
-//
-//      }
-}
-
 
 

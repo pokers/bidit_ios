@@ -16,31 +16,31 @@ class Network{
     static let shared = Network()
     
     
-//    private(set) lazy var apollo =  ApolloClient(url: URL(string:
-//    var token = ""
-
-        private(set) lazy var apollo: ApolloClient = {
-            let client = URLSessionClient()
-            let cache = InMemoryNormalizedCache()
-            let store = ApolloStore(cache: cache)
-            let provider = NetworkInterceptorProvider(client: client, store: store)
-            let url = URL(string: PrivateKey().GRAPHQL_URL)!
-            let transport = RequestChainNetworkTransport(interceptorProvider: provider,
-                                                         endpointURL: url)
-            return ApolloClient(networkTransport: transport, store: store)
-        }()
+    //    private(set) lazy var apollo =  ApolloClient(url: URL(string:
+    //    var token = ""
     
-//    func fetch<Query: GraphQLQuery>(
-//        query: Query,
-//        cachePolicy: CachePolicy = .default,
-//        queue: DispatchQueue = DispatchQueue.main
-//      ) -> Observable<Query.Data> {
-//        return self.apollo.rx
-//          .fetch(query: query,
-//                 cachePolicy: cachePolicy,
-//                 queue: queue)
-//          .asObservable()
-//      }
+    private(set) lazy var apollo: ApolloClient = {
+        let client = URLSessionClient()
+        let cache = InMemoryNormalizedCache()
+        let store = ApolloStore(cache: cache)
+        let provider = NetworkInterceptorProvider(client: client, store: store)
+        let url = URL(string: PrivateKey().GRAPHQL_URL)!
+        let transport = RequestChainNetworkTransport(interceptorProvider: provider,
+                                                     endpointURL: url)
+        return ApolloClient(networkTransport: transport, store: store)
+    }()
+    
+    //    func fetch<Query: GraphQLQuery>(
+    //        query: Query,
+    //        cachePolicy: CachePolicy = .default,
+    //        queue: DispatchQueue = DispatchQueue.main
+    //      ) -> Observable<Query.Data> {
+    //        return self.apollo.rx
+    //          .fetch(query: query,
+    //                 cachePolicy: cachePolicy,
+    //                 queue: queue)
+    //          .asObservable()
+    //      }
     
     func rxFetch<Query: GraphQLQuery>(
         query: Query,
@@ -86,7 +86,7 @@ class TokenAddingInterceptor: ApolloInterceptor {
             }
         // TODO
         let keychain = TokenManager.sharedKeyChain
-            let token = "\(String(describing: keychain.get(forKey)!)) \(forKey)"
+            let token = "\(String(describing: keychain.get(forKey) ?? "")) \(forKey)"
             print("login token : \(token)")
             
             
