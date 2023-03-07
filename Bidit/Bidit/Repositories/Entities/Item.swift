@@ -6,6 +6,15 @@
 //
 
 import Foundation
+//상품 상태
+enum ItemStatus : Int{
+    case REGISTED = 0//등록
+    case ONGOING = 1//경매중
+    case SOLD = 2//판매 완료
+    case END = 3//거래 완료
+    case CANCEL = 4 //등록 취소
+}
+
 struct Item : ModelType, Codable{
     var id : Int!
     var status : Int!
